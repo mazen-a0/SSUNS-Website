@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SSUNS 2026 Website
 
-## Getting Started
+Next.js App Router + TypeScript + Tailwind project for the SSUNS 2026 public website.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Placeholder images
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Add these files under `public/placeholders/`:
 
-## Learn More
+1. `hero-1920x1080.jpg` (16:9, 1920x1080) - hero background, delegates in committee
+2. `montreal-1600x900.jpg` (16:9, 1600x900) - Montreal skyline/city vibe
+3. `delegates-1600x1067.jpg` (3:2, 1600x1067) - delegates debating
+4. `hotel-1600x900.jpg` (16:9, 1600x900) - Sheraton exterior/venue
+5. `committee-1200x800.jpg` (3:2, 1200x800) - committee room/placards
+6. `portrait-800x1000.jpg` (4:5, 800x1000) - executive/student portrait
 
-To learn more about Next.js, take a look at the following resources:
+## Hero video
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Add homepage hero video files under `public/video/`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. `montreal-panorama.webm` as the primary source
+2. `montreal-panorama.mp4` as the fallback source
 
-## Deploy on Vercel
+Recommended loop duration is `6-10` seconds. Keep files compressed for fast first paint, with a target size of roughly `3-8 MB` per file when possible. To replace the video, overwrite those filenames and keep the poster image at `public/placeholders/hero-1920x1080.jpg`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [DEPLOYMENT.md](./DEPLOYMENT.md).

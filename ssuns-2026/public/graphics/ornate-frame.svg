@@ -1,0 +1,21 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 30V10H30" stroke="#142082" stroke-width="1.5"/>
+  <path d="M90 10H110V30" stroke="#142082" stroke-width="1.5"/>
+  <path d="M110 90V110H90" stroke="#142082" stroke-width="1.5"/>
+  <path d="M30 110H10V90" stroke="#142082" stroke-width="1.5"/>
+  <path d="M19 19H43" stroke="#142082" stroke-width="1.15"/>
+  <path d="M77 19H101" stroke="#142082" stroke-width="1.15"/>
+  <path d="M19 101H43" stroke="#142082" stroke-width="1.15"/>
+  <path d="M77 101H101" stroke="#142082" stroke-width="1.15"/>
+  <path d="M19 43V19" stroke="#142082" stroke-width="1.15"/>
+  <path d="M101 43V19" stroke="#142082" stroke-width="1.15"/>
+  <path d="M19 101V77" stroke="#142082" stroke-width="1.15"/>
+  <path d="M101 101V77" stroke="#142082" stroke-width="1.15"/>
+  <g stroke="#142082" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 44.5C55.2 44.5 51.3 47.1 51.3 50.5C51.3 52.6 53 54.2 55.4 54.2C58.1 54.2 59.9 52.3 59.9 49.1C59.9 46.6 58.5 45 56.6 44.1"/>
+    <path d="M60 44.5C64.8 44.5 68.7 47.1 68.7 50.5C68.7 52.6 67 54.2 64.6 54.2C61.9 54.2 60.1 52.3 60.1 49.1C60.1 46.6 61.5 45 63.4 44.1"/>
+    <path d="M60 43.6V54.1"/>
+    <path d="M47.8 63C51.6 60.4 55.1 58.9 60 58.9C64.9 58.9 68.4 60.4 72.2 63"/>
+    <path d="M49.8 68.7C53 66.8 56.1 65.8 60 65.8C63.9 65.8 67 66.8 70.2 68.7"/>
+  </g>
+</svg>

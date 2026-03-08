@@ -38,7 +38,7 @@ export function GlassSheetModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(11,16,44,0.55)] p-4 backdrop-blur-md sm:items-center sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(11,16,44,0.55)] p-4 backdrop-blur-sm sm:items-center sm:p-8">
       <button
         aria-label={closeLabel}
         className="absolute inset-0"
@@ -48,15 +48,15 @@ export function GlassSheetModal({
       <div
         aria-modal="true"
         className={cn(
-          "relative z-10 w-full max-w-3xl rounded-3xl border border-[var(--glass-border-strong)] bg-[var(--glass-bg-strong)] p-6 shadow-[0_35px_80px_-35px_rgba(11,16,44,0.92)] backdrop-blur-2xl",
+          "theme-panel-strong paper-grain relative z-10 w-full max-w-3xl rounded-[10px] border border-[var(--rule)] p-6 shadow-[var(--shadow-strong)]",
           "sm:p-8",
         )}
         role="dialog"
       >
         <div className="mb-6 flex items-start justify-between gap-4">
-          <h2 className="font-display text-2xl uppercase text-[var(--color-brand-navy)]">{title}</h2>
+          <h2 className="font-display text-2xl uppercase text-[var(--accent)]">{title}</h2>
           <button
-            className="rounded-full border border-white/55 bg-white/50 px-3 py-1 text-xs font-semibold text-[var(--color-brand-navy)]"
+            className="border border-[var(--rule)] bg-[var(--bg)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--accent)]"
             onClick={onClose}
             type="button"
           >

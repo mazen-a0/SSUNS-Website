@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { chivo, marketFresh, petitFormal } from "@/app/fonts";
+import { AppPreferencesProvider } from "@/components/providers/AppPreferencesProvider";
 import { SiteChrome } from "@/components/SiteChrome";
 import { siteMeta } from "@/content/en/site";
 import "./globals.css";
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${chivo.variable} ${marketFresh.variable} ${petitFormal.variable} antialiased`}>
-        <SiteChrome>{children}</SiteChrome>
+        <AppPreferencesProvider>
+          <SiteChrome>{children}</SiteChrome>
+        </AppPreferencesProvider>
       </body>
     </html>
   );

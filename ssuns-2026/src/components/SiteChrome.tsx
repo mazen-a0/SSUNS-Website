@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { commonResources } from "@/content/en/resources";
-import { navItems, uiText } from "@/content/en/site";
+import { useState } from "react";
 import { CommandPalette } from "@/components/CommandPalette";
 import { GlassNav } from "@/components/GlassNav";
+import { SiteFooter } from "@/components/SiteFooter";
+import { useAppPreferences } from "@/components/providers/AppPreferencesProvider";
+import { useSiteContent } from "@/lib/useSiteContent";
 
 type SiteChromeProps = {
   children: React.ReactNode;
@@ -12,28 +13,8 @@ type SiteChromeProps = {
 
 export function SiteChrome({ children }: SiteChromeProps) {
   const [paletteOpen, setPaletteOpen] = useState(false);
-
-  const actions = useMemo(() => {
-    const routeActions = [{ id: "home", label: "Home", description: "Go to homepage", href: "/", group: "Navigation" }].concat(
-      navItems.map((item) => ({
-        id: item.href,
-        label: item.label,
-        description: `Go to ${item.label}`,
-        href: item.href,
-        group: "Navigation",
-      })),
-    );
-
-    const resourceActions = commonResources.map((resource) => ({
-      id: resource.id,
-      label: resource.title,
-      description: resource.description,
-      href: `/resources${resource.href}`,
-      group: "Resources",
-    }));
-
-    return [...routeActions, ...resourceActions];
-  }, []);
+  const { language, setLanguage } = useAppPreferences();
+  const { navItems, searchIndex, uiText } = useSiteContent();
 
   return (
     <>
@@ -42,19 +23,28 @@ export function SiteChrome({ children }: SiteChromeProps) {
         commandShortcutLabel={uiText.commandShortcut}
         homeAriaLabel={uiText.homeAria}
         items={navItems}
+        language={language}
+        languageEnglishLabel={uiText.languageEnglish}
+        languageFrenchLabel={uiText.languageFrench}
+        languageSwitchLabel={uiText.languageSwitchLabel}
         onOpenPalette={() => setPaletteOpen(true)}
         openMenuLabel={uiText.openMenu}
         openPaletteLabel={uiText.openCommandPalette}
+        searchLabel={uiText.searchLabel}
+        setLanguage={setLanguage}
       />
       <main>{children}</main>
+      <SiteFooter />
       <CommandPalette
-        actions={actions}
+        actions={searchIndex}
         onOpenChange={setPaletteOpen}
         open={paletteOpen}
         text={{
           closeLabel: uiText.closePalette,
+          contentGroupLabel: uiText.commandGroupContent,
           empty: uiText.commandEmpty,
           hint: uiText.commandHint,
+          navigationGroupLabel: uiText.commandGroupNavigation,
           placeholder: uiText.commandPlaceholder,
           title: uiText.commandTitle,
         }}
