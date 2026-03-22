@@ -81,6 +81,10 @@ export function CommandPalette({
     onOpenChange(false);
     setQuery("");
     setActive(0);
+    if (/^https?:\/\//.test(href)) {
+      window.location.href = href;
+      return;
+    }
     router.push(href);
   };
 
@@ -105,7 +109,7 @@ export function CommandPalette({
               {text.placeholder}
             </label>
             <div className="flex items-center gap-3 border border-[var(--rule)] bg-[var(--bg)] px-3 py-3">
-              <span aria-hidden className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+              <span aria-hidden className="text-xs font-semibold text-[var(--muted)]">
                 /
               </span>
               <input
@@ -141,7 +145,7 @@ export function CommandPalette({
                 ref={inputRef}
                 value={query}
               />
-              <kbd className="border border-[var(--rule)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">
+              <kbd className="border border-[var(--rule)] px-2 py-1 text-[10px] font-semibold text-[var(--muted)]">
                 Esc
               </kbd>
             </div>
@@ -150,7 +154,6 @@ export function CommandPalette({
                 <p className="section-kicker">{text.title}</p>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{text.hint}</p>
               </div>
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">Cmd+K</div>
             </div>
           </div>
 
@@ -175,11 +178,11 @@ export function CommandPalette({
                     type="button"
                   >
                     <div className="grid gap-2 sm:grid-cols-[0.22fr_0.78fr] sm:items-start">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                      <p className="text-[10px] font-semibold text-[var(--muted)]">
                         {action.group === "navigation" ? text.navigationGroupLabel : text.contentGroupLabel}
                       </p>
                       <div>
-                        <p className="text-sm font-semibold uppercase tracking-[0.08em]">{action.title}</p>
+                        <p className="text-sm font-semibold">{action.title}</p>
                         <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">{action.snippet}</p>
                       </div>
                     </div>

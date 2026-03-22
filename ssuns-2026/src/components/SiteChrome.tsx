@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommandPalette } from "@/components/CommandPalette";
 import { GlassNav } from "@/components/GlassNav";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -14,24 +14,31 @@ type SiteChromeProps = {
 export function SiteChrome({ children }: SiteChromeProps) {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const { language, setLanguage } = useAppPreferences();
-  const { navItems, searchIndex, uiText } = useSiteContent();
+  const { footerContent, navItems, searchIndex, uiText } = useSiteContent();
+
+  useEffect(() => {
+    const openSearch = () => setPaletteOpen(true);
+    window.addEventListener("ssuns:open-search", openSearch as EventListener);
+    return () => window.removeEventListener("ssuns:open-search", openSearch as EventListener);
+  }, []);
 
   return (
     <>
       <GlassNav
         closeMenuLabel={uiText.closeMenu}
-        commandShortcutLabel={uiText.commandShortcut}
         homeAriaLabel={uiText.homeAria}
         items={navItems}
         language={language}
         languageEnglishLabel={uiText.languageEnglish}
         languageFrenchLabel={uiText.languageFrench}
         languageSwitchLabel={uiText.languageSwitchLabel}
+        mastheadLabel={uiText.mastheadLabel}
         onOpenPalette={() => setPaletteOpen(true)}
         openMenuLabel={uiText.openMenu}
         openPaletteLabel={uiText.openCommandPalette}
         searchLabel={uiText.searchLabel}
         setLanguage={setLanguage}
+        socialLinks={footerContent.socialLinks}
       />
       <main>{children}</main>
       <SiteFooter />

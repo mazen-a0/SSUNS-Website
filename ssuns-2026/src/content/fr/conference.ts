@@ -11,6 +11,8 @@ export const conferenceContent = {
     schedule: "Temps forts de l'horaire",
     venue: "Lieu et ville",
     policies: "Conduite et politiques",
+    sponsorship: "Commandites",
+    training: "Formation et préparation",
   },
   chapters: [
     {
@@ -38,6 +40,33 @@ export const conferenceContent = {
       body: [
         "L'horaire est conçu pour préserver l'élan sans créer une compression inutile pour les délégués ou les conseillers.",
         "Le texte d'horaire fictif pourra être remplacé plus tard par le programme quotidien final.",
+      ],
+    },
+    {
+      href: "/conference/icao",
+      title: "ICAO",
+      summary: "Chapitre de référence pour le comité ICAO de SSUNS et son contexte dans la conférence.",
+      body: [
+        "ICAO demeure l'un des comités reconnaissables du programme de SSUNS et fait partie de l'offre plus large de simulation et de politiques de la conférence.",
+        "Les délégués intéressés par ICAO devraient consulter le catalogue des comités et les documents propres au comité lorsqu'ils seront publiés.",
+      ],
+    },
+    {
+      href: "/conference/charity-partner",
+      title: "Partenaire caritatif",
+      summary: "Information sur le partenaire caritatif de la conférence et initiatives connexes.",
+      body: [
+        "Ce chapitre est réservé à l'information sur le partenaire caritatif de SSUNS et aux initiatives connexes tournées vers la conférence.",
+        "Lorsque le partenaire 2026 sera confirmé, ce chapitre devrait diriger les délégués et les conseillers vers l'information officielle et les détails pertinents.",
+      ],
+    },
+    {
+      href: "/conference/delegate-resource-center",
+      title: "Centre de ressources des délégués (DRC)",
+      summary: "Soutien aux délégués, repères sur le site et ressources d'aide.",
+      body: [
+        "Le Centre de ressources des délégués vise à centraliser le matériel de soutien et les ressources destinées aux délégués pendant la préparation et les opérations de conférence.",
+        "Ce chapitre devrait orienter les délégués vers l'inscription, la préparation des comités, la logistique du lieu et les politiques.",
       ],
     },
     {
@@ -96,6 +125,17 @@ export const conferenceContent = {
     title: "Lieu et ville",
     body:
       "Les délégués se réunissent dans un hôtel central de Montréal avec un excellent accès au transport, des services à proximité et une structure adaptée aux grandes délégations scolaires.",
+  },
+  sponsorshipCallout: {
+    ...en.sponsorshipCallout,
+    title: "Soutenir SSUNS 2026",
+    body:
+      "Les organisations qui souhaitent soutenir l'accessibilité, la qualité du programme ou l'accueil de la conférence peuvent consulter le chapitre de commandites.",
+  },
+  crisisFeature: {
+    ...en.crisisFeature,
+    title: "Simulation de crise",
+    body: "Les mises à jour rapides, la rédaction de directives et l'adaptation stratégique demeurent une part distinctive du programme de SSUNS.",
   },
   policyCallouts: [
     {

@@ -1,10 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { useSiteContent } from "@/lib/useSiteContent";
 
-const detailSections = ["overview", "topic", "difficulty", "format", "chairs", "resources"] as const;
+const detailSections = ["overview", "topic", "format", "chairs", "resources"] as const;
+
+type SectionKey = (typeof detailSections)[number];
 
 type CommitteeDetailSheetProps = {
   slug: string;
@@ -13,124 +16,114 @@ type CommitteeDetailSheetProps = {
 export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   const { committees, committeesPageContent } = useSiteContent();
   const committee = committees.find((entry) => entry.slug === slug);
+  const [activeSection, setActiveSection] = useState<SectionKey>("overview");
 
   if (!committee) {
     return null;
   }
 
   return (
-    <section className="mx-auto mt-6 max-w-6xl px-4 sm:px-6">
-      <div className="theme-panel-strong paper-grain overflow-hidden rounded-[10px] p-5 sm:p-8">
+    <section className="mx-auto mt-8 max-w-[96rem] px-5 sm:px-8">
+      <div className="theme-panel-strong paper-grain overflow-hidden rounded-[8px] p-6 sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4">
-          <Link
-            className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]"
-            href="/committees"
-          >
+          <Link className="text-sm font-semibold text-[var(--accent)]" href="/committees">
             {committeesPageContent.detailBackLabel}
           </Link>
-          <Link className="border border-[var(--rule)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]" href="/committees">
+          <Link className="border border-[var(--rule)] px-4 py-2 text-sm font-semibold text-[var(--accent)]" href="/committees">
             {committeesPageContent.detailCloseLabel}
           </Link>
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+        <div className="mt-6 grid gap-8 xl:grid-cols-[1.08fr_0.92fr] xl:items-start">
           <div>
             <p className="section-kicker">{committee.theme}</p>
-            <h1 className="mt-3 font-display text-4xl uppercase leading-[0.92] text-[var(--accent)] sm:text-5xl">{committee.name}</h1>
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[var(--text)] sm:text-base">{committee.blurb}</p>
+            <h1 className="mt-3 font-display text-4xl leading-[0.92] text-[var(--accent)] sm:text-5xl">{committee.name}</h1>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--text)]">{committee.overview}</p>
 
             <div className="mt-6 grid gap-3 border-y border-[var(--rule)] py-4 sm:grid-cols-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
-                <p className="mt-2 text-sm font-semibold uppercase tracking-[0.08em] text-[var(--text)]">{committee.level}</p>
+                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
+                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.level}</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{committeesPageContent.sections.format}</p>
-                <p className="mt-2 text-sm font-semibold uppercase tracking-[0.08em] text-[var(--text)]">{committee.format}</p>
+                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.format}</p>
+                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.format}</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{committeesPageContent.sizeLabel}</p>
-                <p className="mt-2 text-sm font-semibold uppercase tracking-[0.08em] text-[var(--text)]">{committee.size}</p>
+                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sizeLabel}</p>
+                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.size}</p>
               </div>
             </div>
 
-            <nav aria-label={committee.name} className="mt-5 overflow-x-auto">
-              <div className="flex min-w-max gap-3 border-b border-[var(--rule)] pb-3">
-                {detailSections.map((section) => (
-                  <a
-                    className="border border-[var(--rule)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]"
-                    href={`#${section}`}
+            <div className="mt-5 flex flex-wrap gap-2 border-b border-[var(--rule)] pb-3">
+              {detailSections.map((section) => {
+                const isActive = activeSection === section;
+                return (
+                  <button
+                    className={
+                      isActive
+                        ? "border border-[var(--accent)] bg-[rgba(20,32,130,0.06)] px-3 py-2 text-sm font-semibold text-[var(--accent)]"
+                        : "border border-[var(--rule)] px-3 py-2 text-sm font-semibold text-[var(--muted)] transition-colors hover:bg-[rgba(20,32,130,0.03)] hover:text-[var(--accent)]"
+                    }
                     key={section}
+                    onClick={() => setActiveSection(section)}
+                    type="button"
                   >
                     {committeesPageContent.sections[section]}
-                  </a>
-                ))}
-              </div>
-            </nav>
+                  </button>
+                );
+              })}
+            </div>
 
-            <div className="mt-6 space-y-5">
-              <section id="overview" className="scroll-mt-28 border-b border-[var(--rule)] pb-5">
-                <p className="section-kicker">{committeesPageContent.sections.overview}</p>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--text)]">{committee.overview}</p>
-              </section>
-
-              <section id="topic" className="scroll-mt-28 border-b border-[var(--rule)] pb-5">
-                <p className="section-kicker">{committeesPageContent.sections.topic}</p>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--text)]">{committee.topic}</p>
-              </section>
-
-              <section id="difficulty" className="scroll-mt-28 border-b border-[var(--rule)] pb-5">
-                <p className="section-kicker">{committeesPageContent.sections.difficulty}</p>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{committee.difficulty}</p>
-              </section>
-
-              <section id="format" className="scroll-mt-28 border-b border-[var(--rule)] pb-5">
-                <p className="section-kicker">{committeesPageContent.sections.format}</p>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--text)]">{committee.format}</p>
-              </section>
+            <div className="mt-5 border-b border-[var(--rule)] pb-5">
+              {activeSection === "overview" ? <p className="text-sm leading-7 text-[var(--text)]">{committee.overview}</p> : null}
+              {activeSection === "topic" ? <p className="text-sm leading-7 text-[var(--text)]">{committee.topic || "Coming soon."}</p> : null}
+              {activeSection === "format" ? <p className="text-sm leading-7 text-[var(--text)]">{committee.format || "Coming soon."}</p> : null}
+              {activeSection === "chairs" ? (
+                committee.chairs.length ? (
+                  <ul className="space-y-4">
+                    {committee.chairs.map((chair) => (
+                      <li className="border-t border-[var(--rule)] pt-4 first:border-t-0 first:pt-0" key={chair.name}>
+                        <p className="font-display text-2xl leading-none text-[var(--text)]">{chair.name}</p>
+                        <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{chair.bio}</p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm leading-7 text-[var(--muted)]">Coming soon.</p>
+                )
+              ) : null}
+              {activeSection === "resources" ? (
+                <div className="space-y-4">
+                  {committee.resources.length ? (
+                    <ul className="space-y-3 text-sm leading-7 text-[var(--text)]">
+                      {committee.resources.map((resource) => (
+                        <li className="border-t border-[var(--rule)] pt-3 first:border-t-0 first:pt-0" key={resource}>
+                          {resource}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm leading-7 text-[var(--muted)]">Coming soon.</p>
+                  )}
+                  <div className="border-t border-[var(--rule)] pt-4">
+                    <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.guide}</p>
+                    <p className="mt-2 text-sm text-[var(--muted)]">{committee.backgroundGuide}</p>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
 
-          <div className="space-y-5">
-            <article className="theme-panel overflow-hidden rounded-[10px] p-3">
-              {/* TODO(photo): Replace with committee room photograph (3:2, 1200x800). Suggested subject: placards, dais, and delegates in active session. */}
-              <Image
-                alt="Committee room with placards and dais"
-                className="aspect-[3/2] w-full object-cover"
-                height={800}
-                src="/placeholders/committee-1200x800.jpg"
-                width={1200}
-              />
+          <div className="space-y-4">
+            <article className="theme-panel overflow-hidden rounded-[8px] p-3">
+              <CommitteeImage alt="Committee room with placards and dais" mode="hero" slug={committee.slug} src={committee.imageSrc} />
             </article>
 
-            <section id="chairs" className="theme-panel paper-grain scroll-mt-28 rounded-[10px] p-5">
-              <p className="section-kicker">{committeesPageContent.sections.chairs}</p>
-              <ul className="mt-4 space-y-4">
-                {committee.chairs.map((chair) => (
-                  <li className="border-t border-[var(--rule)] pt-4 first:border-t-0 first:pt-0" key={chair.name}>
-                    <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">{chair.name}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{chair.bio}</p>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section id="resources" className="bg-[var(--panel-inverse)] p-5 text-white shadow-[var(--shadow-soft)] scroll-mt-28">
-              <p className="section-kicker text-[#afcbff]">{committeesPageContent.sections.resources}</p>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-[#e8f0ff]">
-                {committee.resources.map((resource) => (
-                  <li className="border-t border-white/14 pt-3 first:border-t-0 first:pt-0" key={resource}>
-                    {resource}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-5 border-t border-white/14 pt-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#afcbff]">
-                  {committeesPageContent.sections.guide}
-                </p>
-                <p className="mt-2 text-sm text-[#eef4ff]">{committee.backgroundGuide}</p>
-              </div>
-            </section>
+            <article className="theme-panel paper-grain rounded-[8px] p-5">
+              <p className="section-kicker">{committeesPageContent.sections.difficulty}</p>
+              <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{committee.difficulty}</p>
+            </article>
           </div>
         </div>
       </div>

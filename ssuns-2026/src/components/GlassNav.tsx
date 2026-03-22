@@ -3,11 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/content/registry";
 
 type NavItem = {
+  label: string;
+  href: string;
+};
+
+type SocialLink = {
   label: string;
   href: string;
 };
@@ -19,14 +24,41 @@ type GlassNavProps = {
   homeAriaLabel: string;
   openPaletteLabel: string;
   searchLabel: string;
-  commandShortcutLabel: string;
   languageSwitchLabel: string;
   language: Locale;
   setLanguage: (language: Locale) => void;
   languageEnglishLabel: string;
   languageFrenchLabel: string;
+  socialLinks: SocialLink[];
+  mastheadLabel: string;
   onOpenPalette: () => void;
 };
+
+const coreHrefs = new Set(["/", "/about", "/conference", "/committees", "/registration", "/resources"]);
+const utilityHrefs = new Set(["/sponsor-us", "/staff-resources", "/contact"]);
+
+function isActivePath(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function InstagramIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="14" viewBox="0 0 24 24" width="14">
+      <rect height="15" rx="4" stroke="currentColor" strokeWidth="1.5" width="15" x="4.5" y="4.5" />
+      <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="17.2" cy="6.8" fill="currentColor" r="1" />
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="14" viewBox="0 0 24 24" width="14">
+      <path d="M14 4v9.2a3.2 3.2 0 1 1-3-3.2" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+      <path d="M14 4c1 2.1 2.6 3.4 5 3.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+    </svg>
+  );
+}
 
 export function GlassNav({
   items,
@@ -35,137 +67,156 @@ export function GlassNav({
   homeAriaLabel,
   openPaletteLabel,
   searchLabel,
-  commandShortcutLabel,
   languageSwitchLabel,
   language,
   setLanguage,
   languageEnglishLabel,
   languageFrenchLabel,
+  socialLinks,
+  mastheadLabel,
   onOpenPalette,
 }: GlassNavProps) {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
-  const navRef = useRef<HTMLDivElement | null>(null);
-
-  const itemRefs = useMemo(() => {
-    return items.reduce<Record<string, HTMLAnchorElement | null>>((acc, item) => {
-      acc[item.href] = null;
-      return acc;
-    }, {});
-  }, [items]);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 18);
+    const onScroll = () => setIsScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const updateIndicator = () => {
-      const active = items.find((item) => pathname === item.href) ?? null;
-      if (!active) {
-        setIndicator((prev) => ({ ...prev, visible: false }));
-        return;
-      }
-
-      const activeEl = itemRefs[active.href];
-      const navEl = navRef.current;
-
-      if (!activeEl || !navEl) {
-        setIndicator((prev) => ({ ...prev, visible: false }));
-        return;
-      }
-
-      const activeBox = activeEl.getBoundingClientRect();
-      const navBox = navEl.getBoundingClientRect();
-
-      setIndicator({
-        left: activeBox.left - navBox.left,
-        width: activeBox.width,
-        visible: true,
-      });
-    };
-
-    updateIndicator();
-    window.addEventListener("resize", updateIndicator);
-    return () => window.removeEventListener("resize", updateIndicator);
-  }, [itemRefs, items, pathname]);
+  const coreItems = useMemo(() => items.filter((item) => coreHrefs.has(item.href)), [items]);
+  const utilityItems = useMemo(() => items.filter((item) => utilityHrefs.has(item.href)), [items]);
+  const instagramLink = socialLinks.find((link) => link.label.toLowerCase().includes("instagram"));
+  const tiktokLink = socialLinks.find((link) => link.label.toLowerCase().includes("tiktok"));
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 border-b border-[#25389f] backdrop-blur-sm transition-colors duration-300",
-        isScrolled ? "bg-[rgba(10,18,60,0.96)]" : "bg-[rgba(20,32,130,0.9)]",
+        "sticky top-0 z-50 border-b border-[var(--rule)] bg-[rgba(244,246,251,0.94)] backdrop-blur-sm",
+        isScrolled && "shadow-[0_10px_24px_-24px_rgba(10,19,66,0.45)]",
       )}
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 sm:px-6">
+      <div className="border-t border-[var(--rule)]" />
+
+      <div className="hidden xl:block">
+        <div className="mx-auto max-w-[96rem] px-5 sm:px-8">
+          <div className="flex min-h-9 items-center justify-between gap-4 border-b border-[var(--rule)] text-[11px] text-[var(--muted)]">
+            <p className="truncate text-[10px] font-semibold tracking-[0.05em] text-[var(--accent)]">{mastheadLabel}</p>
+            <div className="flex shrink-0 items-center gap-2">
+              {instagramLink ? (
+                <Link
+                  aria-label={instagramLink.label}
+                  className="inline-flex h-7 w-7 items-center justify-center border border-[var(--rule)] text-[var(--accent)] transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.05)]"
+                  href={instagramLink.href}
+                  target="_blank"
+                >
+                  <InstagramIcon />
+                </Link>
+              ) : null}
+              {tiktokLink ? (
+                <Link
+                  aria-label={tiktokLink.label}
+                  className="inline-flex h-7 w-7 items-center justify-center border border-[var(--rule)] text-[var(--accent)] transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.05)]"
+                  href={tiktokLink.href}
+                  target="_blank"
+                >
+                  <TikTokIcon />
+                </Link>
+              ) : null}
+              <div aria-label={languageSwitchLabel} className="inline-flex h-7 items-center border border-[var(--rule)] bg-white/70 p-0.5">
+                <button
+                  className={cn(
+                    "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
+                    language === "en" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:text-[var(--accent)]",
+                  )}
+                  onClick={() => setLanguage("en")}
+                  type="button"
+                >
+                  {languageEnglishLabel}
+                </button>
+                <button
+                  className={cn(
+                    "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
+                    language === "fr" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:text-[var(--accent)]",
+                  )}
+                  onClick={() => setLanguage("fr")}
+                  type="button"
+                >
+                  {languageFrenchLabel}
+                </button>
+              </div>
+              <button
+                aria-label={openPaletteLabel}
+                className="inline-flex h-7 items-center border border-[var(--rule)] px-3 text-[11px] font-semibold text-[var(--accent)] transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.05)]"
+                onClick={onOpenPalette}
+                type="button"
+              >
+                {searchLabel}
+              </button>
+            </div>
+          </div>
+
+          <div className="grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4">
+            <Link aria-label={homeAriaLabel} className="inline-flex items-center" href="/">
+              <span className="inline-flex border border-[var(--accent)] bg-[var(--accent)] px-2.5 py-2 shadow-[var(--shadow-soft)]">
+                <Image alt="SSUNS logo" height={22} priority src="/logos/ssuns-woodmark.png" width={88} />
+              </span>
+            </Link>
+
+            <nav aria-label="Primary" className="min-w-0">
+              <div className="flex min-w-0 items-center justify-center gap-2.5 2xl:gap-3.5">
+                {coreItems.map((item) => {
+                  const isActive = isActivePath(pathname, item.href);
+                  return (
+                    <Link
+                      className={cn(
+                        "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-3 text-[11px] font-semibold text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)]",
+                        isActive && "is-active text-[var(--accent)]",
+                      )}
+                      href={item.href}
+                      key={item.href}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </nav>
+
+            <div className="flex items-center gap-2.5">
+              {utilityItems.map((item) => {
+                const isActive = isActivePath(pathname, item.href);
+                return (
+                  <Link
+                    className={cn(
+                      "nav-link inline-flex items-center whitespace-nowrap py-3 text-[10.5px] font-semibold text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)]",
+                      isActive && "is-active text-[var(--accent)]",
+                    )}
+                    href={item.href}
+                    key={item.href}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto flex min-h-[4.25rem] max-w-[96rem] items-center justify-between gap-4 px-5 sm:px-8 xl:hidden">
         <Link aria-label={homeAriaLabel} className="inline-flex items-center" href="/">
-          <span className="inline-flex border border-white/18 bg-[rgba(7,15,49,0.4)] px-2.5 py-2">
-            <Image alt="SSUNS logo" height={24} src="/logos/ssuns-woodmark.png" width={92} priority />
+          <span className="inline-flex border border-[var(--accent)] bg-[var(--accent)] px-2.5 py-2 shadow-[var(--shadow-soft)]">
+            <Image alt="SSUNS logo" height={22} priority src="/logos/ssuns-woodmark.png" width={88} />
           </span>
         </Link>
-
-        <nav aria-label="Primary" className="hidden md:flex md:justify-center">
-          <div ref={navRef} className="relative flex items-center gap-5">
-            <span
-              aria-hidden
-              className={cn(
-                "absolute bottom-0 h-px bg-[#79aefc] transition-all duration-300",
-                indicator.visible ? "opacity-100" : "opacity-0",
-              )}
-              style={{ left: `${indicator.left}px`, width: `${indicator.width}px` }}
-            />
-            {items.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  className={cn(
-                    "relative pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors",
-                    isActive ? "text-white" : "text-[#d3e2ff] hover:text-white",
-                  )}
-                  href={item.href}
-                  ref={(node) => {
-                    itemRefs[item.href] = node;
-                  }}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
-
-        <div className="flex items-center justify-end gap-3">
-          <div aria-label={languageSwitchLabel} className="hidden items-center gap-1 border-r border-white/18 pr-3 md:flex">
-            <button
-              className={cn(
-                "text-[11px] font-semibold uppercase tracking-[0.18em]",
-                language === "en" ? "text-white" : "text-[#d3e2ff]",
-              )}
-              onClick={() => setLanguage("en")}
-              type="button"
-            >
-              {languageEnglishLabel}
-            </button>
-            <span aria-hidden className="text-[11px] text-[#9bb9ff]">|</span>
-            <button
-              className={cn(
-                "text-[11px] font-semibold uppercase tracking-[0.18em]",
-                language === "fr" ? "text-white" : "text-[#d3e2ff]",
-              )}
-              onClick={() => setLanguage("fr")}
-              type="button"
-            >
-              {languageFrenchLabel}
-            </button>
-          </div>
+        <div className="flex items-center gap-2">
           <button
             aria-label={openPaletteLabel}
-            className="hidden border border-white/18 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#d3e2ff] transition-colors hover:text-white md:inline-flex"
+            className="inline-flex h-9 items-center border border-[var(--rule)] px-3 text-sm font-semibold text-[var(--accent)]"
             onClick={onOpenPalette}
             type="button"
           >
@@ -174,7 +225,7 @@ export function GlassNav({
           <button
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? closeMenuLabel : openMenuLabel}
-            className="border border-white/18 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#d3e2ff] md:hidden"
+            className="inline-flex h-9 items-center border border-[var(--rule)] px-3 text-sm font-semibold text-[var(--accent)]"
             onClick={() => setMobileOpen((prev) => !prev)}
             type="button"
           >
@@ -184,49 +235,83 @@ export function GlassNav({
       </div>
 
       {mobileOpen ? (
-        <nav aria-label="Mobile" className="border-t border-white/12 bg-[rgba(10,18,60,0.98)] px-4 py-3 md:hidden sm:px-6">
-          <div className="flex flex-col gap-3">
-            {items.map((item) => (
-              <Link
-                key={item.href}
-                className={cn(
-                  "border-b border-white/10 pb-3 text-[11px] font-semibold uppercase tracking-[0.18em]",
-                  pathname === item.href ? "text-white" : "text-[#d3e2ff]",
-                )}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <div className="flex items-center gap-2 border-b border-white/10 pb-3">
-              <button
-                className={cn("text-[11px] font-semibold uppercase tracking-[0.18em]", language === "en" ? "text-white" : "text-[#d3e2ff]")}
-                onClick={() => setLanguage("en")}
-                type="button"
-              >
-                {languageEnglishLabel}
-              </button>
-              <span aria-hidden className="text-[11px] text-[#9bb9ff]">|</span>
-              <button
-                className={cn("text-[11px] font-semibold uppercase tracking-[0.18em]", language === "fr" ? "text-white" : "text-[#d3e2ff]")}
-                onClick={() => setLanguage("fr")}
-                type="button"
-              >
-                {languageFrenchLabel}
-              </button>
+        <nav aria-label="Mobile" className="border-t border-[var(--rule)] bg-[var(--paper)] px-4 py-4 xl:hidden sm:px-6">
+          <div className="space-y-5">
+            <p className="text-[11px] font-semibold text-[var(--accent)]">{mastheadLabel}</p>
+            <div className="grid gap-2">
+              {items.map((item) => {
+                const isActive = isActivePath(pathname, item.href);
+                return (
+                  <Link
+                    className={cn(
+                      "border-b border-[var(--rule)] py-3 text-sm font-semibold text-[var(--text)] transition-colors duration-200 hover:text-[var(--accent)]",
+                      isActive && "text-[var(--accent)]",
+                    )}
+                    href={item.href}
+                    key={item.href}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </div>
-            <button
-              className="border-b border-white/10 pb-3 text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-[#d3e2ff]"
-              onClick={() => {
-                setMobileOpen(false);
-                onOpenPalette();
-              }}
-              type="button"
-            >
-              {searchLabel}
-              <span className="ml-2 text-[#9bb9ff]">{commandShortcutLabel}</span>
-            </button>
+
+            <div className="flex flex-wrap items-center gap-3 border-t border-[var(--rule)] pt-4">
+              <button
+                aria-label={openPaletteLabel}
+                className="inline-flex h-9 items-center border border-[var(--rule)] px-3 text-sm font-semibold text-[var(--accent)]"
+                onClick={() => {
+                  setMobileOpen(false);
+                  onOpenPalette();
+                }}
+                type="button"
+              >
+                {searchLabel}
+              </button>
+              <div aria-label={languageSwitchLabel} className="inline-flex h-9 items-center border border-[var(--rule)] bg-white/70 p-0.5">
+                <button
+                  className={cn(
+                    "inline-flex h-full min-w-10 items-center justify-center px-2 text-[11px] font-semibold",
+                    language === "en" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)]",
+                  )}
+                  onClick={() => setLanguage("en")}
+                  type="button"
+                >
+                  {languageEnglishLabel}
+                </button>
+                <button
+                  className={cn(
+                    "inline-flex h-full min-w-10 items-center justify-center px-2 text-[11px] font-semibold",
+                    language === "fr" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)]",
+                  )}
+                  onClick={() => setLanguage("fr")}
+                  type="button"
+                >
+                  {languageFrenchLabel}
+                </button>
+              </div>
+              {instagramLink ? (
+                <Link
+                  aria-label={instagramLink.label}
+                  className="inline-flex h-9 w-9 items-center justify-center border border-[var(--rule)] text-[var(--accent)]"
+                  href={instagramLink.href}
+                  target="_blank"
+                >
+                  <InstagramIcon />
+                </Link>
+              ) : null}
+              {tiktokLink ? (
+                <Link
+                  aria-label={tiktokLink.label}
+                  className="inline-flex h-9 w-9 items-center justify-center border border-[var(--rule)] text-[var(--accent)]"
+                  href={tiktokLink.href}
+                  target="_blank"
+                >
+                  <TikTokIcon />
+                </Link>
+              ) : null}
+            </div>
           </div>
         </nav>
       ) : null}

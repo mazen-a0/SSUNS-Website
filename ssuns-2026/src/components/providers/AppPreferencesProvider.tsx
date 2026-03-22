@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
 import type { Locale } from "@/content/registry";
 
 type AppPreferencesContextValue = {
@@ -10,6 +10,7 @@ type AppPreferencesContextValue = {
 
 const AppPreferencesContext = createContext<AppPreferencesContextValue | null>(null);
 const LANGUAGE_STORAGE_KEY = "ssuns-language";
+const LANGUAGE_CHANGE_EVENT = "ssuns-language-change";
 
 function getStoredLanguage(): Locale {
   if (typeof window === "undefined") {
@@ -21,10 +22,25 @@ function getStoredLanguage(): Locale {
 }
 
 export function AppPreferencesProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Locale>(getStoredLanguage);
+  const language = useSyncExternalStore(
+    (callback) => {
+      window.addEventListener("storage", callback);
+      window.addEventListener(LANGUAGE_CHANGE_EVENT, callback as EventListener);
+      return () => {
+        window.removeEventListener("storage", callback);
+        window.removeEventListener(LANGUAGE_CHANGE_EVENT, callback as EventListener);
+      };
+    },
+    getStoredLanguage,
+    () => "en",
+  ) as Locale;
+
+  const setLanguage = useCallback((nextLanguage: Locale) => {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
+    window.dispatchEvent(new Event(LANGUAGE_CHANGE_EVENT));
+  }, []);
 
   useEffect(() => {
-    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     document.documentElement.lang = language;
   }, [language]);
 
@@ -33,7 +49,7 @@ export function AppPreferencesProvider({ children }: { children: React.ReactNode
       language,
       setLanguage,
     }),
-    [language],
+    [language, setLanguage],
   );
 
   return <AppPreferencesContext.Provider value={value}>{children}</AppPreferencesContext.Provider>;

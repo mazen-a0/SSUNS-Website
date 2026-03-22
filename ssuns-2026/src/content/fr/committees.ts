@@ -4,10 +4,52 @@ export const committeesPageContent = {
   ...en,
   title: "Comités",
   intro:
-    "Nos comités 2026 sont en préparation. Explorez les comités 2025 ci-dessous comme aperçu.",
+    "Comprend des assemblées générales (AG), des conseils économiques et sociaux (ECOSOC), des comités spécialisés (SPEC) et des comités de crise.",
+  chapters: [
+    {
+      href: "/committees",
+      title: "Vue d'ensemble",
+      summary: "Explorez le programme des comités 2026 par format et par type de comité.",
+      body: [
+        "Comprend des assemblées générales (AG), des conseils économiques et sociaux (ECOSOC), des comités spécialisés (SPEC) et des comités de crise.",
+        "Pour la liste complète des comités, veuillez visiter la page des comités du site web.",
+      ],
+    },
+    {
+      href: "/committees/slating",
+      title: "Répartition des comités",
+      summary: "Descriptions de comités, contacts du dais et notes de programme pour la programmation 2026.",
+      body: [
+        "Committee Descriptions for Website/Dias Apps",
+        "If you have any questions, feel free to contact Emma Ristic at gaecosoc@ssuns.org.",
+        "If you have any questions, feel free to contact Will Greer at spec@ssuns.org.",
+        "If you have any questions, feel free to contact Eitan Pessin at crisis@ssuns.org.",
+        "Meet the DAIS!",
+      ],
+    },
+    {
+      href: "/committees/awards",
+      title: "Distinctions",
+      summary: "Prix individuels et prix de délégation à SSUNS 2026.",
+      body: [
+        "SSUNS est avant tout un environnement amical et une expérience d'apprentissage collective. Ainsi, les distinctions à SSUNS sont accordées aux délégués dont le comportement enrichit l'apprentissage de leurs pairs de manière exceptionnelle. Les distinctions de SSUNS sont réparties en deux grandes catégories : les distinctions individuelles et les distinctions de délégation.",
+        "Détails complets à venir en français. En attendant, veuillez consulter la version anglaise de cette page si nécessaire.",
+      ],
+    },
+    {
+      href: "/committees/policies",
+      title: "Politiques des comités",
+      summary: "Politique technologique selon la taille et le format du comité pour SSUNS 2026.",
+      body: [
+        "Technology Policy SSUNS 2026.",
+        "Please note that the SSUNS 2026 technology policy has changed and will vary by committee size and format. As SSUNS will run as a hybrid conference, the policies for GAs, ECOSOCs, Specialized Agencies, and Crisis committees will differ.",
+        "Le texte français complet sera ajouté lorsque la version finale sera approuvée.",
+      ],
+    },
+  ],
   continueLabel: "Continuer vers le programme de la conférence",
   searchLabel: "Rechercher des comités",
-  searchPlaceholder: "Rechercher par nom, sujet, format ou difficulté",
+  searchPlaceholder: "Rechercher par nom, sujet, format ou niveau",
   allOptionLabel: "Tous",
   filterThemeLabel: "Volet",
   filterLevelLabel: "Niveau",
@@ -17,13 +59,20 @@ export const committeesPageContent = {
   noResults: "Aucun comité ne correspond à vos filtres.",
   detailBackLabel: "Retour à tous les comités",
   detailCloseLabel: "Fermer le dossier",
+  groups: {
+    ga: "Assemblées générales",
+    ecosoc: "ECOSOC",
+    specialized: "Spécialisés",
+    crisis: "Crise",
+    jointCrisis: "Crise conjointe",
+  },
   sections: {
     ...en.sections,
     overview: "Aperçu",
-    difficulty: "Niveau de difficulté",
+    difficulty: "Difficulté",
     topic: "Sujet",
     format: "Format",
-    chairs: "Présidence",
+    chairs: "Biographies de la présidence",
     resources: "Ressources",
     guide: "Guide préparatoire",
   },
@@ -32,19 +81,13 @@ export const committeesPageContent = {
 export const committees = enCommittees.map((committee) => ({
   ...committee,
   level:
-    committee.level === "Beginner"
-      ? "Débutant"
-      : committee.level === "Intermediate"
-        ? "Intermédiaire"
-        : committee.level === "Advanced"
-          ? "Avancé"
-          : committee.level === "High Crisis"
-            ? "Crise élevée"
-            : committee.level === "Low Crisis"
-              ? "Crise légère"
-              : committee.level === "Bilingual"
-                ? "Bilingue"
-                : committee.level,
+    committee.level === "Advanced"
+      ? "Avancé"
+      : committee.level === "Beginner"
+        ? "Débutant"
+        : committee.level === "Coming soon"
+          ? "À venir"
+          : committee.level,
   theme:
     committee.theme === "General Assemblies"
       ? "Assemblées générales"
@@ -52,60 +95,42 @@ export const committees = enCommittees.map((committee) => ({
         ? "Conseils économiques et sociaux"
         : committee.theme === "Specialized Committees"
           ? "Comités spécialisés"
-          : committee.theme === "Crisis Committees"
-            ? "Comités de crise"
-            : committee.theme === "Joint Crisis Committees"
-              ? "Comités de crise conjoints"
+          : committee.theme === "Joint Crisis Committees"
+            ? "Comités de crise conjoints"
+            : committee.theme === "Crisis Committees"
+              ? "Comités de crise"
               : committee.theme,
   size:
     committee.size === "Double Delegation"
       ? "Double délégation"
-      : committee.size === "Medium"
-        ? "Moyenne"
-        : committee.size === "Small"
-          ? "Petite"
-          : committee.size === "Joint Crisis"
-            ? "Crise conjointe"
-            : committee.size,
-  overview: `${committee.overview} Aperçu du programme 2025 de SSUNS.`,
+      : committee.size === "Coming soon"
+        ? "À venir"
+        : committee.size,
   difficulty:
-    committee.difficulty === "Beginner Committee."
-      ? "Comité débutant."
-      : committee.difficulty === "Advanced Committee."
-        ? "Comité avancé."
-        : committee.difficulty === "High Level of Crisis."
-          ? "Niveau élevé de crise."
-          : committee.difficulty === "Low Level of Crisis."
-            ? "Niveau léger de crise."
-            : committee.difficulty,
+    committee.difficulty === "Coming soon"
+      ? "À venir"
+      : committee.difficulty
+          .replace("This is a Double Delegate Committee.", "Il s'agit d'un comité à double délégation.")
+          .replace("This is an Advanced Committee.", "Il s'agit d'un comité avancé.")
+          .replace("This is a Beginner Committee.", "Il s'agit d'un comité pour débutants.")
+          .replace("This is a General Assembly Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée lourde de l'Assemblée générale.")
+          .replace("This is a Crisis Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée comprenant des éléments de crise de haut niveau.")
+          .replace("This is a Joint-Crisis Committee.", "Il s'agit d'un comité de crise conjoint.")
+          .replace("Some sessions might take place outside the Sheraton Hotel.", "Certaines séances pourraient avoir lieu à l'extérieur de l'hôtel Sheraton."),
   format:
     committee.format === "General Assembly"
       ? "Assemblée générale"
-      : committee.format === "Specialized"
-        ? "Spécialisé"
-        : committee.format === "Specialized Crisis"
-          ? "Crise spécialisée"
+      : committee.format === "ECOSOC"
+        ? "ECOSOC"
+        : committee.format === "Specialized"
+          ? "Spécialisé"
           : committee.format === "Joint Crisis"
             ? "Crise conjointe"
-            : committee.format === "ECOSOC"
-              ? "ECOSOC"
-              : committee.format === "Crisis"
-                ? "Crise"
-                : committee.format,
-  chairs: committee.chairs.map((chair) => ({
-    ...chair,
-    name: chair.name === "Chair Placeholder" ? "Présidence fictive" : "Vice-présidence fictive",
-    bio:
-      chair.name === "Chair Placeholder"
-        ? "TODO : Remplacer par la biographie confirmée de la présidence 2026 pour ce comité."
-        : "TODO : Remplacer par la biographie confirmée de la vice-présidence 2026 pour ce comité.",
-  })),
-  resources: committee.resources.map((resource) =>
-    resource.startsWith("TODO:")
-      ? resource
-          .replace("TODO: Add confirmed background guide link when the 2026 committee packet is published.", "TODO : Ajouter le lien confirmé vers le guide préparatoire lorsque le dossier 2026 sera publié.")
-          .replace("TODO: Add research primer or committee brief when available.", "TODO : Ajouter une note de recherche ou un dossier de comité lorsqu'il sera disponible.")
-      : resource,
-  ),
-  backgroundGuide: "TODO : Ajouter le lien vers le guide 2026.",
+            : committee.format === "Crisis"
+              ? "Crise"
+              : committee.format,
+  blurb: committee.blurb === "Coming soon." ? "À venir." : committee.blurb,
+  overview: committee.overview === "Coming soon." ? "À venir." : committee.overview,
+  topic: committee.topic === "Coming soon" ? "À venir" : committee.topic,
+  backgroundGuide: committee.backgroundGuide === "Coming soon" ? "À venir" : committee.backgroundGuide,
 }));

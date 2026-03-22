@@ -1,3 +1,5 @@
+import type { ContentBundle } from "@/content/registry";
+
 export type SearchEntry = {
   id: string;
   title: string;
@@ -13,51 +15,6 @@ type Chapter = {
   body: string[];
 };
 
-type ContentBundle = {
-  navItems: Array<{ label: string; href: string }>;
-  homeContent: {
-    hero: { title: string; accent: string; description: string };
-    editorial: { title: string; subtitle: string };
-    timeline: { title: string; items: Array<{ date: string; label: string }> };
-  };
-  aboutContent: {
-    chapters: Chapter[];
-    pillars: Array<{ title: string; body: string }>;
-  };
-  conferenceContent: {
-    chapters: Chapter[];
-    tracks: Array<{ title: string; body: string }>;
-    scheduleBand: { title: string; items: Array<{ label: string; text: string }> };
-  };
-  registrationContent: {
-    chapters: Chapter[];
-    steps: string[];
-    tracks: Array<{ title: string; body: string }>;
-  };
-  resourcesPageContent: {
-    title: string;
-    chapters: Chapter[];
-  };
-  commonResources: Array<{
-    id: string;
-    title: string;
-    description: string;
-    href: string;
-    details: string;
-  }>;
-  committees: Array<{
-    slug: string;
-    name: string;
-    topic: string;
-    overview: string;
-    difficulty: string;
-    chairs: Array<{ name: string; bio: string }>;
-    resources: string[];
-  }>;
-  contactContent: {
-    items: Array<{ label: string; value: string }>;
-  };
-};
 
 function chapterEntries(prefix: string, chapters: Chapter[]): SearchEntry[] {
   return chapters.map((chapter, index) => ({
@@ -99,7 +56,7 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       id: "home-editorial",
       title: content.homeContent.editorial.title,
       snippet: content.homeContent.editorial.subtitle,
-      href: "/#what-is-ssuns",
+      href: "/#mission",
       group: "content",
     },
     {
@@ -107,6 +64,13 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       title: content.homeContent.timeline.title,
       snippet: content.homeContent.timeline.items.map((item) => `${item.date} ${item.label}`).join(" | "),
       href: "/#key-dates",
+      group: "content",
+    },
+    {
+      id: "home-gallery",
+      title: content.homeContent.gallery.pageTitle ?? content.homeContent.gallery.title,
+      snippet: `${content.homeContent.gallery.intro} ${content.homeContent.gallery.items.map((item) => `${item.title} ${item.caption}`).join(" | ")}`,
+      href: "/gallery",
       group: "content",
     },
     ...chapterEntries("about-chapter", content.aboutContent.chapters),
@@ -145,9 +109,10 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       id: `resource-${resource.id}`,
       title: resource.title,
       snippet: `${resource.description} ${resource.details}`,
-      href: `/resources${resource.href}`,
+      href: resource.href,
       group: "content" as const,
     })),
+    ...chapterEntries("committees-chapter", content.committeesPageContent.chapters),
     ...content.committees.map((committee) => ({
       id: `committee-${committee.slug}`,
       title: committee.name,
@@ -157,11 +122,18 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       href: `/committees/${committee.slug}`,
       group: "content" as const,
     })),
-    ...content.contactContent.items.map((item, index) => ({
+    ...content.contactContent.directory.map((item, index) => ({
       id: `contact-${index}`,
-      title: `${item.label} Contact`,
-      snippet: item.value,
+      title: `${item.name} ${item.role}`,
+      snippet: item.email,
       href: "/contact",
+      group: "content" as const,
+    })),
+    ...content.sponsorContent.reasons.map((reason, index) => ({
+      id: `sponsor-${index}`,
+      title: reason.title,
+      snippet: reason.body,
+      href: "/sponsor-us",
       group: "content" as const,
     })),
     {
@@ -169,6 +141,13 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       title: content.resourcesPageContent.title,
       snippet: content.commonResources.map((resource) => resource.title).join(" | "),
       href: "/resources",
+      group: "content",
+    },
+    {
+      id: "sponsor-title",
+      title: content.sponsorContent.title,
+      snippet: content.sponsorContent.intro,
+      href: "/sponsor-us",
       group: "content",
     },
   ];

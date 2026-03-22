@@ -10,7 +10,7 @@ type LiquidButtonProps = {
 };
 
 const baseClass =
-  "liquid-button group relative inline-flex items-center justify-center overflow-hidden rounded-[6px] px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.14em] transition duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-blue)]";
+  "liquid-button group relative inline-flex items-center justify-center overflow-hidden rounded-[6px] px-5 py-2.5 text-sm font-semibold transition duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-blue)]";
 
 export function LiquidButton({
   label,
@@ -23,7 +23,7 @@ export function LiquidButton({
   const variantClass =
     variant === "solid"
       ? "border border-[var(--accent)] bg-[var(--accent)] text-white shadow-[var(--shadow-soft)]"
-      : "border border-[var(--border)] bg-[var(--panel-strong)] text-[var(--accent)]";
+      : "border border-[var(--rule)] bg-[var(--panel-strong)] text-[var(--accent)]";
 
   const content = (
     <>

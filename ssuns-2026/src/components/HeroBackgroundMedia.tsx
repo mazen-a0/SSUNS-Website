@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 type HeroBackgroundMediaProps = {
   poster: string;
   posterAlt: string;
+  videoWebmSrc?: string;
+  videoMp4Src?: string;
 };
 
-export function HeroBackgroundMedia({ poster, posterAlt }: HeroBackgroundMediaProps) {
+export function HeroBackgroundMedia({ poster, posterAlt, videoWebmSrc, videoMp4Src }: HeroBackgroundMediaProps) {
   const [allowMotion, setAllowMotion] = useState(false);
 
   useEffect(() => {
@@ -37,8 +39,8 @@ export function HeroBackgroundMedia({ poster, posterAlt }: HeroBackgroundMediaPr
           poster={poster}
           preload="metadata"
         >
-          <source src="/video/montreal-panorama.webm" type="video/webm" />
-          <source src="/video/montreal-panorama.mp4" type="video/mp4" />
+          <source src={videoWebmSrc || "/video/montreal-panorama.webm"} type="video/webm" />
+          <source src={videoMp4Src || "/video/montreal-panorama.mp4"} type="video/mp4" />
         </video>
       ) : (
         <Image

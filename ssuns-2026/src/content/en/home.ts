@@ -1,20 +1,30 @@
 export const homeContent = {
   hero: {
     eyebrow: "SSUNS 2026 • Montreal",
-    title: "SSUNS 2026 is on the way! Stay tuned for website updates…",
-    accent: "Canada's largest high-school level Model United Nations conference",
+    title: "Canada's premier high school Model United Nations conference",
+    accent: "Building on 33 years of excellence, our 34th conference will set a new standard.",
     description:
-      "Secondary Schools’ United Nations Symposium (SSUNS) is Canada’s largest high-school level Model United Nations (MUN) conference, hosting over 1300 students every November in downtown Montreal.",
+      "Each year, SSUNS welcomes over 1,300 delegates representing 60+ school delegations from around the world. Organized entirely by students and staffed by 250+ McGill volunteers, the conference provides a dynamic forum where high school and Cégep students develop leadership, negotiation, and public speaking skills while tackling complex global issues through committee debate and collaboration.",
     statement:
-      "Model United Nations allows delegates to place themselves in the shoes of world leaders and diplomats, using debate and public speaking to engage real world issues.",
-    primaryCta: { label: "Register now", href: "https://munager.com" },
+      "Hosted annually in Montreal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience.",
+    primaryCta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
     secondaryCta: { label: "Explore Committees", href: "/committees" },
     stats: [
-      { label: "Delegates", value: "1500+" },
-      { label: "Schools", value: "90+" },
-      { label: "Committees", value: "35" },
-      { label: "Days", value: "4" },
+      { label: "Delegates", value: "1300+" },
+      { label: "Staff", value: "250+" },
+      { label: "Schools", value: "60+" },
+      { label: "Committees", value: "24" },
     ],
+    countdownTarget: null,
+    countdownLabels: {
+      days: "Days",
+      hours: "Hours",
+      minutes: "Minutes",
+    },
+    video: {
+      webmSrc: "/video/montreal-panorama.webm",
+      mp4Src: "/video/montreal-panorama.mp4",
+    },
     image: {
       src: "/placeholders/hero-1920x1080.jpg",
       alt: "Delegates entering plenary hall under blue conference lighting",
@@ -25,6 +35,7 @@ export const homeContent = {
   sectionIndex: [
     { id: "hero", label: "Overview" },
     { id: "glance", label: "At A Glance" },
+    { id: "key-dates", label: "Key Dates" },
     { id: "mission", label: "Mission" },
     { id: "committees-preview", label: "Committees" },
     { id: "venue", label: "Venue" },
@@ -33,25 +44,25 @@ export const homeContent = {
   atGlance: {
     label: "At A Glance",
     items: [
-      { label: "Dates", value: "March 2026", detail: "Four conference days with staged arrivals and closing ceremonies." },
-      { label: "Venue", value: "Sheraton Montreal", detail: "Central hotel setting with committee, advisory, and plenary flow under one roof." },
-      { label: "Committees", value: "35 Programmes", detail: "General assemblies, specialized rooms, and crisis formats with distinct pacing." },
-      { label: "Delegations", value: "90+ Schools", detail: "Canadian and international delegations, faculty advisors, and student leaders." },
+      { label: "Delegates", value: "1300+", detail: "Attended by 1300+ delegates from around the world." },
+      { label: "Venue", value: "Sheraton Montreal", detail: "Hosting SSUNS 34th itinerary from November 12–15." },
+      { label: "Committees", value: "24", detail: "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Committees (SPECs), and Crisis Committees." },
+      { label: "Schools", value: "60+", detail: "Representing delegations from Canada and around the world." },
     ],
   },
   editorial: {
-    label: "Institutional Profile",
+    label: "Overview of SSUNS",
     title: "What Is SSUNS?",
-    subtitle: "A student-run diplomatic institution with the standards of a flagship annual programme.",
+    subtitle: "A student-run conference built on diplomacy, debate, and leadership development.",
     strengthsTitle: "The Distinction",
     body: [
-      "SSUNS is not a one-note debate event. It is a full diplomatic ecosystem where delegates build policy positions, negotiate amendments, and defend outcomes in rooms that reward discipline.",
-      "Behind every session is a student production team coordinating chairing, crisis architecture, hospitality, faculty communication, and venue operations with uncommon precision.",
+      "In 1992, a group of students at McGill University came together with the goal of creating a space where high school students could explore global issues through diplomacy and debate. They envisioned an environment where young leaders could collaborate, think critically, and engage with the challenges facing the international community. Now in its 34th year, the Secondary Schools’ United Nations Symposium (SSUNS) has grown into one of Canada’s premier high school Model United Nations conferences.",
+      "Hosted annually in Montreal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience. This year, we are excited to welcome delegates back to the Sheraton Centre Montreal Hotel. From innovative committees to exciting delegate events, the Secretariat has worked tirelessly to create an extraordinary 34th iteration of SSUNS. We invite you to explore our website to learn more about what makes SSUNS a truly unique Model United Nations conference.",
     ],
     points: [
-      "Rigorous rules of procedure without performative friction",
-      "Topics selected for geopolitical depth and educational value",
-      "An atmosphere that feels ceremonial without becoming theatrical",
+      "Youth leadership",
+      "Substantive debates",
+      "Student-led excellence",
     ],
   },
   directorNote: {
@@ -97,7 +108,7 @@ export const homeContent = {
       title: "Standards matter as much as aesthetics.",
       body:
         "Code of conduct, safeguarding, accessibility planning, and advisor coordination are treated as core conference architecture rather than add-ons.",
-      cta: { label: "Review conference policies", href: "/resources#policies" },
+      cta: { label: "Review conference policies", href: "/resources/policies" },
     },
   },
   featuredCommittees: {
@@ -107,24 +118,22 @@ export const homeContent = {
       "From first-committee confidence building to technical strategy rooms, SSUNS is designed as a portfolio of experiences rather than a single repeated format.",
     ctaLabel: "View full committee catalogue",
     items: [
-      { slug: "committee-1", note: "A measured introduction to drafting, caucusing, and coalition work." },
-      { slug: "committee-3", note: "High-pressure crisis pacing with tight writing expectations and strategic adaptation." },
-      { slug: "committee-6", note: "Technical, advanced, and sharply policy-driven in both language and tempo." },
+      { slug: "who-2026", note: "A double-delegation room focused on public-health systems and worker protection." },
+      { slug: "wto-2026", note: "An advanced room on climate diplomacy, trade tools, and market coordination." },
+      { slug: "festival-rivalry-2026", note: "A joint-crisis format built around rivalry, pacing, and strategic decision-making." },
     ],
   },
   timeline: {
     title: "Key Dates",
     intro: "A disciplined planning calendar for advisors, chairs, and delegates.",
     items: [
-      { date: "Sept 2025", label: "School pre-registration opens" },
-      { date: "Nov 2025", label: "Committee preferences window" },
-      { date: "Jan 2026", label: "Background guides published" },
-      { date: "Feb 2026", label: "Advisor briefing and delegate orientation" },
-      { date: "Mar 2026", label: "Conference week in Montreal" },
+      { date: "April 1, 2026", label: "Registration opens" },
+      { date: "Nov 12-15, 2026", label: "Conference week in Montreal" },
     ],
   },
   gallery: {
     title: "Montreal & Venue",
+    pageTitle: "Gallery",
     scrollHint: "Scroll the archive",
     label: "Brochure Plates",
     intro:
@@ -163,6 +172,10 @@ export const homeContent = {
         note: "conference ballroom prepared for plenary, 16:9, recommended 1600x900",
       },
     ],
+    cta: {
+      label: "View gallery",
+      href: "/gallery",
+    },
   },
 
   landAcknowledgement: {
@@ -171,6 +184,9 @@ export const homeContent = {
       "SSUNS 2026 will be held at the Sheraton Hotel, with preparatory work accomplished at McGill University. Both of these sites are located in Montréal, known as Tiohti:áke to the Kanien'kehá:ka Nation, a founding nation of the Haudenosaunee Confederacy.",
       "This territory is unceded land, and prior to colonization it served as a place of exchange and gathering for the Haudenosaunee and Anishinaabe nations.",
       "Owing to our use of such land, we must honor, recognise, and respect these nations as stewards of the lands and waters on which we meet.",
+      "It is important to understand the rich history of Indigenous communities and their connection to this land for millennia to the present day. In the 15th and 16th Centuries, European nations discovered the Americas and quickly began their settlements. This was the beginning of the colonization of Indigenous Peoples across these two continents, and led to the greatest genocide the world has ever witnessed. For over 500 years Indigenous Peoples have been the subject of extreme discrimination and racism, facing atrocities from ethnic cleansing, to assimilation, to cultural segregation.",
+      "A land acknowledgement must not replace reparatory and reconciliatory work.",
+      "In order to achieve this, we must all be dedicated to recognizing the atrocities enacted by Euro-centric settlers and the long-lasting impact that colonization has had on Indigenous communities and Peoples. To move beyond a land acknowledgement, we must actively work to dismantle settler-colonial legacies that persist to this day. We can take the first step by educating ourselves. To find allyship tools from the Montreal Indigenous Community NETWORK, please consult https://reseaumtlnetwork.com/en/being-an-ally/our-tools/. If you are interested in further resources about initiatives, please contact the Chief of Human Resources at hr@ssuns.org.",
     ],
   },
   testimonials: {
@@ -195,7 +211,7 @@ export const homeContent = {
     label: "Registration",
     title: "Registration for SSUNS 2026 will open on April 1st!",
     body:
-      "The conference will take place from November 12-15, 2026. Additional details, including step-by-step instructions and important updates, will be posted throughout March.",
-    cta: { label: "Register now", href: "https://munager.com" },
+      "This year, we are introducing a new registration system designed to improve your experience and streamline the process. Additional details, including step-by-step instructions and important updates, will be posted here throughout March. We encourage all delegates and advisors to review this information in advance to ensure a smooth registration.",
+    cta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
   },
 };

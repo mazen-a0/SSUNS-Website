@@ -9,7 +9,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-20 border-t border-[#25389f] bg-[var(--panel-inverse)] text-white">
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
+      <div className="mx-auto max-w-[96rem] px-5 py-10 sm:px-8 sm:py-12">
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr_0.8fr]">
           <section className="relative border border-white/14 bg-[rgba(7,14,48,0.26)] p-6">
             <Image
@@ -25,7 +25,7 @@ export function SiteFooter() {
             </span>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#d7e3ff]">{footerContent.motto}</p>
             <Image alt="" aria-hidden="true" className="mt-5 opacity-95 invert" height={18} src="/graphics/report-divider.svg" width={260} />
-            <p className="mt-5 text-xs uppercase tracking-[0.16em] text-[#b4caff]">{footerContent.closing}</p>
+            <p className="mt-5 text-xs leading-relaxed text-[#b4caff]">{footerContent.closing}</p>
           </section>
 
           {footerContent.sections.map((section) => (
@@ -45,9 +45,16 @@ export function SiteFooter() {
             <p className="section-kicker text-[#b4caff]">{footerContent.contactTitle}</p>
             <div className="mt-4 space-y-3 border-t border-white/12 pt-4">
               {footerContent.contacts.map((contact) => (
-                <p className="text-sm text-white/90" key={contact}>
+                <a className="block text-sm text-white/90 transition-opacity hover:opacity-70" href={`mailto:${contact}`} key={contact}>
                   {contact}
-                </p>
+                </a>
+              ))}
+            </div>
+            <div className="mt-5 flex flex-wrap gap-3 border-t border-white/12 pt-4">
+              {footerContent.socialLinks.map((link) => (
+                <Link className="text-sm text-white/90 transition-opacity hover:opacity-70" href={link.href} key={link.href} target="_blank">
+                  {link.label}
+                </Link>
               ))}
             </div>
           </section>

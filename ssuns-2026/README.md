@@ -11,6 +11,48 @@ npm run dev
 
 Then open `http://localhost:3000`.
 
+## Sanity
+
+Sanity is now the primary content source for the site. The public website still falls back to the existing local content files in `src/content/en` and `src/content/fr` whenever:
+
+1. Sanity env vars are not configured
+2. Sanity is reachable but a document has not been created yet
+3. A specific field has not been populated yet
+
+That means the site remains fully renderable while Studio content is still being entered.
+
+### Required env vars
+
+Add these env vars locally in `.env.local` and in Vercel:
+
+```bash
+SANITY_PROJECT_ID=
+SANITY_DATASET=
+SANITY_API_VERSION=2025-01-01
+SANITY_READ_TOKEN=
+```
+
+Notes:
+
+1. `SANITY_READ_TOKEN` is optional unless you later enable draft/preview behavior.
+2. `SANITY_PROJECT_ID`, `SANITY_DATASET`, and `SANITY_API_VERSION` are mirrored into the client-safe `NEXT_PUBLIC_SANITY_*` vars through `next.config.ts`, so you only need to set the `SANITY_*` versions.
+
+### Studio
+
+The embedded Studio lives at `/studio`.
+
+1. Start the app with `npm run dev`
+2. Open `http://localhost:3000/studio`
+3. If Sanity is not configured yet, the Studio route shows a setup message instead of breaking the app
+
+### First-time setup in Studio
+
+Create these first to see content appear immediately:
+
+1. `Settings` singleton: create the `siteSettings` document from the desk structure and set the site title, socials, Munager link, and hero media
+2. `Pages` > `home`: create a page document with slug `home` and fill in the title, subtitle, intro, and optional sections
+3. `Secretariat`: create `secretariatMember` documents to replace the local fallback roster on `/about/secretariat`
+
 ## Placeholder images
 
 Add these files under `public/placeholders/`:

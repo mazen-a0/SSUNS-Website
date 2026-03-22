@@ -11,11 +11,14 @@ export const registrationContent = {
     pathways: "Volets d'inscription",
     timeline: "Calendrier d'inscription",
     fees: "Frais et financement",
+    currentTier: "Palier d'inscription actuel",
+    walkthrough: "Guide Munager",
+    listserv: "Liste de diffusion",
   },
   chapters: [
     {
       ...en.chapters[0],
-      title: "Vue d'ensemble",
+      title: "Info",
       summary: "Les inscriptions à SSUNS 2026 ouvrent le 1er avril 2026.",
       body: [
         "Les inscriptions à SSUNS 2026 ouvriront le 1er avril. La conférence aura lieu du 12 au 15 novembre 2026.",
@@ -24,7 +27,7 @@ export const registrationContent = {
     },
     {
       ...en.chapters[1],
-      title: "Comment s'inscrire",
+      title: "Tutoriel Munager",
       summary: "Utilisez Munager pour compléter l'inscription de votre délégation.",
       body: [
         "Toute l'inscription doit être complétée par l'entremise de Munager.",
@@ -63,13 +66,27 @@ export const registrationContent = {
     "Ouvrez la page officielle d'inscription de SSUNS et consultez les instructions publiées.",
     "Complétez l'inscription dans Munager à l'aide du lien officiel de la conférence.",
     "Inscrivez-vous à la liste de diffusion pour recevoir les mises à jour au fur et à mesure qu'elles sont publiées en mars.",
-    "Revenez aux chapitres d'inscription pour les frais, les échéances et les politiques.",
+    "Revenez aux chapitres d'inscription pour les frais, les échéances, le guide et les mises à jour sur l'aide financière.",
   ],
   timeline: [
     { ...en.timeline[0], label: "1er avril 2026", text: "Ouverture des inscriptions." },
     { ...en.timeline[1], label: "Mars 2026", text: "Les mises à jour du site et les détails d'inscription continuent d'être publiés." },
     { ...en.timeline[2], label: "12-15 novembre 2026", text: "Dates de la conférence à Montréal." },
   ],
+  currentTier: {
+    label: "Les inscriptions ouvrent le 1er avril",
+    detail: "Munager est la destination unique et officielle pour l'inscription des écoles et des délégués.",
+  },
+  pricingTimeline: en.pricingTimeline,
+  pricingTimelineText: {
+    title: "Calendrier d'inscription",
+    delegationFee: "Frais de délégation",
+    delegateFee: "Par délégué",
+    current: "Actuel",
+    financialAidDeadlines: "Échéances d'aide financière",
+    to: "au",
+  },
+  financialAidDeadlines: ["8 juin", "8 septembre", "16 octobre"],
   feePlaceholders: [
     { ...en.feePlaceholders[0], title: "Frais", body: "Les informations tarifaires seront publiées dans le cadre de l'ouverture officielle des inscriptions." },
     { ...en.feePlaceholders[1], title: "Politiques", body: "Toute politique de paiement ou d'annulation sera liée depuis ce chapitre une fois publiée." },
@@ -83,14 +100,42 @@ export const registrationContent = {
     },
     {
       ...en.tracks[1],
-      title: "Mises à jour par liste de diffusion",
-      body: "Abonnez-vous pour recevoir les avis de publication, les consignes d'inscription et les mises à jour des chapitres au fur et à mesure qu'ils sont publiés.",
+      title: "Guide du délégué",
+      body: "Le guide et le dossier de préparation devraient être consultés avant les arrivées, l'attribution des comités et la semaine de la conférence.",
     },
     {
       ...en.tracks[2],
-      title: "Dates de la conférence",
-      body: "La conférence aura lieu du 12 au 15 novembre 2026 à Montréal.",
+      title: "Fenêtre d'aide financière",
+      body: "Les détails sur l'aide financière et les politiques connexes seront liés depuis le chapitre d'aide financière une fois publiés.",
     },
   ],
-  cta: { ...en.cta, label: "Register now", href: "https://munager.com" },
+  listserv: {
+    ...en.listserv,
+    label: "Restez informés",
+    body: "Inscrivez-vous à la liste de diffusion de SSUNS pour recevoir les avis de publication, les consignes d'inscription et les mises à jour de la conférence.",
+  },
+  listservForm: {
+    nameLabel: "Nom",
+    emailLabel: "Courriel",
+    schoolLabel: "École",
+    submitLabel: "Joindre la liste de diffusion",
+    successLabel: "Merci. Vos renseignements ont été envoyés.",
+    fallbackLabel: "Impossible d'envoyer automatiquement. Veuillez écrire à schools@ssuns.org.",
+  },
+  letter: {
+    ...en.letter,
+    label: "Chargée d’Affaires",
+    title: "Lettre aux écoles",
+    body: [
+      "Assurez-vous de vous inscrire à notre liste de diffusion ci-dessous pour rester informé au fur et à mesure que les détails seront publiés au cours du mois de mars.",
+      "Les inscriptions à SSUNS 2026 ouvriront le 1er avril. La conférence aura lieu du 12 au 15 novembre 2026.",
+    ],
+    role: "Chargée d’Affaires, SSUNS 2026",
+  },
+  cta: { ...en.cta, label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
+  munagerVideo: {
+    ...en.munagerVideo,
+    title: "Guide Munager",
+    unavailableLabel: "Vidéo à venir",
+  },
 };

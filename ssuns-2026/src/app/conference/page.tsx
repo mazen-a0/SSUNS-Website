@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
+import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 
@@ -11,9 +13,9 @@ export default function ConferencePage() {
   return (
     <>
       <PageHero intro={conferenceContent.intro} title={conferenceContent.title} />
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-6 lg:grid-cols-[0.34fr_0.66fr]">
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref="/conference" items={conferenceContent.chapters} />
           </aside>
 
@@ -22,13 +24,16 @@ export default function ConferencePage() {
               <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/14 pb-5">
                 <div>
                   <p className="section-kicker text-[#b4caff]">{conferenceContent.sections.schedule}</p>
-                  <h2 className="mt-3 font-display text-4xl uppercase leading-none">{conferenceContent.scheduleBand.title}</h2>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight">{conferenceContent.scheduleBand.title}</h2>
                 </div>
+                <Link className="border-b border-[#79aefc] pb-1 text-sm font-semibold tracking-[0.02em] text-white" href="/conference/schedule">
+                  {conferenceContent.chapters.find((chapter) => chapter.href === "/conference/schedule")?.title}
+                </Link>
               </div>
               <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 {conferenceContent.scheduleBand.items.map((item) => (
                   <article className="border-l border-white/18 pl-4" key={item.label}>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b4caff]">{item.label}</p>
+                    <p className="text-xs font-semibold text-[#b4caff]">{item.label}</p>
                     <p className="mt-2 text-sm leading-relaxed text-[#eef4ff]">{item.text}</p>
                   </article>
                 ))}
@@ -40,7 +45,7 @@ export default function ConferencePage() {
               <Image alt="" aria-hidden="true" className="mt-4" height={18} src="/graphics/report-divider.svg" width={320} />
               <div className="mt-5 grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                 <div>
-                  <h2 className="font-display text-4xl uppercase leading-none text-[var(--accent)]">{conferenceContent.venueSection.title}</h2>
+                  <h2 className="text-3xl font-semibold leading-tight text-[var(--accent)]">{conferenceContent.venueSection.title}</h2>
                   <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{conferenceContent.venueSection.body}</p>
                   <ul className="mt-6 space-y-4 border-t border-[var(--rule)] pt-5">
                     {conferenceContent.expectations.map((item) => (
@@ -51,10 +56,7 @@ export default function ConferencePage() {
                     ))}
                   </ul>
                 </div>
-                <div className="theme-panel overflow-hidden p-3">
-                  {/* conference hotel exterior, 16:9, recommended 1600x900 */}
-                  <Image alt={conferenceContent.venueSection.image.alt} className="aspect-[16/9] w-full object-cover" height={900} src={conferenceContent.venueSection.image.src} width={1600} />
-                </div>
+                <DossierFigure alt={conferenceContent.venueSection.image.alt} ratio="16/9" src={conferenceContent.venueSection.image.src} />
               </div>
             </article>
 
@@ -63,15 +65,48 @@ export default function ConferencePage() {
               <div className="mt-6 space-y-5 border-t border-[var(--rule)] pt-5">
                 {conferenceContent.tracks.map((track) => (
                   <article className="grid gap-4 md:grid-cols-[0.32fr_0.68fr]" key={track.title}>
-                    <Image alt={track.image.alt} className="aspect-[3/2] w-full object-cover" height={800} src={track.image.src} width={1200} />
+                    <DossierFigure alt={track.image.alt} ratio="3/2" src={track.image.src} />
                     <div>
-                      <h3 className="font-display text-3xl uppercase leading-none text-[var(--accent)]">{track.title}</h3>
+                      <h3 className="text-2xl font-semibold leading-tight text-[var(--accent)]">{track.title}</h3>
                       <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{track.body}</p>
                     </div>
                   </article>
                 ))}
               </div>
             </article>
+
+            <div className="grid gap-6 lg:grid-cols-[0.56fr_0.44fr]">
+              <DossierFigure
+                alt={conferenceContent.crisisFeature.image.alt}
+                caption={conferenceContent.crisisFeature.body}
+                eyebrow={conferenceContent.crisisFeature.title}
+                ratio="3/2"
+                src={conferenceContent.crisisFeature.image.src}
+              />
+
+              <div className="space-y-6">
+                <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+                  <p className="section-kicker">{conferenceContent.sections.policies}</p>
+                  <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5">
+                    {conferenceContent.policyCallouts.map((item) => (
+                      <article className="grid gap-3 md:grid-cols-[0.34fr_0.66fr]" key={item.title}>
+                        <p className="text-sm font-semibold text-[var(--accent)]">{item.title}</p>
+                        <p className="text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                      </article>
+                    ))}
+                  </div>
+                </article>
+
+                <article className="bg-[var(--panel-inverse)] p-6 text-white sm:p-8">
+                  <p className="section-kicker text-[#b4caff]">{conferenceContent.sections.sponsorship}</p>
+                  <h2 className="mt-4 text-2xl font-semibold leading-tight">{conferenceContent.sponsorshipCallout.title}</h2>
+                  <p className="mt-4 text-sm leading-relaxed text-[#dbe7ff]">{conferenceContent.sponsorshipCallout.body}</p>
+                  <Link className="mt-5 inline-flex border-b border-[#79aefc] pb-1 text-sm font-semibold tracking-[0.02em] text-white" href={conferenceContent.sponsorshipCallout.href}>
+                    {conferenceContent.sponsorshipCallout.title}
+                  </Link>
+                </article>
+              </div>
+            </div>
           </div>
         </div>
       </section>

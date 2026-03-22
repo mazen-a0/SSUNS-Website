@@ -1,17 +1,25 @@
 "use client";
 
-import { getContent } from "@/content/registry";
-import { buildSearchIndex } from "@/content/search";
+import { useMemo } from "react";
 import { useAppPreferences } from "@/components/providers/AppPreferencesProvider";
+import { useContentBundles } from "@/components/providers/SiteContentProvider";
+import { buildSearchIndex } from "@/content/search";
 
 export function useSiteContent() {
   const { language } = useAppPreferences();
-  const content = getContent(language);
-  const alternateContent = getContent(language === "en" ? "fr" : "en");
-  const primarySearchIndex = buildSearchIndex(content);
-  const alternateSearchIndex = buildSearchIndex(alternateContent)
-    .filter((entry) => entry.group === "content")
-    .map((entry) => ({ ...entry, id: `${entry.id}-${language === "en" ? "fr" : "en"}` }));
+  const bundles = useContentBundles();
+  const content = bundles[language] ?? bundles.en;
+  const alternateLanguage = language === "en" ? "fr" : "en";
+  const alternateContent = bundles[alternateLanguage] ?? bundles.en;
+
+  const primarySearchIndex = useMemo(() => buildSearchIndex(content), [content]);
+  const alternateSearchIndex = useMemo(
+    () =>
+      buildSearchIndex(alternateContent)
+        .filter((entry) => entry.group === "content")
+        .map((entry) => ({ ...entry, id: `${entry.id}-${alternateLanguage}` })),
+    [alternateContent, alternateLanguage],
+  );
 
   return {
     language,

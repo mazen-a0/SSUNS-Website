@@ -6,6 +6,7 @@ import { homeContent as homeContentEn } from "@/content/en/home";
 import { registrationContent as registrationContentEn } from "@/content/en/registration";
 import { commonResources as commonResourcesEn, resourcesPageContent as resourcesPageContentEn } from "@/content/en/resources";
 import { footerContent as footerContentEn, navItems as navItemsEn, siteMeta as siteMetaEn, uiText as uiTextEn } from "@/content/en/site";
+import { sponsorContent as sponsorContentEn } from "@/content/en/sponsor";
 import { aboutContent as aboutContentFr } from "@/content/fr/about";
 import { committees as committeesFr, committeesPageContent as committeesPageContentFr } from "@/content/fr/committees";
 import { conferenceContent as conferenceContentFr } from "@/content/fr/conference";
@@ -14,10 +15,11 @@ import { homeContent as homeContentFr } from "@/content/fr/home";
 import { registrationContent as registrationContentFr } from "@/content/fr/registration";
 import { commonResources as commonResourcesFr, resourcesPageContent as resourcesPageContentFr } from "@/content/fr/resources";
 import { footerContent as footerContentFr, navItems as navItemsFr, siteMeta as siteMetaFr, uiText as uiTextFr } from "@/content/fr/site";
+import { sponsorContent as sponsorContentFr } from "@/content/fr/sponsor";
 
 export type Locale = "en" | "fr";
 
-export const contentByLocale = {
+export const localContentByLocale = {
   en: {
     siteMeta: siteMetaEn,
     navItems: navItemsEn,
@@ -30,6 +32,7 @@ export const contentByLocale = {
     resourcesPageContent: resourcesPageContentEn,
     commonResources: commonResourcesEn,
     contactContent: contactContentEn,
+    sponsorContent: sponsorContentEn,
     committeesPageContent: committeesPageContentEn,
     committees: committeesEn,
   },
@@ -45,17 +48,18 @@ export const contentByLocale = {
     resourcesPageContent: resourcesPageContentFr,
     commonResources: commonResourcesFr,
     contactContent: contactContentFr,
+    sponsorContent: sponsorContentFr,
     committeesPageContent: committeesPageContentFr,
     committees: committeesFr,
   },
 };
 
-export type ContentBundle = (typeof contentByLocale)[Locale];
+export type ContentBundle = (typeof localContentByLocale)[Locale];
 
-export function getContent(locale: Locale): ContentBundle {
-  return contentByLocale[locale] ?? contentByLocale.en;
+export function getLocalContent(locale: Locale): ContentBundle {
+  return localContentByLocale[locale] ?? localContentByLocale.en;
 }
 
-export function getCommitteeBySlug(locale: Locale, slug: string) {
-  return (contentByLocale[locale] ?? contentByLocale.en).committees.find((committee) => committee.slug === slug);
+export function getLocalCommitteeBySlug(locale: Locale, slug: string) {
+  return (localContentByLocale[locale] ?? localContentByLocale.en).committees.find((committee) => committee.slug === slug);
 }

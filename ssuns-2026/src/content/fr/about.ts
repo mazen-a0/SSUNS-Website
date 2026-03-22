@@ -1,4 +1,22 @@
-import { aboutContent as en } from "@/content/en/about";
+import { aboutContent as en, type SecretariatMember } from "@/content/en/about";
+
+const secretariatMembers: SecretariatMember[] = [
+  { name: "Marcus Kelly", role: "Secretary-General" },
+  { name: "Costas Oreopoulos", role: "Chargée d’Affaires" },
+  { name: "Mazen Asali", role: "Director-General" },
+  { name: "Andrew Tobin", role: "USG Finance" },
+  { name: "Hortense Bonnet", role: "USG Admin" },
+  { name: "Julien Fournier", role: "Chief of HR" },
+  { name: "Léandre Noël", role: "Chief of Ops" },
+  { name: "Kiara Gilroy", role: "Director of Events" },
+  { name: "Tracy Jiang", role: "Director of PR" },
+  { name: "Paul Malpartida Durroux", role: "Dep PR External Outreach" },
+  { name: "Hannah Regular", role: "Dep PR Brand Management" },
+  { name: "Valeria Fonseca Ortega", role: "USG Committees" },
+  { name: "Emma Ristic", role: "Dep GA/ECOSOCs" },
+  { name: "Eitan Pessin", role: "Dep Specs" },
+  { name: "Will Greer", role: "Dep Crisis" },
+];
 
 export const aboutContent = {
   ...en,
@@ -51,11 +69,28 @@ export const aboutContent = {
     },
     {
       ...en.chapters[4],
-      title: "Héritage",
+      title: "Héritage de SSUNS",
       summary: "Une lecture plus longue de SSUNS comme institution et tradition annuelle.",
       body: [
         "Au fil des décennies, SSUNS est devenu une conférence reconnue pour son ampleur, la variété de ses comités et un équilibre distinctif entre rigueur et chaleur humaine.",
         "Ce chapitre pourra plus tard être enrichi par des repères historiques confirmés, des archives photographiques et du matériel d'anniversaire officiel.",
+      ],
+    },
+    {
+      href: "/about/irsam",
+      title: "IRSAM",
+      summary: "Visitez IRSAM, l'Association des étudiants en relations internationales de McGill, organisme parent de SSUNS.",
+      body: [
+        "IRSAM est l'Association des étudiants en relations internationales de McGill, l'organisme parapluie qui soutient SSUNS et d'autres programmes.",
+      ],
+    },
+    {
+      href: "/about/faqs",
+      title: "FAQ",
+      summary: "Questions fréquentes pour les délégués, les conseillers et les familles.",
+      body: [
+        "Les questions fréquentes couvrent les distinctions, la logistique des délégations, le code vestimentaire, la préparation et le déroulement général de la conférence.",
+        "Lorsqu'une question renvoie à un autre sujet, les délégués devraient être orientés vers les chapitres du lieu, de l'horaire, de l'inscription ou des comités.",
       ],
     },
   ],
@@ -85,6 +120,7 @@ export const aboutContent = {
     { ...en.teamPlaceholders[1], name: "Directeur général fictif", role: "Opérations, logistique et exécution sur le site." },
     { ...en.teamPlaceholders[2], name: "Secrétaire général adjoint aux comités fictif", role: "Recrutement, formation et contrôle de qualité des comités." },
   ],
+  secretariatMembers,
   metrics: [
     { ...en.metrics[0], label: "Années d'existence" },
     { ...en.metrics[1], label: "Bénévoles annuels" },

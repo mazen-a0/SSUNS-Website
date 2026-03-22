@@ -1,12 +1,14 @@
 export const conferenceContent = {
   title: "Conference",
   intro:
-    "SSUNS 2026 combines traditional committees, dynamic crisis rooms, keynote programming, and clear operational support in a tightly produced multi-day experience.",
+    "SSUNS 2026 will take place November 12–15 in Montreal. The full conference schedule will be released closer to the event.",
   sections: {
     tracks: "What To Expect",
     schedule: "Schedule Highlights",
     venue: "Venue & City",
     policies: "Conduct & Policy",
+    sponsorship: "Sponsorship",
+    training: "Training & Preparation",
   },
   chapters: [
     {
@@ -14,8 +16,8 @@ export const conferenceContent = {
       title: "Overview",
       summary: "Programme overview, room formats, and event expectations.",
       body: [
-        "The conference is structured to feel legible and well-paced from opening ceremony to departure.",
-        "Delegates should encounter distinct room formats, strong advisor support, and predictable operational standards across the programme.",
+        "SSUNS 2026 will take place November 12–15 in Montreal.",
+        "The full conference schedule will be released closer to the event.",
       ],
     },
     {
@@ -23,8 +25,12 @@ export const conferenceContent = {
       title: "Venue",
       summary: "Hotel footprint, city access, and movement through the conference environment.",
       body: [
-        "The host venue is designed to keep committees, advisory support, plenaries, and informal circulation within a coherent footprint.",
-        "Montreal provides the conference with both civic character and practical accessibility for traveling schools.",
+        "Le Centre Sheraton Hotel, one of Montreal’s most prestigious hotels, has long been the venue of SSUNS. Committee sessions, workshops, and socials are all held on-site. Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
+        "For many years we have been lucky to host SSUNS at le Centre Sheraton, the hotel providing a spacious and welcoming venue for delegates to debate, socialize, and explore Montreal. With newly renovated rooms and a prime location, your time at the Sheraton is sure to exceed expectations.",
+        "* All independent delegates must be accompanied by an adult chaperone both to the conference and at the hotel. Independent delegates under 18 must have an adult staying in the same hotel room as them.",
+        "SSUNS 2026 Preferential Sheraton Hotel Rates. *All prices are in CAD and include Quebec tax. Please also note that all single and double occupancy rooms have 1 queen or 1 king sized bed.",
+        "Please note that room availability at the SSUNS preferential Sheraton Hotel rate is limited.",
+        "Delegations can still book rooms at the hotel at its normal rate, through the Sheraton's website. Other hotels are located nearby, SSUNS does not have any partnerships or agreements other than with the Centre Sheraton Montreal.",
       ],
     },
     {
@@ -32,8 +38,33 @@ export const conferenceContent = {
       title: "Schedule",
       summary: "Cadence of arrival, committee sessions, ceremonies, and departures.",
       body: [
-        "The schedule is built to preserve momentum without creating unnecessary compression for delegates or faculty advisors.",
-        "Placeholder schedule language can later be replaced with the final daily programme.",
+        "SSUNS 2026 will take place November 12–15 in Montreal.",
+        "The full conference schedule will be released closer to the event.",
+      ],
+    },
+    {
+      href: "/conference/icao",
+      title: "ICAO",
+      summary: "Reference chapter for SSUNS' ICAO committee and its conference context.",
+      body: [
+        "Coming soon.",
+      ],
+    },
+    {
+      href: "/conference/charity-partner",
+      title: "Charity partner",
+      summary: "Conference-facing partner information and future charitable collaboration details.",
+      body: [
+        "Coming soon.",
+      ],
+    },
+    {
+      href: "/conference/delegate-resource-center",
+      title: "Delegate Resource Center (DRC)",
+      summary: "Delegate support, on-site reference points, and conference help resources.",
+      body: [
+        "The Delegate Handbook, containing key information on conference policies, preparation, and procedures, will be released prior to the conference.",
+        "Coming soon.",
       ],
     },
     {
@@ -41,8 +72,11 @@ export const conferenceContent = {
       title: "Policies",
       summary: "Code of conduct, accessibility, safety, and supervisory expectations.",
       body: [
-        "Policy is treated as conference architecture, not a secondary document set.",
-        "This chapter will later house confirmed policy text, escalation paths, and reporting guidance.",
+        "Technology Policy SSUNS 2026.",
+        "Please note that the SSUNS 2026 technology policy has changed and will vary by committee size and format. As SSUNS will run as a hybrid conference, the policies for GAs, ECOSOCs, Specialized Agencies, and Crisis committees will differ.",
+        "Double-Delegate General Assemblies (FAO and UNHR) will operate as paperless committees, with Slack serving as the primary platform for communication between Dais and delegates.",
+        "These committees will follow a tech-free format, with the exception of online draft writing. Notes must be passed physically, digital note-passing is not allowed.",
+        "Delegates should come prepared with printed copies of their research to minimize reliance on devices during sessions.",
       ],
     },
     {
@@ -85,27 +119,42 @@ export const conferenceContent = {
     },
   ],
   expectations: [
-    "Professional dress expectations and punctual committee arrival",
-    "Strong preparation before committee guide release dates",
-    "Respectful debate conduct with clear behavioral standards",
+    "Committee sessions, workshops, and socials are all held on-site.",
+    "Delegates are expected to dress in business attire during committee sessions.",
+    "Each school delegation must be accompanied by a faculty advisor or responsible adult.",
   ],
   scheduleBand: {
     title: "Schedule Highlights",
     items: [
-      { label: "Day 1", text: "Arrival, opening ceremony, bloc formation, and early directives." },
-      { label: "Day 2", text: "Committee acceleration, workshops, and advisor coordination." },
-      { label: "Day 3", text: "Resolution drafting, crisis escalation, and awards shortlisting." },
-      { label: "Day 4", text: "Final voting, closing ceremony, and departures." },
+      { label: "Dates", text: "SSUNS 2026 will take place November 12–15 in Montreal." },
+      { label: "Schedule", text: "The full conference schedule will be released closer to the event." },
+      { label: "Venue", text: "Committee sessions, workshops, and socials are all held on-site at Le Centre Sheraton Hotel." },
+      { label: "Guidance", text: "Delegates should continue to check the venue, registration, and committee chapters as materials are released." },
     ],
   },
   venueSection: {
     title: "Venue & City",
     body:
-      "Delegates convene at a central Montreal hotel venue with strong transport access, walkable amenities, and a structure suited to large-scale school delegations.",
+      "Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
     image: {
       src: "/placeholders/hotel-1600x900.jpg",
       alt: "Conference hotel exterior in evening light",
       note: "conference hotel exterior, 16:9, recommended 1600x900",
+    },
+  },
+  sponsorshipCallout: {
+    title: "Support SSUNS 2026",
+    body:
+      "Organizations interested in supporting SSUNS 2026 can review the sponsorship chapter while package details are finalized.",
+    href: "/sponsor-us",
+  },
+  crisisFeature: {
+    title: "Crisis simulation",
+    body: "Fast-moving updates, directive writing, and strategic adaptation remain a defining part of the SSUNS programme.",
+    image: {
+      src: "/placeholders/delegates-1600x1067.jpg",
+      alt: "Delegates caucusing during a crisis simulation",
+      note: "delegates caucusing during crisis simulation, 3:2, recommended 1600x1067",
     },
   },
   policyCallouts: [

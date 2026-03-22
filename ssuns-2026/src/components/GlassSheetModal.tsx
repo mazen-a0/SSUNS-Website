@@ -54,9 +54,9 @@ export function GlassSheetModal({
         role="dialog"
       >
         <div className="mb-6 flex items-start justify-between gap-4">
-          <h2 className="font-display text-2xl uppercase text-[var(--accent)]">{title}</h2>
+          <h2 className="text-2xl font-semibold text-[var(--accent)]">{title}</h2>
           <button
-            className="border border-[var(--rule)] bg-[var(--bg)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--accent)]"
+            className="border border-[var(--rule)] bg-[var(--bg)] px-3 py-1 text-xs font-semibold text-[var(--accent)]"
             onClick={onClose}
             type="button"
           >

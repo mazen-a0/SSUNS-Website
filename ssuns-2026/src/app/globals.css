@@ -20,7 +20,7 @@
   --shadow-soft: 0 1px 0 rgba(20, 32, 130, 0.08), 0 10px 24px -24px rgba(10, 19, 66, 0.25);
   --shadow-strong: 0 1px 0 rgba(20, 32, 130, 0.1), 0 18px 36px -32px rgba(10, 19, 66, 0.28);
   --hero-overlay: linear-gradient(118deg, rgba(20, 32, 130, 0.94), rgba(20, 32, 130, 0.74) 42%, rgba(10, 16, 36, 0.46) 100%);
-  --panel-blur: blur(2px);
+  --panel-blur: none;
   --ornament-opacity: 0.08;
   --site-background:
     radial-gradient(42rem 26rem at 7% 0%, rgba(20, 32, 130, 0.08), transparent 60%),
@@ -30,11 +30,19 @@
 
 * {
   border-color: transparent;
+  box-sizing: border-box;
 }
 
 html,
 body {
   min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-padding-top: 9rem;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -44,17 +52,30 @@ body {
 }
 
 main {
-  padding-bottom: 3rem;
+  width: 100%;
+  overflow-x: clip;
+  padding-bottom: 4rem;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
 }
 
 img {
-  max-width: 100%;
   height: auto;
+}
+
+[id] {
+  scroll-margin-top: 9rem;
 }
 
 .font-display {
   font-family: var(--font-market-fresh), var(--font-chivo), sans-serif;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .font-accent {
@@ -62,9 +83,9 @@ img {
 }
 
 .section-kicker {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -146,9 +167,41 @@ img {
   position: absolute;
   top: -1px;
   left: 1rem;
-  width: 4.5rem;
-  height: 0.65rem;
-  background: var(--walnut);
+  width: 4rem;
+  height: 0.2rem;
+  background: var(--accent-2);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.78rem;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms ease;
+  opacity: 0.9;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.section-entrance {
+  animation: section-rise 520ms ease-out both;
+}
+
+.image-drift {
+  animation: image-drift 920ms ease-out both;
 }
 
 .liquid-button {
@@ -167,6 +220,26 @@ img {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes section-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes image-drift {
+  from {
+    transform: translateY(-10px) scale(1.02);
+  }
+  to {
+    transform: translateY(0) scale(1);
   }
 }
 

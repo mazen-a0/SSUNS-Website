@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
+import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 
@@ -12,14 +13,11 @@ export default function ResourcesPage() {
   return (
     <>
       <PageHero intro={resourcesPageContent.intro} title={resourcesPageContent.title} />
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-6 lg:grid-cols-[0.34fr_0.66fr]">
-          <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref="/resources" items={resourcesPageContent.chapters} />
-            <article className="theme-panel overflow-hidden rounded-[8px] p-3">
-              {/* delegates reviewing resource documents, 3:2, recommended 1200x800 */}
-              <Image alt={resourcesPageContent.heroImage.alt} className="aspect-[3/2] w-full object-cover" height={800} src={resourcesPageContent.heroImage.src} width={1200} />
-            </article>
+            <DossierFigure alt={resourcesPageContent.heroImage.alt} ratio="3/2" src={resourcesPageContent.heroImage.src} />
           </aside>
 
           <div className="space-y-6">
@@ -28,22 +26,23 @@ export default function ResourcesPage() {
                 <div className="grid gap-5 lg:grid-cols-[0.26fr_0.74fr]">
                   <div>
                     <p className="section-kicker">{resourcesPageContent.sections.categories}</p>
-                    <h2 className="mt-4 font-display text-3xl uppercase leading-none text-[var(--accent)]">{category}</h2>
+                    <h2 className="mt-4 text-2xl font-semibold leading-tight text-[var(--accent)]">{category}</h2>
                   </div>
                   <div className="space-y-4">
                     {commonResources
                       .filter((resource) => resource.category === category)
                       .map((resource) => (
-                        <article className="border-t border-[var(--rule)] pt-4" key={resource.id}>
-                          <span className="relative -top-24 block" id={resource.id} />
+                        <article className="border-t border-[var(--rule)] pt-4" id={resource.id} key={resource.id}>
                           <div className="grid gap-3 md:grid-cols-[0.34fr_0.66fr]">
                             <div>
-                              <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">{resource.title}</h3>
+                              <Link className="text-sm font-semibold text-[var(--accent)]" href={resource.href}>
+                                {resource.title}
+                              </Link>
                               <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{resource.description}</p>
                             </div>
                             <div>
                               <p className="text-sm leading-relaxed text-[var(--muted)]">{resource.details}</p>
-                              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">{resourcesPageContent.placeholderLabel}</p>
+                              <p className="mt-3 text-xs font-semibold text-[var(--muted)]">{resourcesPageContent.placeholderLabel}</p>
                             </div>
                           </div>
                         </article>
