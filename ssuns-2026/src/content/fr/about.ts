@@ -1,21 +1,21 @@
 import { aboutContent as en, type SecretariatMember } from "@/content/en/about";
 
 const secretariatMembers: SecretariatMember[] = [
-  { name: "Marcus Kelly", role: "Secretary-General" },
-  { name: "Costas Oreopoulos", role: "Chargée d’Affaires" },
-  { name: "Mazen Asali", role: "Director-General" },
-  { name: "Andrew Tobin", role: "USG Finance" },
-  { name: "Hortense Bonnet", role: "USG Admin" },
-  { name: "Julien Fournier", role: "Chief of HR" },
-  { name: "Léandre Noël", role: "Chief of Ops" },
-  { name: "Kiara Gilroy", role: "Director of Events" },
-  { name: "Tracy Jiang", role: "Director of PR" },
-  { name: "Paul Malpartida Durroux", role: "Dep PR External Outreach" },
-  { name: "Hannah Regular", role: "Dep PR Brand Management" },
-  { name: "Valeria Fonseca Ortega", role: "USG Committees" },
-  { name: "Emma Ristic", role: "Dep GA/ECOSOCs" },
-  { name: "Eitan Pessin", role: "Dep Specs" },
-  { name: "Will Greer", role: "Dep Crisis" },
+  { name: "Marcus Kelly", role: "Secretary-General", headshotSrc: "/headshots/marcus.jpg" },
+  { name: "Costas Oreopoulos", role: "Chargée d’Affaires", headshotSrc: "/headshots/costas.jpg" },
+  { name: "Mazen Asali", role: "Director-General", headshotSrc: "/headshots/mazen.jpg" },
+  { name: "Andrew Tobin", role: "USG Finance", headshotSrc: "/headshots/andrew.jpg" },
+  { name: "Hortense Bonnet", role: "USG Admin", headshotSrc: "/headshots/hortense.jpg" },
+  { name: "Julien Fournier", role: "Chief of HR", headshotSrc: "/headshots/julien.jpg" },
+  { name: "Léandre Noël", role: "Chief of Ops", headshotSrc: "/headshots/leandre.jpg" },
+  { name: "Kiara Gilroy", role: "Director of Events", headshotSrc: "/headshots/kiara.jpg" },
+  { name: "Tracy Jiang", role: "Director of PR", headshotSrc: "/headshots/tracy.jpg" },
+  { name: "Paul Malpartida Durroux", role: "Dep PR External Outreach", headshotSrc: "/headshots/paul.jpg" },
+  { name: "Hannah Regular", role: "Dep PR Brand Management", headshotSrc: "/headshots/hannah.jpg" },
+  { name: "Valeria Fonseca Ortega", role: "USG Committees", headshotSrc: "/headshots/vale.jpg" },
+  { name: "Emma Ristic", role: "Dep GA/ECOSOCs", headshotSrc: "/headshots/emma.jpg" },
+  { name: "Eitan Pessin", role: "Dep Specs", headshotSrc: "/headshots/eitan.jpg" },
+  { name: "Will Greer", role: "Dep Crisis", headshotSrc: "/headshots/will.jpg" },
 ];
 
 export const aboutContent = {
@@ -121,6 +121,7 @@ export const aboutContent = {
     { ...en.teamPlaceholders[2], name: "Secrétaire général adjoint aux comités fictif", role: "Recrutement, formation et contrôle de qualité des comités." },
   ],
   secretariatMembers,
+  faqCategories: en.faqCategories,
   metrics: [
     { ...en.metrics[0], label: "Années d'existence" },
     { ...en.metrics[1], label: "Bénévoles annuels" },

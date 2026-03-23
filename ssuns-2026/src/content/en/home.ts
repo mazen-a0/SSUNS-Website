@@ -76,8 +76,8 @@ export const homeContent = {
     role: "Secretary-General, SSUNS 2026",
     stamp: "Montreal • Organizing Office",
     image: {
-      src: "/placeholders/portrait-800x1000.jpg",
-      alt: "Portrait of the secretary-general placeholder",
+      src: "/headshots/marcus.jpg",
+      alt: "Portrait of the secretary-general",
       note: "portrait of secretary-general or conference director, 4:5, recommended 800x1000",
     },
   },
@@ -181,13 +181,33 @@ export const homeContent = {
   landAcknowledgement: {
     title: "Land Acknowledgement",
     body: [
-      "SSUNS 2026 will be held at the Sheraton Hotel, with preparatory work accomplished at McGill University. Both of these sites are located in Montréal, known as Tiohti:áke to the Kanien'kehá:ka Nation, a founding nation of the Haudenosaunee Confederacy.",
-      "This territory is unceded land, and prior to colonization it served as a place of exchange and gathering for the Haudenosaunee and Anishinaabe nations.",
-      "Owing to our use of such land, we must honor, recognise, and respect these nations as stewards of the lands and waters on which we meet.",
-      "It is important to understand the rich history of Indigenous communities and their connection to this land for millennia to the present day. In the 15th and 16th Centuries, European nations discovered the Americas and quickly began their settlements. This was the beginning of the colonization of Indigenous Peoples across these two continents, and led to the greatest genocide the world has ever witnessed. For over 500 years Indigenous Peoples have been the subject of extreme discrimination and racism, facing atrocities from ethnic cleansing, to assimilation, to cultural segregation.",
-      "A land acknowledgement must not replace reparatory and reconciliatory work.",
-      "In order to achieve this, we must all be dedicated to recognizing the atrocities enacted by Euro-centric settlers and the long-lasting impact that colonization has had on Indigenous communities and Peoples. To move beyond a land acknowledgement, we must actively work to dismantle settler-colonial legacies that persist to this day. We can take the first step by educating ourselves. To find allyship tools from the Montreal Indigenous Community NETWORK, please consult https://reseaumtlnetwork.com/en/being-an-ally/our-tools/. If you are interested in further resources about initiatives, please contact the Chief of Human Resources at hr@ssuns.org.",
+      "SSUNS 2026 will be held at the Sheraton Hotel, with preparatory work accomplished at McGill University. Both sites are located in Montréal, known as Tiohti:áke to the Kanien'kehá:ka Nation, a founding nation of the Haudenosaunee Confederacy. This territory is unceded; not surrendered, not purchased, and not resolved by any legal or moral framework we can point to with integrity. The sovereignty of the Haudenosaunee and Anishinaabe nations was never extinguished. It has simply gone unrecognized by the colonial states that displaced them and the political and economic structures that have continued to benefit from that displacement.",
+      "The dispossession of Indigenous peoples from these lands is not a historical rupture but an ongoing condition of settler-colonial states. That dispossession has never fallen equally: Indigenous women, girls, and Two-Spirit people continue to face disproportionate rates of violence and institutional neglect; a pattern the National Inquiry into Missing and Murdered Indigenous Women and Girls identified as genocide in 2019. Indigenous communities facing poverty, inadequate housing, and lack of clean water are not experiencing the failures of existing systems. They are experiencing those systems functioning exactly as designed.",
+      "Land acknowledgements, as commonly practiced, warrant serious scrutiny. Indigenous scholarship has argued compellingly that recognition politics, the notion that naming colonial history constitutes meaningful justice, can reinforce settler power by substituting symbolic gestures for structural accountability. An acknowledgement that is read and set aside does not challenge the institutions or distributions of power that perpetuate Indigenous dispossession. SSUNS is not exempt from this critique.",
+      "This statement marks not an achievement, but a starting point; one that demands more of us than words. Genuine reconciliation requires the restoration of Indigenous land, life, and self-determination on Indigenous terms, not settler ones. SSUNS is committed to approaching this as an ongoing institutional responsibility, one that implicates our programming, our partnerships, and the material choices we make as an organization.",
     ],
+    resourcesTitle: "Further Resources",
+    resources: [
+      {
+        label: "Allyship tools from the Montreal Indigenous Community NETWORK",
+        href: "https://reseaumtlnetwork.com/en/being-an-ally/our-tools/",
+      },
+      {
+        label: "Glen Coulthard, Red Skin, White Masks (2014)",
+        href: "https://www.upress.umn.edu/book-division/books/red-skin-white-masks",
+      },
+      {
+        label: "Leanne Betasamosake Simpson, As We Have Always Done (2017)",
+        href: "https://www.upress.umn.edu/book-division/books/as-we-have-always-done",
+      },
+      {
+        label: "National Inquiry into Missing and Murdered Indigenous Women and Girls, Final Report (2019)",
+        href: "https://www.mmiwg-ffada.ca/final-report/",
+      },
+    ],
+    contactLine: "For information on further initiatives, contact our Chief of Human Resources at hr@ssuns.org.",
+    expandLabel: "Read more",
+    collapseLabel: "Read less",
   },
   testimonials: {
     label: "School Impressions",

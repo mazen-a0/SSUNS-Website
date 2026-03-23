@@ -38,7 +38,7 @@ export function CommandPalette({
     if (!normalized) return actions;
 
     return actions.filter((item) => {
-      return `${item.title} ${item.snippet} ${item.group}`.toLowerCase().includes(normalized);
+      return `${item.title} ${item.snippet} ${item.group} ${item.breadcrumb ?? ""}`.toLowerCase().includes(normalized);
     });
   }, [actions, query]);
   const safeActiveIndex = Math.min(active, Math.max(filtered.length - 1, 0));
@@ -182,6 +182,7 @@ export function CommandPalette({
                         {action.group === "navigation" ? text.navigationGroupLabel : text.contentGroupLabel}
                       </p>
                       <div>
+                        {action.breadcrumb ? <p className="text-[11px] font-medium text-[var(--muted)]">{action.breadcrumb}</p> : null}
                         <p className="text-sm font-semibold">{action.title}</p>
                         <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">{action.snippet}</p>
                       </div>

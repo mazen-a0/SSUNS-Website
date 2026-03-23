@@ -31,7 +31,7 @@ export default function AboutSecretariatPage() {
 
             <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {aboutContent.secretariatMembers.map((member) => (
-                <ProfileCard imageSrc={member.headshotSrc} key={member.name} name={member.name} role={member.role} />
+                <ProfileCard bio={member.bio} imageSrc={member.headshotSrc} key={member.name} name={member.name} role={member.role} />
               ))}
             </section>
           </div>

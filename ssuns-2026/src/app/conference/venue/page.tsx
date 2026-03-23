@@ -8,6 +8,12 @@ import { useSiteContent } from "@/lib/useSiteContent";
 
 const mapsQuery = "https://www.google.com/maps?q=Le+Centre+Sheraton+Montreal&z=15&output=embed";
 const mapsLink = "https://www.google.com/maps/search/?api=1&query=Le+Centre+Sheraton+Montreal";
+const hotelRates = [
+  { occupancy: "Single", roomRate: "$332.01", luggageFees: "$15.87" },
+  { occupancy: "Double", roomRate: "$332.01", luggageFees: "$31.74" },
+  { occupancy: "Triple", roomRate: "$343.91", luggageFees: "$47.61" },
+  { occupancy: "Quadruple", roomRate: "$355.81", luggageFees: "$63.48" },
+];
 
 export default function ConferenceVenuePage() {
   const { conferenceContent } = useSiteContent();
@@ -56,6 +62,21 @@ export default function ConferenceVenuePage() {
                 </div>
               </article>
             </div>
+
+            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+              <p className="section-kicker">Preferential Sheraton Rates</p>
+              <div className="mt-5 grid gap-4 border-t border-[var(--rule)] pt-5 md:grid-cols-2 xl:grid-cols-4">
+                {hotelRates.map((rate) => (
+                  <article className="border border-[var(--rule)] px-4 py-4" key={rate.occupancy}>
+                    <p className="text-sm font-semibold text-[var(--accent)]">{rate.occupancy}</p>
+                    <div className="mt-3 space-y-2 text-sm leading-relaxed text-[var(--text)]">
+                      <p>Room rate: {rate.roomRate}</p>
+                      <p className="text-[var(--muted)]">Luggage fees: {rate.luggageFees}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </article>
           </div>
         </div>
       </section>

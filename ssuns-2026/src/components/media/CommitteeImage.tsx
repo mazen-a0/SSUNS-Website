@@ -21,7 +21,7 @@ export function CommitteeImage({ slug, alt, src, mode = "card", className, prior
   const wrapperClassName = useMemo(
     () =>
       mode === "hero"
-        ? "aspect-[16/9] max-h-[clamp(240px,38vw,520px)]"
+        ? "aspect-[4/3] max-h-[clamp(240px,38vw,520px)]"
         : "aspect-[4/3] max-h-[clamp(180px,22vw,260px)]",
     [mode],
   );

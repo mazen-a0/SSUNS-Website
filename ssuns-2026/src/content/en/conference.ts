@@ -47,7 +47,8 @@ export const conferenceContent = {
       title: "ICAO",
       summary: "Reference chapter for SSUNS' ICAO committee and its conference context.",
       body: [
-        "Coming soon.",
+        "The International Civil Aviation Organization is headquartered in Montreal, making it a natural part of the SSUNS conference context.",
+        "Delegates interested in ICAO should review the committee dossier alongside the conference venue and schedule chapters.",
       ],
     },
     {
@@ -141,6 +142,13 @@ export const conferenceContent = {
       alt: "Conference hotel exterior in evening light",
       note: "conference hotel exterior, 16:9, recommended 1600x900",
     },
+  },
+  icaoFeature: {
+    title: "About this committee",
+    body:
+      "With natural disasters increasing in both frequency and intensity, immense pressure is being placed on global emergency response systems. Simultaneously, aviation has become a critical tool in delivering humanitarian aid, conducting search-and-rescue missions, and restoring stability in affected regions when ground infrastructure is not accessible. This International Civil Aviation Organization committee will dive into how aviation technology can strengthen disaster response through initiatives like quicker airspace coordination, the establishment of emergency air corridors, and the deployment of unmanned aerial systems for damage assessment. Delegates will work to develop resolutions international authorities can adapt to coordinate air space response more effectively, alleviating the damage in social, economic, and cultural facets in the lives of those most affected.",
+    mapQuery: "https://www.google.com/maps?q=ICAO+Montreal&z=15&output=embed",
+    mapLink: "https://www.google.com/maps/search/?api=1&query=ICAO+Montreal",
   },
   sponsorshipCallout: {
     title: "Support SSUNS 2026",

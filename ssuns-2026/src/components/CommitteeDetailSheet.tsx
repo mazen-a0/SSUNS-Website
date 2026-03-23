@@ -22,6 +22,28 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
     return null;
   }
 
+  const isFrenchTheme =
+    committee.theme === "Comités spécialisés" ||
+    committee.theme === "Comités de crise" ||
+    committee.theme === "Comités de crise conjoints" ||
+    committee.theme === "Assemblées générales" ||
+    committee.theme === "Conseils économiques et sociaux";
+  const contactLine =
+    committee.theme === "Specialized Committees" || committee.theme === "Comités spécialisés"
+      ? isFrenchTheme
+        ? "Pour toute question, veuillez contacter Eitan Pessin à spec@ssuns.org."
+        : "If you have questions, please contact Eitan Pessin at spec@ssuns.org."
+      : committee.theme === "Crisis Committees" ||
+          committee.theme === "Joint Crisis Committees" ||
+          committee.theme === "Comités de crise" ||
+          committee.theme === "Comités de crise conjoints"
+        ? isFrenchTheme
+          ? "Pour toute question, veuillez contacter Will Greer à crisis@ssuns.org."
+          : "If you have questions, please contact Will Greer at crisis@ssuns.org."
+        : isFrenchTheme
+          ? "Pour toute question, veuillez contacter Emma Ristic à gaecosoc@ssuns.org."
+          : "If you have questions, please contact Emma Ristic at gaecosoc@ssuns.org.";
+
   return (
     <section className="mx-auto mt-8 max-w-[96rem] px-5 sm:px-8">
       <div className="theme-panel-strong paper-grain overflow-hidden rounded-[8px] p-6 sm:p-8 lg:p-10">
@@ -38,16 +60,20 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
           <div>
             <p className="section-kicker">{committee.theme}</p>
             <h1 className="mt-3 font-display text-4xl leading-[0.92] text-[var(--accent)] sm:text-5xl">{committee.name}</h1>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--text)]">{committee.overview}</p>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--text)]">{committee.blurb}</p>
 
-            <div className="mt-6 grid gap-3 border-y border-[var(--rule)] py-4 sm:grid-cols-3">
+            <div className="mt-6 grid gap-3 border-y border-[var(--rule)] py-4 sm:grid-cols-4">
               <div>
-                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.level}</p>
+                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterThemeLabel}</p>
+                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.theme}</p>
               </div>
               <div>
                 <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.format}</p>
                 <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.format}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
+                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.level}</p>
               </div>
               <div>
                 <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sizeLabel}</p>
@@ -113,6 +139,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                 </div>
               ) : null}
             </div>
+            <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{contactLine}</p>
           </div>
 
           <div className="space-y-4">

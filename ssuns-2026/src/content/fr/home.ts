@@ -191,11 +191,10 @@ export const homeContent = {
   landAcknowledgement: {
     ...en.landAcknowledgement,
     title: "Reconnaissance du territoire",
-    body: [
-      "SSUNS 2026 se tiendra à l'hôtel Sheraton, tandis que le travail préparatoire est réalisé à l'Université McGill. Ces deux sites sont situés à Montréal, connue comme Tiohti:áke par la nation Kanien'kehá:ka, nation fondatrice de la Confédération haudenosaunee.",
-      "Ce territoire est non cédé et, avant la colonisation, il servait de lieu d'échange et de rassemblement pour les nations haudenosaunee et anishinaabe.",
-      "Puisque nous utilisons ce territoire, nous devons honorer, reconnaître et respecter ces nations comme gardiennes des terres et des eaux sur lesquelles nous nous réunissons.",
-    ],
+    resourcesTitle: "Ressources supplémentaires",
+    contactLine: "Pour plus d'information sur les initiatives à venir, contactez notre Chief of Human Resources à hr@ssuns.org.",
+    expandLabel: "Lire la suite",
+    collapseLabel: "Réduire",
   },
   testimonials: {
     ...en.testimonials,

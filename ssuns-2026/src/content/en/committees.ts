@@ -24,22 +24,13 @@ export const committeesPageContent = {
   chapters: [
     {
       href: "/committees",
-      title: "Overview",
-      summary: "Explore the 2026 committee programme by format and committee type.",
-      body: [
-        "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Committees (SPECs), and Crisis Committees.",
-        "For the full list of committees, please visit the Committees page of the website.",
-      ],
-    },
-    {
-      href: "/committees/slating",
-      title: "Committee slating",
+      title: "Committee Slating",
       summary: "Committee descriptions, dais contacts, and programme notes for the 2026 slate.",
       body: [
         "Committee Descriptions for Website/Dias Apps",
         "If you have any questions, feel free to contact Emma Ristic at gaecosoc@ssuns.org.",
-        "If you have any questions, feel free to contact Will Greer at spec@ssuns.org.",
-        "If you have any questions, feel free to contact Eitan Pessin at crisis@ssuns.org.",
+        "If you have any questions, feel free to contact Eitan Pessin at spec@ssuns.org.",
+        "If you have any questions, feel free to contact Will Greer at crisis@ssuns.org.",
         "Meet the DAIS!",
       ],
     },
@@ -65,7 +56,7 @@ export const committeesPageContent = {
     },
     {
       href: "/committees/policies",
-      title: "Committee policies",
+      title: "Committee Policies",
       summary: "Technology policy by committee size and format for SSUNS 2026.",
       body: [
         "Technology Policy SSUNS 2026.",

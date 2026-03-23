@@ -27,8 +27,6 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
   const [search, setSearch] = useState("");
   const [track, setTrack] = useState<string>(allLabel);
   const [level, setLevel] = useState<string>(allLabel);
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
-
   const tracks = [allLabel, pageContent.groups.ga, pageContent.groups.ecosoc, pageContent.groups.specialized, pageContent.groups.jointCrisis, pageContent.groups.crisis];
   const levels = [allLabel, ...new Set(committees.map((item) => item.level))];
 
@@ -133,15 +131,8 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                   {groupCommittees.map((committee) => {
-                    const isExpanded = expandedCard === committee.id;
-
                     return (
-                      <article
-                        className="group theme-panel overflow-hidden rounded-[8px]"
-                        key={committee.id}
-                        onMouseEnter={() => setExpandedCard(committee.id)}
-                        onMouseLeave={() => setExpandedCard((current) => (current === committee.id ? null : current))}
-                      >
+                      <article className="group theme-panel overflow-hidden rounded-[8px]" key={committee.id}>
                         <div className="relative">
                           <CommitteeImage alt={`${committee.name} committee placeholder`} mode="card" slug={committee.slug} src={committee.imageSrc} />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(8,15,52,0.94)] to-transparent px-4 py-4 text-white">
@@ -152,24 +143,17 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
 
                         <div className="px-4 py-4">
                           <div className="grid gap-2 text-[11px] font-semibold text-[var(--muted)] sm:grid-cols-3">
-                            <span className="border border-[var(--rule)] px-2 py-1">{committee.level}</span>
                             <span className="border border-[var(--rule)] px-2 py-1">{committee.format}</span>
+                            <span className="border border-[var(--rule)] px-2 py-1">{committee.level}</span>
                             <span className="border border-[var(--rule)] px-2 py-1">{committee.size}</span>
                           </div>
 
-                          <div className={`mt-4 space-y-3 text-sm leading-relaxed text-[var(--muted)] ${isExpanded ? "block" : "hidden md:block md:opacity-0 md:transition-opacity md:duration-200 group-hover:opacity-100"}`}>
+                          <div className="mt-4 space-y-3 text-sm leading-relaxed text-[var(--muted)]">
                             <p className="text-[var(--text)]">{committee.blurb}</p>
                             <p>{committee.topic}</p>
                           </div>
 
                           <div className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--rule)] pt-4">
-                            <button
-                              className="text-sm font-semibold text-[var(--accent)] md:hidden"
-                              onClick={() => setExpandedCard(isExpanded ? null : committee.id)}
-                              type="button"
-                            >
-                              {isExpanded ? pageContent.detailCloseLabel : pageContent.sections.overview}
-                            </button>
                             <Link className="ml-auto inline-flex items-center gap-3 text-sm font-semibold text-[var(--accent)]" href={`/committees/${committee.slug}`}>
                               <span>{pageContent.openDetailsLabel}</span>
                               <span aria-hidden className="h-px w-8 bg-[var(--accent)] transition-all duration-300 group-hover:w-10" />

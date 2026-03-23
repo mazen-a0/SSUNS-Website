@@ -11,16 +11,48 @@ type SiteChromeProps = {
   children: React.ReactNode;
 };
 
+type PreviewMenuSection = {
+  href: string;
+  label: string;
+  description: string;
+};
+
 export function SiteChrome({ children }: SiteChromeProps) {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const { language, setLanguage } = useAppPreferences();
-  const { footerContent, navItems, searchIndex, uiText } = useSiteContent();
+  const {
+    aboutContent,
+    committeesPageContent,
+    conferenceContent,
+    footerContent,
+    navItems,
+    registrationContent,
+    searchIndex,
+    uiText,
+  } = useSiteContent();
 
   useEffect(() => {
     const openSearch = () => setPaletteOpen(true);
     window.addEventListener("ssuns:open-search", openSearch as EventListener);
     return () => window.removeEventListener("ssuns:open-search", openSearch as EventListener);
   }, []);
+
+  const previewMenus: Record<string, PreviewMenuSection[]> = {
+    "/about": aboutContent.chapters
+      .filter((chapter) => chapter.href !== "/about")
+      .map((chapter) => ({ description: chapter.summary, href: chapter.href, label: chapter.title })),
+    "/conference": conferenceContent.chapters
+      .filter((chapter) => chapter.href !== "/conference")
+      .map((chapter) => ({ description: chapter.summary, href: chapter.href, label: chapter.title })),
+    "/committees": committeesPageContent.chapters.map((chapter) => ({
+      description: chapter.summary,
+      href: chapter.href,
+      label: chapter.title,
+    })),
+    "/registration": registrationContent.chapters
+      .filter((chapter) => chapter.href !== "/registration")
+      .map((chapter) => ({ description: chapter.summary, href: chapter.href, label: chapter.title })),
+  };
 
   return (
     <>
@@ -36,6 +68,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
         onOpenPalette={() => setPaletteOpen(true)}
         openMenuLabel={uiText.openMenu}
         openPaletteLabel={uiText.openCommandPalette}
+        previewMenus={previewMenus}
         searchLabel={uiText.searchLabel}
         setLanguage={setLanguage}
         socialLinks={footerContent.socialLinks}

@@ -182,8 +182,8 @@ export const registrationContent = {
     note: "screen capture of Munager registration flow, 16:9, recommended 1920x1080",
   },
   image: {
-    src: "/placeholders/portrait-800x1000.jpg",
-    alt: "Delegate checking registration materials",
+    src: "/headshots/costas.jpg",
+    alt: "Portrait placeholder for the registration office",
     note: "delegate registration portrait, 4:5, recommended 800x1000",
   },
 };

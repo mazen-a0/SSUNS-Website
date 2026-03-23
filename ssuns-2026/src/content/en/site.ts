@@ -50,7 +50,6 @@ export const navItems: NavItem[] = [
   { label: "Conference", href: "/conference" },
   { label: "Committees", href: "/committees" },
   { label: "Registration", href: "/registration" },
-  { label: "Resources", href: "/resources" },
   { label: "Sponsor Us", href: "/sponsor-us" },
   { label: "Staff Resources", href: "/staff-resources" },
   { label: "Contact", href: "/contact" },

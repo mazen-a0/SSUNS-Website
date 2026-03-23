@@ -7,21 +7,21 @@ export type SecretariatMember = {
 };
 
 const secretariatMembers: SecretariatMember[] = [
-    { name: "Marcus Kelly", role: "Secretary-General" },
-    { name: "Costas Oreopoulos", role: "Chargée d’Affaires" },
-    { name: "Mazen Asali", role: "Director-General" },
-    { name: "Andrew Tobin", role: "USG Finance" },
-    { name: "Hortense Bonnet", role: "USG Admin" },
-    { name: "Julien Fournier", role: "Chief of HR" },
-    { name: "Léandre Noël", role: "Chief of Ops" },
-    { name: "Kiara Gilroy", role: "Director of Events" },
-    { name: "Tracy Jiang", role: "Director of PR" },
-    { name: "Paul Malpartida Durroux", role: "Dep PR External Outreach" },
-    { name: "Hannah Regular", role: "Dep PR Brand Management" },
-    { name: "Valeria Fonseca Ortega", role: "USG Committees" },
-    { name: "Emma Ristic", role: "Dep GA/ECOSOCs" },
-    { name: "Eitan Pessin", role: "Dep Specs" },
-    { name: "Will Greer", role: "Dep Crisis" },
+    { name: "Marcus Kelly", role: "Secretary-General", headshotSrc: "/headshots/marcus.jpg" },
+    { name: "Costas Oreopoulos", role: "Chargée d’Affaires", headshotSrc: "/headshots/costas.jpg" },
+    { name: "Mazen Asali", role: "Director-General", headshotSrc: "/headshots/mazen.jpg" },
+    { name: "Andrew Tobin", role: "USG Finance", headshotSrc: "/headshots/andrew.jpg" },
+    { name: "Hortense Bonnet", role: "USG Admin", headshotSrc: "/headshots/hortense.jpg" },
+    { name: "Julien Fournier", role: "Chief of HR", headshotSrc: "/headshots/julien.jpg" },
+    { name: "Léandre Noël", role: "Chief of Ops", headshotSrc: "/headshots/leandre.jpg" },
+    { name: "Kiara Gilroy", role: "Director of Events", headshotSrc: "/headshots/kiara.jpg" },
+    { name: "Tracy Jiang", role: "Director of PR", headshotSrc: "/headshots/tracy.jpg" },
+    { name: "Paul Malpartida Durroux", role: "Dep PR External Outreach", headshotSrc: "/headshots/paul.jpg" },
+    { name: "Hannah Regular", role: "Dep PR Brand Management", headshotSrc: "/headshots/hannah.jpg" },
+    { name: "Valeria Fonseca Ortega", role: "USG Committees", headshotSrc: "/headshots/vale.jpg" },
+    { name: "Emma Ristic", role: "Dep GA/ECOSOCs", headshotSrc: "/headshots/emma.jpg" },
+    { name: "Eitan Pessin", role: "Dep Specs", headshotSrc: "/headshots/eitan.jpg" },
+    { name: "Will Greer", role: "Dep Crisis", headshotSrc: "/headshots/will.jpg" },
 ];
 
 export const aboutContent = {
@@ -138,6 +138,82 @@ export const aboutContent = {
     { name: "USG Committees Placeholder", role: "Committee recruitment, training, and quality control." },
   ],
   secretariatMembers,
+  faqCategories: [
+    {
+      title: "Conference Basics",
+      items: [
+        {
+          question: "What is Model United Nations?",
+          answer:
+            "Model United Nations (MUN) is an academic simulation where students represent countries or organizations and debate global issues through diplomacy and negotiation. Delegates research their assigned country or character, participate in structured debate, and work together to draft resolutions or directives addressing the topics discussed in committee.",
+        },
+        {
+          question: "What types of committees does SSUNS offer?",
+          answer:
+            "SSUNS offers three main categories of committees: General Assemblies and Economical and Social Councils (GAs and ECOSOCs) – our largest committees, focused on major international policy issues; Specialized Committees (SPECs) – medium-sized committees that explore specific institutions, historical contexts, or unique policy topics; Crisis Committees – smaller, fast-paced simulations where events evolve throughout the committee session.",
+        },
+        {
+          question: "Who can attend SSUNS?",
+          answer: "SSUNS is open to secondary-school and Cégep students participating as part of a school delegation.",
+        },
+        {
+          question: "When and where will SSUNS 2026 take place?",
+          answer: "The 34th Itinerary of SSUNS will take place November 12–15, 2026 at the Sheraton Montreal Hotel in Montreal.",
+        },
+        {
+          question: "Can university students attend SSUNS?",
+          answer:
+            "SSUNS is only open to high school and CEGEP students. University students interested in continuing with MUN are encouraged to attend McMUN, McGill’s university-level conference held each January at the Sheraton Montreal.",
+        },
+      ],
+    },
+    {
+      title: "Registration & Delegations",
+      items: [
+        {
+          question: "How do schools register for SSUNS?",
+          answer:
+            "Delegations register through MUNager, the official registration platform for SSUNS. Registration for SSUNS 2026 opens April 1, 2026.",
+        },
+        {
+          question: "How much does SSUNS cost and is there financial assistance available?",
+          answer:
+            "The price for all delegates and delegations depends on the registration pricing you are registering under. SSUNS recognizes the financial barriers inherent in participating in the conference. In light of this, we will be offering financial aid to both delegations and individual delegates. Please consult the Financial Aid page for more information.",
+        },
+        {
+          question: "Are faculty advisors required for delegations?",
+          answer: "Yes. Each school delegation must be accompanied by a faculty advisor or responsible adult.",
+        },
+        {
+          question: "How can schools stay updated on conference announcements?",
+          answer:
+            "Schools can subscribe to the SSUNS list-serv to receive updates about registration, resources, and conference announcements.",
+        },
+      ],
+    },
+    {
+      title: "Preparation & Conference Life",
+      items: [
+        {
+          question: "Do delegates need prior MUN experience?",
+          answer: "No. SSUNS welcomes both first-time delegates and experienced participants.",
+        },
+        {
+          question: "When will committee assignments be released?",
+          answer: "Committee assignments and character allocations will be shared with delegations following the registration process.",
+        },
+        {
+          question: "Where can I find delegate resources or background guides?",
+          answer:
+            "Information and resources will be available under the tab “Delegates” Delegate Handbook, which will be released prior to the conference, and conduct additional research on their assigned country or character.",
+        },
+        {
+          question: "What should delegates wear to the conference?",
+          answer: "Delegates are expected to dress in business attire during committee sessions.",
+        },
+      ],
+    },
+  ],
   metrics: [
     { label: "Years Running", value: "28+" },
     { label: "Annual Volunteers", value: "300+" },

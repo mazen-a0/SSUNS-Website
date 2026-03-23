@@ -6,6 +6,7 @@ import { CountdownBand } from "@/components/CountdownBand";
 import { DossierRail } from "@/components/DossierRail";
 import { CountUpValue } from "@/components/CountUpValue";
 import { HeroBackgroundMedia } from "@/components/HeroBackgroundMedia";
+import { LandAcknowledgementBlock } from "@/components/LandAcknowledgementBlock";
 import { LiquidButton } from "@/components/LiquidButton";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { DossierFigure } from "@/components/media/DossierFigure";
@@ -268,14 +269,15 @@ export default function HomePage() {
           </section>
 
           <section className="section-entrance">
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">{homeContent.landAcknowledgement.title}</p>
-              <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
-                {homeContent.landAcknowledgement.body.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </article>
+            <LandAcknowledgementBlock
+              body={homeContent.landAcknowledgement.body}
+              collapseLabel={homeContent.landAcknowledgement.collapseLabel}
+              contactLine={homeContent.landAcknowledgement.contactLine}
+              expandLabel={homeContent.landAcknowledgement.expandLabel}
+              resources={homeContent.landAcknowledgement.resources}
+              resourcesTitle={homeContent.landAcknowledgement.resourcesTitle}
+              title={homeContent.landAcknowledgement.title}
+            />
           </section>
         </div>
       </section>

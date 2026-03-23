@@ -17,6 +17,12 @@ type SocialLink = {
   href: string;
 };
 
+type PreviewMenuItem = {
+  label: string;
+  href: string;
+  description: string;
+};
+
 type GlassNavProps = {
   items: NavItem[];
   openMenuLabel: string;
@@ -31,10 +37,11 @@ type GlassNavProps = {
   languageFrenchLabel: string;
   socialLinks: SocialLink[];
   mastheadLabel: string;
+  previewMenus: Record<string, PreviewMenuItem[]>;
   onOpenPalette: () => void;
 };
 
-const coreHrefs = new Set(["/", "/about", "/conference", "/committees", "/registration", "/resources"]);
+const coreHrefs = new Set(["/", "/about", "/conference", "/committees", "/registration"]);
 const utilityHrefs = new Set(["/sponsor-us", "/staff-resources", "/contact"]);
 
 function isActivePath(pathname: string, href: string) {
@@ -74,11 +81,13 @@ export function GlassNav({
   languageFrenchLabel,
   socialLinks,
   mastheadLabel,
+  previewMenus,
   onOpenPalette,
 }: GlassNavProps) {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openPreview, setOpenPreview] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);
@@ -101,7 +110,7 @@ export function GlassNav({
     >
       <div className="border-t border-[var(--rule)]" />
 
-      <div className="hidden xl:block">
+      <div className="hidden xl:block" onMouseLeave={() => setOpenPreview(null)}>
         <div className="mx-auto max-w-[96rem] px-5 sm:px-8">
           <div className="flex min-h-9 items-center justify-between gap-4 border-b border-[var(--rule)] text-[11px] text-[var(--muted)]">
             <p className="truncate text-[10px] font-semibold tracking-[0.05em] text-[var(--accent)]">{mastheadLabel}</p>
@@ -171,16 +180,22 @@ export function GlassNav({
                 {coreItems.map((item) => {
                   const isActive = isActivePath(pathname, item.href);
                   return (
-                    <Link
-                      className={cn(
-                        "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-3 text-[11px] font-semibold text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)]",
-                        isActive && "is-active text-[var(--accent)]",
-                      )}
-                      href={item.href}
+                    <div
+                      className="relative"
                       key={item.href}
+                      onFocusCapture={() => setOpenPreview(previewMenus[item.href]?.length ? item.href : null)}
+                      onMouseEnter={() => setOpenPreview(previewMenus[item.href]?.length ? item.href : null)}
                     >
-                      {item.label}
-                    </Link>
+                      <Link
+                        className={cn(
+                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-3 text-[11px] font-semibold text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)]",
+                          isActive && "is-active text-[var(--accent)]",
+                        )}
+                        href={item.href}
+                      >
+                        {item.label}
+                      </Link>
+                    </div>
                   );
                 })}
               </div>
@@ -204,6 +219,24 @@ export function GlassNav({
               })}
             </div>
           </div>
+
+          {openPreview && previewMenus[openPreview]?.length ? (
+            <div className="border-t border-[var(--rule)] py-4">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {previewMenus[openPreview].map((entry) => (
+                  <Link
+                    className="theme-panel-strong block rounded-[8px] px-4 py-4 transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.03)]"
+                    href={entry.href}
+                    key={entry.href}
+                    onFocus={() => setOpenPreview(openPreview)}
+                  >
+                    <p className="text-sm font-semibold text-[var(--accent)]">{entry.label}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{entry.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -242,17 +275,33 @@ export function GlassNav({
               {items.map((item) => {
                 const isActive = isActivePath(pathname, item.href);
                 return (
-                  <Link
-                    className={cn(
-                      "border-b border-[var(--rule)] py-3 text-sm font-semibold text-[var(--text)] transition-colors duration-200 hover:text-[var(--accent)]",
-                      isActive && "text-[var(--accent)]",
-                    )}
-                    href={item.href}
-                    key={item.href}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
+                  <div className="border-b border-[var(--rule)] py-3" key={item.href}>
+                    <Link
+                      className={cn(
+                        "block text-sm font-semibold text-[var(--text)] transition-colors duration-200 hover:text-[var(--accent)]",
+                        isActive && "text-[var(--accent)]",
+                      )}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                    {previewMenus[item.href]?.length ? (
+                      <div className="mt-2 space-y-2 pl-3">
+                        {previewMenus[item.href].map((entry) => (
+                          <Link
+                            className="block text-sm text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)]"
+                            href={entry.href}
+                            key={entry.href}
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            <span className="font-semibold text-[var(--text)]">{entry.label}</span>
+                            <span className="mt-1 block text-xs leading-relaxed">{entry.description}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
                 );
               })}
             </div>

@@ -1,5 +1,5 @@
-import { CommitteesChapterPage } from "@/components/CommitteesChapterPage";
+import { redirect } from "next/navigation";
 
 export default function CommitteesSlatingPage() {
-  return <CommitteesChapterPage href="/committees/slating" />;
+  redirect("/committees");
 }

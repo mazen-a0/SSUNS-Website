@@ -8,22 +8,13 @@ export const committeesPageContent = {
   chapters: [
     {
       href: "/committees",
-      title: "Vue d'ensemble",
-      summary: "Explorez le programme des comités 2026 par format et par type de comité.",
-      body: [
-        "Comprend des assemblées générales (AG), des conseils économiques et sociaux (ECOSOC), des comités spécialisés (SPEC) et des comités de crise.",
-        "Pour la liste complète des comités, veuillez visiter la page des comités du site web.",
-      ],
-    },
-    {
-      href: "/committees/slating",
       title: "Répartition des comités",
       summary: "Descriptions de comités, contacts du dais et notes de programme pour la programmation 2026.",
       body: [
         "Committee Descriptions for Website/Dias Apps",
         "If you have any questions, feel free to contact Emma Ristic at gaecosoc@ssuns.org.",
-        "If you have any questions, feel free to contact Will Greer at spec@ssuns.org.",
-        "If you have any questions, feel free to contact Eitan Pessin at crisis@ssuns.org.",
+        "If you have any questions, feel free to contact Eitan Pessin at spec@ssuns.org.",
+        "If you have any questions, feel free to contact Will Greer at crisis@ssuns.org.",
         "Meet the DAIS!",
       ],
     },
