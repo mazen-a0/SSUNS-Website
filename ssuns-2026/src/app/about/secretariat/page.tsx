@@ -14,8 +14,8 @@ export default function AboutSecretariatPage() {
   return (
     <>
       <PageHero eyebrow={aboutContent.title} intro={chapter.summary} title={chapter.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref={chapter.href} items={aboutContent.chapters} />
           </aside>

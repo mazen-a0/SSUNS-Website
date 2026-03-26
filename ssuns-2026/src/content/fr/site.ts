@@ -36,7 +36,7 @@ export const uiText = {
   railIndexLabel: "Index",
   railContextLabel: "Contexte",
   railQuickLinksLabel: "Liens rapides",
-  railCurrentLabel: "Chapitre actuel",
+  railCurrentLabel: "Section actuelle",
   railOpenLabel: "Ouvrir l'index",
   railCloseLabel: "Fermer l'index",
   railRegisterLabel: "Inscription",

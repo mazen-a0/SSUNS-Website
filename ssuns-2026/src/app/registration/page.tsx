@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { ListservSignupForm } from "@/components/ListservSignupForm";
@@ -8,18 +9,51 @@ import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { PublicVideoPanel } from "@/components/PublicVideoPanel";
 import { RegistrationTimeline } from "@/components/RegistrationTimeline";
+import { Timeline, type TimelineItem } from "@/components/ui/timeline";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function RegistrationPage() {
   const { registrationContent } = useSiteContent();
+  const [referenceNow] = useState(() => Date.now());
+  const navItems = registrationContent.chapters.filter((chapter) =>
+    ["/registration", "/registration/how-to-register", "/registration/financial-aid"].includes(chapter.href),
+  );
+  const milestoneDates = [
+    {
+      id: "registration-opens",
+      title: "Registration opens",
+      description: registrationContent.timeline[0]?.text,
+      date: new Date("2026-04-01T00:00:00-04:00"),
+    },
+    ...registrationContent.financialAidDeadlines.map((deadline, index) => ({
+      id: `financial-aid-${index}`,
+      title: "Financial aid deadline",
+      description: "Financial Aid Application Deadlines.",
+      date: new Date(`${deadline}, 2026`),
+    })),
+    {
+      id: "conference",
+      title: "Conference",
+      description: registrationContent.timeline[2]?.text,
+      date: new Date("2026-11-12T00:00:00-05:00"),
+    },
+  ];
+  const firstUpcomingIndex = milestoneDates.findIndex((item) => item.date.getTime() >= referenceNow);
+  const timelineItems: TimelineItem[] = milestoneDates.map((item, index) => ({
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    timestamp: item.date,
+    status: item.date.getTime() < referenceNow ? "completed" : index === firstUpcomingIndex ? "active" : "pending",
+  }));
 
   return (
     <>
       <PageHero intro={registrationContent.intro} title={registrationContent.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <DossierNav currentHref="/registration" items={registrationContent.chapters} />
+            <DossierNav currentHref="/registration" items={navItems} />
           </aside>
 
           <div className="space-y-8">
@@ -39,6 +73,21 @@ export default function RegistrationPage() {
                   ))}
                 </div>
               </div>
+            </article>
+
+            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+              <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-4">
+                <div>
+                  <p className="section-kicker">{registrationContent.sections.timeline}</p>
+                  <h2 className="mt-3 text-4xl font-semibold leading-tight text-[var(--accent)]">
+                    {registrationContent.sections.timeline}
+                  </h2>
+                </div>
+                <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">
+                  {registrationContent.timeline.map((item) => item.text).join(" ")}
+                </p>
+              </div>
+              <Timeline className="mt-6" items={timelineItems} />
             </article>
 
             <RegistrationTimeline

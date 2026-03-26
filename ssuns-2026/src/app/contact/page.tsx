@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHero intro={contactContent.intro} title={contactContent.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
+      <section className="page-shell">
         <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
           <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
             <p className="section-kicker">{contactContent.sections.office}</p>

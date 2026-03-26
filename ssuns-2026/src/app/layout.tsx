@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   title: siteMeta.title,
   description: siteMeta.description,
   icons: {
-    icon: "/logos/ssuns-dove.png",
-    shortcut: "/logos/ssuns-dove.png",
-    apple: "/logos/ssuns-dove.png",
+    icon: "/logos/ssuns-dove-main-navy.png",
+    shortcut: "/logos/ssuns-dove-main-navy.png",
+    apple: "/logos/ssuns-dove-main-navy.png",
   },
 };
 
@@ -26,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${chivo.variable} ${marketFresh.variable} ${petitFormal.variable} antialiased`}>
+      <body className={`${chivo.variable} ${marketFresh.variable} ${petitFormal.variable} ui-copy antialiased`}>
         <SiteContentProvider bundles={bundles}>
           <AppPreferencesProvider>
             <SiteChrome>{children}</SiteChrome>

@@ -1,27 +1,28 @@
+"use client";
+
+import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
 import { DossierNav } from "@/components/DossierNav";
 import { PageHero } from "@/components/PageHero";
+import { useSiteContent } from "@/lib/useSiteContent";
 
-type Chapter = {
+type ConferenceChapterPageProps = {
   href: string;
-  title: string;
-  summary: string;
-  body: string[];
 };
 
-type DossierChapterPageProps = {
-  eyebrow: string;
-  chapter: Chapter;
-  chapters: Chapter[];
-};
+export function ConferenceChapterPage({ href }: ConferenceChapterPageProps) {
+  const { conferenceContent } = useSiteContent();
+  const chapter = conferenceContent.chapters.find((item) => item.href === href);
 
-export function DossierChapterPage({ eyebrow, chapter, chapters }: DossierChapterPageProps) {
+  if (!chapter) return null;
+
   return (
     <>
-      <PageHero eyebrow={eyebrow} intro={chapter.summary} title={chapter.title} />
+      <PageHero eyebrow={conferenceContent.title} intro={chapter.summary} title={chapter.title} />
       <section className="page-shell">
+        <ConferenceQuickLinks className="mb-6" currentHref={href} />
         <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <DossierNav currentHref={chapter.href} items={chapters} />
+            <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>
           <article className="theme-panel-strong paper-grain p-8 sm:p-10 md:p-12">
             <div className="space-y-6 body-copy">

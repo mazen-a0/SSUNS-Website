@@ -14,8 +14,8 @@ export default function CommitteesPage() {
   return (
     <>
       <PageHero intro={slatingChapter.summary} title={slatingChapter.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref="/committees" items={committeesPageContent.chapters} />
             <DossierFigure alt={committeesPageContent.heroImage.alt} ratio="4/3" src={committeesPageContent.heroImage.src} />
@@ -24,7 +24,7 @@ export default function CommitteesPage() {
           <div className="space-y-6">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
               <p className="section-kicker">{slatingChapter.title}</p>
-              <Image alt="" aria-hidden="true" className="mt-4" height={18} src="/graphics/report-divider.svg" width={320} />
+              <Image alt="" aria-hidden="true" className="mt-4 opacity-85" height={18} src="/graphics/report-rule.svg" width={300} />
               <div className="mt-5 space-y-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">
                 {slatingChapter.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>

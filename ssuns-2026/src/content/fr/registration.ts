@@ -18,7 +18,7 @@ export const registrationContent = {
   chapters: [
     {
       ...en.chapters[0],
-      title: "Info",
+      title: "Information",
       summary: "Les inscriptions à SSUNS 2026 ouvrent le 1er avril 2026.",
       body: [
         "Les inscriptions à SSUNS 2026 ouvriront le 1er avril. La conférence aura lieu du 12 au 15 novembre 2026.",
@@ -27,7 +27,7 @@ export const registrationContent = {
     },
     {
       ...en.chapters[1],
-      title: "Tutoriel Munager",
+      title: "Comment s'inscrire",
       summary: "Utilisez Munager pour compléter l'inscription de votre délégation.",
       body: [
         "Toute l'inscription doit être complétée par l'entremise de Munager.",

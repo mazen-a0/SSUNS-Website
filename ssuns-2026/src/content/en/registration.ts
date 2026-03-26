@@ -14,7 +14,7 @@ export const registrationContent = {
   chapters: [
     {
       href: "/registration",
-      title: "Info",
+      title: "Information",
       summary: "Registration for SSUNS 2026 opens April 1, 2026.",
       body: [
         "Registration for SSUNS 2026 will open on April 1st!",
@@ -25,7 +25,7 @@ export const registrationContent = {
     },
     {
       href: "/registration/how-to-register",
-      title: "How-to tutorial (Munager)",
+      title: "How to Register",
       summary: "Use Munager to complete delegation registration.",
       body: [
         "How to Register.",

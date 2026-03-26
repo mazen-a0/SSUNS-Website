@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
 import { DossierNav } from "@/components/DossierNav";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
@@ -13,8 +14,9 @@ export default function ConferencePage() {
   return (
     <>
       <PageHero intro={conferenceContent.intro} title={conferenceContent.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <ConferenceQuickLinks className="mb-6" currentHref="/conference" />
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref="/conference" items={conferenceContent.chapters} />
           </aside>
@@ -42,7 +44,7 @@ export default function ConferencePage() {
 
             <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
               <p className="section-kicker">{conferenceContent.sections.venue}</p>
-              <Image alt="" aria-hidden="true" className="mt-4" height={18} src="/graphics/report-divider.svg" width={320} />
+              <Image alt="" aria-hidden="true" className="mt-4 opacity-85" height={18} src="/graphics/report-rule.svg" width={300} />
               <div className="mt-5 grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                 <div>
                   <h2 className="text-3xl font-semibold leading-tight text-[var(--accent)]">{conferenceContent.venueSection.title}</h2>

@@ -13,8 +13,8 @@ export default function AboutPage() {
   return (
     <>
       <PageHero intro={aboutContent.intro} title={aboutContent.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref="/about" items={aboutContent.chapters} />
             <div className="theme-panel-strong paper-grain rounded-[8px] p-5">
@@ -32,7 +32,7 @@ export default function AboutPage() {
           <div className="space-y-8">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-8 sm:p-11">
               <p className="section-kicker">{overviewChapter.title}</p>
-              <Image alt="" aria-hidden="true" className="mt-4" height={18} src="/graphics/report-divider.svg" width={320} />
+              <Image alt="" aria-hidden="true" className="mt-4 opacity-85" height={18} src="/graphics/report-rule.svg" width={300} />
               <div className="mt-5 space-y-5 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
                 {overviewChapter.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>

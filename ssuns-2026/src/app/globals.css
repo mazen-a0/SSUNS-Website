@@ -21,7 +21,9 @@
   --shadow-strong: 0 1px 0 rgba(20, 32, 130, 0.1), 0 18px 36px -32px rgba(10, 19, 66, 0.28);
   --hero-overlay: linear-gradient(118deg, rgba(20, 32, 130, 0.94), rgba(20, 32, 130, 0.74) 42%, rgba(10, 16, 36, 0.46) 100%);
   --panel-blur: none;
-  --ornament-opacity: 0.08;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
   --site-background:
     radial-gradient(42rem 26rem at 7% 0%, rgba(20, 32, 130, 0.08), transparent 60%),
     radial-gradient(36rem 20rem at 102% 8%, rgba(76, 158, 255, 0.08), transparent 56%),
@@ -49,12 +51,13 @@ body {
   color: var(--text);
   font-family: var(--font-chivo), ui-sans-serif, system-ui;
   background: var(--site-background);
+  line-height: 1.6;
 }
 
 main {
   width: 100%;
   overflow-x: clip;
-  padding-bottom: 4rem;
+  padding-bottom: 5rem;
 }
 
 img,
@@ -75,7 +78,7 @@ img {
 
 .font-display {
   font-family: var(--font-market-fresh), var(--font-chivo), sans-serif;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.005em;
 }
 
 .font-accent {
@@ -83,9 +86,9 @@ img {
 }
 
 .section-kicker {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -95,6 +98,7 @@ img {
   background: var(--panel);
   box-shadow: var(--shadow-soft);
   backdrop-filter: var(--panel-blur);
+  border-radius: var(--radius-md);
 }
 
 .theme-panel-strong {
@@ -102,6 +106,7 @@ img {
   background: var(--panel-strong);
   box-shadow: var(--shadow-strong);
   backdrop-filter: var(--panel-blur);
+  border-radius: var(--radius-md);
 }
 
 .theme-divider {
@@ -113,14 +118,6 @@ img {
   background-image: radial-gradient(rgba(20, 32, 130, 0.05) 0.5px, transparent 0.5px);
   background-size: 4px 4px;
   mix-blend-mode: multiply;
-}
-
-.glass-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, transparent 22%);
 }
 
 .paper-grain {
@@ -174,19 +171,20 @@ img {
 
 .nav-link {
   position: relative;
+  font-family: var(--font-chivo), ui-sans-serif, system-ui;
 }
 
 .nav-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0.78rem;
+  bottom: 0.35rem;
   width: 100%;
-  height: 1px;
-  background: currentColor;
+  height: 2px;
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 180ms ease;
+  transition: transform 220ms ease, opacity 220ms ease;
   opacity: 0.9;
 }
 
@@ -197,11 +195,36 @@ img {
 }
 
 .section-entrance {
-  animation: section-rise 520ms ease-out both;
+  animation: section-rise 620ms ease-out both;
 }
 
 .image-drift {
-  animation: image-drift 920ms ease-out both;
+  animation: image-drift 1200ms ease-out both;
+}
+
+.page-shell {
+  width: min(100%, 92rem);
+  margin-inline: auto;
+  padding-inline: 1.1rem;
+}
+
+.section-shell {
+  width: min(100%, 92rem);
+  margin-inline: auto;
+  padding-inline: 1.1rem;
+  padding-block: 1.5rem;
+}
+
+.body-copy {
+  font-family: var(--font-chivo), ui-sans-serif, system-ui;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.ui-copy {
+  font-family: var(--font-chivo), ui-sans-serif, system-ui;
+  letter-spacing: 0;
 }
 
 .liquid-button {

@@ -137,7 +137,7 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
                           <CommitteeImage alt={`${committee.name} committee placeholder`} mode="card" slug={committee.slug} src={committee.imageSrc} />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(8,15,52,0.94)] to-transparent px-4 py-4 text-white">
                             <p className="text-[11px] font-semibold text-[#c7d7ff]">{committee.theme}</p>
-                            <h3 className="mt-2 font-display text-2xl leading-none">{committee.name}</h3>
+                            <h3 className="mt-2 text-2xl font-semibold leading-tight">{committee.name}</h3>
                           </div>
                         </div>
 

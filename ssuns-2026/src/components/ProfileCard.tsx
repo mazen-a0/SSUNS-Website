@@ -16,7 +16,7 @@ export function ProfileCard({ name, role, imageSrc, bio }: ProfileCardProps) {
           <Image alt={`${name} headshot`} className="aspect-[4/5] w-full object-cover" height={1000} src={imageSrc || "/headshots/marcus.jpg"} width={800} />
         </div>
         <div>
-          <h3 className="font-display text-2xl leading-none text-[var(--text)]">{name}</h3>
+          <h3 className="text-2xl font-semibold leading-tight text-[var(--text)]">{name}</h3>
           <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{role}</p>
           <details className="mt-4 border-t border-[var(--rule)] pt-4">
             <summary className="cursor-pointer text-sm font-semibold text-[var(--accent)]">Bio</summary>

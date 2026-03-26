@@ -1,11 +1,7 @@
 "use client";
 
-import { DossierChapterPage } from "@/components/DossierChapterPage";
-import { useSiteContent } from "@/lib/useSiteContent";
+import { ConferenceChapterPage } from "@/components/ConferenceChapterPage";
 
 export default function ConferenceAwardsPage() {
-  const { conferenceContent } = useSiteContent();
-  const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/awards");
-  if (!chapter) return null;
-  return <DossierChapterPage chapter={chapter} chapters={conferenceContent.chapters} eyebrow={conferenceContent.title} />;
+  return <ConferenceChapterPage href="/conference/awards" />;
 }

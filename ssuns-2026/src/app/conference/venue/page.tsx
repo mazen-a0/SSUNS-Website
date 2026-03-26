@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
 import { DossierNav } from "@/components/DossierNav";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
@@ -24,8 +25,9 @@ export default function ConferenceVenuePage() {
   return (
     <>
       <PageHero eyebrow={conferenceContent.title} intro={chapter.summary} title={chapter.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <ConferenceQuickLinks className="mb-6" currentHref={chapter.href} />
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>

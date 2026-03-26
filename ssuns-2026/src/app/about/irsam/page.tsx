@@ -12,7 +12,7 @@ export default function AboutIrsamPage() {
   return (
     <>
       <DossierChapterPage chapter={chapter} chapters={aboutContent.chapters} eyebrow={aboutContent.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
+      <section className="page-shell">
         <div className="mx-auto max-w-[72rem] border-t border-[var(--rule)] pt-6">
           <Link className="inline-flex items-center gap-3 border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="https://irsam.ca" target="_blank">
             <span>Visit IRSAM</span>

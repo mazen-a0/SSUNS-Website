@@ -69,7 +69,7 @@ export const uiText: UiText = {
   railIndexLabel: "Index",
   railContextLabel: "Context",
   railQuickLinksLabel: "Quick Links",
-  railCurrentLabel: "Current Chapter",
+  railCurrentLabel: "Current Section",
   railOpenLabel: "Open index",
   railCloseLabel: "Close index",
   railRegisterLabel: "Register",

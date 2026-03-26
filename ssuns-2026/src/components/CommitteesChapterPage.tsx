@@ -17,13 +17,13 @@ export function CommitteesChapterPage({ href }: CommitteesChapterPageProps) {
   return (
     <>
       <PageHero eyebrow={committeesPageContent.title} intro={chapter.summary} title={chapter.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+      <section className="page-shell">
+        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <DossierNav currentHref={chapter.href} items={committeesPageContent.chapters} />
           </aside>
-          <article className="theme-panel-strong paper-grain rounded-[8px] p-7 sm:p-10">
-            <div className="space-y-5 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
+          <article className="theme-panel-strong paper-grain p-8 sm:p-10 md:p-12">
+            <div className="space-y-6 body-copy">
               {chapter.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}

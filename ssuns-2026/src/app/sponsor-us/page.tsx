@@ -11,7 +11,7 @@ export default function SponsorUsPage() {
   return (
     <>
       <PageHero intro={sponsorContent.intro} title={sponsorContent.title} />
-      <section className="mx-auto max-w-[96rem] px-5 sm:px-8">
+      <section className="page-shell">
         <div className="grid gap-6 lg:grid-cols-[0.44fr_0.56fr]">
           <DossierFigure alt={sponsorContent.heroImage.alt} ratio="16/9" src={sponsorContent.heroImage.src} />
 

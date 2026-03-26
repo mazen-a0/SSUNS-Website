@@ -45,8 +45,8 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
           : "If you have questions, please contact Emma Ristic at gaecosoc@ssuns.org.";
 
   return (
-    <section className="mx-auto mt-8 max-w-[96rem] px-5 sm:px-8">
-      <div className="theme-panel-strong paper-grain overflow-hidden rounded-[8px] p-6 sm:p-8 lg:p-10">
+    <section className="page-shell mt-8">
+      <div className="theme-panel-strong paper-grain overflow-hidden p-6 sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4">
           <Link className="text-sm font-semibold text-[var(--accent)]" href="/committees">
             {committeesPageContent.detailBackLabel}
@@ -102,27 +102,27 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
             </div>
 
             <div className="mt-5 border-b border-[var(--rule)] pb-5">
-              {activeSection === "overview" ? <p className="text-sm leading-7 text-[var(--text)]">{committee.overview}</p> : null}
-              {activeSection === "topic" ? <p className="text-sm leading-7 text-[var(--text)]">{committee.topic || "Coming soon."}</p> : null}
-              {activeSection === "format" ? <p className="text-sm leading-7 text-[var(--text)]">{committee.format || "Coming soon."}</p> : null}
+              {activeSection === "overview" ? <p className="body-copy text-[0.98rem]">{committee.overview}</p> : null}
+              {activeSection === "topic" ? <p className="body-copy text-[0.98rem]">{committee.topic || "Coming soon."}</p> : null}
+              {activeSection === "format" ? <p className="body-copy text-[0.98rem]">{committee.format || "Coming soon."}</p> : null}
               {activeSection === "chairs" ? (
                 committee.chairs.length ? (
                   <ul className="space-y-4">
                     {committee.chairs.map((chair) => (
                       <li className="border-t border-[var(--rule)] pt-4 first:border-t-0 first:pt-0" key={chair.name}>
-                        <p className="font-display text-2xl leading-none text-[var(--text)]">{chair.name}</p>
-                        <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{chair.bio}</p>
+                        <p className="text-2xl font-semibold leading-tight text-[var(--text)]">{chair.name}</p>
+                        <p className="body-copy mt-2 text-[0.98rem] text-[var(--muted)]">{chair.bio}</p>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm leading-7 text-[var(--muted)]">Coming soon.</p>
+                  <p className="body-copy text-[0.98rem] text-[var(--muted)]">Coming soon.</p>
                 )
               ) : null}
               {activeSection === "resources" ? (
                 <div className="space-y-4">
                   {committee.resources.length ? (
-                    <ul className="space-y-3 text-sm leading-7 text-[var(--text)]">
+                    <ul className="space-y-3 body-copy text-[0.98rem]">
                       {committee.resources.map((resource) => (
                         <li className="border-t border-[var(--rule)] pt-3 first:border-t-0 first:pt-0" key={resource}>
                           {resource}
@@ -130,7 +130,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-sm leading-7 text-[var(--muted)]">Coming soon.</p>
+                    <p className="body-copy text-[0.98rem] text-[var(--muted)]">Coming soon.</p>
                   )}
                   <div className="border-t border-[var(--rule)] pt-4">
                     <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.guide}</p>
