@@ -15,6 +15,9 @@ export const homeContent = {
       { label: "Schools", value: "60+" },
       { label: "Committees", value: "24" },
     ],
+    /** Conference opens Nov 12, 2026 (Montreal); used by hero countdown */
+    conferenceStartIso: "2026-11-12T00:00:00-05:00",
+    countdownHeading: "Countdown to SSUNS 2026",
     countdownTarget: null,
     countdownLabels: {
       days: "Days",

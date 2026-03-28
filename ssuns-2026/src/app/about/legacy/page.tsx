@@ -46,18 +46,16 @@ export default function AboutLegacyPage() {
               </div>
             </article>
 
-            <section className="theme-panel-strong paper-grain p-8 sm:p-10">
-              <p className="section-kicker">Illustrative View</p>
-              <h2 className="mt-4 font-display text-4xl leading-tight text-[var(--accent)] sm:text-5xl">Delegations</h2>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">
-                Illustrative delegation locations connected to SSUNS. Additional delegation detail will be added here once conference data is finalized.
-              </p>
-              <div className="mt-8">
+            <section className="overflow-hidden border border-[var(--rule)] bg-[var(--panel-strong)] p-6 sm:p-8">
+              <p className="section-kicker">{aboutContent.sections.legacy}</p>
+              <h2 className="mt-3 text-2xl font-semibold leading-tight text-[var(--accent)] sm:text-3xl">{chapter.title}</h2>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">{aboutContent.legacy}</p>
+              <div className="mt-8 flex justify-center border border-[var(--rule)] bg-[var(--paper)] px-4 py-8 sm:px-8 sm:py-10">
                 <CobeGlobe arcs={delegationArcs} markers={delegationMarkers} />
               </div>
-              <div className="mt-6 flex flex-wrap gap-2 border-t border-[var(--rule)] pt-4 text-xs font-medium text-[var(--muted)] sm:text-sm">
+              <div className="mt-6 flex flex-wrap gap-2 border-t border-[var(--rule)] pt-4 text-xs font-semibold text-[var(--muted)] sm:text-sm">
                 {delegationMarkers.map((marker) => (
-                  <span className="rounded-[999px] border border-[var(--rule)] px-3 py-1" key={marker.id}>
+                  <span className="rounded-[4px] border border-[var(--rule)] bg-[var(--panel)] px-3 py-1" key={marker.id}>
                     {marker.label}
                   </span>
                 ))}

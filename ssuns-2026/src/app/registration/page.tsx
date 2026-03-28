@@ -18,23 +18,25 @@ export default function RegistrationPage() {
   const navItems = registrationContent.chapters.filter((chapter) =>
     ["/registration", "/registration/how-to-register", "/registration/financial-aid"].includes(chapter.href),
   );
+  /** Canonical aid round dates aligned with registration.ts / financial aid chapter (Montreal ET) */
+  const financialAidIso = ["2026-06-08T12:00:00-04:00", "2026-09-08T12:00:00-04:00", "2026-10-16T12:00:00-04:00"] as const;
   const milestoneDates = [
     {
       id: "registration-opens",
-      title: "Registration opens",
-      description: registrationContent.timeline[0]?.text,
+      title: registrationContent.timeline[0]?.label ?? "",
+      description: registrationContent.timeline[0]?.text ?? "",
       date: new Date("2026-04-01T00:00:00-04:00"),
     },
-    ...registrationContent.financialAidDeadlines.map((deadline, index) => ({
+    ...registrationContent.financialAidDeadlines.map((deadlineLabel, index) => ({
       id: `financial-aid-${index}`,
-      title: "Financial aid deadline",
-      description: "Financial Aid Application Deadlines.",
-      date: new Date(`${deadline}, 2026`),
+      title: registrationContent.pricingTimelineText.financialAidDeadlines,
+      description: deadlineLabel,
+      date: new Date(financialAidIso[index] ?? financialAidIso[0]),
     })),
     {
       id: "conference",
-      title: "Conference",
-      description: registrationContent.timeline[2]?.text,
+      title: registrationContent.timeline[2]?.label ?? "",
+      description: registrationContent.timeline[2]?.text ?? "",
       date: new Date("2026-11-12T00:00:00-05:00"),
     },
   ];
@@ -44,7 +46,12 @@ export default function RegistrationPage() {
     title: item.title,
     description: item.description,
     timestamp: item.date,
-    status: item.date.getTime() < referenceNow ? "completed" : index === firstUpcomingIndex ? "active" : "pending",
+    status:
+      item.date.getTime() < referenceNow
+        ? "completed"
+        : firstUpcomingIndex !== -1 && index === firstUpcomingIndex
+          ? "active"
+          : "pending",
   }));
 
   return (
@@ -87,7 +94,7 @@ export default function RegistrationPage() {
                   {registrationContent.timeline.map((item) => item.text).join(" ")}
                 </p>
               </div>
-              <Timeline className="mt-6" items={timelineItems} />
+              <Timeline className="mt-6 overflow-x-hidden" items={timelineItems} variant="compact" />
             </article>
 
             <RegistrationTimeline

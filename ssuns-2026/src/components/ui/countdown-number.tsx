@@ -9,6 +9,8 @@ type CountdownNumberProps = {
   endDate: Date;
   startDate?: Date;
   className?: string;
+  /** Smaller tiles for dense layouts (e.g. hero sidebar) */
+  compact?: boolean;
   labels?: {
     days: string;
     hours: string;
@@ -48,7 +50,7 @@ function getTimeLeft(endDate: Date, startDate?: Date): TimeLeft {
   };
 }
 
-export function CountdownNumber({ endDate, startDate, className, labels = defaultLabels }: CountdownNumberProps) {
+export function CountdownNumber({ endDate, startDate, className, compact = false, labels = defaultLabels }: CountdownNumberProps) {
   const prefersReducedMotion = useReducedMotion();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft(endDate, startDate));
 
@@ -70,26 +72,45 @@ export function CountdownNumber({ endDate, startDate, className, labels = defaul
     [labels.days, labels.hours, labels.minutes, labels.seconds, timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds],
   );
 
+  const tileClass = cn(
+    "flex flex-col items-center justify-center rounded-[6px] text-center",
+    compact
+      ? "min-w-[3.25rem] border border-white/16 bg-[rgba(8,14,46,0.55)] px-2 py-2 sm:min-w-[3.75rem]"
+      : "theme-panel min-w-[4.5rem] px-2.5 py-2.5 sm:min-w-[5.25rem] sm:px-3 sm:py-3",
+  );
+  const digitClass = cn(
+    "font-semibold leading-none tabular-nums",
+    compact ? "text-lg text-white sm:text-xl" : "text-2xl text-[var(--accent)] sm:text-3xl",
+  );
+  const labelClass = cn(
+    "mt-0.5 font-semibold uppercase tracking-[0.06em]",
+    compact ? "text-[9px] text-[#b4caff]" : "text-[10px] text-[var(--muted)]",
+  );
+
   return (
-    <div className={cn("flex flex-wrap items-center gap-3 sm:gap-4", className)}>
+    <div className={cn("flex flex-wrap items-center gap-2 sm:gap-3", className)} suppressHydrationWarning>
       {units.map((unit, index) => {
         const body = (
-          <div className="theme-panel flex min-w-[4.75rem] flex-col items-center justify-center rounded-[8px] px-3 py-3 text-center sm:min-w-[5.5rem]">
-            <NumberFlow className="text-2xl font-semibold leading-none text-[var(--accent)] sm:text-3xl" format={{ minimumIntegerDigits: 2 }} value={unit.value} />
-            <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--muted)]">{unit.label}</span>
+          <div className={tileClass}>
+            <NumberFlow className={digitClass} format={{ minimumIntegerDigits: 2 }} value={unit.value} />
+            <span className={labelClass}>{unit.label}</span>
           </div>
         );
 
         return (
-          <div className="flex items-center gap-3" key={unit.key}>
+          <div className="flex items-center gap-2 sm:gap-3" key={unit.key}>
             {prefersReducedMotion ? (
               body
             ) : (
-              <motion.div initial={{ opacity: 0, y: 8 }} transition={{ delay: index * 0.05, duration: 0.35, ease: "easeOut" }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <motion.div initial={{ opacity: 0, y: 6 }} transition={{ delay: index * 0.04, duration: 0.3, ease: "easeOut" }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 {body}
               </motion.div>
             )}
-            {index < units.length - 1 ? <span className="hidden text-lg font-semibold text-[var(--muted)] sm:inline">:</span> : null}
+            {index < units.length - 1 ? (
+              <span className={cn("font-semibold text-[var(--muted)]", compact ? "text-sm text-white/35" : "hidden text-lg sm:inline")} aria-hidden>
+                :
+              </span>
+            ) : null}
           </div>
         );
       })}

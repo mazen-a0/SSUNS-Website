@@ -9,11 +9,14 @@ type SocialIconButtonProps = {
   label: string;
   className?: string;
   disabled?: boolean;
+  /** `inverse`: footer / dark panels (white icon treatment) */
+  variant?: "default" | "inverse";
 };
 
 type SocialIconRowProps = {
   items: Array<SocialIconButtonProps>;
   className?: string;
+  variant?: "default" | "inverse";
 };
 
 function TikTokIcon() {
@@ -58,7 +61,7 @@ function getIcon(platform: SocialPlatform) {
   }
 }
 
-export function SocialIconButton({ platform, href, label, className, disabled = false }: SocialIconButtonProps) {
+export function SocialIconButton({ platform, href, label, className, disabled = false, variant = "default" }: SocialIconButtonProps) {
   const content = (
     <>
       {getIcon(platform)}
@@ -67,7 +70,10 @@ export function SocialIconButton({ platform, href, label, className, disabled = 
   );
 
   const classes = cn(
-    "inline-flex h-10 w-10 items-center justify-center rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] text-[var(--accent)] transition duration-200 hover:scale-105 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.04)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-2)] disabled:pointer-events-none disabled:opacity-45",
+    "inline-flex h-9 w-9 items-center justify-center rounded-[6px] border transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-2)] disabled:pointer-events-none disabled:opacity-40 sm:h-10 sm:w-10",
+    variant === "inverse"
+      ? "border-white/20 bg-white/5 text-white hover:border-white/40 hover:bg-white/10"
+      : "border-[var(--rule)] bg-[var(--panel)] text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.04)]",
     className,
   );
 
@@ -86,11 +92,11 @@ export function SocialIconButton({ platform, href, label, className, disabled = 
   );
 }
 
-export function SocialIconRow({ items, className }: SocialIconRowProps) {
+export function SocialIconRow({ items, className, variant = "default" }: SocialIconRowProps) {
   return (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div className={cn("flex flex-wrap items-center gap-2.5", className)}>
       {items.map((item) => (
-        <SocialIconButton key={`${item.platform}-${item.label}`} {...item} />
+        <SocialIconButton key={`${item.platform}-${item.label}`} {...item} variant={variant} />
       ))}
     </div>
   );

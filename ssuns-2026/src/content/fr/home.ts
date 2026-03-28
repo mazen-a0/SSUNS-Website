@@ -19,6 +19,8 @@ export const homeContent = {
       { ...en.hero.stats[2], label: "Écoles" },
       { ...en.hero.stats[3], label: "Comités" },
     ],
+    conferenceStartIso: en.hero.conferenceStartIso,
+    countdownHeading: "Compte à rebours avant SSUNS 2026",
     countdownTarget: en.hero.countdownTarget,
     countdownLabels: {
       days: "Jours",

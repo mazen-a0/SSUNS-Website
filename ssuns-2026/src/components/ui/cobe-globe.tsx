@@ -37,10 +37,17 @@ export interface CobeGlobeProps {
   mapSamples?: number;
 }
 
-const defaultMarkerColor: [number, number, number] = [0.298, 0.62, 1];
-const defaultBaseColor: [number, number, number] = [0.94, 0.96, 0.99];
-const defaultArcColor: [number, number, number] = [0.298, 0.62, 1];
-const defaultGlowColor: [number, number, number] = [0.08, 0.125, 0.51];
+/** SSUNS brand tokens as linear RGB triplets for cobe (see globals.css --color-brand-navy, --paper, accent) */
+const BRAND = {
+  navy: [20 / 255, 32 / 255, 130 / 255] as [number, number, number],
+  accentBlue: [76 / 255, 158 / 255, 1] as [number, number, number],
+  paper: [244 / 255, 246 / 255, 251 / 255] as [number, number, number],
+};
+
+const defaultMarkerColor = BRAND.accentBlue;
+const defaultBaseColor = BRAND.paper;
+const defaultArcColor = BRAND.accentBlue;
+const defaultGlowColor = BRAND.navy;
 
 export function CobeGlobe({
   markers = [],
@@ -50,13 +57,13 @@ export function CobeGlobe({
   baseColor = defaultBaseColor,
   arcColor = defaultArcColor,
   glowColor = defaultGlowColor,
-  dark = 0.18,
-  mapBrightness = 2.8,
+  dark = 0.2,
+  mapBrightness = 2.45,
   markerSize = 0.085,
   markerElevation = 0.03,
   arcWidth = 0.7,
   arcHeight = 0.16,
-  speed = 0.0032,
+  speed = 0.0022,
   theta = 0.28,
   diffuse = 1.35,
   mapSamples = 20000,
@@ -134,7 +141,13 @@ export function CobeGlobe({
   }, []);
 
   useEffect(() => {
-    reduceMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => {
+      reduceMotionRef.current = mq.matches;
+    };
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -253,15 +266,17 @@ export function CobeGlobe({
   }, [arcColor, arcHeight, arcWidth, baseColor, cobeArcs, cobeMarkers, dark, diffuse, glowColor, mapBrightness, mapSamples, markerColor, markerElevation, speed, theta]);
 
   return (
-    <div className={cn("relative mx-auto aspect-square w-full max-w-[34rem] select-none", className)}>
-      <div className="absolute inset-3 rounded-full border border-[var(--rule)] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.85),rgba(255,255,255,0))]" />
+    <div className={cn("relative mx-auto w-full min-w-0 max-w-[min(100%,28rem)] select-none", className)}>
+      <div className="relative aspect-square w-full overflow-hidden rounded-full">
+      <div className="pointer-events-none absolute inset-3 rounded-full border border-[var(--rule)] bg-[radial-gradient(circle_at_center,rgba(244,246,251,0.9),rgba(244,246,251,0))]" />
       <canvas
         ref={canvasRef}
         aria-label="Illustrative globe showing delegation locations"
-        className="relative z-10 h-full w-full rounded-full opacity-0 transition-opacity duration-700"
+        className="relative z-10 h-full w-full rounded-full opacity-0 transition-opacity duration-500"
         onPointerDown={handlePointerDown}
         style={{ cursor: "grab", touchAction: "none" }}
       />
+      </div>
     </div>
   );
 }

@@ -56,7 +56,7 @@ export function SiteFooter() {
                 </a>
               ))}
             </div>
-            {socialItems.length ? <SocialIconRow className="mt-5" items={socialItems} /> : null}
+            {socialItems.length ? <SocialIconRow className="mt-5" items={socialItems} variant="inverse" /> : null}
           </section>
         </div>
       </div>

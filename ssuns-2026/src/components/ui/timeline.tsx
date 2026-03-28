@@ -5,16 +5,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Check, Clock3, CircleDot, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 
-const timelineVariants = cva("relative flex w-full", {
+const timelineVariants = cva("relative flex w-full min-w-0", {
   variants: {
     variant: {
       default: "gap-5",
-      compact: "gap-3",
+      compact: "gap-4",
       spacious: "gap-8",
     },
     orientation: {
       vertical: "flex-col",
-      horizontal: "grid gap-4 md:grid-cols-2 xl:grid-cols-4",
+      horizontal: "grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2",
     },
   },
   defaultVariants: {
@@ -23,10 +23,10 @@ const timelineVariants = cva("relative flex w-full", {
   },
 });
 
-const itemVariants = cva("relative", {
+const itemVariants = cva("relative min-w-0", {
   variants: {
     orientation: {
-      vertical: "pl-12",
+      vertical: "pl-10 sm:pl-12",
       horizontal: "h-full min-w-0",
     },
   },
@@ -117,12 +117,12 @@ export function Timeline({
               </div>
             )}
 
-            <div className="theme-panel-strong h-full rounded-[8px] p-4 sm:p-5">
+            <div className="h-full rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] p-4 sm:p-5">
               {showTimestamps && timestampPosition === "top" && item.timestamp ? (
-                <time className="text-xs font-medium text-[var(--muted)]">{formatTimestamp(item.timestamp)}</time>
+                <time className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[var(--muted)]">{formatTimestamp(item.timestamp)}</time>
               ) : null}
               <div className={cn("mt-1 flex gap-3", timestampPosition === "inline" ? "items-start justify-between" : "items-start")}>
-                <h3 className="text-xl font-semibold leading-tight text-[var(--accent)]">{item.title}</h3>
+                <h3 className="text-lg font-semibold leading-snug text-[var(--accent)] sm:text-xl">{item.title}</h3>
                 {showTimestamps && timestampPosition === "inline" && item.timestamp ? (
                   <time className="shrink-0 text-xs font-medium text-[var(--muted)]">{formatTimestamp(item.timestamp)}</time>
                 ) : null}

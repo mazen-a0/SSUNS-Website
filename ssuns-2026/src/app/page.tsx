@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { CountdownBand } from "@/components/CountdownBand";
 import { DossierRail } from "@/components/DossierRail";
@@ -44,7 +43,7 @@ export default function HomePage() {
           <div className="relative z-20 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
             <div className="max-w-3xl">
               <p className="section-kicker text-[#dbe6ff]">{homeContent.hero.eyebrow}</p>
-              <Image alt="" aria-hidden="true" className="mt-4 opacity-90" height={18} src="/graphics/report-rule.svg" width={320} />
+              <div aria-hidden className="mt-4 h-px max-w-[14rem] bg-[linear-gradient(90deg,var(--accent-2),transparent)]" />
               <h1 className="mt-5 max-w-4xl font-display text-5xl leading-[0.9] text-white sm:text-7xl">{homeContent.hero.title}</h1>
               <p className="mt-4 text-sm font-semibold text-[#b9ceff]">{homeContent.hero.accent}</p>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-[#eef3ff] sm:text-lg">{homeContent.hero.description}</p>
@@ -72,11 +71,12 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-6 border-t border-white/14 pt-4">
-                <p className="text-sm font-semibold text-white">Countdown to SSUNS 2026</p>
+              <div className="mt-5 border-t border-white/14 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.06em] text-[#b4caff]">{homeContent.hero.countdownHeading}</p>
                 <CountdownNumber
-                  className="mt-4"
-                  endDate={new Date("2026-11-12T00:00:00-05:00")}
+                  className="mt-3 gap-2 sm:gap-3"
+                  compact
+                  endDate={new Date(homeContent.hero.conferenceStartIso)}
                   labels={{ days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds" }}
                 />
               </div>
@@ -137,7 +137,7 @@ export default function HomePage() {
             <aside>
               <div className="section-entrance border border-[var(--rule)] bg-[var(--panel-inverse)] p-6 text-white shadow-[var(--shadow-soft)] sm:p-7">
                 <p className="section-kicker text-[#b4caff]">{homeContent.editorial.label}</p>
-                <Image alt="" aria-hidden="true" className="mt-4 opacity-90 invert" height={18} src="/graphics/report-rule.svg" width={260} />
+                <div aria-hidden className="mt-4 h-px max-w-[12rem] bg-[linear-gradient(90deg,var(--accent-2),transparent)]" />
                 <h2 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl">{homeContent.editorial.title}</h2>
                 <p className="mt-4 text-sm leading-relaxed text-[#dbe6ff] sm:text-base">{homeContent.editorial.subtitle}</p>
               </div>
