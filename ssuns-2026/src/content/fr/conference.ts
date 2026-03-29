@@ -46,10 +46,7 @@ export const conferenceContent = {
       href: "/conference/icao",
       title: "ICAO",
       summary: "Chapitre de référence pour le comité ICAO de SSUNS et son contexte dans la conférence.",
-      body: [
-        "L'Organisation de l'aviation civile internationale est basée à Montréal, ce qui en fait un point de référence naturel pour la conférence SSUNS.",
-        "Les délégués intéressés par l'ICAO devraient consulter le dossier du comité ainsi que les chapitres du lieu et de l'horaire.",
-      ],
+      body: ["À venir."],
     },
     {
       href: "/conference/charity-partner",

@@ -47,8 +47,8 @@ export const conferenceContent = {
       title: "ICAO",
       summary: "Reference chapter for SSUNS' ICAO committee and its conference context.",
       body: [
-        "The International Civil Aviation Organization is headquartered in Montreal, making it a natural part of the SSUNS conference context.",
-        "Delegates interested in ICAO should review the committee dossier alongside the conference venue and schedule chapters.",
+        "The International Civil Aviation Organization (ICAO) sits in Montréal, and that matters. It’s one of the few places where global coordination is not theoretical — it’s operational. The work ICAO does shapes how people and goods move across borders every day, and it forces a kind of diplomacy that is practical: safety, standards, oversight, compliance, cooperation. If you want to understand how international systems actually function, aviation is one of the clearest windows.",
+        "SSUNS’ ICAO programming is designed to feel like that world: structured, technical when it needs to be, and deeply political underneath. Delegates are pushed to balance national interest with collective responsibility, to negotiate with precision, and to write outcomes that can survive scrutiny. It’s a Montréal advantage — and a uniquely SSUNS way of turning the city into part of the learning.",
       ],
     },
     {
@@ -94,7 +94,7 @@ export const conferenceContent = {
       title: "General Assemblies",
       body: "Large-format rooms with robust caucusing, amendment workflow, and a clear emphasis on bloc discipline.",
       image: {
-        src: "/placeholders/committee-1200x800.jpg",
+        src: "/pictures/chairs.JPG",
         alt: "General assembly with delegate placards",
         note: "general assembly floor, 3:2, recommended 1200x800",
       },
@@ -103,7 +103,7 @@ export const conferenceContent = {
       title: "Specialized Committees",
       body: "Smaller rooms with focused mandates, more technical framing, and deeper policy tradeoff analysis.",
       image: {
-        src: "/placeholders/delegates-1600x1067.jpg",
+        src: "/pictures/delegates.JPG",
         alt: "Delegates discussing draft resolution text",
         note: "delegates drafting resolutions, 3:2, recommended 1600x1067",
       },
@@ -112,7 +112,7 @@ export const conferenceContent = {
       title: "Crisis Simulations",
       body: "Fast-turn scenario rooms emphasizing rapid strategy, high-information updates, and disciplined directive writing.",
       image: {
-        src: "/placeholders/hero-1920x1080.jpg",
+        src: "/pictures/gala(1).JPG",
         alt: "Crisis room update briefing with live notices",
         note: "crisis room briefing, 16:9, recommended 1920x1080",
       },
@@ -137,7 +137,7 @@ export const conferenceContent = {
     body:
       "Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
     image: {
-      src: "/placeholders/hotel-1600x900.jpg",
+      src: "/pictures/hotel-1600x900.jpg",
       alt: "Conference hotel exterior in evening light",
       note: "conference hotel exterior, 16:9, recommended 1600x900",
     },
@@ -159,7 +159,7 @@ export const conferenceContent = {
     title: "Crisis simulation",
     body: "Fast-moving updates, directive writing, and strategic adaptation remain a defining part of the SSUNS programme.",
     image: {
-      src: "/placeholders/delegates-1600x1067.jpg",
+      src: "/pictures/delegates(6).JPG",
       alt: "Delegates caucusing during a crisis simulation",
       note: "delegates caucusing during crisis simulation, 3:2, recommended 1600x1067",
     },

@@ -182,6 +182,37 @@ export const aboutContent = {
     "SSUNS brings together secondary-school delegates from around the world to engage in thoughtful debate on global issues.",
   legacy:
     "Over the decades, SSUNS has grown into one of the largest Model United Nations conferences for high school students, welcoming delegates from across Canada and around the world.",
+  legacyGlobalSection: {
+    title: "Legacy is global",
+    body: [
+      "SSUNS has always felt bigger than one city. Every November, Montréal becomes a crossroads: students arriving with different accents, different school cultures, different political instincts — and one shared willingness to take diplomacy seriously. That mix is the point. When you put delegates from Toronto and Vancouver in the same room as students from New York, Boston, Washington, Chicago, Nairobi, Accra, Lagos, and Port-au-Prince, debate stops being a performance and becomes an exchange — of perspective, priorities, and how you argue when the stakes feel real.",
+      "That international energy is what gives SSUNS its edge. It’s not just “global issues” on a placard — it’s a conference where the room itself is global. New friendships form across borders, blocs shift across lunch breaks, and ideas get tested by people who don’t think like you. The result is a conference that’s demanding in the best way: you leave sharper, more confident, and more aware of the world you’re stepping into.",
+    ],
+    locations: {
+      canada: ["Toronto", "Vancouver"],
+      unitedStates: ["New York", "Boston", "Washington DC", "Chicago"],
+      widerWorld: [
+        "Kenya",
+        "Uganda",
+        "Panama",
+        "Trinidad and Tobago",
+        "Belarus",
+        "Ghana",
+        "Nigeria",
+        "Bahamas",
+        "Nepal",
+        "Cameroon",
+        "Cuba",
+        "Ethiopia",
+        "Puerto Rico",
+        "Burkina Faso",
+        "Morocco",
+        "Haiti",
+        "Germany",
+        "Nicaragua",
+      ],
+    },
+  },
   pillars: [
     {
       title: "Student-Led Excellence",
@@ -283,7 +314,7 @@ export const aboutContent = {
     { label: "Schools", value: "60+" },
   ],
   image: {
-    src: "/placeholders/delegates-1600x1067.jpg",
+    src: "/pictures/delegates-1600x1067.jpg",
     alt: "Delegates collaborating during moderated caucus",
     note: "delegates collaborating, 3:2, recommended 1600x1067",
   },

@@ -23,8 +23,8 @@ type DossierCarouselProps = {
 };
 
 function DossierCarouselSlide({ item }: { item: DossierCarouselItem }) {
-  const [resolvedSrc, setResolvedSrc] = useState(item.src || item.fallbackSrc || "/placeholders/hero-1920x1080.jpg");
-  const fallbackSrc = item.fallbackSrc || "/placeholders/hero-1920x1080.jpg";
+  const [resolvedSrc, setResolvedSrc] = useState(item.src || item.fallbackSrc || "/pictures/hero-1920x1080.jpg");
+  const fallbackSrc = item.fallbackSrc || "/pictures/hero-1920x1080.jpg";
 
   return (
     <figure className="theme-panel section-entrance overflow-hidden rounded-[8px] p-3">

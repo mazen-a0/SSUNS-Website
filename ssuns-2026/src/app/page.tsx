@@ -8,6 +8,7 @@ import { HeroBackgroundMedia } from "@/components/HeroBackgroundMedia";
 import { LandAcknowledgementBlock } from "@/components/LandAcknowledgementBlock";
 import { LiquidButton } from "@/components/LiquidButton";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
+import { EditorialGallery } from "@/components/media/EditorialGallery";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { CountdownNumber } from "@/components/ui/countdown-number";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -25,6 +26,14 @@ export default function HomePage() {
       return { ...committee, note: item.note };
     })
     .filter((committee): committee is NonNullable<typeof committee> => committee !== null);
+  const homeGalleryItems = [
+    { id: "home-photo-1", src: "/pictures/delegates.JPG", alt: "Delegates in session" },
+    { id: "home-photo-2", src: "/pictures/gala.JPG", alt: "Conference gala moment" },
+    { id: "home-photo-3", src: "/pictures/delegates(2).JPG", alt: "Delegates speaking with placards up" },
+    { id: "home-photo-4", src: "/pictures/chairs.JPG", alt: "Dais and chairs in committee" },
+    { id: "home-photo-5", src: "/pictures/secretariat.JPG", alt: "Secretariat on site" },
+    { id: "home-photo-6", src: "/pictures/delegates(7).JPG", alt: "Delegates caucusing" },
+  ];
 
   return (
     <>
@@ -111,7 +120,13 @@ export default function HomePage() {
 
           <section className="section-entrance" id="key-dates">
             {homeContent.hero.countdownTarget ? (
-              <CountdownBand labels={homeContent.hero.countdownLabels} target={homeContent.hero.countdownTarget} />
+              <CountdownBand
+                key={homeContent.hero.countdownTarget}
+                endedCta={homeContent.hero.countdownEndedCta}
+                endedMessage={homeContent.hero.countdownEndedMessage}
+                labels={homeContent.hero.countdownLabels}
+                target={homeContent.hero.countdownTarget}
+              />
             ) : (
               <div className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
                 <div className="flex flex-wrap items-end justify-between gap-4">
@@ -245,20 +260,7 @@ export default function HomePage() {
               </div>
             </div>
             <p className="max-w-3xl text-sm leading-relaxed text-[var(--muted)]">{homeContent.gallery.intro}</p>
-            <div className="mt-6 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-              <DossierFigure
-                alt={homeContent.gallery.items[0].alt}
-                caption={homeContent.gallery.items[0].caption}
-                eyebrow={homeContent.gallery.items[0].title}
-                ratio="16/9"
-                src={homeContent.gallery.items[0].src}
-              />
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-                {homeContent.gallery.items.slice(1).map((item, index) => (
-                  <DossierFigure alt={item.alt} caption={item.caption} eyebrow={item.title} key={item.id} ratio={index === 1 ? "3/2" : "16/9"} src={item.src} />
-                ))}
-              </div>
-            </div>
+            <EditorialGallery className="mt-6" compact items={homeGalleryItems} />
           </section>
 
           <section className="section-entrance">

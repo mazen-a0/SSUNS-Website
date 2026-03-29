@@ -7,22 +7,47 @@ import { useSiteContent } from "@/lib/useSiteContent";
 
 const delegationMarkers = [
   { id: "toronto", label: "Toronto", location: [43.6532, -79.3832] as [number, number] },
-  { id: "montreal", label: "Montreal", location: [45.5017, -73.5673] as [number, number] },
-  { id: "nairobi", label: "Nairobi", location: [-1.2921, 36.8219] as [number, number] },
-  { id: "paris", label: "Paris", location: [48.8566, 2.3522] as [number, number] },
+  { id: "vancouver", label: "Vancouver", location: [49.2827, -123.1207] as [number, number] },
+  { id: "new-york", label: "New York", location: [40.7128, -74.006] as [number, number] },
+  { id: "boston", label: "Boston", location: [42.3601, -71.0589] as [number, number] },
   { id: "washington", label: "Washington DC", location: [38.9072, -77.0369] as [number, number] },
+  { id: "chicago", label: "Chicago", location: [41.8781, -87.6298] as [number, number] },
+  { id: "kenya", label: "Kenya", location: [-1.2921, 36.8219] as [number, number] },
+  { id: "uganda", label: "Uganda", location: [0.3476, 32.5825] as [number, number] },
+  { id: "panama", label: "Panama", location: [8.9824, -79.5199] as [number, number] },
+  { id: "trinidad", label: "Trinidad and Tobago", location: [10.6596, -61.5089] as [number, number] },
+  { id: "belarus", label: "Belarus", location: [53.9, 27.5667] as [number, number] },
+  { id: "ghana", label: "Ghana", location: [5.6037, -0.187] as [number, number] },
+  { id: "nigeria", label: "Nigeria", location: [6.5244, 3.3792] as [number, number] },
+  { id: "bahamas", label: "Bahamas", location: [25.0443, -77.3504] as [number, number] },
+  { id: "nepal", label: "Nepal", location: [27.7172, 85.324] as [number, number] },
+  { id: "cameroon", label: "Cameroon", location: [3.848, 11.5021] as [number, number] },
+  { id: "cuba", label: "Cuba", location: [23.1136, -82.3666] as [number, number] },
+  { id: "ethiopia", label: "Ethiopia", location: [8.9806, 38.7578] as [number, number] },
+  { id: "puerto-rico", label: "Puerto Rico", location: [18.4655, -66.1057] as [number, number] },
+  { id: "burkina-faso", label: "Burkina Faso", location: [12.3714, -1.5197] as [number, number] },
+  { id: "morocco", label: "Morocco", location: [34.0209, -6.8416] as [number, number] },
+  { id: "haiti", label: "Haiti", location: [18.5944, -72.3074] as [number, number] },
+  { id: "germany", label: "Germany", location: [52.52, 13.405] as [number, number] },
+  { id: "nicaragua", label: "Nicaragua", location: [12.114, -86.2362] as [number, number] },
 ];
 
 const delegationArcs = [
   { id: "toronto-montreal", from: [43.6532, -79.3832] as [number, number], to: [45.5017, -73.5673] as [number, number] },
+  { id: "vancouver-montreal", from: [49.2827, -123.1207] as [number, number], to: [45.5017, -73.5673] as [number, number] },
+  { id: "new-york-montreal", from: [40.7128, -74.006] as [number, number], to: [45.5017, -73.5673] as [number, number] },
   { id: "washington-montreal", from: [38.9072, -77.0369] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "paris-montreal", from: [48.8566, 2.3522] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "nairobi-montreal", from: [-1.2921, 36.8219] as [number, number], to: [45.5017, -73.5673] as [number, number] },
+  { id: "kenya-montreal", from: [-1.2921, 36.8219] as [number, number], to: [45.5017, -73.5673] as [number, number] },
+  { id: "ghana-montreal", from: [5.6037, -0.187] as [number, number], to: [45.5017, -73.5673] as [number, number] },
 ];
 
 export default function AboutLegacyPage() {
-  const { aboutContent } = useSiteContent();
+  const { aboutContent, language } = useSiteContent();
   const chapter = aboutContent.chapters.find((item) => item.href === "/about/legacy");
+  const geographyLabels =
+    language === "fr"
+      ? { canada: "Canada", unitedStates: "États-Unis", widerWorld: "Monde" }
+      : { canada: "Canada", unitedStates: "United States", widerWorld: "Wider World" };
 
   if (!chapter) {
     return null;
@@ -33,7 +58,7 @@ export default function AboutLegacyPage() {
       <PageHero eyebrow={aboutContent.title} intro={chapter.summary} title={chapter.title} />
       <section className="page-shell">
         <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="xl:sticky xl:top-28 xl:self-start">
+          <aside className="sticky-below-header">
             <DossierNav currentHref={chapter.href} items={aboutContent.chapters} />
           </aside>
 
@@ -48,17 +73,48 @@ export default function AboutLegacyPage() {
 
             <section className="overflow-hidden border border-[var(--rule)] bg-[var(--panel-strong)] p-6 sm:p-8">
               <p className="section-kicker">{aboutContent.sections.legacy}</p>
-              <h2 className="mt-3 text-2xl font-semibold leading-tight text-[var(--accent)] sm:text-3xl">{chapter.title}</h2>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">{aboutContent.legacy}</p>
-              <div className="mt-8 flex justify-center border border-[var(--rule)] bg-[var(--paper)] px-4 py-8 sm:px-8 sm:py-10">
-                <CobeGlobe arcs={delegationArcs} markers={delegationMarkers} />
+              <h2 className="mt-3 text-3xl font-semibold leading-tight text-[var(--accent)] sm:text-4xl">{aboutContent.legacyGlobalSection.title}</h2>
+              <div className="mt-6 grid gap-8 xl:grid-cols-[0.58fr_0.42fr] xl:items-start">
+                <div className="space-y-5 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
+                  {aboutContent.legacyGlobalSection.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+                <div className="border border-[var(--rule)] bg-[var(--paper)] px-4 py-8 sm:px-6 sm:py-10">
+                  <CobeGlobe arcs={delegationArcs} markers={delegationMarkers} />
+                </div>
               </div>
-              <div className="mt-6 flex flex-wrap gap-2 border-t border-[var(--rule)] pt-4 text-xs font-semibold text-[var(--muted)] sm:text-sm">
-                {delegationMarkers.map((marker) => (
-                  <span className="rounded-[4px] border border-[var(--rule)] bg-[var(--panel)] px-3 py-1" key={marker.id}>
-                    {marker.label}
-                  </span>
-                ))}
+              <div className="mt-6 grid gap-4 border-t border-[var(--rule)] pt-5 md:grid-cols-3">
+                <article className="border border-[var(--rule)] bg-[var(--panel)] p-4">
+                  <p className="section-kicker">{geographyLabels.canada}</p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:text-sm">
+                    {aboutContent.legacyGlobalSection.locations.canada.map((location) => (
+                      <span className="border border-[var(--rule)] px-3 py-1" key={location}>
+                        {location}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+                <article className="border border-[var(--rule)] bg-[var(--panel)] p-4">
+                  <p className="section-kicker">{geographyLabels.unitedStates}</p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:text-sm">
+                    {aboutContent.legacyGlobalSection.locations.unitedStates.map((location) => (
+                      <span className="border border-[var(--rule)] px-3 py-1" key={location}>
+                        {location}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+                <article className="border border-[var(--rule)] bg-[var(--panel)] p-4">
+                  <p className="section-kicker">{geographyLabels.widerWorld}</p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:text-sm">
+                    {aboutContent.legacyGlobalSection.locations.widerWorld.map((location) => (
+                      <span className="border border-[var(--rule)] px-3 py-1" key={location}>
+                        {location}
+                      </span>
+                    ))}
+                  </div>
+                </article>
               </div>
             </section>
           </div>

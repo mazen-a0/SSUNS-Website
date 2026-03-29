@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
 import { DossierNav } from "@/components/DossierNav";
-import { DossierCarousel } from "@/components/media/DossierCarousel";
+import { EditorialGallery } from "@/components/media/EditorialGallery";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -18,23 +18,13 @@ const hotelRates = [
 ];
 
 export default function ConferenceVenuePage() {
-  const { conferenceContent, homeContent } = useSiteContent();
+  const { conferenceContent } = useSiteContent();
   const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/venue");
-  const venueSlides = [
-    {
-      id: "venue-hotel",
-      alt: conferenceContent.venueSection.image.alt,
-      caption: conferenceContent.venueSection.body,
-      eyebrow: conferenceContent.venueSection.title,
-      src: conferenceContent.venueSection.image.src,
-    },
-    ...homeContent.gallery.items.map((item) => ({
-      id: item.id,
-      alt: item.alt,
-      caption: item.caption,
-      eyebrow: item.title,
-      src: item.src,
-    })),
+  const venueGalleryItems = [
+    { id: "venue-photo-1", src: "/pictures/hotel-1600x900.jpg", alt: "Sheraton exterior" },
+    { id: "venue-photo-2", src: "/pictures/montreal-1600x900.jpg", alt: "Montreal city view" },
+    { id: "venue-photo-3", src: "/pictures/gala(2).JPG", alt: "Delegates gathered in venue event space" },
+    { id: "venue-photo-4", src: "/pictures/delegates(8).JPG", alt: "Delegates moving through conference space" },
   ];
 
   if (!chapter) return null;
@@ -45,7 +35,7 @@ export default function ConferenceVenuePage() {
       <section className="page-shell">
         <ConferenceQuickLinks className="mb-6" currentHref={chapter.href} />
         <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="xl:sticky xl:top-28 xl:self-start">
+          <aside className="sticky-below-header">
             <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>
           <div className="space-y-8">
@@ -115,7 +105,12 @@ export default function ConferenceVenuePage() {
               </div>
             </article>
 
-            <DossierCarousel items={venueSlides} />
+            <EditorialGallery
+              description={conferenceContent.venueSection.body}
+              eyebrow={conferenceContent.sections.venue}
+              items={venueGalleryItems}
+              title={conferenceContent.venueSection.title}
+            />
           </div>
         </div>
       </section>

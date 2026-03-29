@@ -13,7 +13,7 @@ type CommitteeImageProps = {
   priority?: boolean;
 };
 
-const fallbackSrc = "/placeholders/committee-1200x800.jpg";
+const fallbackSrc = "/pictures/committee-1200x800.jpg";
 
 export function CommitteeImage({ slug, alt, src, mode = "card", className, priority = false }: CommitteeImageProps) {
   const initialSrc = src || fallbackSrc;
@@ -21,14 +21,14 @@ export function CommitteeImage({ slug, alt, src, mode = "card", className, prior
   const wrapperClassName = useMemo(
     () =>
       mode === "hero"
-        ? "aspect-[4/3] max-h-[clamp(240px,38vw,520px)]"
-        : "aspect-[4/3] max-h-[clamp(180px,22vw,260px)]",
+        ? "aspect-[4/3] max-h-[min(380px,40vh)] w-full max-w-full sm:max-h-[min(400px,42vh)]"
+        : "aspect-[4/3] max-h-[clamp(160px,20vw,240px)] w-full max-w-full",
     [mode],
   );
 
   return (
     <div className={cn("relative w-full overflow-hidden", wrapperClassName, className)} data-committee-slug={slug}>
-      {/* TODO(photo): Replace missing committee image with /public/committees/2026/{slug}.jpg. Fallback remains /public/placeholders/committee-1200x800.jpg until the final asset is added. */}
+      {/* TODO(photo): Replace missing committee image with /public/committees/2026/{slug}.jpg. Fallback remains /public/pictures/committee-1200x800.jpg until the final asset is added. */}
       <Image
         alt={alt}
         className="object-cover"

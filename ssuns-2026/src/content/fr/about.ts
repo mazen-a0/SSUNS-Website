@@ -88,6 +88,11 @@ export const aboutContent = {
     },
   ],
   secretariatMembers,
+  legacyGlobalSection: {
+    ...en.legacyGlobalSection,
+    title: "L’héritage est mondial",
+    body: ["À venir."],
+  },
   faqCategories: en.faqCategories,
   pillars: [
     {

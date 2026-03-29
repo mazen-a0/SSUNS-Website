@@ -79,6 +79,7 @@ export const registrationContent = {
   ],
   howToGuide: {
     title: "How to Apply",
+    overviewHeading: "Overview",
     intro: "A step-by-step guide to registering your delegation, managing attendees, and securing committee assignments.",
     courtesy: "Courtesy of MUNager",
     closing: "Guide content courtesy of MUNager.",
@@ -233,7 +234,7 @@ export const registrationContent = {
   cta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
   munagerVideo: {
     src: "/video/munager-howto.mp4",
-    poster: "/placeholders/hero-1920x1080.jpg",
+    poster: "/pictures/hero-1920x1080.jpg",
     fallbackSrc: "/video/ssuns-recap-2025.mp4",
     title: "Munager walkthrough",
     unavailableLabel: "Video coming soon",
