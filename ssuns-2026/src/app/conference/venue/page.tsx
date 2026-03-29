@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
 import { DossierNav } from "@/components/DossierNav";
+import { DossierCarousel } from "@/components/media/DossierCarousel";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -17,8 +18,24 @@ const hotelRates = [
 ];
 
 export default function ConferenceVenuePage() {
-  const { conferenceContent } = useSiteContent();
+  const { conferenceContent, homeContent } = useSiteContent();
   const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/venue");
+  const venueSlides = [
+    {
+      id: "venue-hotel",
+      alt: conferenceContent.venueSection.image.alt,
+      caption: conferenceContent.venueSection.body,
+      eyebrow: conferenceContent.venueSection.title,
+      src: conferenceContent.venueSection.image.src,
+    },
+    ...homeContent.gallery.items.map((item) => ({
+      id: item.id,
+      alt: item.alt,
+      caption: item.caption,
+      eyebrow: item.title,
+      src: item.src,
+    })),
+  ];
 
   if (!chapter) return null;
 
@@ -27,8 +44,8 @@ export default function ConferenceVenuePage() {
       <PageHero eyebrow={conferenceContent.title} intro={chapter.summary} title={chapter.title} />
       <section className="page-shell">
         <ConferenceQuickLinks className="mb-6" currentHref={chapter.href} />
-        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="xl:sticky xl:top-28 xl:self-start">
             <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>
           <div className="space-y-8">
@@ -66,19 +83,39 @@ export default function ConferenceVenuePage() {
             </div>
 
             <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">Preferential Sheraton Rates</p>
-              <div className="mt-5 grid gap-4 border-t border-[var(--rule)] pt-5 md:grid-cols-2 xl:grid-cols-4">
-                {hotelRates.map((rate) => (
-                  <article className="border border-[var(--rule)] px-4 py-4" key={rate.occupancy}>
-                    <p className="text-sm font-semibold text-[var(--accent)]">{rate.occupancy}</p>
-                    <div className="mt-3 space-y-2 text-sm leading-relaxed text-[var(--text)]">
-                      <p>Room rate: {rate.roomRate}</p>
-                      <p className="text-[var(--muted)]">Luggage fees: {rate.luggageFees}</p>
-                    </div>
-                  </article>
-                ))}
+              <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-4">
+                <div>
+                  <p className="section-kicker">Preferential Sheraton Rates</p>
+                  <h2 className="font-display mt-3 text-4xl leading-tight text-[var(--accent)]">Hotel rates</h2>
+                </div>
+                <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">
+                  All prices are in CAD and include Quebec tax. Please also note that all single and double occupancy rooms have 1 queen or 1 king sized bed.
+                </p>
+              </div>
+
+              <div className="mt-5 overflow-hidden border border-[var(--rule)]">
+                <table className="w-full border-collapse text-left text-sm sm:text-base">
+                  <thead className="bg-[var(--paper-deep)] text-[var(--accent)]">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold">Room Type</th>
+                      <th className="px-4 py-3 font-semibold">Rate</th>
+                      <th className="px-4 py-3 font-semibold">Luggage Fees</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {hotelRates.map((rate) => (
+                      <tr className="border-t border-[var(--rule)]" key={rate.occupancy}>
+                        <td className="px-4 py-3 font-semibold text-[var(--text)]">{rate.occupancy}</td>
+                        <td className="px-4 py-3 text-[var(--text)]">{rate.roomRate}</td>
+                        <td className="px-4 py-3 text-[var(--muted)]">{rate.luggageFees}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </article>
+
+            <DossierCarousel items={venueSlides} />
           </div>
         </div>
       </section>

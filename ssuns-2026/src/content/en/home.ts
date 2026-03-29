@@ -69,13 +69,15 @@ export const homeContent = {
     ],
   },
   directorNote: {
-    label: "Director's Letter",
-    title: "A conference should feel both exacting and generous.",
+    label: "A Letter from the Secretary-General",
+    title: "Welcome to SSUNS 2026.",
     body: [
-      "SSUNS is designed to reward serious preparation while remaining legible and welcoming to schools entering the circuit for the first time. The measure of quality is not volume, but composure.",
-      "We want delegates to leave feeling they were held to a meaningful standard: one reflected in committee design, advisor communication, venue hospitality, and the cadence of every session.",
+      "Welcome to SSUNS 2026! My name is Marcus C. Kelly and I have the pleasure of serving as the Secretary-General of SSUNS 2026, the 34th iteration of our conference.",
+      "Each November, our conference executes a tremendous mandate. Our team, run by roughly 350 MUN trained McGill University students, carries out one of Canada’s, and the world's, largest and most prestigious Model United Nations conferences. Working for months, the SSUNS staff curates a conference weekend full of collaboration, leadership, education, and healthy competition in a bid to execute a values based experience - one that can set the tone for how students, delegates, and leaders interact in their budding journeys.",
+      "This year, I am emphasizing success through trust, coordination, and academic excellence when creating our committee content and other delegation services - one that mirrors our responsibilities as students at McGill University.",
+      "So what are you waiting for? Secure your place at SSUNS 2026 while space remains limited.",
     ],
-    signature: "Secretary-General Placeholder",
+    signature: "Marcus C. Kelly",
     role: "Secretary-General, SSUNS 2026",
     stamp: "Montreal • Organizing Office",
     image: {

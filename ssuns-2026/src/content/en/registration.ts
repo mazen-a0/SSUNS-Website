@@ -21,21 +21,15 @@ export const registrationContent = {
         "This year, we are introducing a new registration system designed to improve your experience and streamline the process.",
         "Additional details, including step-by-step instructions and important updates, will be posted here throughout March. We encourage all delegates and advisors to review this information in advance to ensure a smooth registration.",
         "The conference will take place from November 12-15, 2026.",
+        "Registration opens: April 1st.",
+        "Registration closes: October 16 or upon reaching capacity.",
       ],
     },
     {
       href: "/registration/how-to-register",
       title: "How to Register",
       summary: "Use Munager to complete delegation registration.",
-      body: [
-        "How to Register.",
-        "1. Visit the official SSUNS registration page and review the conference registration instructions.",
-        "2. Complete your school’s registration through MUNager using the official conference link.",
-        "For a detailed walkthrough of the process, please refer to the MUNager Registration Guide: https://munager.com/apply-guide/.",
-        "3. Join the SSUNS listserv to receive important updates and announcements leading up to the conference.",
-        "4. Check the registration section of our website for information on fees, deadlines, and policy updates.",
-        "If you have any further questions, please contact our Chargée d’Affaires, Costas Oreopoulos, at schools@ssuns.org.",
-      ],
+      body: ["A step-by-step guide to registering your delegation, managing attendees, and securing committee assignments."],
     },
     {
       href: "/registration/fees",
@@ -83,6 +77,66 @@ export const registrationContent = {
     "Join the SSUNS listserv to receive important updates and announcements leading up to the conference.",
     "Check the registration section of our website for information on fees, deadlines, and policy updates.",
   ],
+  howToGuide: {
+    title: "How to Apply",
+    intro: "A step-by-step guide to registering your delegation, managing attendees, and securing committee assignments.",
+    courtesy: "Courtesy of MUNager",
+    closing: "Guide content courtesy of MUNager.",
+    openGuideLabel: "Open the MUNager apply guide",
+    phases: [
+      {
+        id: "phase1",
+        number: 1,
+        title: "Phase 1: Submitting Your Application",
+        videoId: "PrCFLMbu7Ug",
+        steps: [
+          { title: "Create an Account", description: "Use the conference link to sign in or register." },
+          { title: "Fill School Details", description: "Input name and street address." },
+          { title: "Set Your Numbers", description: "Input total Delegates and Faculty Advisors." },
+          { title: "Logistics", description: "Answer questions regarding application type, hotels, and visas." },
+          { title: "Submit", description: 'Consent to emails and click "Submit Application."' },
+        ],
+      },
+      {
+        id: "phase2",
+        number: 2,
+        title: "Phase 2: Adding Attendees",
+        videoId: "awAjt0Lnysk",
+        steps: [
+          { title: "Navigate", description: 'Go to the "Delegates" tab on the dashboard.' },
+          { title: "Input Names", description: 'Click "New Delegate" to add names and emails.' },
+          { title: "Assign Roles", description: "Designate Head Delegates where applicable." },
+          { title: "Faculty & Policies", description: "Repeat for Faculty Advisors and upload required policy forms." },
+        ],
+      },
+      {
+        id: "phase3",
+        number: 3,
+        title: "Phase 3: Submitting Preferences",
+        videoId: "AMVFFxxtj_Y",
+        steps: [
+          { title: "Open Preferences", description: 'Navigate to the "Preferences" tab.' },
+          { title: "Rank Committees", description: "Drag and drop committees into your preferred order." },
+          { title: "Select Countries", description: "Search and add 5–15 countries you wish to represent." },
+          { title: "Add Notes", description: "Use the text box for any specific requests." },
+          { title: "Auto-Save", description: 'Confirm that the "All changes saved" indicator appears.' },
+        ],
+      },
+      {
+        id: "phase4",
+        number: 4,
+        title: "Phase 4: Assigning Delegates",
+        videoId: "SxczU3Nkbxw",
+        steps: [
+          { title: "Committee Assignments", description: 'Navigate to the "Committee Assignments" tab.' },
+          { title: "View Roles", description: "See the countries/committees assigned by the conference." },
+          { title: "Match Names", description: "Select a delegate from the dropdown for each assignment." },
+          { title: "Double Delegations", description: "Ensure both delegate slots are filled for GA/Double Del committees." },
+          { title: "Finalize", description: "Confirm assignments are saved (no submit button required)." },
+        ],
+      },
+    ],
+  },
   timeline: [
     { label: "April 1, 2026", text: "Registration opens." },
     { label: "October 16, 2026", text: "Registration closes or earlier upon reaching capacity." },
@@ -90,7 +144,7 @@ export const registrationContent = {
   ],
   currentTier: {
     label: "Registration opens April 1st",
-    detail: "The conference will take place from November 12-15, 2026.",
+    detail: "Registration closes October 16 or upon reaching capacity. The conference will take place from November 12-15, 2026.",
   },
   pricingTimeline: [
     {
@@ -127,9 +181,10 @@ export const registrationContent = {
     to: "to",
   },
   financialAidDeadlines: ["June 8", "September 8", "October 16"],
+  invoiceDeadlines: ["June 22", "September 16", "October 23"],
   feePlaceholders: [
     { title: "Fees", body: "The Delegate Fee applies to each delegate who wishes to register. The Delegation Fee is an additional one time fee that covers the entire delegation." },
-    { title: "Policies", body: "Additional information, including policy updates, will continue to be posted here." },
+    { title: "Dates", body: "Registration opens: April 1st. Registration closes: October 16 or upon reaching capacity." },
     { title: "Financial Aid", body: "Financial Policies and Aid will be updated soon." },
   ],
   tracks: [
@@ -164,10 +219,13 @@ export const registrationContent = {
   },
   letter: {
     label: "Chargée d’Affaires",
-    title: "A letter to schools",
+    title: "A message from the Chargé d'affaires",
     body: [
+      "Dear SSUNS Delegates and Faculty Advisors,",
+      "My name is Costas Oreopoulos and it is my distinct privilege to serve as your Chargé d’Affaires for SSUNS 2026. Since its debut in 1993, SSUNS has grown to be Canada’s premier Model United Nations conference. Now in its 34th edition, we continue to provide a world-class conference experience for high school and CEGEP students. Each November, over 1400 students from around the globe join us for four days of dynamic committee sessions, captivating debate and immersive simulations.",
+      "Beyond committee sessions, SSUNS offers a range of opportunities to enrich your experience, including workshops, social events and guided tours of McGill University. Faculty Advisors will have the chance to observe their delegates in action, connect with fellow educators and enjoy the Faculty Advisor Lounge and social events. All of this takes place in the beautifully vibrant city of Montreal, where attendees can explore iconic landmarks and experience its unique culture.",
+      "Whether you are returning to SSUNS or joining us for the first time, we are incredibly excited to welcome you for an unforgettable weekend of diplomacy, debate and collaboration. I look forward to seeing you all this November!",
       "Sign up with your email address to receive SSUNS 2026 latest news from our Chargée d’Affaires.",
-      "Be sure to sign up to our list-serv below to stay updated as information is released throughout March.",
     ],
     signature: "Costas Oreopoulos",
     role: "Chargée d’Affaires, SSUNS 2026",

@@ -2,20 +2,38 @@
 
 import Image from "next/image";
 import { DossierNav } from "@/components/DossierNav";
+import { DossierCarousel } from "@/components/media/DossierCarousel";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function AboutPage() {
-  const { aboutContent } = useSiteContent();
+  const { aboutContent, homeContent } = useSiteContent();
   const overviewChapter = aboutContent.chapters.find((chapter) => chapter.href === "/about") ?? aboutContent.chapters[0];
+  const legacyChapter = aboutContent.chapters.find((chapter) => chapter.href === "/about/legacy");
+  const aboutSlides = [
+    {
+      id: "about-overview",
+      alt: aboutContent.image.alt,
+      caption: aboutContent.legacy,
+      eyebrow: aboutContent.sections.legacy,
+      src: aboutContent.image.src,
+    },
+    ...homeContent.gallery.items.slice(0, 2).map((item) => ({
+      id: item.id,
+      alt: item.alt,
+      caption: item.caption,
+      eyebrow: item.title,
+      src: item.src,
+    })),
+  ];
 
   return (
     <>
       <PageHero intro={aboutContent.intro} title={aboutContent.title} />
       <section className="page-shell">
-        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
-          <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
             <DossierNav currentHref="/about" items={aboutContent.chapters} />
             <div className="theme-panel-strong paper-grain rounded-[8px] p-5">
               <div className="grid gap-0 border border-[var(--rule)]">
@@ -44,6 +62,13 @@ export default function AboutPage() {
             </article>
 
             <DossierFigure alt={aboutContent.image.alt} caption={aboutContent.legacy} eyebrow={aboutContent.sections.legacy} ratio="3/2" src={aboutContent.image.src} />
+
+            <DossierCarousel
+              description={aboutContent.legacy}
+              eyebrow={aboutContent.sections.legacy}
+              items={aboutSlides}
+              title={legacyChapter?.title}
+            />
 
             <div className="grid gap-5 md:grid-cols-3">
               {aboutContent.pillars.map((pillar) => (

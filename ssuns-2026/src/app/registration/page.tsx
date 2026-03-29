@@ -1,100 +1,73 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { ListservSignupForm } from "@/components/ListservSignupForm";
 import { LiquidButton } from "@/components/LiquidButton";
-import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
-import { PublicVideoPanel } from "@/components/PublicVideoPanel";
 import { RegistrationTimeline } from "@/components/RegistrationTimeline";
-import { Timeline, type TimelineItem } from "@/components/ui/timeline";
 import { useSiteContent } from "@/lib/useSiteContent";
+
+const visibleRegistrationHrefs = new Set(["/registration", "/registration/how-to-register", "/registration/financial-aid"]);
+
+function getRegistrationStatus(now: Date) {
+  const openDate = new Date("2026-04-01T00:00:00-04:00");
+  const closeDate = new Date("2026-10-16T23:59:59-04:00");
+
+  if (now < openDate) {
+    return {
+      label: "Not open",
+      detail: "Registration opens April 1, 2026.",
+    };
+  }
+
+  if (now > closeDate) {
+    return {
+      label: "Closed",
+      detail: "Registration closed on October 16, 2026 or earlier upon reaching capacity.",
+    };
+  }
+
+  return {
+    label: "Open",
+    detail: "Registration closes October 16, 2026 or earlier upon reaching capacity.",
+  };
+}
 
 export default function RegistrationPage() {
   const { registrationContent } = useSiteContent();
-  const [referenceNow] = useState(() => Date.now());
-  const navItems = registrationContent.chapters.filter((chapter) =>
-    ["/registration", "/registration/how-to-register", "/registration/financial-aid"].includes(chapter.href),
-  );
-  /** Canonical aid round dates aligned with registration.ts / financial aid chapter (Montreal ET) */
-  const financialAidIso = ["2026-06-08T12:00:00-04:00", "2026-09-08T12:00:00-04:00", "2026-10-16T12:00:00-04:00"] as const;
-  const milestoneDates = [
-    {
-      id: "registration-opens",
-      title: registrationContent.timeline[0]?.label ?? "",
-      description: registrationContent.timeline[0]?.text ?? "",
-      date: new Date("2026-04-01T00:00:00-04:00"),
-    },
-    ...registrationContent.financialAidDeadlines.map((deadlineLabel, index) => ({
-      id: `financial-aid-${index}`,
-      title: registrationContent.pricingTimelineText.financialAidDeadlines,
-      description: deadlineLabel,
-      date: new Date(financialAidIso[index] ?? financialAidIso[0]),
-    })),
-    {
-      id: "conference",
-      title: registrationContent.timeline[2]?.label ?? "",
-      description: registrationContent.timeline[2]?.text ?? "",
-      date: new Date("2026-11-12T00:00:00-05:00"),
-    },
-  ];
-  const firstUpcomingIndex = milestoneDates.findIndex((item) => item.date.getTime() >= referenceNow);
-  const timelineItems: TimelineItem[] = milestoneDates.map((item, index) => ({
-    id: item.id,
-    title: item.title,
-    description: item.description,
-    timestamp: item.date,
-    status:
-      item.date.getTime() < referenceNow
-        ? "completed"
-        : firstUpcomingIndex !== -1 && index === firstUpcomingIndex
-          ? "active"
-          : "pending",
-  }));
+  const chapter = registrationContent.chapters.find((item) => item.href === "/registration");
+  const navItems = registrationContent.chapters.filter((item) => visibleRegistrationHrefs.has(item.href));
+  const status = getRegistrationStatus(new Date());
+  const isFrench = registrationContent.title === "Inscription";
+
+  if (!chapter) return null;
 
   return (
     <>
-      <PageHero intro={registrationContent.intro} title={registrationContent.title} />
+      <PageHero intro={chapter.summary} title={chapter.title} />
       <section className="page-shell">
-        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <DossierNav currentHref="/registration" items={navItems} />
+        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="xl:sticky xl:top-28 xl:self-start">
+            <DossierNav currentHref={chapter.href} items={navItems} />
           </aside>
 
           <div className="space-y-8">
             <article className="rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-6 py-7 text-white sm:px-8">
-              <div className="grid gap-4 md:grid-cols-[0.58fr_0.42fr] md:items-end">
+              <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr] lg:items-end">
                 <div>
-                  <p className="section-kicker text-[#b4caff]">{registrationContent.sections.currentTier}</p>
-                  <h2 className="mt-3 text-3xl font-semibold leading-tight">{registrationContent.currentTier.label}</h2>
-                  <p className="mt-4 text-sm leading-relaxed text-[#e4eeff]">{registrationContent.currentTier.detail}</p>
+                  <p className="section-kicker text-[#b4caff]">{isFrench ? "Statut actuel des inscriptions" : "Current registration status"}</p>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight">{status.label}</h2>
+                  <p className="mt-4 text-sm leading-relaxed text-[#e4eeff]">{status.detail}</p>
                 </div>
-                <div className="grid gap-3 border-l border-white/14 pl-0 md:pl-5">
-                  {registrationContent.timeline.map((item) => (
-                    <article key={item.label}>
-                      <p className="text-xs font-semibold text-[#b4caff]">{item.label}</p>
-                      <p className="mt-1 text-sm text-[#eef4ff]">{item.text}</p>
-                    </article>
+                <div className="grid gap-3 border-t border-white/14 pt-4 lg:border-t-0 lg:border-l lg:pl-5 lg:pt-0">
+                  {chapter.body.map((paragraph) => (
+                    <p className="text-sm leading-relaxed text-[#eef4ff]" key={paragraph}>
+                      {paragraph}
+                    </p>
                   ))}
                 </div>
               </div>
-            </article>
-
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-4">
-                <div>
-                  <p className="section-kicker">{registrationContent.sections.timeline}</p>
-                  <h2 className="mt-3 text-4xl font-semibold leading-tight text-[var(--accent)]">
-                    {registrationContent.sections.timeline}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">
-                  {registrationContent.timeline.map((item) => item.text).join(" ")}
-                </p>
-              </div>
-              <Timeline className="mt-6 overflow-x-hidden" items={timelineItems} variant="compact" />
             </article>
 
             <RegistrationTimeline
@@ -103,10 +76,64 @@ export default function RegistrationPage() {
               text={registrationContent.pricingTimelineText}
             />
 
-            <div className="grid gap-8 xl:grid-cols-[0.52fr_0.48fr]">
+            <section className="grid gap-8 xl:grid-cols-[0.56fr_0.44fr]">
+              <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+                <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-4">
+                  <div>
+                    <p className="section-kicker">{isFrench ? "Frais et dates" : "Fees & Dates"}</p>
+                    <h2 className="font-display mt-3 text-4xl leading-tight text-[var(--accent)]">{isFrench ? "Frais d'inscription" : "Registration fees"}</h2>
+                  </div>
+                  <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{registrationContent.feePlaceholders[0]?.body}</p>
+                </div>
+                <div className="mt-5 overflow-hidden border border-[var(--rule)]">
+                  <table className="w-full border-collapse text-left text-sm sm:text-base">
+                    <thead className="bg-[var(--paper-deep)] text-[var(--accent)]">
+                      <tr>
+                        <th className="px-4 py-3 font-semibold">{isFrench ? "Palier" : "Stage"}</th>
+                        <th className="px-4 py-3 font-semibold">{isFrench ? "Dates" : "Dates"}</th>
+                        <th className="px-4 py-3 font-semibold">{isFrench ? "Frais de délégation" : "Delegation Fee"}</th>
+                        <th className="px-4 py-3 font-semibold">{isFrench ? "Par délégué" : "Per Delegate"}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {registrationContent.pricingTimeline.map((stage) => (
+                        <tr className="border-t border-[var(--rule)]" key={stage.id}>
+                          <td className="px-4 py-3 font-semibold text-[var(--text)]">{stage.label}</td>
+                          <td className="px-4 py-3 text-[var(--muted)]">{stage.start} {isFrench ? "au" : "to"} {stage.end}</td>
+                          <td className="px-4 py-3 text-[var(--text)]">{stage.delegationFee}</td>
+                          <td className="px-4 py-3 text-[var(--text)]">{stage.delegateFee}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+
+              <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+                <p className="section-kicker">{isFrench ? "Dates clés" : "Key Dates"}</p>
+                <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5">
+                  {registrationContent.timeline.map((item) => (
+                    <article className="border-l border-[var(--rule)] pl-4" key={item.label}>
+                      <p className="text-xs font-semibold text-[var(--accent)]">{item.label}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{item.text}</p>
+                    </article>
+                  ))}
+                  <article className="border-l border-[var(--rule)] pl-4">
+                    <p className="text-xs font-semibold text-[var(--accent)]">{isFrench ? "Aide financière" : "Financial Aid"}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{registrationContent.financialAidDeadlines.join(" • ")}</p>
+                  </article>
+                  <article className="border-l border-[var(--rule)] pl-4">
+                    <p className="text-xs font-semibold text-[var(--accent)]">{isFrench ? "Facturation" : "Invoices"}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{registrationContent.invoiceDeadlines.join(" • ")}</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+
+            <section className="grid gap-8 xl:grid-cols-[0.58fr_0.42fr]">
               <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
                 <p className="section-kicker">{registrationContent.letter.label}</p>
-                <h2 className="mt-4 text-3xl font-semibold leading-tight text-[var(--accent)]">{registrationContent.letter.title}</h2>
+                <h2 className="font-display mt-4 text-4xl leading-tight text-[var(--accent)]">{registrationContent.letter.title}</h2>
                 <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
                   {registrationContent.letter.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
@@ -125,37 +152,35 @@ export default function RegistrationPage() {
                 </div>
               </article>
 
-              <div className="space-y-8">
-                <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-                  <p className="section-kicker">{registrationContent.sections.flow}</p>
-                  <h2 className="mt-4 text-3xl font-semibold leading-tight text-[var(--accent)]">{registrationContent.sections.flow}</h2>
-                  <ol className="mt-6 space-y-4 border-t border-[var(--rule)] pt-5">
+              <div className="space-y-6">
+                <article className="theme-panel rounded-[8px] p-6 sm:p-8">
+                  <p className="section-kicker">{isFrench ? "Comment s'inscrire" : "How to Register"}</p>
+                  <h2 className="font-display mt-4 text-3xl leading-tight text-[var(--accent)]">{isFrench ? "Complétez l'inscription de votre délégation dans MUNager" : "Complete your delegation registration in MUNager"}</h2>
+                  <ol className="mt-5 space-y-3 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
                     {registrationContent.steps.map((step, index) => (
-                      <li className="grid gap-3 sm:grid-cols-[0.08fr_0.92fr]" key={step}>
-                        <span className="text-sm font-semibold tracking-[0.04em] text-[var(--accent)]">{index + 1}</span>
-                        <span className="text-sm leading-relaxed text-[var(--text)]">{step}</span>
+                      <li className="grid gap-3 sm:grid-cols-[1.75rem_minmax(0,1fr)]" key={step}>
+                        <span className="font-semibold text-[var(--accent)]">{index + 1}.</span>
+                        <span>{step}</span>
                       </li>
                     ))}
                   </ol>
-                  <div className="mt-8 flex flex-wrap items-center gap-5 border-t border-[var(--rule)] pt-5">
+                  <div className="mt-6 flex flex-wrap gap-3 border-t border-[var(--rule)] pt-5">
                     <LiquidButton href={registrationContent.cta.href} label={registrationContent.cta.label} />
-                    <Link className="border-b border-[var(--accent-2)] pb-1 text-sm font-semibold tracking-[0.02em] text-[var(--accent)]" href="/registration/financial-aid">
-                      {registrationContent.chapters.find((chapter) => chapter.href === "/registration/financial-aid")?.title}
+                    <Link className="inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/registration/how-to-register">
+                      {isFrench ? "Voir le guide complet" : "View full guide"}
                     </Link>
                   </div>
                 </article>
 
-                <PublicVideoPanel
-                  fallbackSrc={registrationContent.munagerVideo.fallbackSrc}
-                  poster={registrationContent.munagerVideo.poster}
-                  src={registrationContent.munagerVideo.src}
-                  title={registrationContent.munagerVideo.title}
-                  unavailableLabel={registrationContent.munagerVideo.unavailableLabel}
-                />
-
-                <DossierFigure alt={registrationContent.image.alt} ratio="4/5" src={registrationContent.image.src} />
+                <article className="theme-panel rounded-[8px] p-6 sm:p-8">
+                  <p className="section-kicker">{isFrench ? "Aide financière" : "Financial Aid"}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{registrationContent.chapters.find((item) => item.href === "/registration/financial-aid")?.body[0]}</p>
+                  <Link className="mt-4 inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/registration/financial-aid">
+                    {isFrench ? "Ouvrir l'aide financière" : "Open financial aid"}
+                  </Link>
+                </article>
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </section>

@@ -4,20 +4,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
 import { DossierNav } from "@/components/DossierNav";
+import { DossierCarousel } from "@/components/media/DossierCarousel";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function ConferencePage() {
-  const { conferenceContent } = useSiteContent();
+  const { conferenceContent, homeContent } = useSiteContent();
+  const conferenceSlides = [
+    {
+      id: "conference-venue",
+      alt: conferenceContent.venueSection.image.alt,
+      caption: conferenceContent.venueSection.body,
+      eyebrow: conferenceContent.venueSection.title,
+      src: conferenceContent.venueSection.image.src,
+    },
+    ...homeContent.gallery.items.slice(1).map((item) => ({
+      id: item.id,
+      alt: item.alt,
+      caption: item.caption,
+      eyebrow: item.title,
+      src: item.src,
+    })),
+  ];
 
   return (
     <>
       <PageHero intro={conferenceContent.intro} title={conferenceContent.title} />
       <section className="page-shell">
         <ConferenceQuickLinks className="mb-6" currentHref="/conference" />
-        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="xl:sticky xl:top-28 xl:self-start">
             <DossierNav currentHref="/conference" items={conferenceContent.chapters} />
           </aside>
 
@@ -61,6 +78,13 @@ export default function ConferencePage() {
                 <DossierFigure alt={conferenceContent.venueSection.image.alt} ratio="16/9" src={conferenceContent.venueSection.image.src} />
               </div>
             </article>
+
+            <DossierCarousel
+              description={conferenceContent.venueSection.body}
+              eyebrow={conferenceContent.sections.venue}
+              items={conferenceSlides}
+              title={conferenceContent.venueSection.title}
+            />
 
             <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
               <p className="section-kicker">{conferenceContent.sections.tracks}</p>

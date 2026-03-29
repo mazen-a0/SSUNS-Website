@@ -112,7 +112,7 @@ export function DossierRail({ items, currentHref, variant = "rail", contextTitle
 
   return (
     <>
-      <div className="theme-panel-strong paper-grain hidden rounded-[8px] p-4 lg:block lg:ml-[-1.25rem]">
+      <div className="theme-panel-strong paper-grain hidden rounded-[8px] p-4 xl:block">
         <section>
           <p className="section-kicker">{uiText.railIndexLabel}</p>
           <div className="mt-3 space-y-2 border-t border-[var(--rule)] pt-3">

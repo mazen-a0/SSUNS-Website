@@ -27,11 +27,10 @@ export const committeesPageContent = {
       title: "Committee Slating",
       summary: "Committee descriptions, dais contacts, and programme notes for the 2026 slate.",
       body: [
-        "Committee Descriptions for Website/Dias Apps",
-        "If you have any questions, feel free to contact Emma Ristic at gaecosoc@ssuns.org.",
-        "If you have any questions, feel free to contact Eitan Pessin at spec@ssuns.org.",
-        "If you have any questions, feel free to contact Will Greer at crisis@ssuns.org.",
-        "Meet the DAIS!",
+        "My name is Valeria Fonseca Ortega, and I am back to serve my second year as Under-Secretary-General for Committee Affairs. Coming back a second time has made this iteration of SSUNS even more exciting, and I, alongside the rest of Team Committees: Emma Ristic, Deputy USG for GA and ECOSOCs; Eitan Pessin, Deputy USG for Specialized Agencies; and William Greer, Deputy USG for Crisis, have worked hard to carefully craft committees that are outside the box, push for perspectives that are often disregarded, and overall contain great educational material.",
+        "We have aimed to showcase a diversity of subjects in both geographical, historical, and thematic spheres. This year, we are proud to bring forth the first iteration of the United Nations Security Council, alongside committees like the First Pan-Slavic Congress of 1848 and the Pan-African Film and Television Festival of Ouagadougou.",
+        "Our goal is simple: foster debate, exchange ideas, challenge perceptions, and create meaningful dialogue. Above all, SSUNS stands not as a competition, but rather as a forum for young leaders to find their voices in a world where dialogue is often disregarded as one of the most powerful tools.",
+        "If you have any questions, feel free to contact Emma Ristic at gaecosoc@ssuns.org, Eitan Pessin at spec@ssuns.org, or Will Greer at crisis@ssuns.org.",
       ],
     },
     {

@@ -65,7 +65,7 @@ export const conferenceContent = {
       summary: "Delegate support, on-site reference points, and conference help resources.",
       body: [
         "The Delegate Handbook, containing key information on conference policies, preparation, and procedures, will be released prior to the conference.",
-        "Coming soon.",
+        "Merch.",
       ],
     },
     {
@@ -75,19 +75,18 @@ export const conferenceContent = {
       body: [
         "Technology Policy SSUNS 2026.",
         "Please note that the SSUNS 2026 technology policy has changed and will vary by committee size and format. As SSUNS will run as a hybrid conference, the policies for GAs, ECOSOCs, Specialized Agencies, and Crisis committees will differ.",
-        "Double-Delegate General Assemblies (FAO and UNHR) will operate as paperless committees, with Slack serving as the primary platform for communication between Dais and delegates.",
-        "These committees will follow a tech-free format, with the exception of online draft writing. Notes must be passed physically, digital note-passing is not allowed.",
-        "Delegates should come prepared with printed copies of their research to minimize reliance on devices during sessions.",
+        "Double-Delegate General Assemblies. Double-Delegate General Assemblies (FAO and UNHR) will operate as paperless committees, with Slack serving as the primary platform for communication between Dais and delegates.",
+        "Delegates are allowed to use laptops and personal devices during committee sessions, both in-room and out-of-room. Despite this, delegates are expected to arrive fully prepared, with all research completed prior to the conference. During moderated caucuses, devices must only be for note-passing via Slack.",
+        "Small General Assemblies, ECOSOCs, and Specialized Agencies. These committees will follow a tech-free format, with the exception of online draft writing. Notes must be passed physically, digital note-passing is not allowed. Laptops and personal devices must be put away during moderated caucuses, unless specific accommodations have been approved. Devices may be used only during unmoderated caucuses for drafting working papers or resolutions. Delegates should come prepared with printed copies of their research to minimize reliance on devices during sessions. For Specialized Agencies, directives will be written by hand on paper.",
+        "Crises. Delegates are required to use paper for all in-committee functions, including passing notes to fellow delegates, writing directives, and sending crisis notes to the backroom. To ensure consistency, delegates must use 8.5” x 11” notebooks or legal pads. In line with SSUNS’ sustainability commitment, notepads will not be provided. All Crisis delegates are expected to bring two notebooks or legal pads, as committees operate on a two-notepad system.",
+        "For any questions regarding the tech policy at SSUNS or technical issues (with respect to committees), please contact committees@ssuns.org.",
       ],
     },
     {
       href: "/conference/awards",
       title: "Awards",
       summary: "Recognition, honours, and distinction at the close of conference.",
-      body: [
-        "Awards information will be published here as the 2026 programme is finalized.",
-        "This chapter can later house award categories, criteria, and closing ceremony notes.",
-      ],
+      body: ["See the Awards section under Committees for the full awards breakdown."],
     },
   ],
   tracks: [

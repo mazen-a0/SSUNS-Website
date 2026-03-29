@@ -24,8 +24,8 @@ export default function ConferenceDrcPage() {
       <PageHero eyebrow={conferenceContent.title} intro={chapter.summary} title={chapter.title} />
       <section className="page-shell">
         <ConferenceQuickLinks className="mb-6" currentHref={chapter.href} />
-        <div className="grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] xl:gap-14">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
+          <aside className="xl:sticky xl:top-28 xl:self-start">
             <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>
           <div className="space-y-8">

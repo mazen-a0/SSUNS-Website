@@ -1,28 +1,12 @@
 import { aboutContent as en, type SecretariatMember } from "@/content/en/about";
 
-const secretariatMembers: SecretariatMember[] = [
-  { name: "Marcus Kelly", role: "Secretary-General", headshotSrc: "/headshots/marcus.jpg" },
-  { name: "Costas Oreopoulos", role: "Chargée d’Affaires", headshotSrc: "/headshots/costas.jpg" },
-  { name: "Mazen Asali", role: "Director-General", headshotSrc: "/headshots/mazen.jpg" },
-  { name: "Andrew Tobin", role: "USG Finance", headshotSrc: "/headshots/andrew.jpg" },
-  { name: "Hortense Bonnet", role: "USG Admin", headshotSrc: "/headshots/hortense.jpg" },
-  { name: "Julien Fournier", role: "Chief of HR", headshotSrc: "/headshots/julien.jpg" },
-  { name: "Léandre Noël", role: "Chief of Ops", headshotSrc: "/headshots/leandre.jpg" },
-  { name: "Kiara Gilroy", role: "Director of Events", headshotSrc: "/headshots/kiara.jpg" },
-  { name: "Tracy Jiang", role: "Director of PR", headshotSrc: "/headshots/tracy.jpg" },
-  { name: "Paul Malpartida Durroux", role: "Dep PR External Outreach", headshotSrc: "/headshots/paul.jpg" },
-  { name: "Hannah Regular", role: "Dep PR Brand Management", headshotSrc: "/headshots/hannah.jpg" },
-  { name: "Valeria Fonseca Ortega", role: "USG Committees", headshotSrc: "/headshots/vale.jpg" },
-  { name: "Emma Ristic", role: "Dep GA/ECOSOCs", headshotSrc: "/headshots/emma.jpg" },
-  { name: "Eitan Pessin", role: "Dep Specs", headshotSrc: "/headshots/eitan.jpg" },
-  { name: "Will Greer", role: "Dep Crisis", headshotSrc: "/headshots/will.jpg" },
-];
+const secretariatMembers: SecretariatMember[] = en.secretariatMembers.map((member) => ({ ...member }));
 
 export const aboutContent = {
   ...en,
   title: "À propos de SSUNS",
   intro:
-    "SSUNS est l'une des plus grandes conférences de simulation des Nations Unies pour écoles secondaires en Amérique du Nord, conçue par des étudiants qui valorisent la qualité institutionnelle, une pédagogie solide et un véritable sens de l'occasion.",
+    "Fondé en 1992 par un groupe d’étudiants de l’Université McGill, le Symposium des Nations Unies des écoles secondaires (SSUNS) a été créé afin d’offrir aux élèves du secondaire un espace pour explorer les enjeux mondiaux à travers la diplomatie et le débat.",
   sections: {
     ...en.sections,
     mission: "Mission",
@@ -33,20 +17,22 @@ export const aboutContent = {
   chapters: [
     {
       ...en.chapters[0],
-      title: "Vue d'ensemble",
-      summary: "Profil institutionnel, héritage et standard de conférence.",
+      title: "Vue d’ensemble",
+      summary: "Profil institutionnel, héritage et mission de SSUNS.",
       body: [
-        "SSUNS fonctionne comme une institution diplomatique étudiante avec un fort accent sur la préparation, le rythme et la confiance opérationnelle.",
-        "L'identité de la conférence dépend autant de la discipline du programme et de la clarté pour les conseillers que de l'ampleur des comités.",
+        "En 1992, un groupe d’étudiants de l’Université McGill s’est réuni avec l’objectif de créer un espace où des élèves du secondaire pourraient explorer les enjeux mondiaux à travers la diplomatie et le débat.",
+        "Aujourd’hui, dans sa 34e année, le Symposium des Nations Unies des écoles secondaires (SSUNS) est devenu l’une des principales conférences de simulation des Nations Unies au secondaire au Canada.",
+        "Chaque année, SSUNS accueille plus de 1 300 délégués représentant plus de 60 délégations scolaires provenant du monde entier. Entièrement organisée par des étudiants et soutenue par plus de 250 étudiants de McGill, la conférence offre un espace dynamique où les élèves du secondaire et du cégep développent leurs compétences en leadership, en négociation et en prise de parole en public, tout en abordant des enjeux mondiaux complexes à travers les débats en comité et la collaboration.",
+        "Organisé annuellement à Montréal, au Québec, SSUNS rassemble des étudiants du monde entier pour une expérience inoubliable. Cette année, nous sommes ravis d’accueillir de nouveau les délégués à l’hôtel Sheraton Centre Montréal. Des comités innovants aux événements captivants pour les participants, le Secrétariat a travaillé sans relâche afin de créer une 34e édition exceptionnelle de SSUNS. Nous vous invitons à explorer notre site web pour découvrir ce qui fait de SSUNS une conférence de simulation des Nations Unies véritablement unique.",
       ],
     },
     {
       ...en.chapters[1],
       title: "Mission",
-      summary: "Pourquoi SSUNS existe et quel standard la conférence cherche à tenir.",
+      summary: "Pourquoi SSUNS existe et ce que la conférence demande aux délégués et au personnel.",
       body: [
-        "SSUNS existe pour offrir aux délégués du secondaire une conférence qui traite la préparation, la diplomatie et le leadership étudiant avec sérieux.",
-        "L'objectif n'est pas simplement la participation, mais la formation : les élèves devraient repartir avec de meilleures habitudes de recherche, de rédaction et de négociation.",
+        "SSUNS rassemble des délégués du secondaire provenant du monde entier afin de participer à des débats réfléchis sur des enjeux mondiaux. Grâce à une diplomatie structurée et à la collaboration, la conférence encourage les étudiants à développer leur esprit critique, leurs compétences en communication et leur leadership, tout en travaillant à l’élaboration de solutions concrètes.",
+        "Organisé par des étudiants de l’Université McGill, SSUNS offre aux délégués comme aux membres du personnel des occasions de se développer en tant que leaders, de s’ouvrir à une diversité de perspectives et de participer à une conférence fondée sur la préparation, le respect et la curiosité intellectuelle.",
       ],
     },
     {
@@ -54,17 +40,20 @@ export const aboutContent = {
       title: "Secrétariat",
       summary: "La structure de direction étudiante responsable de la conférence.",
       body: [
-        "Le secrétariat est responsable de l'orientation du programme, de la logistique, des comités, des services aux délégués et de la cohérence générale de la conférence.",
-        "Les biographies fictives pourront plus tard être remplacées par les membres confirmés de l'exécutif et les descriptions exactes de portefeuille.",
+        "UNE ÉQUIPE DE 15 PERSONNES MOBILISÉE TOUTE L’ANNÉE POUR FAIRE VIVRE L’EXPÉRIENCE SSUNS.",
+        "Tout au long de l’année, le Secrétariat travaille à la mise en place de chaque aspect de la conférence, du développement des comités à l’élaboration du programme académique, en passant par la coordination de la logistique et des événements.",
+        "Aux côtés de centaines d’étudiants bénévoles de McGill, l’équipe réunit les personnes et les idées qui donnent vie à SSUNS.",
+        "À la fois étudiants, organisateurs et leaders, les membres du Secrétariat contribuent à créer une conférence qui stimule la réflexion, encourage la collaboration et rassemble la communauté internationale du MUN à Montréal.",
+        "NOUS AVONS HÂTE DE VOUS ACCUEILLIR À SSUNS !",
       ],
     },
     {
       ...en.chapters[3],
-      title: "Coordination",
-      summary: "Les portefeuilles opérationnels qui transforment la planification en exécution.",
+      title: "Coordinateurs",
+      summary: "Les équipes opérationnelles qui rendent l’expérience SSUNS possible.",
       body: [
-        "Les coordonnateurs soutiennent la circulation sur le site, la communication avec les conseillers, l'inscription, l'accueil et les opérations des comités pendant la semaine de la conférence.",
-        "Cette section pourra ensuite s'élargir à des profils détaillés ou à des notes de direction pour chaque portefeuille.",
+        "Découvrez les coordinateurs qui contribuent à faire vivre l’expérience SSUNS !",
+        "SSUNS ne serait pas possible sans leur engagement et leur soutien.",
       ],
     },
     {
@@ -72,59 +61,54 @@ export const aboutContent = {
       title: "Héritage de SSUNS",
       summary: "Une lecture plus longue de SSUNS comme institution et tradition annuelle.",
       body: [
-        "Au fil des décennies, SSUNS est devenu une conférence reconnue pour son ampleur, la variété de ses comités et un équilibre distinctif entre rigueur et chaleur humaine.",
-        "Ce chapitre pourra plus tard être enrichi par des repères historiques confirmés, des archives photographiques et du matériel d'anniversaire officiel.",
+        "Fondé en 1992 par un groupe d’étudiant·e·s de l’Université McGill, le Symposium des Nations Unies des écoles secondaires (SSUNS) a été créé afin d’offrir aux élèves du secondaire un espace pour explorer les enjeux mondiaux à travers la diplomatie et le débat.",
+        "Au fil des années, SSUNS est devenu l’une des plus importantes conférences de simulation des Nations Unies pour les élèves du secondaire, accueillant des délégués provenant de partout au Canada et du monde entier.",
+        "Aujourd’hui, la conférence poursuit cet héritage en réunissant des étudiants autour de débats réfléchis, de la collaboration et du développement du leadership.",
       ],
     },
     {
-      href: "/about/irsam",
+      ...en.chapters[5],
       title: "IRSAM",
-      summary: "Visitez IRSAM, l'Association des étudiants en relations internationales de McGill, organisme parent de SSUNS.",
+      summary: "L’organisation mère de SSUNS et ses autres volets étudiants.",
       body: [
-        "IRSAM est l'Association des étudiants en relations internationales de McGill, l'organisme parapluie qui soutient SSUNS et d'autres programmes.",
+        "SSUNS fait partie d’une organisation plus large, l’Association des étudiant·e·s en relations internationales de McGill (IRSAM). Cet organisme à but non lucratif, constitué au niveau fédéral, regroupe plus de 300 membres étudiants à l’Université McGill.",
+        "IRSAM vise à favoriser l’engagement des jeunes, le développement du leadership et la sensibilisation aux enjeux internationaux à travers ses différents volets. De plus, IRSAM bénéficie du statut consultatif spécial auprès du Conseil économique et social des Nations Unies (ECOSOC), ce qui en fait l’une des rares organisations universitaires dirigées par des étudiants dans le monde à détenir ce statut auprès des Nations Unies.",
+        "En plus de SSUNS, IRSAM comprend six autres associations : McMUN, l’équipe de délégation de McGill, Flux, la McGill International Review, Junior Peacemakers et la Délégation Consultative des Jeunes de l’Université McGill (MYAD).",
       ],
     },
     {
-      href: "/about/faqs",
+      ...en.chapters[6],
       title: "FAQ",
-      summary: "Questions fréquentes pour les délégués, les conseillers et les familles.",
+      summary: "Questions fréquentes pour les délégués, les encadrants et les familles.",
       body: [
-        "Les questions fréquentes couvrent les distinctions, la logistique des délégations, le code vestimentaire, la préparation et le déroulement général de la conférence.",
-        "Lorsqu'une question renvoie à un autre sujet, les délégués devraient être orientés vers les chapitres du lieu, de l'horaire, de l'inscription ou des comités.",
+        "Qu’est-ce que la simulation des Nations Unies (MUN) ?",
+        "Comment les écoles peuvent-elles s’inscrire à SSUNS ?",
+        "Comment les écoles peuvent-elles rester informées ?",
       ],
     },
-  ],
-  mission:
-    "SSUNS existe pour offrir aux délégués du secondaire une conférence qui traite la préparation, la diplomatie et le leadership étudiant avec sérieux. L'objectif n'est pas seulement la participation, mais la formation.",
-  legacy:
-    "Au fil des décennies, SSUNS est devenu une conférence reconnue pour son ampleur, la variété de ses comités et un équilibre distinctif entre rigueur et chaleur humaine. Le texte de remplacement pourra plus tard être remplacé par des repères historiques précis.",
-  pillars: [
-    {
-      ...en.pillars[0],
-      title: "Excellence dirigée par les étudiants",
-      body: "Les grandes fonctions opérationnelles sont conçues et livrées par des équipes étudiantes avec une responsabilité claire et une forte discipline de production.",
-    },
-    {
-      ...en.pillars[1],
-      title: "Rigueur de fond",
-      body: "Les sujets de comité sont choisis pour leur profondeur politique, leur actualité et la complexité réelle des négociations qu'ils permettent.",
-    },
-    {
-      ...en.pillars[2],
-      title: "Culture institutionnelle",
-      body: "Les nouveaux délégués comme les présidents expérimentés doivent sentir que la conférence est exigeante, cohérente et qu'elle mérite une préparation sérieuse.",
-    },
-  ],
-  teamPlaceholders: [
-    { ...en.teamPlaceholders[0], name: "Secrétaire général fictif", role: "Direction générale de la conférence et vision d'ensemble." },
-    { ...en.teamPlaceholders[1], name: "Directeur général fictif", role: "Opérations, logistique et exécution sur le site." },
-    { ...en.teamPlaceholders[2], name: "Secrétaire général adjoint aux comités fictif", role: "Recrutement, formation et contrôle de qualité des comités." },
   ],
   secretariatMembers,
   faqCategories: en.faqCategories,
+  pillars: [
+    {
+      ...en.pillars[0],
+      title: "Excellence étudiante",
+      body: "SSUNS est conçu et organisé par des étudiants de l’Université McGill, qui assurent la réalisation de la conférence avec professionnalisme et rigueur.",
+    },
+    {
+      ...en.pillars[1],
+      title: "Débats engagés",
+      body: "Les comités abordent des enjeux mondiaux complexes à travers des discussions de fond et des négociations réfléchies.",
+    },
+    {
+      ...en.pillars[2],
+      title: "Leadership collaboratif",
+      body: "SSUNS permet aux jeunes leaders de faire entendre leurs perspectives et leurs idées dans les discussions sur les enjeux mondiaux.",
+    },
+  ],
   metrics: [
-    { ...en.metrics[0], label: "Années d'existence" },
-    { ...en.metrics[1], label: "Bénévoles annuels" },
-    { ...en.metrics[2], label: "Écoles partenaires" },
+    { label: "Délégués", value: "1300+" },
+    { label: "Staff", value: "250+" },
+    { label: "Écoles", value: "60+" },
   ],
 };

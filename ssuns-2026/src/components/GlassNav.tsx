@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { NavPreviewDeck } from "@/components/nav/nav-preview-deck";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/content/registry";
 
@@ -197,7 +198,7 @@ export function GlassNav({
             </div>
           </div>
 
-          <div className="grid min-h-[3rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4">
+          <div className="grid min-h-[2.8rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4">
             <Link
               aria-label={homeAriaLabel}
               className="inline-flex items-center"
@@ -225,7 +226,7 @@ export function GlassNav({
                       <Link
                         aria-expanded={hasPreview ? openPreview === item.href : undefined}
                         className={cn(
-                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-2 text-[15px] font-semibold text-[#eaf0ff] transition-colors duration-200 hover:text-white",
+                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-2 text-base font-semibold text-[#eaf0ff] transition-colors duration-200 hover:text-white",
                           isActive && "is-active text-white",
                         )}
                         href={item.href}
@@ -252,7 +253,7 @@ export function GlassNav({
                 return (
                   <Link
                     className={cn(
-                      "nav-link inline-flex items-center whitespace-nowrap py-2 text-[13px] font-semibold text-[#d6e2ff] transition-colors duration-200 hover:text-white",
+                      "nav-link inline-flex items-center whitespace-nowrap py-2 text-sm font-semibold text-[#d6e2ff] transition-colors duration-200 hover:text-white",
                       isActive && "is-active text-white",
                     )}
                     href={item.href}
@@ -271,26 +272,16 @@ export function GlassNav({
 
           {openPreview && previewMenus[openPreview]?.length ? (
             <div className="border-t border-white/12 py-4">
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {previewMenus[openPreview].map((entry) => (
-                  <Link
-                    className="block border border-white/12 bg-[rgba(8,14,46,0.96)] px-4 py-4 transition-colors duration-200 hover:border-[var(--accent-2)] hover:bg-[rgba(12,20,64,0.98)]"
-                    href={entry.href}
-                    key={entry.href}
-                    onClick={() => setOpenPreview(null)}
-                    onFocus={() => setOpenPreview(openPreview)}
-                  >
-                    <p className="text-sm font-semibold text-white">{entry.label}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[#c6d7ff]">{entry.description}</p>
-                  </Link>
-                ))}
-              </div>
+              <NavPreviewDeck
+                items={previewMenus[openPreview]}
+                onNavigate={() => setOpenPreview(null)}
+              />
             </div>
           ) : null}
         </div>
       </div>
 
-      <div className="page-shell flex min-h-[3rem] items-center justify-between gap-4 xl:hidden">
+      <div className="page-shell flex min-h-[2.8rem] items-center justify-between gap-4 xl:hidden">
         <Link
           aria-label={homeAriaLabel}
           className="inline-flex items-center"
@@ -305,7 +296,7 @@ export function GlassNav({
         <div className="flex items-center gap-2">
           <button
             aria-label={openPaletteLabel}
-            className="inline-flex h-9 items-center border border-white/16 bg-white/8 px-3 text-sm font-semibold text-white"
+            className="inline-flex h-8 items-center border border-white/16 bg-white/8 px-3 text-sm font-semibold text-white"
             onClick={onOpenPalette}
             type="button"
           >
@@ -314,7 +305,7 @@ export function GlassNav({
           <button
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? closeMenuLabel : openMenuLabel}
-            className="inline-flex h-9 items-center border border-white/16 bg-white/8 px-3 text-sm font-semibold text-white"
+            className="inline-flex h-8 items-center border border-white/16 bg-white/8 px-3 text-sm font-semibold text-white"
             onClick={() => setMobileOpen((prev) => !prev)}
             type="button"
           >
@@ -357,19 +348,12 @@ export function GlassNav({
                       ) : null}
                     </div>
                     {hasPreview && isExpanded ? (
-                      <div className="mt-3 space-y-2 pl-3">
-                        {previewMenus[item.href].map((entry) => (
-                          <Link
-                            className="block text-sm text-[#d6e2ff] transition-colors duration-200 hover:text-white"
-                            href={entry.href}
-                            key={entry.href}
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            <span className="font-semibold text-white">{entry.label}</span>
-                            <span className="mt-1 block text-xs leading-relaxed">{entry.description}</span>
-                          </Link>
-                        ))}
-                      </div>
+                      <NavPreviewDeck
+                        className="mt-3 pl-3"
+                        items={previewMenus[item.href]}
+                        layout="stack"
+                        onNavigate={() => setMobileOpen(false)}
+                      />
                     ) : null}
                   </div>
                 );

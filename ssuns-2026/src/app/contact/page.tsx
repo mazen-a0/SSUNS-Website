@@ -1,14 +1,30 @@
 "use client";
 
 import { useState } from "react";
+import { DossierCarousel } from "@/components/media/DossierCarousel";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function ContactPage() {
-  const { contactContent } = useSiteContent();
+  const { contactContent, homeContent } = useSiteContent();
   const [formState, setFormState] = useState({ name: "", email: "", subject: "", message: "" });
   const [error, setError] = useState<string | null>(null);
+  const contactSlides = [
+    {
+      id: "contact-montreal",
+      alt: contactContent.image.alt,
+      eyebrow: contactContent.title,
+      src: contactContent.image.src,
+    },
+    ...homeContent.gallery.items.slice(0, 2).map((item) => ({
+      id: item.id,
+      alt: item.alt,
+      caption: item.caption,
+      eyebrow: item.title,
+      src: item.src,
+    })),
+  ];
 
   return (
     <>
@@ -34,6 +50,7 @@ export default function ContactPage() {
 
           <div className="space-y-5">
             <DossierFigure alt={contactContent.image.alt} ratio="16/9" src={contactContent.image.src} />
+            <DossierCarousel items={contactSlides} />
             <article className="bg-[var(--panel-inverse)] p-6 text-white sm:p-7">
               <p className="section-kicker text-[#afcbff]">{contactContent.sections.responseWindow}</p>
               <h2 className="mt-4 text-2xl font-semibold leading-tight">{contactContent.officeHours.title}</h2>

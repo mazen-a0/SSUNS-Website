@@ -106,9 +106,9 @@ export const footerContent = {
       title: "Preparation",
       items: [
         { label: "How To Register", href: "/registration/how-to-register" },
-        { label: "Handbook", href: "/registration/how-to-register" },
-        { label: "Policies", href: "/resources/policies" },
-        { label: "FAQ", href: "/resources/faq" },
+        { label: "Financial Aid", href: "/registration/financial-aid" },
+        { label: "Committee Policies", href: "/committees/policies" },
+        { label: "FAQ", href: "/about/faqs" },
       ],
     },
   ],

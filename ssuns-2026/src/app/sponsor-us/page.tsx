@@ -2,18 +2,33 @@
 
 import { PageHero } from "@/components/PageHero";
 import { PublicAssetLink } from "@/components/PublicAssetLink";
-import { DossierFigure } from "@/components/media/DossierFigure";
+import { DossierCarousel } from "@/components/media/DossierCarousel";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function SponsorUsPage() {
-  const { sponsorContent } = useSiteContent();
+  const { homeContent, sponsorContent } = useSiteContent();
+  const sponsorSlides = [
+    {
+      id: "sponsor-hero",
+      alt: sponsorContent.heroImage.alt,
+      eyebrow: sponsorContent.title,
+      src: sponsorContent.heroImage.src,
+    },
+    ...homeContent.gallery.items.slice(1, 4).map((item) => ({
+      id: item.id,
+      alt: item.alt,
+      caption: item.caption,
+      eyebrow: item.title,
+      src: item.src,
+    })),
+  ];
 
   return (
     <>
       <PageHero intro={sponsorContent.intro} title={sponsorContent.title} />
       <section className="page-shell">
         <div className="grid gap-6 lg:grid-cols-[0.44fr_0.56fr]">
-          <DossierFigure alt={sponsorContent.heroImage.alt} ratio="16/9" src={sponsorContent.heroImage.src} />
+          <DossierCarousel items={sponsorSlides} />
 
           <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
             <div className="grid gap-4 sm:grid-cols-2">

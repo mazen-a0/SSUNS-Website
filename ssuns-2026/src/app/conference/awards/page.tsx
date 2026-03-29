@@ -1,7 +1,5 @@
-"use client";
-
-import { ConferenceChapterPage } from "@/components/ConferenceChapterPage";
+import { redirect } from "next/navigation";
 
 export default function ConferenceAwardsPage() {
-  return <ConferenceChapterPage href="/conference/awards" />;
+  redirect("/committees/awards");
 }

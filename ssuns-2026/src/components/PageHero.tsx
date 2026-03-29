@@ -13,12 +13,9 @@ export function PageHero({ title, intro, eyebrow, className }: PageHeroProps) {
       <div className="theme-panel-strong paper-grain section-entrance relative overflow-hidden px-7 py-10 sm:px-10 sm:py-12">
         {eyebrow ? <p className="section-kicker">{eyebrow}</p> : null}
         <div aria-hidden className="mt-4 h-px max-w-[14rem] bg-[linear-gradient(90deg,var(--accent-2),transparent)]" />
-        <div className="mt-6 grid gap-6 lg:grid-cols-[0.88fr_0.12fr] lg:items-end">
-          <div>
-            <h1 className="font-display text-4xl leading-[0.92] text-[var(--accent)] sm:text-6xl">{title}</h1>
-            <p className="mt-5 max-w-4xl text-base leading-8 text-[var(--muted)] sm:text-lg">{intro}</p>
-          </div>
-          <div className="hidden border-l border-[var(--rule)] pl-5 lg:block" />
+        <div className="mt-6 max-w-4xl">
+          <h1 className="font-display text-4xl leading-[0.92] text-[var(--accent)] sm:text-6xl">{title}</h1>
+          <p className="mt-5 max-w-4xl text-base leading-8 text-[var(--muted)] sm:text-lg">{intro}</p>
         </div>
       </div>
     </section>

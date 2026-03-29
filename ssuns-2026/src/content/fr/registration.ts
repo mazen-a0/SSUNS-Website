@@ -4,7 +4,7 @@ export const registrationContent = {
   ...en,
   title: "Inscription",
   intro:
-    "Les inscriptions à SSUNS 2026 ouvriront le 1er avril! La conférence aura lieu du 12 au 15 novembre 2026 et des détails supplémentaires seront publiés tout au long du mois de mars.",
+    "Les inscriptions à SSUNS 2026 ouvriront le 1er avril ! Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
   sections: {
     ...en.sections,
     flow: "Comment s'inscrire",
@@ -21,18 +21,20 @@ export const registrationContent = {
       title: "Information",
       summary: "Les inscriptions à SSUNS 2026 ouvrent le 1er avril 2026.",
       body: [
-        "Les inscriptions à SSUNS 2026 ouvriront le 1er avril. La conférence aura lieu du 12 au 15 novembre 2026.",
-        "Assurez-vous de vous inscrire à notre liste de diffusion ci-dessous pour rester informé au fur et à mesure que les détails seront publiés au cours du mois de mars.",
+        "Les inscriptions pour SSUNS 2026 ouvriront le 1er avril !",
+        "Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
+        "Des informations supplémentaires, y compris des instructions détaillées et des mises à jour importantes, seront publiées ici tout au long du mois de mars.",
+        "Nous encourageons tous les délégués et les encadrants à les consulter à l’avance afin d’assurer une inscription sans difficulté.",
+        "La conférence se déroulera du 12 au 15 novembre 2026.",
+        "Ouverture des inscriptions : 1er avril.",
+        "Clôture des inscriptions : 16 octobre ou lorsque la capacité maximale est atteinte.",
       ],
     },
     {
       ...en.chapters[1],
       title: "Comment s'inscrire",
       summary: "Utilisez Munager pour compléter l'inscription de votre délégation.",
-      body: [
-        "Toute l'inscription doit être complétée par l'entremise de Munager.",
-        "Les écoles et les délégués doivent suivre les instructions officielles d'inscription et utiliser la plateforme officielle pour les soumissions et les mises à jour.",
-      ],
+      body: [en.howToGuide.intro],
     },
     {
       ...en.chapters[2],
@@ -48,8 +50,15 @@ export const registrationContent = {
       title: "Aide financière",
       summary: "Information sur l'accessibilité financière.",
       body: [
-        "Les informations sur l'accessibilité financière seront publiées avec le dossier d'inscription.",
-        "Les écoles devraient consulter ce chapitre pour les options de soutien, les critères d'admissibilité et l'échéancier de soumission.",
+        "Les politiques financières et les informations relatives à l’aide financière seront mises à jour prochainement.",
+        "Dates limites – Demandes d’aide financière.",
+        "Précoce : 8 juin.",
+        "Régulière : 8 septembre.",
+        "Dernière ronde : 16 octobre.",
+        "Dates limites – Facturation.",
+        "Précoce : 22 juin.",
+        "Régulière : 16 septembre.",
+        "Dernière ronde : 23 octobre.",
       ],
     },
     {
@@ -63,11 +72,12 @@ export const registrationContent = {
     },
   ],
   steps: [
-    "Ouvrez la page officielle d'inscription de SSUNS et consultez les instructions publiées.",
-    "Complétez l'inscription dans Munager à l'aide du lien officiel de la conférence.",
-    "Inscrivez-vous à la liste de diffusion pour recevoir les mises à jour au fur et à mesure qu'elles sont publiées en mars.",
-    "Revenez aux chapitres d'inscription pour les frais, les échéances, le guide et les mises à jour sur l'aide financière.",
+    "Consultez la page officielle d’inscription de SSUNS et prenez connaissance des instructions.",
+    "Complétez l’inscription de votre école sur MUNager à l’aide du lien officiel de la conférence.",
+    "Inscrivez-vous à la liste de diffusion de SSUNS afin de recevoir les mises à jour et annonces importantes avant la conférence.",
+    "Consultez la section « Inscription » de notre site web pour obtenir des informations sur les frais, les échéances et les politiques.",
   ],
+  howToGuide: en.howToGuide,
   timeline: [
     { ...en.timeline[0], label: "1er avril 2026", text: "Ouverture des inscriptions." },
     { ...en.timeline[1], label: "Mars 2026", text: "Les mises à jour du site et les détails d'inscription continuent d'être publiés." },
@@ -75,7 +85,7 @@ export const registrationContent = {
   ],
   currentTier: {
     label: "Les inscriptions ouvrent le 1er avril",
-    detail: "Munager est la destination unique et officielle pour l'inscription des écoles et des délégués.",
+    detail: "La conférence se déroulera du 12 au 15 novembre 2026. Les inscriptions se terminent le 16 octobre ou lorsque la capacité maximale est atteinte.",
   },
   pricingTimeline: en.pricingTimeline,
   pricingTimelineText: {
@@ -87,10 +97,11 @@ export const registrationContent = {
     to: "au",
   },
   financialAidDeadlines: ["8 juin", "8 septembre", "16 octobre"],
+  invoiceDeadlines: ["22 juin", "16 septembre", "23 octobre"],
   feePlaceholders: [
-    { ...en.feePlaceholders[0], title: "Frais", body: "Les informations tarifaires seront publiées dans le cadre de l'ouverture officielle des inscriptions." },
-    { ...en.feePlaceholders[1], title: "Politiques", body: "Toute politique de paiement ou d'annulation sera liée depuis ce chapitre une fois publiée." },
-    { ...en.feePlaceholders[2], title: "Aide financière", body: "Les détails sur l'aide financière apparaîtront ici lorsque SSUNS publiera le dossier d'inscription 2026." },
+    { ...en.feePlaceholders[0], title: "Frais", body: "Les frais de délégué s’appliquent à chaque participant inscrit. Les frais de délégation constituent un montant unique couvrant l’ensemble de la délégation." },
+    { ...en.feePlaceholders[1], title: "Dates", body: "Ouverture des inscriptions : 1er avril. Clôture des inscriptions : 16 octobre ou lorsque la capacité maximale est atteinte." },
+    { ...en.feePlaceholders[2], title: "Aide financière", body: "Les politiques financières et les informations relatives à l’aide financière seront mises à jour prochainement." },
   ],
   tracks: [
     {
@@ -112,7 +123,7 @@ export const registrationContent = {
   listserv: {
     ...en.listserv,
     label: "Restez informés",
-    body: "Inscrivez-vous à la liste de diffusion de SSUNS pour recevoir les avis de publication, les consignes d'inscription et les mises à jour de la conférence.",
+    body: "Vous pouvez dès maintenant vous inscrire pour recevoir les courriels hebdomadaires de SSUNS ! Restez informé de nos dernières mises à jour, des informations sur l’inscription et bien plus encore.",
   },
   listservForm: {
     nameLabel: "Nom",
@@ -127,8 +138,10 @@ export const registrationContent = {
     label: "Chargée d’Affaires",
     title: "Lettre aux écoles",
     body: [
-      "Assurez-vous de vous inscrire à notre liste de diffusion ci-dessous pour rester informé au fur et à mesure que les détails seront publiés au cours du mois de mars.",
-      "Les inscriptions à SSUNS 2026 ouvriront le 1er avril. La conférence aura lieu du 12 au 15 novembre 2026.",
+      "Les inscriptions pour SSUNS 2026 ouvriront le 1er avril !",
+      "Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
+      "Des informations supplémentaires, y compris des instructions détaillées et des mises à jour importantes, seront publiées ici tout au long du mois de mars.",
+      "Inscrivez-vous avec votre adresse courriel pour recevoir les dernières nouvelles de SSUNS 2026 de la part de notre chargée d’affaires.",
     ],
     role: "Chargée d’Affaires, SSUNS 2026",
   },
