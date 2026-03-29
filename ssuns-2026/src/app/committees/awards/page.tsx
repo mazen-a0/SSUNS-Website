@@ -1,6 +1,7 @@
 "use client";
 
 import { DossierNav } from "@/components/DossierNav";
+import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 
@@ -16,21 +17,22 @@ export default function CommitteesAwardsPage() {
   return (
     <>
       <PageHero eyebrow={committeesPageContent.title} intro={chapter.summary} title={chapter.title} />
-      <section className="page-shell">
+      <section className="pb-12">
+        <Container>
         <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="xl:sticky xl:top-28 xl:self-start">
+          <aside className="sticky-below-header">
             <DossierNav currentHref={chapter.href} items={committeesPageContent.chapters} />
           </aside>
 
           <div className="space-y-8">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-7 sm:p-9">
-              <div className="space-y-4 body-copy">
-                <p>{chapter.body[0]}</p>
+              <div className="body-copy space-y-4">
+                <p className="measure-prose">{chapter.body[0]}</p>
               </div>
             </article>
 
-            <section className="grid gap-6 xl:grid-cols-2">
-              <article className="theme-panel-strong paper-grain rounded-[8px] p-7 sm:p-9">
+            <section className="grid min-w-0 gap-6 xl:grid-cols-2">
+              <article className="theme-panel-strong paper-grain min-w-0 rounded-[8px] p-7 sm:p-9">
                 <p className="section-kicker">{isFrench ? "Prix individuels" : "Individual Awards"}</p>
                 <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5">
                   <article>
@@ -56,7 +58,7 @@ export default function CommitteesAwardsPage() {
                 </div>
               </article>
 
-              <article className="theme-panel-strong paper-grain rounded-[8px] p-7 sm:p-9">
+              <article className="theme-panel-strong paper-grain min-w-0 rounded-[8px] p-7 sm:p-9">
                 <p className="section-kicker">{isFrench ? "Prix de délégation" : "Delegation Awards"}</p>
                 <div className="mt-5 space-y-5 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
                   <article>
@@ -79,11 +81,11 @@ export default function CommitteesAwardsPage() {
                 </div>
                 <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{isFrench ? "À venir." : "Coming soon."}</p>
               </div>
-              <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <div className="mt-5 grid min-w-0 gap-4 sm:grid-cols-2">
                 {awardVideoPlaceholders.map((item) => (
-                  <article className="border border-[var(--rule)] p-4" key={item}>
+                  <article className="min-w-0 border border-[var(--rule)] p-3 sm:p-4" key={item}>
                     {/* TODO(video): Replace this placeholder with the canonical awards YouTube embed once the URL is provided. */}
-                    <div className="aspect-video w-full bg-[var(--paper-deep)]" />
+                    <div className="video-embed bg-[var(--paper-deep)]" />
                     <p className="mt-3 text-sm font-semibold text-[var(--accent)]">{isFrench ? `Vidéo des prix ${item}` : `Awards video ${item}`}</p>
                     <p className="mt-1 text-sm text-[var(--muted)]">{isFrench ? "À venir." : "Coming soon."}</p>
                   </article>
@@ -92,6 +94,7 @@ export default function CommitteesAwardsPage() {
             </section>
           </div>
         </div>
+        </Container>
       </section>
     </>
   );

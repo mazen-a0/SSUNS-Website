@@ -33,7 +33,7 @@ export default function AboutPage() {
       <PageHero intro={aboutContent.intro} title={aboutContent.title} />
       <section className="page-shell">
         <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
+          <aside className="sticky-below-header space-y-6">
             <DossierNav currentHref="/about" items={aboutContent.chapters} />
             <div className="theme-panel-strong paper-grain rounded-[8px] p-5">
               <div className="grid gap-0 border border-[var(--rule)]">

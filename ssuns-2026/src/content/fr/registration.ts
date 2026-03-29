@@ -77,7 +77,10 @@ export const registrationContent = {
     "Inscrivez-vous à la liste de diffusion de SSUNS afin de recevoir les mises à jour et annonces importantes avant la conférence.",
     "Consultez la section « Inscription » de notre site web pour obtenir des informations sur les frais, les échéances et les politiques.",
   ],
-  howToGuide: en.howToGuide,
+  howToGuide: {
+    ...en.howToGuide,
+    overviewHeading: "Aperçu",
+  },
   timeline: [
     { ...en.timeline[0], label: "1er avril 2026", text: "Ouverture des inscriptions." },
     { ...en.timeline[1], label: "Mars 2026", text: "Les mises à jour du site et les détails d'inscription continuent d'être publiés." },

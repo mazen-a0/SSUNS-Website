@@ -27,6 +27,8 @@ export const homeContent = {
       hours: "Heures",
       minutes: "Minutes",
     },
+    countdownEndedMessage: "Le compte à rebours est terminé — consultez le calendrier de la conférence SSUNS 2026.",
+    countdownEndedCta: { label: "Calendrier de la conférence", href: "/conference/schedule" },
   },
   sectionIndex: [
     { ...en.sectionIndex[0], label: "Vue d'ensemble" },

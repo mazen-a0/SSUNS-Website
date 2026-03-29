@@ -9,7 +9,6 @@ Brand
 
 Layout / Spacing
 - No horizontal scroll on any route (desktop or mobile).
-- Pages should feel airy like NAIMUN: reduce density, increase whitespace.
 - Use consistent max-width + gutters across pages.
 - Background images should be full-bleed where used (no boxed awkward crops).
 

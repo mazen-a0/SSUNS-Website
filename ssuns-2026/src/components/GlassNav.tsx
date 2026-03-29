@@ -142,7 +142,7 @@ export function GlassNav({
 
       <div className="hidden xl:block" onMouseLeave={() => setOpenPreview(null)}>
         <div className="page-shell">
-          <div className="flex min-h-6 items-center justify-between gap-4 border-b border-white/12 text-[12px] text-[#d6e2ff]">
+          <div className="flex min-h-5 items-center justify-between gap-3 border-b border-white/12 text-[11px] text-[#d6e2ff]">
             <p className="truncate text-[11px] font-semibold tracking-[0.03em] text-[#d6e2ff]">{mastheadLabel}</p>
             <div className="flex shrink-0 items-center gap-2 py-1">
               {instagramLink ? (
@@ -198,7 +198,7 @@ export function GlassNav({
             </div>
           </div>
 
-          <div className="grid min-h-[2.8rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4">
+          <div className="grid min-h-[2.35rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
             <Link
               aria-label={homeAriaLabel}
               className="inline-flex items-center"
@@ -208,7 +208,7 @@ export function GlassNav({
                 setOpenPreview(null);
               }}
             >
-              <Image alt="SSUNS logo" height={22} priority src="/logos/ssuns2026-woodmark-white.png" width={108} />
+              <Image alt="SSUNS logo" height={24} priority src="/logos/ssuns2026-woodmark-white.png" width={118} />
             </Link>
 
             <nav aria-label="Primary" className="min-w-0">
@@ -226,7 +226,7 @@ export function GlassNav({
                       <Link
                         aria-expanded={hasPreview ? openPreview === item.href : undefined}
                         className={cn(
-                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-2 text-base font-semibold text-[#eaf0ff] transition-colors duration-200 hover:text-white",
+                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-1.5 text-[1.0625rem] font-semibold leading-tight text-[#eaf0ff] transition-colors duration-200 hover:text-white xl:text-[1.125rem]",
                           isActive && "is-active text-white",
                         )}
                         href={item.href}
@@ -253,7 +253,7 @@ export function GlassNav({
                 return (
                   <Link
                     className={cn(
-                      "nav-link inline-flex items-center whitespace-nowrap py-2 text-sm font-semibold text-[#d6e2ff] transition-colors duration-200 hover:text-white",
+                      "nav-link inline-flex items-center whitespace-nowrap py-1.5 text-[0.9375rem] font-semibold text-[#d6e2ff] transition-colors duration-200 hover:text-white",
                       isActive && "is-active text-white",
                     )}
                     href={item.href}
@@ -281,7 +281,7 @@ export function GlassNav({
         </div>
       </div>
 
-      <div className="page-shell flex min-h-[2.8rem] items-center justify-between gap-4 xl:hidden">
+      <div className="page-shell flex min-h-[2.45rem] items-center justify-between gap-3 xl:hidden">
         <Link
           aria-label={homeAriaLabel}
           className="inline-flex items-center"
@@ -291,7 +291,7 @@ export function GlassNav({
             setOpenPreview(null);
           }}
         >
-          <Image alt="SSUNS logo" height={22} priority src="/logos/ssuns2026-woodmark-white.png" width={108} />
+          <Image alt="SSUNS logo" height={24} priority src="/logos/ssuns2026-woodmark-white.png" width={118} />
         </Link>
         <div className="flex items-center gap-2">
           <button

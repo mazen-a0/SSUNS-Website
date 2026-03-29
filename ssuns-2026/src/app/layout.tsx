@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: siteMeta.title,
   description: siteMeta.description,
   icons: {
-    icon: "/logos/ssuns-dove-main-navy.png",
+    icon: [{ url: "/logos/ssuns-dove-main-navy.png", type: "image/png" }],
     shortcut: "/logos/ssuns-dove-main-navy.png",
     apple: "/logos/ssuns-dove-main-navy.png",
   },

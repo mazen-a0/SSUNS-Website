@@ -19,7 +19,7 @@ export function CommitteesChapterPage({ href }: CommitteesChapterPageProps) {
       <PageHero eyebrow={committeesPageContent.title} intro={chapter.summary} title={chapter.title} />
       <section className="page-shell">
         <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="xl:sticky xl:top-28 xl:self-start">
+          <aside className="sticky-below-header">
             <DossierNav currentHref={chapter.href} items={committeesPageContent.chapters} />
           </aside>
           <article className="theme-panel-strong paper-grain p-8 sm:p-10 md:p-12">
