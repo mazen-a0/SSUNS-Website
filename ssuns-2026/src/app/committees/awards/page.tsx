@@ -1,7 +1,7 @@
 "use client";
 
 import { DossierNav } from "@/components/DossierNav";
-import { Container } from "@/components/layout/Container";
+import { Container } from "@/components/layout";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
 

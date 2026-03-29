@@ -1,4 +1,4 @@
-import { Container } from "@/components/layout/Container";
+import { Container } from "@/components/layout";
 import { cn } from "@/lib/cn";
 
 type PageHeroProps = {
