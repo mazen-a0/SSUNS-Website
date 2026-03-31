@@ -6,11 +6,11 @@ type LiquidButtonProps = {
   href?: string;
   onClick?: () => void;
   className?: string;
-  variant?: "solid" | "ghost";
+  variant?: "solid" | "ghost" | "inverse" | "inverseGhost";
 };
 
 const baseClass =
-  "liquid-button ui-copy group relative inline-flex items-center justify-center overflow-hidden rounded-[6px] border px-5 py-2.5 text-sm font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-blue)]";
+  "liquid-button ui-copy group relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-[6px] border px-5 py-2.5 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]";
 
 export function LiquidButton({
   label,
@@ -20,10 +20,17 @@ export function LiquidButton({
   variant = "solid",
 }: LiquidButtonProps) {
   const isExternal = typeof href === "string" && /^https?:\/\//.test(href);
-  const variantClass =
-    variant === "solid"
-      ? "border-[var(--accent)] bg-[var(--accent)] text-white shadow-[var(--shadow-soft)] hover:border-[#1a2a98] hover:bg-[#1a2a98]"
-      : "border-[var(--accent)] bg-white text-[var(--accent)] hover:bg-[rgba(20,32,130,0.06)]";
+  const variantTokens = {
+    solid:
+      "border-[var(--accent)] bg-[var(--accent)] text-white shadow-[var(--shadow-soft)] hover:border-[#1a2a98] hover:bg-[#1a2a98] hover:text-white",
+    ghost:
+      "border-[var(--accent)] bg-transparent text-[var(--accent)] shadow-none hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.08)] hover:text-[var(--accent)]",
+    inverse:
+      "border-white bg-white text-[var(--accent)] shadow-[var(--shadow-soft)] hover:border-[#d9e3ff] hover:bg-[#eef3ff] hover:text-[var(--accent)]",
+    inverseGhost:
+      "border-white/36 bg-[rgba(8,14,44,0.34)] text-white shadow-none hover:border-white/60 hover:bg-[rgba(255,255,255,0.14)] hover:text-white",
+  } as const;
+  const variantClass = variantTokens[variant];
 
   const content = (
     <>

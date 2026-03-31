@@ -314,7 +314,7 @@ export const aboutContent = {
     { label: "Schools", value: "60+" },
   ],
   image: {
-    src: "/pictures/delegates-1600x1067.jpg",
+    src: "/photos/delegates-1600x1067.jpg",
     alt: "Delegates collaborating during moderated caucus",
     note: "delegates collaborating, 3:2, recommended 1600x1067",
   },

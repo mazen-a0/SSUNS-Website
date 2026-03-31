@@ -143,6 +143,11 @@ export function SecretariatModal({ member, onClose }: SecretariatModalProps) {
                       {member.name}
                     </h2>
                     <p className="mt-3 text-base leading-relaxed text-[var(--muted)]">{member.role}</p>
+                    {member.email ? (
+                      <a className="mt-3 inline-flex text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href={`mailto:${member.email}`}>
+                        {member.email}
+                      </a>
+                    ) : null}
                   </div>
                   <button
                     ref={closeButtonRef}

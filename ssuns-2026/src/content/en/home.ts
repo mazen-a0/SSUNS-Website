@@ -1,13 +1,13 @@
 export const homeContent = {
   hero: {
-    eyebrow: "SSUNS 2026 • Montreal",
-    title: "Canada's premier high school Model United Nations conference",
-    accent: "Building on 33 years of excellence, our 34th conference will set a new standard.",
+    eyebrow: "SSUNS 2026 • Montréal",
+    title: "Secondary Schools’ United Nations Symposium",
+    accent: "Canada’s premier high school Model United Nations conference",
     description:
       "Each year, SSUNS welcomes over 1,300 delegates representing 60+ school delegations from around the world. Organized entirely by students and staffed by 250+ McGill volunteers, the conference provides a dynamic forum where high school and Cégep students develop leadership, negotiation, and public speaking skills while tackling complex global issues through committee debate and collaboration.",
     statement:
-      "Hosted annually in Montreal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience.",
-    primaryCta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
+      "Hosted annually in Montréal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience.",
+    primaryCta: { label: "Register now", href: "/registration" },
     secondaryCta: { label: "Explore Committees", href: "/committees" },
     stats: [
       { label: "Delegates", value: "1300+" },
@@ -15,7 +15,7 @@ export const homeContent = {
       { label: "Schools", value: "60+" },
       { label: "Committees", value: "24" },
     ],
-    /** Conference opens Nov 12, 2026 (Montreal); used by hero countdown */
+    /** Conference opens Nov 12, 2026 (Montréal); used by hero countdown */
     conferenceStartIso: "2026-11-12T00:00:00-05:00",
     countdownHeading: "Countdown to SSUNS 2026",
     countdownTarget: null,
@@ -32,7 +32,7 @@ export const homeContent = {
       mp4Src: "/video/montreal-panorama.mp4",
     },
     image: {
-      src: "/pictures/hero-1920x1080.jpg",
+      src: "/photos/hero-1920x1080.jpg",
       alt: "Delegates entering plenary hall under blue conference lighting",
       note: "hero background image: delegates entering plenary hall, 16:9, recommended 1920x1080",
     },
@@ -51,7 +51,7 @@ export const homeContent = {
     label: "At A Glance",
     items: [
       { label: "Delegates", value: "1300+", detail: "Attended by 1300+ delegates from around the world." },
-      { label: "Venue", value: "Sheraton Montreal", detail: "Hosting SSUNS 34th itinerary from November 12–15." },
+      { label: "Venue", value: "Sheraton Montréal", detail: "Hosting SSUNS 34th itinerary from November 12–15." },
       { label: "Committees", value: "24", detail: "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Committees (SPECs), and Crisis Committees." },
       { label: "Schools", value: "60+", detail: "Representing delegations from Canada and around the world." },
     ],
@@ -63,7 +63,7 @@ export const homeContent = {
     strengthsTitle: "The Distinction",
     body: [
       "In 1992, a group of students at McGill University came together with the goal of creating a space where high school students could explore global issues through diplomacy and debate. They envisioned an environment where young leaders could collaborate, think critically, and engage with the challenges facing the international community. Now in its 34th year, the Secondary Schools’ United Nations Symposium (SSUNS) has grown into one of Canada’s premier high school Model United Nations conferences.",
-      "Hosted annually in Montreal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience. This year, we are excited to welcome delegates back to the Sheraton Centre Montreal Hotel. From innovative committees to exciting delegate events, the Secretariat has worked tirelessly to create an extraordinary 34th iteration of SSUNS. We invite you to explore our website to learn more about what makes SSUNS a truly unique Model United Nations conference.",
+      "Hosted annually in Montréal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience. This year, we are excited to welcome delegates back to the Sheraton Centre Montréal Hotel. From innovative committees to exciting delegate events, the Secretariat has worked tirelessly to create an extraordinary 34th iteration of SSUNS. We invite you to explore our website to learn more about what makes SSUNS a truly unique Model United Nations conference.",
     ],
     points: [
       "Youth leadership",
@@ -82,7 +82,7 @@ export const homeContent = {
     ],
     signature: "Marcus C. Kelly",
     role: "Secretary-General, SSUNS 2026",
-    stamp: "Montreal • Organizing Office",
+    stamp: "Montréal • Organizing Office",
     image: {
       src: "/headshots/marcus.jpg",
       alt: "Portrait of the secretary-general",
@@ -116,7 +116,7 @@ export const homeContent = {
       title: "Standards matter as much as aesthetics.",
       body:
         "Code of conduct, safeguarding, accessibility planning, and advisor coordination are treated as core conference architecture rather than add-ons.",
-      cta: { label: "Review conference policies", href: "/resources/policies" },
+      cta: { label: "Review conference policies", href: "/conference/policies" },
     },
   },
   featuredCommittees: {
@@ -136,11 +136,11 @@ export const homeContent = {
     intro: "A disciplined planning calendar for advisors, chairs, and delegates.",
     items: [
       { date: "April 1, 2026", label: "Registration opens" },
-      { date: "Nov 12-15, 2026", label: "Conference week in Montreal" },
+      { date: "Nov 12-15, 2026", label: "Conference week in Montréal" },
     ],
   },
   gallery: {
-    title: "Montreal & Venue",
+    title: "Montréal & Venue",
     pageTitle: "Gallery",
     scrollHint: "Scroll the archive",
     label: "Brochure Plates",
@@ -149,17 +149,17 @@ export const homeContent = {
     items: [
       {
         id: "gallery-montreal",
-        title: "Montreal at Dusk",
+        title: "Montréal at Dusk",
         caption: "A bilingual city with civic gravity and a natural conference bearing.",
-        src: "/pictures/montreal-1600x900.jpg",
-        alt: "Montreal skyline at dusk with river reflections",
-        note: "Montreal skyline at dusk, 16:9, recommended 1600x900",
+        src: "/photos/montreal-1600x900.jpg",
+        alt: "Montréal skyline at dusk with river reflections",
+        note: "Montréal skyline at dusk, 16:9, recommended 1600x900",
       },
       {
         id: "gallery-hotel",
         title: "Sheraton Arrival",
         caption: "A centralized hotel footprint supports delegation flow, advisory support, and evening transitions.",
-        src: "/pictures/hotel-1600x900.jpg",
+        src: "/photos/hotel-1600x900.jpg",
         alt: "Sheraton exterior and conference entrance",
         note: "Sheraton exterior and conference arrival, 16:9, recommended 1600x900",
       },
@@ -167,7 +167,7 @@ export const homeContent = {
         id: "gallery-delegates",
         title: "Committee Floor",
         caption: "Debate, drafting, and procedural movement should feel disciplined rather than chaotic.",
-        src: "/pictures/delegates-1600x1067.jpg",
+        src: "/photos/delegates-1600x1067.jpg",
         alt: "Delegates debating in committee session",
         note: "delegates debating in committee, 3:2, recommended 1600x1067",
       },
@@ -175,7 +175,7 @@ export const homeContent = {
         id: "gallery-ballroom",
         title: "Plenary Setting",
         caption: "Opening and closing moments should carry ceremonial weight without excess.",
-        src: "/pictures/gala.JPG",
+        src: "/photos/gala.JPG",
         alt: "Conference ballroom prepared for plenary session",
         note: "conference ballroom prepared for plenary, 16:9, recommended 1600x900",
       },
@@ -197,7 +197,7 @@ export const homeContent = {
     resourcesTitle: "Further Resources",
     resources: [
       {
-        label: "Allyship tools from the Montreal Indigenous Community NETWORK",
+        label: "Allyship tools from the Montréal Indigenous Community NETWORK",
         href: "https://reseaumtlnetwork.com/en/being-an-ally/our-tools/",
       },
       {
@@ -222,15 +222,13 @@ export const homeContent = {
     title: "The conference should feel composed from first contact onward.",
     items: [
       {
-        quote:
-          "Placeholder quote: SSUNS felt polished, exacting, and genuinely welcoming from the first advisor briefing onward.",
-        author: "Faculty Advisor Placeholder",
+        quote: "Coming soon.",
+        author: "Faculty Advisor",
         role: "Returning delegation advisor",
       },
       {
-        quote:
-          "Placeholder quote: Committee staff struck the right balance between seriousness and accessibility for our delegates.",
-        author: "Head Delegate Placeholder",
+        quote: "Coming soon.",
+        author: "Head Delegate",
         role: "Senior delegation lead",
       },
     ],
@@ -240,6 +238,6 @@ export const homeContent = {
     title: "Registration for SSUNS 2026 will open on April 1st!",
     body:
       "This year, we are introducing a new registration system designed to improve your experience and streamline the process. Additional details, including step-by-step instructions and important updates, will be posted here throughout March. We encourage all delegates and advisors to review this information in advance to ensure a smooth registration.",
-    cta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
+    cta: { label: "Register now", href: "/registration" },
   },
 };

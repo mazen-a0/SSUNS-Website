@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, type PointerEvent as ReactPointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import createGlobe, { type Globe as CobeGlobeInstance, type Marker as CobeMarker, type Arc as CobeArc } from "cobe";
 import { cn } from "@/lib/cn";
 
@@ -21,6 +21,7 @@ export interface CobeGlobeProps {
   markers?: GlobeMarker[];
   arcs?: GlobeArc[];
   className?: string;
+  showMarkerLabelsOnHover?: boolean;
   markerColor?: [number, number, number];
   baseColor?: [number, number, number];
   arcColor?: [number, number, number];
@@ -49,10 +50,45 @@ const defaultBaseColor = BRAND.paper;
 const defaultArcColor = BRAND.accentBlue;
 const defaultGlowColor = BRAND.navy;
 
+interface ProjectedMarker extends GlobeMarker {
+  x: number;
+  y: number;
+  visible: boolean;
+}
+
+function projectMarker(location: [number, number], size: number, phi: number, theta: number) {
+  const [lat, lng] = location;
+  const latRad = (lat * Math.PI) / 180;
+  const lngRad = (lng * Math.PI) / 180;
+
+  const x = Math.cos(latRad) * Math.sin(lngRad);
+  const y = Math.sin(latRad);
+  const z = Math.cos(latRad) * Math.cos(lngRad);
+
+  const cosPhi = Math.cos(phi);
+  const sinPhi = Math.sin(phi);
+  const xPhi = x * cosPhi - z * sinPhi;
+  const zPhi = x * sinPhi + z * cosPhi;
+
+  const cosTheta = Math.cos(theta);
+  const sinTheta = Math.sin(theta);
+  const yTheta = y * cosTheta - zPhi * sinTheta;
+  const zTheta = y * sinTheta + zPhi * cosTheta;
+
+  const radius = size * 0.46;
+
+  return {
+    x: size / 2 + xPhi * radius,
+    y: size / 2 - yTheta * radius,
+    visible: zTheta > 0.03,
+  };
+}
+
 export function CobeGlobe({
   markers = [],
   arcs = [],
   className,
+  showMarkerLabelsOnHover = false,
   markerColor = defaultMarkerColor,
   baseColor = defaultBaseColor,
   arcColor = defaultArcColor,
@@ -77,6 +113,9 @@ export function CobeGlobe({
   const thetaOffsetRef = useRef(0);
   const isPausedRef = useRef(false);
   const reduceMotionRef = useRef(false);
+  const hoveredMarkerIdRef = useRef<string | null>(null);
+  const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null);
+  const [projectedMarkers, setProjectedMarkers] = useState<ProjectedMarker[]>([]);
 
   const cobeMarkers = useMemo<CobeMarker[]>(() => {
     return markers.map((marker) => ({
@@ -222,9 +261,12 @@ export function CobeGlobe({
           }
         }
 
+        const currentPhi = phi + phiOffsetRef.current + dragOffset.current.phi;
+        const currentTheta = theta + thetaOffsetRef.current + dragOffset.current.theta;
+
         globe.update({
-          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-          theta: theta + thetaOffsetRef.current + dragOffset.current.theta,
+          phi: currentPhi,
+          theta: currentTheta,
           dark,
           diffuse,
           mapBrightness,
@@ -238,6 +280,16 @@ export function CobeGlobe({
           arcWidth,
           arcHeight,
         });
+
+        if (showMarkerLabelsOnHover && canvas.offsetWidth > 0) {
+          const width = canvas.offsetWidth;
+          setProjectedMarkers(
+            markers.map((marker) => ({
+              ...marker,
+              ...projectMarker(marker.location, width, currentPhi, currentTheta),
+            })),
+          );
+        }
 
         animationFrame = window.requestAnimationFrame(animate);
       };
@@ -263,19 +315,67 @@ export function CobeGlobe({
       resizeObserver?.disconnect();
       globe?.destroy();
     };
-  }, [arcColor, arcHeight, arcWidth, baseColor, cobeArcs, cobeMarkers, dark, diffuse, glowColor, mapBrightness, mapSamples, markerColor, markerElevation, speed, theta]);
+  }, [arcColor, arcHeight, arcWidth, baseColor, cobeArcs, cobeMarkers, dark, diffuse, glowColor, mapBrightness, mapSamples, markerColor, markerElevation, markers, showMarkerLabelsOnHover, speed, theta]);
 
   return (
     <div className={cn("relative mx-auto w-full min-w-0 max-w-[min(100%,28rem)] select-none", className)}>
       <div className="relative aspect-square w-full overflow-hidden rounded-full">
-      <div className="pointer-events-none absolute inset-3 rounded-full border border-[var(--rule)] bg-[radial-gradient(circle_at_center,rgba(244,246,251,0.9),rgba(244,246,251,0))]" />
-      <canvas
-        ref={canvasRef}
-        aria-label="Illustrative globe showing delegation locations"
-        className="relative z-10 h-full w-full rounded-full opacity-0 transition-opacity duration-500"
-        onPointerDown={handlePointerDown}
-        style={{ cursor: "grab", touchAction: "none" }}
-      />
+        <div className="pointer-events-none absolute inset-3 rounded-full border border-[var(--rule)] bg-[radial-gradient(circle_at_center,rgba(244,246,251,0.9),rgba(244,246,251,0))]" />
+        <canvas
+          ref={canvasRef}
+          aria-label="Illustrative globe showing delegation locations"
+          className="relative z-10 h-full w-full rounded-full opacity-0 transition-opacity duration-500"
+          onPointerDown={handlePointerDown}
+          style={{ cursor: "grab", touchAction: "none" }}
+        />
+        {showMarkerLabelsOnHover ? (
+          <div className="pointer-events-none absolute inset-0 z-20">
+            {projectedMarkers
+              .filter((marker) => marker.visible)
+              .map((marker) => {
+                const isHovered = hoveredMarkerId === marker.id;
+                return (
+                  <button
+                    aria-label={marker.label}
+                    className="pointer-events-auto absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                    key={marker.id}
+                    onBlur={() => {
+                      hoveredMarkerIdRef.current = null;
+                      setHoveredMarkerId(null);
+                      isPausedRef.current = false;
+                    }}
+                    onFocus={() => {
+                      hoveredMarkerIdRef.current = marker.id;
+                      setHoveredMarkerId(marker.id);
+                      isPausedRef.current = true;
+                    }}
+                    onPointerEnter={() => {
+                      hoveredMarkerIdRef.current = marker.id;
+                      setHoveredMarkerId(marker.id);
+                      isPausedRef.current = true;
+                    }}
+                    onPointerLeave={() => {
+                      hoveredMarkerIdRef.current = null;
+                      setHoveredMarkerId(null);
+                      isPausedRef.current = false;
+                    }}
+                    style={{ left: marker.x, top: marker.y }}
+                    type="button"
+                  >
+                    <span className="sr-only">{marker.label}</span>
+                    <span
+                      className={cn(
+                        "pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%+0.4rem)] whitespace-nowrap rounded-full border border-[rgba(255,255,255,0.18)] bg-[rgba(8,14,44,0.84)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-white shadow-[var(--shadow-soft)] transition-all duration-200",
+                        isHovered ? "opacity-100 translate-y-[calc(-100%-0.4rem)]" : "opacity-0",
+                      )}
+                    >
+                      {marker.label}
+                    </span>
+                  </button>
+                );
+              })}
+          </div>
+        ) : null}
       </div>
     </div>
   );

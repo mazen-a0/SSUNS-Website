@@ -61,9 +61,9 @@ export const resourcesPageContent = {
       ],
     },
   ],
-  placeholderLabel: "Reference packet placeholder",
+  placeholderLabel: "Reference packet",
   heroImage: {
-    src: "/pictures/committee-1200x800.jpg",
+    src: "/photos/committee-1200x800.jpg",
     alt: "Delegates reviewing conference materials",
     note: "delegates reviewing printed conference packets, 3:2, recommended 1200x800",
   },

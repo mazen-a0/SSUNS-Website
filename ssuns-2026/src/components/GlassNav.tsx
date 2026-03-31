@@ -49,25 +49,6 @@ function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function InstagramIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="14" viewBox="0 0 24 24" width="14">
-      <rect height="15" rx="4" stroke="currentColor" strokeWidth="1.5" width="15" x="4.5" y="4.5" />
-      <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="17.2" cy="6.8" fill="currentColor" r="1" />
-    </svg>
-  );
-}
-
-function TikTokIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="14" viewBox="0 0 24 24" width="14">
-      <path d="M14 4v9.2a3.2 3.2 0 1 1-3-3.2" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-      <path d="M14 4c1 2.1 2.6 3.4 5 3.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
 export function GlassNav({
   items,
   openMenuLabel,
@@ -127,8 +108,7 @@ export function GlassNav({
 
   const coreItems = useMemo(() => items.filter((item) => coreHrefs.has(item.href)), [items]);
   const utilityItems = useMemo(() => items.filter((item) => utilityHrefs.has(item.href)), [items]);
-  const instagramLink = socialLinks.find((link) => link.label.toLowerCase().includes("instagram"));
-  const tiktokLink = socialLinks.find((link) => link.label.toLowerCase().includes("tiktok"));
+  void socialLinks;
 
   return (
     <header
@@ -145,27 +125,7 @@ export function GlassNav({
           <div className="flex min-h-5 items-center justify-between gap-3 border-b border-white/12 text-[11px] text-[#d6e2ff]">
             <p className="truncate text-[11px] font-semibold tracking-[0.03em] text-[#d6e2ff]">{mastheadLabel}</p>
             <div className="flex shrink-0 items-center gap-2 py-1">
-              {instagramLink ? (
-                <Link
-                  aria-label={instagramLink.label}
-                  className="inline-flex h-7 w-7 items-center justify-center border border-white/16 bg-white/8 text-white transition-colors duration-200 hover:border-white/40 hover:bg-white/12"
-                  href={instagramLink.href}
-                  target="_blank"
-                >
-                  <InstagramIcon />
-                </Link>
-              ) : null}
-              {tiktokLink ? (
-                <Link
-                  aria-label={tiktokLink.label}
-                  className="inline-flex h-7 w-7 items-center justify-center border border-white/16 bg-white/8 text-white transition-colors duration-200 hover:border-white/40 hover:bg-white/12"
-                  href={tiktokLink.href}
-                  target="_blank"
-                >
-                  <TikTokIcon />
-                </Link>
-              ) : null}
-              <div aria-label={languageSwitchLabel} className="inline-flex h-7 items-center border border-white/16 bg-white/8 p-0.5">
+              <div aria-label={languageSwitchLabel} className="inline-flex h-6 items-center border border-white/16 bg-white/8 p-0.5">
                 <button
                   className={cn(
                     "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
@@ -189,7 +149,7 @@ export function GlassNav({
               </div>
               <button
                 aria-label={openPaletteLabel}
-                className="inline-flex h-7 items-center border border-white/16 bg-white/8 px-3 text-[11px] font-semibold text-white transition-colors duration-200 hover:border-white/40 hover:bg-white/12"
+                className="inline-flex h-6 items-center border border-white/16 bg-white/8 px-3 text-[11px] font-semibold text-white transition-colors duration-200 hover:border-white/40 hover:bg-white/12"
                 onClick={onOpenPalette}
                 type="button"
               >
@@ -198,7 +158,7 @@ export function GlassNav({
             </div>
           </div>
 
-          <div className="grid min-h-[2.35rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+          <div className="grid min-h-[2.1rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
             <Link
               aria-label={homeAriaLabel}
               className="inline-flex items-center"
@@ -281,7 +241,7 @@ export function GlassNav({
         </div>
       </div>
 
-      <div className="page-shell flex min-h-[2.45rem] items-center justify-between gap-3 xl:hidden">
+      <div className="page-shell flex min-h-[2.2rem] items-center justify-between gap-3 xl:hidden">
         <Link
           aria-label={homeAriaLabel}
           className="inline-flex items-center"
@@ -394,26 +354,6 @@ export function GlassNav({
                   {languageFrenchLabel}
                 </button>
               </div>
-              {instagramLink ? (
-                <Link
-                  aria-label={instagramLink.label}
-                  className="inline-flex h-9 w-9 items-center justify-center border border-white/16 bg-white/8 text-white"
-                  href={instagramLink.href}
-                  target="_blank"
-                >
-                  <InstagramIcon />
-                </Link>
-              ) : null}
-              {tiktokLink ? (
-                <Link
-                  aria-label={tiktokLink.label}
-                  className="inline-flex h-9 w-9 items-center justify-center border border-white/16 bg-white/8 text-white"
-                  href={tiktokLink.href}
-                  target="_blank"
-                >
-                  <TikTokIcon />
-                </Link>
-              ) : null}
             </div>
           </div>
         </nav>

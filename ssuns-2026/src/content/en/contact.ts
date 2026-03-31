@@ -44,7 +44,7 @@ export const contactContent = {
     recipient: "schools@ssuns.org",
   },
   image: {
-    src: "/pictures/montreal-1600x900.jpg",
+    src: "/photos/montreal-1600x900.jpg",
     alt: "Montreal downtown streets near conference district",
     note: "Montreal streetscape, 16:9, recommended 1600x900",
   },

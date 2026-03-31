@@ -5,8 +5,8 @@ export const homeContent = {
   hero: {
     ...en.hero,
     eyebrow: "SSUNS 2026 • Montréal",
-    title: "SSUNS 2026 arrive! Restez à l'affût des mises à jour du site…",
-    accent: "La plus grande conférence MUN pour écoles secondaires au Canada",
+    title: "Secondary Schools’ United Nations Symposium",
+    accent: "La principale conférence de simulation des Nations Unies pour écoles secondaires au Canada",
     description:
       "Le Secondary Schools’ United Nations Symposium (SSUNS) est la plus grande conférence de simulation des Nations Unies (MUN) au niveau secondaire au Canada, accueillant plus de 1300 élèves chaque mois de novembre au centre-ville de Montréal.",
     statement:
@@ -207,16 +207,14 @@ export const homeContent = {
     items: [
       {
         ...en.testimonials.items[0],
-        quote:
-          "Citation fictive : SSUNS nous a semblé soigné, exigeant et véritablement accueillant dès la première séance pour les conseillers.",
-        author: "Conseiller scolaire fictif",
+        quote: "À venir.",
+        author: "Conseiller scolaire",
         role: "Conseiller d'une délégation de retour",
       },
       {
         ...en.testimonials.items[1],
-        quote:
-          "Citation fictive : L'équipe des comités a trouvé le bon équilibre entre sérieux et accessibilité pour nos délégués.",
-        author: "Chef de délégation fictif",
+        quote: "À venir.",
+        author: "Chef de délégation",
         role: "Responsable d'une délégation senior",
       },
     ],

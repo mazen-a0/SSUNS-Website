@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --site-sticky-top: 6.75rem;
+  --site-sticky-top: 5.75rem;
   --color-brand-navy: #142082;
   --color-brand-blue: #4c9eff;
   --paper: #f4f6fb;
@@ -180,6 +180,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   pointer-events: none;
   background-image:
     radial-gradient(rgba(255, 255, 255, 0.12) 0.45px, transparent 0.45px),
@@ -264,6 +265,13 @@ img {
 
 .liquid-button {
   transform: translateZ(0);
+  transition-property: transform, background-color, border-color, color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-button:hover {
+  transform: translateY(-1px);
 }
 
 .liquid-button:active {

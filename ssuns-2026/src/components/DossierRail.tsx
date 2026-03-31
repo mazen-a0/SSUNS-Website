@@ -47,15 +47,15 @@ export function DossierRail({ items, currentHref, variant = "rail", contextTitle
   if (variant === "strip") {
     return (
       <>
-        <div className="theme-panel-strong paper-grain rounded-[8px] p-4 sm:p-5">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--rule)] pb-4">
+        <div className="border-y border-[var(--rule)] bg-[rgba(255,255,255,0.6)] px-0 py-3">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--rule)] pb-3">
             <div>
               <p className="section-kicker">{uiText.railIndexLabel}</p>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{summary}</p>
+              <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">{summary}</p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <button
-                className="border border-[var(--rule)] px-3 py-2 text-sm font-semibold text-[var(--accent)] transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.04)]"
+                className="border border-[var(--rule)] px-3 py-1.5 text-sm font-semibold text-[var(--accent)] transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.04)]"
                 onClick={() => window.dispatchEvent(new CustomEvent("ssuns:open-search"))}
                 type="button"
               >
@@ -73,13 +73,13 @@ export function DossierRail({ items, currentHref, variant = "rail", contextTitle
               ))}
             </div>
           </div>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap gap-2">
             {items.map((item) => {
               const active = isActive(currentHref, item.href);
               return isHashLink(item.href) ? (
                 <a
                   className={cn(
-                    "inline-flex items-center border px-3 py-2 text-sm font-semibold transition-colors duration-200",
+                    "inline-flex items-center border px-3 py-1.5 text-sm font-semibold transition-colors duration-200",
                     active
                       ? "border-[var(--accent)] bg-[rgba(20,32,130,0.06)] text-[var(--accent)]"
                       : "border-[var(--rule)] text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]",
@@ -92,7 +92,7 @@ export function DossierRail({ items, currentHref, variant = "rail", contextTitle
               ) : (
                 <Link
                   className={cn(
-                    "inline-flex items-center border px-3 py-2 text-sm font-semibold transition-colors duration-200",
+                    "inline-flex items-center border px-3 py-1.5 text-sm font-semibold transition-colors duration-200",
                     active
                       ? "border-[var(--accent)] bg-[rgba(20,32,130,0.06)] text-[var(--accent)]"
                       : "border-[var(--rule)] text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]",

@@ -1,9 +1,12 @@
 "use client";
 
 import { DossierNav } from "@/components/DossierNav";
+import { EditorialGallery } from "@/components/media/EditorialGallery";
 import { PageHero } from "@/components/PageHero";
 import { CobeGlobe } from "@/components/ui/cobe-globe";
 import { useSiteContent } from "@/lib/useSiteContent";
+
+const montreal: [number, number] = [45.5017, -73.5673];
 
 const delegationMarkers = [
   { id: "toronto", label: "Toronto", location: [43.6532, -79.3832] as [number, number] },
@@ -32,22 +35,19 @@ const delegationMarkers = [
   { id: "nicaragua", label: "Nicaragua", location: [12.114, -86.2362] as [number, number] },
 ];
 
-const delegationArcs = [
-  { id: "toronto-montreal", from: [43.6532, -79.3832] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "vancouver-montreal", from: [49.2827, -123.1207] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "new-york-montreal", from: [40.7128, -74.006] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "washington-montreal", from: [38.9072, -77.0369] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "kenya-montreal", from: [-1.2921, 36.8219] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-  { id: "ghana-montreal", from: [5.6037, -0.187] as [number, number], to: [45.5017, -73.5673] as [number, number] },
-];
+const delegationArcs = delegationMarkers.map((marker) => ({
+  id: `${marker.id}-montreal`,
+  from: marker.location,
+  to: montreal,
+}));
 
 export default function AboutLegacyPage() {
-  const { aboutContent, language } = useSiteContent();
+  const { aboutContent } = useSiteContent();
   const chapter = aboutContent.chapters.find((item) => item.href === "/about/legacy");
-  const geographyLabels =
-    language === "fr"
-      ? { canada: "Canada", unitedStates: "États-Unis", widerWorld: "Monde" }
-      : { canada: "Canada", unitedStates: "United States", widerWorld: "Wider World" };
+  const legacyGalleryItems = [
+    { id: "legacy-photo-1", src: "/photos/secretariat(2).JPG", alt: "SSUNS team members in conference setting" },
+    { id: "legacy-photo-2", src: "/photos/delegates(11).JPG", alt: "Delegates gathering between committee sessions" },
+  ];
 
   if (!chapter) {
     return null;
@@ -81,42 +81,12 @@ export default function AboutLegacyPage() {
                   ))}
                 </div>
                 <div className="border border-[var(--rule)] bg-[var(--paper)] px-4 py-8 sm:px-6 sm:py-10">
-                  <CobeGlobe arcs={delegationArcs} markers={delegationMarkers} />
+                  <CobeGlobe arcs={delegationArcs} markers={delegationMarkers} showMarkerLabelsOnHover />
                 </div>
               </div>
-              <div className="mt-6 grid gap-4 border-t border-[var(--rule)] pt-5 md:grid-cols-3">
-                <article className="border border-[var(--rule)] bg-[var(--panel)] p-4">
-                  <p className="section-kicker">{geographyLabels.canada}</p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:text-sm">
-                    {aboutContent.legacyGlobalSection.locations.canada.map((location) => (
-                      <span className="border border-[var(--rule)] px-3 py-1" key={location}>
-                        {location}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-                <article className="border border-[var(--rule)] bg-[var(--panel)] p-4">
-                  <p className="section-kicker">{geographyLabels.unitedStates}</p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:text-sm">
-                    {aboutContent.legacyGlobalSection.locations.unitedStates.map((location) => (
-                      <span className="border border-[var(--rule)] px-3 py-1" key={location}>
-                        {location}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-                <article className="border border-[var(--rule)] bg-[var(--panel)] p-4">
-                  <p className="section-kicker">{geographyLabels.widerWorld}</p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:text-sm">
-                    {aboutContent.legacyGlobalSection.locations.widerWorld.map((location) => (
-                      <span className="border border-[var(--rule)] px-3 py-1" key={location}>
-                        {location}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              </div>
             </section>
+
+            <EditorialGallery compact items={legacyGalleryItems} />
           </div>
         </div>
       </section>

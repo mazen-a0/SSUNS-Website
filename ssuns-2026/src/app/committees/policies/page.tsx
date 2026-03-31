@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { PageHero } from "@/components/PageHero";
+import { ExpandablePanels } from "@/components/ui/expandable-panels";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function CommitteesPoliciesPage() {
@@ -29,22 +30,34 @@ export default function CommitteesPoliciesPage() {
               </div>
             </article>
 
-            <section className="grid gap-6 xl:grid-cols-3">
-              <article className="theme-panel rounded-[8px] p-6 sm:p-7 xl:col-span-1">
-                <p className="section-kicker">{isFrench ? "Assemblées générales à double délégation" : "Double-Delegate General Assemblies"}</p>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{chapter.body[2]}</p>
-              </article>
-
-              <article className="theme-panel rounded-[8px] p-6 sm:p-7 xl:col-span-1">
-                <p className="section-kicker">{isFrench ? "Petites AG, ECOSOC et agences spécialisées" : "Small GAs, ECOSOCs, and Specialized Agencies"}</p>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{chapter.body[3]}</p>
-              </article>
-
-              <article className="theme-panel rounded-[8px] p-6 sm:p-7 xl:col-span-1">
-                <p className="section-kicker">{isFrench ? "Crises" : "Crises"}</p>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{chapter.body[4]}</p>
-              </article>
-            </section>
+            <ExpandablePanels
+              items={[
+                {
+                  id: "technology-policy",
+                  title: isFrench ? "Politique technologique" : "Technology Policy",
+                  summary: isFrench ? "Attentes techniques selon le format du comité." : "Technology expectations by committee format.",
+                  content: chapter.body.slice(1),
+                },
+                {
+                  id: "prewriting-policy",
+                  title: isFrench ? "Politique de pré-rédaction" : "Pre-Writing Policy",
+                  summary: isFrench ? "Préparation et rédaction avant le comité." : "Preparation and drafting expectations before committee.",
+                  content: [isFrench ? "À venir." : "Coming soon."],
+                },
+                {
+                  id: "award-policy",
+                  title: isFrench ? "Politique des prix" : "Award Policy",
+                  summary: isFrench ? "Critères et approche des distinctions." : "Award criteria and judging approach.",
+                  content: [isFrench ? "À venir." : "Coming soon."],
+                },
+                {
+                  id: "ai-policy",
+                  title: isFrench ? "Politique sur l’IA" : "AI Policy",
+                  summary: isFrench ? "Usage acceptable des outils d’IA." : "Acceptable use of AI tools and assistance.",
+                  content: [isFrench ? "À venir." : "Coming soon."],
+                },
+              ]}
+            />
 
             <article className="theme-panel-strong rounded-[8px] p-6 sm:p-8">
               <p className="section-kicker">{isFrench ? "Questions" : "Questions"}</p>

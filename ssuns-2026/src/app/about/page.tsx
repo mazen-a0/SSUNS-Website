@@ -83,7 +83,7 @@ export default function AboutPage() {
             <article className="bg-[var(--panel-inverse)] p-6 text-white sm:p-7">
               <p className="section-kicker text-[#b4caff]">{aboutContent.sections.team}</p>
               <div className="mt-5 space-y-4 border-t border-white/12 pt-5">
-                {aboutContent.teamPlaceholders.map((member) => (
+                {aboutContent.secretariatMembers.slice(0, 3).map((member) => (
                   <article className="grid gap-3 sm:grid-cols-[0.34fr_0.66fr]" key={member.name}>
                     <p className="text-sm font-semibold tracking-[0.06em] text-white">{member.name}</p>
                     <p className="text-sm leading-relaxed text-[#dbe7ff]">{member.role}</p>

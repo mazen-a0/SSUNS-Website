@@ -56,7 +56,7 @@ export const resourcesPageContent = {
       ],
     },
   ],
-  placeholderLabel: "Dossier de référence fictif",
+  placeholderLabel: "Dossier de référence",
 };
 
 export const commonResources = [

@@ -3,7 +3,7 @@ export const sponsorContent = {
   intro:
     "Support a flagship student-led conference that brings more than a thousand delegates to Montreal for four days of debate, public speaking, and civic education.",
   heroImage: {
-    src: "/pictures/hotel-1600x900.jpg",
+    src: "/photos/hotel-1600x900.jpg",
     alt: "Conference venue prepared for plenary and sponsor reception",
     note: "conference ballroom or sponsor reception setting, 16:9, recommended 1600x900",
   },

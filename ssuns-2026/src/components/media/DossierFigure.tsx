@@ -30,7 +30,7 @@ export function DossierFigure({
   ratio = "16/9",
   eyebrow,
   caption,
-  fallbackSrc = "/pictures/hero-1920x1080.jpg",
+  fallbackSrc = "/photos/hero-1920x1080.jpg",
   className,
   imageClassName,
   priority = false,

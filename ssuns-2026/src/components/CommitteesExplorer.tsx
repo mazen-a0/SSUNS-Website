@@ -134,29 +134,30 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
                     return (
                       <article className="group theme-panel overflow-hidden rounded-[8px]" key={committee.id}>
                         <div className="relative">
-                          <CommitteeImage alt={`${committee.name} committee placeholder`} mode="card" slug={committee.slug} src={committee.imageSrc} />
+                          <CommitteeImage alt={`${committee.name} committee image`} mode="card" slug={committee.slug} src={committee.imageSrc} />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(8,15,52,0.94)] to-transparent px-4 py-4 text-white">
                             <p className="text-[11px] font-semibold text-[#c7d7ff]">{committee.theme}</p>
                             <h3 className="mt-2 text-2xl font-semibold leading-tight">{committee.name}</h3>
                           </div>
                         </div>
 
-                        <div className="px-4 py-4">
+                        <div className="flex min-h-[10.75rem] flex-col px-4 py-4">
                           <div className="grid gap-2 text-[11px] font-semibold text-[var(--muted)] sm:grid-cols-3">
                             <span className="border border-[var(--rule)] px-2 py-1">{committee.format}</span>
                             <span className="border border-[var(--rule)] px-2 py-1">{committee.level}</span>
                             <span className="border border-[var(--rule)] px-2 py-1">{committee.size}</span>
                           </div>
 
-                          <div className="mt-4 space-y-3 text-sm leading-relaxed text-[var(--muted)]">
+                          <div className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
                             <p className="text-[var(--text)]">{committee.blurb}</p>
-                            <p>{committee.topic}</p>
                           </div>
 
-                          <div className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--rule)] pt-4">
-                            <Link className="ml-auto inline-flex items-center gap-3 text-sm font-semibold text-[var(--accent)]" href={`/committees/${committee.slug}`}>
+                          <div className="mt-auto flex justify-end pt-5">
+                            <Link
+                              className="inline-flex items-center gap-2 rounded-full border border-[var(--rule-strong)] bg-[var(--panel-strong)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)] transition-colors duration-150 hover:bg-[var(--paper)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--panel)]"
+                              href={`/committees/${committee.slug}`}
+                            >
                               <span>{pageContent.openDetailsLabel}</span>
-                              <span aria-hidden className="h-px w-8 bg-[var(--accent)] transition-all duration-300 group-hover:w-10" />
                             </Link>
                           </div>
                         </div>

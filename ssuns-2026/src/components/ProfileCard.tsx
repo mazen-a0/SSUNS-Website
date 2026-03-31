@@ -6,12 +6,13 @@ type ProfileCardProps = {
   id: string;
   name: string;
   role: string;
+  email?: string;
   imageSrc?: string;
   bio?: string;
   onOpen: () => void;
 };
 
-export function ProfileCard({ id, name, role, imageSrc, bio, onOpen }: ProfileCardProps) {
+export function ProfileCard({ id, name, role, email, imageSrc, bio, onOpen }: ProfileCardProps) {
   const { language } = useSiteContent();
   const body = bio?.trim() || (language === "fr" ? "À venir" : "Coming soon");
 
@@ -29,6 +30,11 @@ export function ProfileCard({ id, name, role, imageSrc, bio, onOpen }: ProfileCa
         <div>
           <h3 className="font-display text-2xl leading-tight text-[var(--accent)]">{name}</h3>
           <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{role}</p>
+          {email ? (
+            <a className="mt-2 inline-flex text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href={`mailto:${email}`}>
+              {email}
+            </a>
+          ) : null}
           <div className="mt-4 border-t border-[var(--rule)] pt-4">
             <p
               className="text-sm leading-relaxed text-[var(--muted)]"

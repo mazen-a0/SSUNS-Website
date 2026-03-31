@@ -11,6 +11,7 @@ type CountdownNumberProps = {
   className?: string;
   /** Smaller tiles for dense layouts (e.g. hero sidebar) */
   compact?: boolean;
+  variant?: "default" | "plate";
   labels?: {
     days: string;
     hours: string;
@@ -50,7 +51,14 @@ function getTimeLeft(endDate: Date, startDate?: Date): TimeLeft {
   };
 }
 
-export function CountdownNumber({ endDate, startDate, className, compact = false, labels = defaultLabels }: CountdownNumberProps) {
+export function CountdownNumber({
+  endDate,
+  startDate,
+  className,
+  compact = false,
+  variant = "default",
+  labels = defaultLabels,
+}: CountdownNumberProps) {
   const prefersReducedMotion = useReducedMotion();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft(endDate, startDate));
 
@@ -74,17 +82,27 @@ export function CountdownNumber({ endDate, startDate, className, compact = false
 
   const tileClass = cn(
     "flex flex-col items-center justify-center rounded-[6px] text-center",
-    compact
+    variant === "plate"
+      ? "min-w-[3.35rem] border border-white/14 bg-[rgba(255,255,255,0.08)] px-2.5 py-2 shadow-[0_1px_0_rgba(255,255,255,0.08)_inset] backdrop-blur-sm"
+      : compact
       ? "min-w-[3.25rem] border border-white/16 bg-[rgba(8,14,46,0.55)] px-2 py-2 sm:min-w-[3.75rem]"
       : "theme-panel min-w-[4.5rem] px-2.5 py-2.5 sm:min-w-[5.25rem] sm:px-3 sm:py-3",
   );
   const digitClass = cn(
     "font-semibold leading-none tabular-nums",
-    compact ? "text-lg text-white sm:text-xl" : "text-2xl text-[var(--accent)] sm:text-3xl",
+    variant === "plate"
+      ? "text-lg text-white sm:text-xl"
+      : compact
+      ? "text-lg text-white sm:text-xl"
+      : "text-2xl text-[var(--accent)] sm:text-3xl",
   );
   const labelClass = cn(
     "mt-0.5 font-semibold uppercase tracking-[0.06em]",
-    compact ? "text-[9px] text-[#b4caff]" : "text-[10px] text-[var(--muted)]",
+    variant === "plate"
+      ? "text-[9px] text-[#c6d7ff]"
+      : compact
+      ? "text-[9px] text-[#b4caff]"
+      : "text-[10px] text-[var(--muted)]",
   );
 
   return (
@@ -107,7 +125,13 @@ export function CountdownNumber({ endDate, startDate, className, compact = false
               </motion.div>
             )}
             {index < units.length - 1 ? (
-              <span className={cn("font-semibold text-[var(--muted)]", compact ? "text-sm text-white/35" : "hidden text-lg sm:inline")} aria-hidden>
+              <span
+                className={cn(
+                  "font-semibold text-[var(--muted)]",
+                  variant === "plate" ? "hidden" : compact ? "text-sm text-white/35" : "hidden text-lg sm:inline",
+                )}
+                aria-hidden
+              >
                 :
               </span>
             ) : null}

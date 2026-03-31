@@ -234,7 +234,7 @@ export const registrationContent = {
   cta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
   munagerVideo: {
     src: "/video/munager-howto.mp4",
-    poster: "/pictures/hero-1920x1080.jpg",
+    poster: "/photos/hero-1920x1080.jpg",
     fallbackSrc: "/video/ssuns-recap-2025.mp4",
     title: "Munager walkthrough",
     unavailableLabel: "Video coming soon",
@@ -242,7 +242,7 @@ export const registrationContent = {
   },
   image: {
     src: "/headshots/costas.jpg",
-    alt: "Portrait placeholder for the registration office",
+    alt: "Portrait for the registration office",
     note: "delegate registration portrait, 4:5, recommended 800x1000",
   },
 };

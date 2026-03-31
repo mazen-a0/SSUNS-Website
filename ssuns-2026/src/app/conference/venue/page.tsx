@@ -21,10 +21,10 @@ export default function ConferenceVenuePage() {
   const { conferenceContent } = useSiteContent();
   const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/venue");
   const venueGalleryItems = [
-    { id: "venue-photo-1", src: "/pictures/hotel-1600x900.jpg", alt: "Sheraton exterior" },
-    { id: "venue-photo-2", src: "/pictures/montreal-1600x900.jpg", alt: "Montreal city view" },
-    { id: "venue-photo-3", src: "/pictures/gala(2).JPG", alt: "Delegates gathered in venue event space" },
-    { id: "venue-photo-4", src: "/pictures/delegates(8).JPG", alt: "Delegates moving through conference space" },
+    { id: "venue-photo-1", src: "/photos/hotel-1600x900.jpg", alt: "Sheraton exterior" },
+    { id: "venue-photo-2", src: "/photos/montreal-1600x900.jpg", alt: "Montreal city view" },
+    { id: "venue-photo-3", src: "/photos/gala(2).JPG", alt: "Delegates gathered in venue event space" },
+    { id: "venue-photo-4", src: "/photos/delegates(8).JPG", alt: "Delegates moving through conference space" },
   ];
 
   if (!chapter) return null;

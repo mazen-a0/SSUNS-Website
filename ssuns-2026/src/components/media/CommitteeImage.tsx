@@ -13,7 +13,7 @@ type CommitteeImageProps = {
   priority?: boolean;
 };
 
-const fallbackSrc = "/pictures/committee-1200x800.jpg";
+const fallbackSrc = "/photos/committee-1200x800.jpg";
 
 export function CommitteeImage({ slug, alt, src, mode = "card", className, priority = false }: CommitteeImageProps) {
   const initialSrc = src || fallbackSrc;
@@ -28,7 +28,7 @@ export function CommitteeImage({ slug, alt, src, mode = "card", className, prior
 
   return (
     <div className={cn("relative w-full overflow-hidden", wrapperClassName, className)} data-committee-slug={slug}>
-      {/* TODO(photo): Replace missing committee image with /public/committees/2026/{slug}.jpg. Fallback remains /public/pictures/committee-1200x800.jpg until the final asset is added. */}
+      {/* TODO(photo): Replace missing committee image with /public/committees/2026/{slug}.jpg. Fallback remains /public/photos/committee-1200x800.jpg until the final asset is added. */}
       <Image
         alt={alt}
         className="object-cover"

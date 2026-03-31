@@ -10,9 +10,14 @@ import type { SecretariatMember } from "@/content/en/about";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function AboutSecretariatPage() {
-  const { aboutContent } = useSiteContent();
+  const { aboutContent, contactContent } = useSiteContent();
   const chapter = aboutContent.chapters.find((item) => item.href === "/about/secretariat");
   const [activeMember, setActiveMember] = useState<SecretariatMember | null>(null);
+  const directoryByName = new Map(contactContent.directory.map((entry) => [entry.name, entry.email]));
+  const members = aboutContent.secretariatMembers.map((member) => ({
+    ...member,
+    email: member.email ?? directoryByName.get(member.name),
+  }));
 
   if (!chapter) return null;
 
@@ -36,9 +41,10 @@ export default function AboutSecretariatPage() {
 
             <LayoutGroup id="secretariat-cards">
               <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {aboutContent.secretariatMembers.map((member) => (
+                {members.map((member) => (
                   <ProfileCard
                     bio={member.bio}
+                    email={member.email}
                     id={member.name}
                     imageSrc={member.headshotSrc}
                     key={member.name}

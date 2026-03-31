@@ -94,7 +94,7 @@ export const conferenceContent = {
       title: "General Assemblies",
       body: "Large-format rooms with robust caucusing, amendment workflow, and a clear emphasis on bloc discipline.",
       image: {
-        src: "/pictures/chairs.JPG",
+        src: "/photos/chairs.JPG",
         alt: "General assembly with delegate placards",
         note: "general assembly floor, 3:2, recommended 1200x800",
       },
@@ -103,7 +103,7 @@ export const conferenceContent = {
       title: "Specialized Committees",
       body: "Smaller rooms with focused mandates, more technical framing, and deeper policy tradeoff analysis.",
       image: {
-        src: "/pictures/delegates.JPG",
+        src: "/photos/delegates.JPG",
         alt: "Delegates discussing draft resolution text",
         note: "delegates drafting resolutions, 3:2, recommended 1600x1067",
       },
@@ -112,7 +112,7 @@ export const conferenceContent = {
       title: "Crisis Simulations",
       body: "Fast-turn scenario rooms emphasizing rapid strategy, high-information updates, and disciplined directive writing.",
       image: {
-        src: "/pictures/gala(1).JPG",
+        src: "/photos/gala(1).JPG",
         alt: "Crisis room update briefing with live notices",
         note: "crisis room briefing, 16:9, recommended 1920x1080",
       },
@@ -137,7 +137,7 @@ export const conferenceContent = {
     body:
       "Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
     image: {
-      src: "/pictures/hotel-1600x900.jpg",
+      src: "/photos/hotel-1600x900.jpg",
       alt: "Conference hotel exterior in evening light",
       note: "conference hotel exterior, 16:9, recommended 1600x900",
     },
@@ -159,7 +159,7 @@ export const conferenceContent = {
     title: "Crisis simulation",
     body: "Fast-moving updates, directive writing, and strategic adaptation remain a defining part of the SSUNS programme.",
     image: {
-      src: "/pictures/delegates(6).JPG",
+      src: "/photos/delegates(6).JPG",
       alt: "Delegates caucusing during a crisis simulation",
       note: "delegates caucusing during crisis simulation, 3:2, recommended 1600x1067",
     },
@@ -167,15 +167,15 @@ export const conferenceContent = {
   policyCallouts: [
     {
       title: "Code of Conduct",
-      body: "Placeholder summary of behavior expectations, advisor supervision, and event professionalism.",
+      body: "Coming soon.",
     },
     {
       title: "Accessibility",
-      body: "Placeholder summary of accommodations process, venue access, and support contacts.",
+      body: "Coming soon.",
     },
     {
       title: "Safety Policies",
-      body: "Placeholder summary of reporting channels, safeguarding, and emergency protocol.",
+      body: "Coming soon.",
     },
   ],
 };

@@ -86,7 +86,7 @@ export const uiText: UiText = {
   languageSwitchLabel: "Language",
   languageEnglish: "EN",
   languageFrench: "FR",
-  mastheadLabel: "SSUNS 2026 • Montreal",
+  mastheadLabel: "SSUNS 2026 • Montréal",
 };
 
 export const footerContent = {
