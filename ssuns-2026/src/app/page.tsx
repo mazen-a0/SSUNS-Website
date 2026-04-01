@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AtAGlancePlate } from "@/components/home/AtAGlancePlate";
+import { SecretaryLetterModal } from "@/components/home/SecretaryLetterModal";
 import { Container, Section } from "@/components/layout";
 import { Reveal } from "@/components/motion/Reveal";
 import { HeroBackgroundMedia } from "@/components/HeroBackgroundMedia";
@@ -15,7 +16,10 @@ import { useSiteContent } from "@/lib/useSiteContent";
 
 function RegistrationVideoPanel() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -25,6 +29,7 @@ function RegistrationVideoPanel() {
 
     const syncState = () => {
       setIsPlaying(!video.paused);
+      setIsMuted(video.muted);
       setCurrentTime(video.currentTime || 0);
       setDuration(Number.isFinite(video.duration) ? video.duration : 0);
     };
@@ -45,6 +50,15 @@ function RegistrationVideoPanel() {
     };
   }, []);
 
+  useEffect(() => {
+    const syncFullscreen = () => {
+      setIsFullscreen(document.fullscreenElement === panelRef.current);
+    };
+
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    return () => document.removeEventListener("fullscreenchange", syncFullscreen);
+  }, []);
+
   const progress = useMemo(() => {
     if (!duration) return 0;
     return Math.max(0, Math.min(100, (currentTime / duration) * 100));
@@ -61,6 +75,26 @@ function RegistrationVideoPanel() {
     }
   };
 
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
+
+  const toggleFullscreen = async () => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    if (document.fullscreenElement === panel) {
+      await document.exitFullscreen();
+      return;
+    }
+
+    await panel.requestFullscreen();
+  };
+
   const handleSeek = (event: React.ChangeEvent<HTMLInputElement>) => {
     const video = videoRef.current;
     if (!video || !duration) return;
@@ -71,20 +105,18 @@ function RegistrationVideoPanel() {
   };
 
   return (
-    <div className="group relative min-h-[280px] overflow-hidden bg-[#0d153e] lg:min-h-full">
+    <div className="group relative min-h-[280px] overflow-hidden bg-[#0d153e] lg:min-h-full" ref={panelRef}>
       <video
         ref={videoRef}
         aria-hidden="true"
         autoPlay
         className="h-full w-full object-cover"
         loop
-        muted
         playsInline
         preload="metadata"
       >
         <source src="/video/registration-open.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,14,44,0.12),rgba(8,14,44,0.36)_55%,rgba(8,14,44,0.68))]" />
       <div className="absolute inset-x-0 bottom-0 z-10 border-t border-white/12 bg-[rgba(8,14,44,0.52)] px-4 py-3 backdrop-blur-md transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">
         <div className="flex items-center gap-3">
           <button
@@ -103,6 +135,22 @@ function RegistrationVideoPanel() {
               </svg>
             )}
           </button>
+          <button
+            aria-label={isMuted ? "Unmute video" : "Mute video"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-[rgba(255,255,255,0.08)] text-white transition-colors duration-200 hover:border-white/34 hover:bg-[rgba(255,255,255,0.16)]"
+            onClick={toggleMute}
+            type="button"
+          >
+            {isMuted ? (
+              <svg aria-hidden="true" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14 7.8v8.4L10.6 13H7v-2h3.6L14 7.8zm3.7 1.1-1.4 1.4a3.5 3.5 0 0 1 0 3.4l1.4 1.4a5.5 5.5 0 0 0 0-6.2zM19.4 5l-9 9-3.4-3.4L5.6 12l3.4 3.4-3.4 3.4L7 20.2l13.8-13.8L19.4 5z" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14 7.8v8.4L10.6 13H7v-2h3.6L14 7.8zm3.4-1.3-1.4 1.4a6 6 0 0 1 0 8.2l1.4 1.4a8 8 0 0 0 0-11z" />
+              </svg>
+            )}
+          </button>
           <div className="flex-1">
             <input
               aria-label="Registration video progress"
@@ -115,6 +163,22 @@ function RegistrationVideoPanel() {
             />
             <div aria-hidden className="mt-2 h-px w-full bg-[linear-gradient(90deg,rgba(76,158,255,0.85),rgba(255,255,255,0.18))]" />
           </div>
+          <button
+            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-[rgba(255,255,255,0.08)] text-white transition-colors duration-200 hover:border-white/34 hover:bg-[rgba(255,255,255,0.16)]"
+            onClick={toggleFullscreen}
+            type="button"
+          >
+            {isFullscreen ? (
+              <svg aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                <path d="M9 15H5v4m0-4 5 5M15 9h4V5m0 4-5-5" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                <path d="M9 5H5v4m0-4 5 5M15 19h4v-4m0 4-5-5" />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </div>
@@ -122,10 +186,12 @@ function RegistrationVideoPanel() {
 }
 
 export default function HomePage() {
-  const { committees, committeesPageContent, contactContent, homeContent } = useSiteContent();
+  const { committees, committeesPageContent, contactContent, homeContent, language } = useSiteContent();
   const sectionSpacing = "pt-6 pb-8 md:pt-8 md:pb-10 xl:pt-10 xl:pb-12";
+  const [isSecretaryLetterOpen, setIsSecretaryLetterOpen] = useState(false);
   const secretaryGeneralEmail =
     contactContent.directory.find((entry) => entry.role === "Secretary-General")?.email ?? null;
+  const secretaryLetterPreview = homeContent.directorNote.body.slice(0, 2);
   const featuredCommittees = homeContent.featuredCommittees.items
     .map((item) => {
       const committee = committees.find((entry) => entry.slug === item.slug);
@@ -247,10 +313,18 @@ export default function HomePage() {
                   <div>
                     <h3 className="text-[1.6rem] font-semibold leading-tight text-[var(--accent)]">{homeContent.directorNote.title}</h3>
                     <div className="mt-2.5 space-y-2.5 text-sm leading-relaxed text-[var(--text)]">
-                      {homeContent.directorNote.body.map((paragraph) => (
+                      {secretaryLetterPreview.map((paragraph) => (
                         <p key={paragraph}>{paragraph}</p>
                       ))}
                     </div>
+                    <button
+                      aria-haspopup="dialog"
+                      className="mt-4 text-sm font-semibold text-[var(--accent)]"
+                      onClick={() => setIsSecretaryLetterOpen(true)}
+                      type="button"
+                    >
+                      {language === "fr" ? "Lire la suite" : "Read more"}
+                    </button>
                     <div className="mt-4 border-t border-[var(--rule)] pt-3">
                       <p className="font-accent text-2xl text-[var(--accent)]">{homeContent.directorNote.signature}</p>
                       <p className="mt-2 text-xs font-semibold text-[var(--muted)]">{homeContent.directorNote.role}</p>
@@ -301,6 +375,18 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
+
+      <SecretaryLetterModal
+        body={homeContent.directorNote.body}
+        email={secretaryGeneralEmail}
+        imageAlt={homeContent.directorNote.image.alt}
+        imageSrc={homeContent.directorNote.image.src}
+        onClose={() => setIsSecretaryLetterOpen(false)}
+        open={isSecretaryLetterOpen}
+        role={homeContent.directorNote.role}
+        signature={homeContent.directorNote.signature}
+        title={homeContent.directorNote.title}
+      />
 
       <Section className={sectionSpacing} id="committees-preview" spacing="none">
         <Container>

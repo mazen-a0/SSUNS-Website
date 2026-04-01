@@ -9,7 +9,7 @@ export const registrationContent = {
     fees: "Fees & Funding",
     currentTier: "Current registration tier",
     walkthrough: "Munager walkthrough",
-    listserv: "List-serv",
+    listserv: "Newsletter",
   },
   chapters: [
     {
@@ -74,7 +74,7 @@ export const registrationContent = {
   steps: [
     "Visit the official SSUNS registration page and review the conference registration instructions.",
     "Complete your school’s registration through MUNager using the official conference link.",
-    "Join the SSUNS listserv to receive important updates and announcements leading up to the conference.",
+    "Join the SSUNS newsletter to receive important updates and announcements leading up to the conference.",
     "Check the registration section of our website for information on fees, deadlines, and policy updates.",
   ],
   howToGuide: {
@@ -206,17 +206,16 @@ export const registrationContent = {
     },
   ],
   listserv: {
-    label: "Stay updated",
-    body: "You can now subscribe to receive SSUNS weekly e-mails! Keep up with our latest updates, registration information and much more!",
+    label: "Join the newsletter",
+    body: "Subscribe to the SSUNS newsletter to receive weekly updates, registration information, and important announcements throughout the season.",
     href: "https://www.ssuns.org/registration-information",
   },
   listservForm: {
-    nameLabel: "Name",
+    requiredLabel: "indicates required",
     emailLabel: "Email",
-    schoolLabel: "School",
-    submitLabel: "Join listserv",
-    successLabel: "Thanks. Your information has been submitted.",
-    fallbackLabel: "Unable to submit automatically. Please email schools@ssuns.org.",
+    firstNameLabel: "First Name",
+    lastNameLabel: "Last Name",
+    submitLabel: "Join newsletter",
   },
   letter: {
     label: "Chargée d’Affaires",

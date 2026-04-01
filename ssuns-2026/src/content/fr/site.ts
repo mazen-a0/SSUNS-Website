@@ -20,8 +20,7 @@ export const navItems = [
   { ...enNavItems[3], label: "Comités" },
   { ...enNavItems[4], label: "Inscription" },
   { ...enNavItems[5], label: "Commandites" },
-  { ...enNavItems[6], label: "Ressources du personnel" },
-  { ...enNavItems[7], label: "Contact" },
+  { ...enNavItems[6], label: "Contact" },
 ];
 
 export const socialLinks = enSocialLinks;

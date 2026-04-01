@@ -13,7 +13,7 @@ export const registrationContent = {
     fees: "Frais et financement",
     currentTier: "Palier d'inscription actuel",
     walkthrough: "Guide Munager",
-    listserv: "Liste de diffusion",
+    listserv: "Infolettre",
   },
   chapters: [
     {
@@ -74,7 +74,7 @@ export const registrationContent = {
   steps: [
     "Consultez la page officielle d’inscription de SSUNS et prenez connaissance des instructions.",
     "Complétez l’inscription de votre école sur MUNager à l’aide du lien officiel de la conférence.",
-    "Inscrivez-vous à la liste de diffusion de SSUNS afin de recevoir les mises à jour et annonces importantes avant la conférence.",
+    "Inscrivez-vous à l'infolettre de SSUNS afin de recevoir les mises à jour et annonces importantes avant la conférence.",
     "Consultez la section « Inscription » de notre site web pour obtenir des informations sur les frais, les échéances et les politiques.",
   ],
   howToGuide: {
@@ -125,26 +125,26 @@ export const registrationContent = {
   ],
   listserv: {
     ...en.listserv,
-    label: "Restez informés",
-    body: "Vous pouvez dès maintenant vous inscrire pour recevoir les courriels hebdomadaires de SSUNS ! Restez informé de nos dernières mises à jour, des informations sur l’inscription et bien plus encore.",
+    label: "Abonnez-vous à l'infolettre",
+    body: "Abonnez-vous à l'infolettre de SSUNS pour recevoir nos mises à jour hebdomadaires, les informations d'inscription et les annonces importantes tout au long de la saison.",
   },
   listservForm: {
-    nameLabel: "Nom",
+    requiredLabel: "indique un champ obligatoire",
     emailLabel: "Courriel",
-    schoolLabel: "École",
-    submitLabel: "Joindre la liste de diffusion",
-    successLabel: "Merci. Vos renseignements ont été envoyés.",
-    fallbackLabel: "Impossible d'envoyer automatiquement. Veuillez écrire à schools@ssuns.org.",
+    firstNameLabel: "Prénom",
+    lastNameLabel: "Nom de famille",
+    submitLabel: "S'abonner à l'infolettre",
   },
   letter: {
     ...en.letter,
     label: "Chargée d’Affaires",
     title: "Lettre aux écoles",
     body: [
-      "Les inscriptions pour SSUNS 2026 ouvriront le 1er avril !",
-      "Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
-      "Des informations supplémentaires, y compris des instructions détaillées et des mises à jour importantes, seront publiées ici tout au long du mois de mars.",
-      "Inscrivez-vous avec votre adresse courriel pour recevoir les dernières nouvelles de SSUNS 2026 de la part de notre chargée d’affaires.",
+      "Chers délégués et conseillers pédagogiques de SSUNS,",
+      "Je m'appelle Costas Oreopoulos et j'ai l'immense privilège d'agir en tant que Chargé d’Affaires pour SSUNS 2026. Depuis ses débuts en 1993, SSUNS est devenu la principale conférence de Modélisation des Nations Unies au Canada. Aujourd'hui, à sa 34e édition, nous continuons d'offrir une expérience de conférence de calibre mondial aux élèves du secondaire et du CÉGEP. Chaque mois de novembre, plus de 1300 étudiants provenant du monde entier se joignent à nous pour quatre jours de sessions de comités dynamiques, de débats captivants et de simulations immersives.",
+      "Au-delà des sessions de comités, SSUNS propose une variété d'activités pour enrichir votre expérience, notamment des ateliers, des événements sociaux et des visites guidées de l'Université McGill. Les conseillers pédagogiques auront l'occasion d'observer leurs délégués en action, d'échanger avec d'autres éducateurs et de profiter du salon des conseillers ainsi que d'événements sociaux. Le tout se déroule dans la ville de Montréal, où les participants peuvent découvrir des sites emblématiques et s'imprégner de sa culture unique.",
+      "Que vous reveniez à SSUNS ou que vous y participiez pour la première fois, nous sommes extrêmement heureux de vous accueillir pour un week-end inoubliable de diplomatie, de débats et de collaboration. J'ai hâte de vous voir tous en novembre !",
+      "Inscrivez-vous avec votre adresse courriel afin de recevoir les dernières nouvelles de SSUNS 2026 de la part de notre Chargé d’Affaires.",
     ],
     role: "Chargée d’Affaires, SSUNS 2026",
   },

@@ -11,11 +11,10 @@ export const committeesPageContent = {
       title: "Répartition des comités",
       summary: "Descriptions de comités, contacts du dais et notes de programme pour la programmation 2026.",
       body: [
-        "Committee Descriptions for Website/Dias Apps",
-        "If you have any questions, feel free to contact Emma Ristic at gaecosoc@ssuns.org.",
-        "If you have any questions, feel free to contact Eitan Pessin at spec@ssuns.org.",
-        "If you have any questions, feel free to contact Will Greer at crisis@ssuns.org.",
-        "Meet the DAIS!",
+        "Je m'appelle Valeria Fonseca Ortega et je suis de retour pour exercer ma deuxième année en tant que Secrétaire générale adjointe aux affaires des comités. Revenir une seconde fois rend cette édition de SSUNS encore plus passionnante, et moi, aux côtés du reste de l'équipe des comités : Emma Ristic, Secrétaire générale adjointe déléguée pour l'Assemblée générale et l'ECOSOC ; Eitan Pessin, Secrétaire général adjoint délégué pour les agences spécialisées ; et William Greer, Secrétaire général adjoint délégué pour la crise, avons travaillé avec soin pour concevoir des comités originaux, qui mettent en avant des perspectives souvent négligées et qui offrent un contenu éducatif de grande qualité.",
+        "Nous avons cherché à présenter une diversité de sujets sur les plans géographique, historique et thématique. Cette année, nous sommes fiers de proposer la première édition du Conseil de sécurité des Nations Unies, ainsi que des comités tels que le Premier Congrès panslave de 1848 et le Festival panafricain du cinéma et de la télévision de Ouagadougou.",
+        "Notre objectif est simple : encourager le débat, favoriser l'échange d'idées, remettre en question les perceptions et créer un dialogue significatif. Avant tout, SSUNS ne se veut pas une compétition, mais plutôt un espace où les jeunes leaders peuvent trouver leur voix dans un monde où le dialogue est souvent négligé comme l'un des outils les plus puissants.",
+        "Si vous avez des questions, n'hésitez pas à contacter Emma Ristic à l'adresse gaecosoc@ssuns.org, Eitan Pessin à spec@ssuns.org ou Will Greer à crisis@ssuns.org.",
       ],
     },
     {

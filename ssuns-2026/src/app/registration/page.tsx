@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { ListservSignupForm } from "@/components/ListservSignupForm";
@@ -109,78 +110,75 @@ export default function RegistrationPage() {
                 </div>
               </article>
 
-              <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-                <p className="section-kicker">{isFrench ? "Dates clés" : "Key Dates"}</p>
-                <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5">
-                  {registrationContent.timeline.map((item) => (
-                    <article className="border-l border-[var(--rule)] pl-4" key={item.label}>
-                      <p className="text-xs font-semibold text-[var(--accent)]">{item.label}</p>
-                      <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{item.text}</p>
-                    </article>
+              <article className="theme-panel rounded-[8px] p-6 sm:p-8">
+                <p className="section-kicker">{isFrench ? "Comment s'inscrire" : "How to Register"}</p>
+                <h2 className="font-display mt-4 text-3xl leading-tight text-[var(--accent)]">
+                  {isFrench ? "Complétez l'inscription de votre délégation dans MUNager" : "Complete your delegation registration in MUNager"}
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+                  {registrationContent.chapters.find((item) => item.href === "/registration/how-to-register")?.summary}
+                </p>
+                <ol className="mt-5 space-y-3 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
+                  {registrationContent.steps.map((step, index) => (
+                    <li className="grid gap-3 sm:grid-cols-[1.75rem_minmax(0,1fr)]" key={step}>
+                      <span className="font-semibold text-[var(--accent)]">{index + 1}.</span>
+                      <span>{step}</span>
+                    </li>
                   ))}
-                  <article className="border-l border-[var(--rule)] pl-4">
-                    <p className="text-xs font-semibold text-[var(--accent)]">{isFrench ? "Aide financière" : "Financial Aid"}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{registrationContent.financialAidDeadlines.join(" • ")}</p>
-                  </article>
-                  <article className="border-l border-[var(--rule)] pl-4">
-                    <p className="text-xs font-semibold text-[var(--accent)]">{isFrench ? "Facturation" : "Invoices"}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{registrationContent.invoiceDeadlines.join(" • ")}</p>
-                  </article>
-                </div>
-              </article>
-            </section>
-
-            <section className="grid gap-8 xl:grid-cols-[0.58fr_0.42fr]">
-              <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-                <p className="section-kicker">{registrationContent.letter.label}</p>
-                <h2 className="font-display mt-4 text-4xl leading-tight text-[var(--accent)]">{registrationContent.letter.title}</h2>
-                <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
-                  {registrationContent.letter.body.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-                <div className="mt-6 border-t border-[var(--rule)] pt-4">
-                  <p className="font-accent text-2xl text-[var(--accent)]">{registrationContent.letter.signature}</p>
-                  <p className="mt-2 text-xs font-semibold text-[var(--muted)]">{registrationContent.letter.role}</p>
-                </div>
-                <div className="mt-6 border-t border-[var(--rule)] pt-5">
-                  <p className="section-kicker">{registrationContent.sections.listserv}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{registrationContent.listserv.body}</p>
-                  <div className="mt-4">
-                    <ListservSignupForm fallbackEmail="schools@ssuns.org" text={registrationContent.listservForm} />
-                  </div>
-                </div>
-              </article>
-
-              <div className="space-y-6">
-                <article className="theme-panel rounded-[8px] p-6 sm:p-8">
-                  <p className="section-kicker">{isFrench ? "Comment s'inscrire" : "How to Register"}</p>
-                  <h2 className="font-display mt-4 text-3xl leading-tight text-[var(--accent)]">{isFrench ? "Complétez l'inscription de votre délégation dans MUNager" : "Complete your delegation registration in MUNager"}</h2>
-                  <ol className="mt-5 space-y-3 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
-                    {registrationContent.steps.map((step, index) => (
-                      <li className="grid gap-3 sm:grid-cols-[1.75rem_minmax(0,1fr)]" key={step}>
-                        <span className="font-semibold text-[var(--accent)]">{index + 1}.</span>
-                        <span>{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                  <div className="mt-6 flex flex-wrap gap-3 border-t border-[var(--rule)] pt-5">
-                    <LiquidButton href={registrationContent.cta.href} label={registrationContent.cta.label} />
-                    <Link className="inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/registration/how-to-register">
-                      {isFrench ? "Voir le guide complet" : "View full guide"}
-                    </Link>
-                  </div>
-                </article>
-
-                <article className="theme-panel rounded-[8px] p-6 sm:p-8">
-                  <p className="section-kicker">{isFrench ? "Aide financière" : "Financial Aid"}</p>
-                  <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{registrationContent.chapters.find((item) => item.href === "/registration/financial-aid")?.body[0]}</p>
-                  <Link className="mt-4 inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/registration/financial-aid">
-                    {isFrench ? "Ouvrir l'aide financière" : "Open financial aid"}
+                </ol>
+                <div className="mt-6 flex flex-wrap gap-3 border-t border-[var(--rule)] pt-5">
+                  <LiquidButton href="/registration/how-to-register" label={isFrench ? "Ouvrir le guide" : "Open the guide"} />
+                  <Link className="inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/registration/financial-aid">
+                    {isFrench ? "Voir l'aide financière" : "View financial aid"}
                   </Link>
-                </article>
-              </div>
+                </div>
+              </article>
             </section>
+
+            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+              <div className="flex items-start gap-6 sm:gap-7">
+                <div className="min-w-0 flex-1">
+                  <p className="section-kicker">{registrationContent.letter.label}</p>
+                  <h2 className="font-display mt-4 text-4xl leading-tight text-[var(--accent)]">{registrationContent.letter.title}</h2>
+                  <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
+                    {registrationContent.letter.body.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-1 w-[9.5rem] max-w-[28vw] shrink-0 self-start overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] sm:mt-2 sm:w-[10.5rem]">
+                  <Image
+                    alt="Costas Oreopoulos"
+                    className="h-auto w-full object-cover"
+                    height={210}
+                    sizes="(min-width: 1280px) 168px, 28vw"
+                    src="/headshots/costas.jpg"
+                    width={168}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 border-t border-[var(--rule)] pt-4">
+                <p className="font-accent text-2xl text-[var(--accent)]">{registrationContent.letter.signature}</p>
+                <p className="mt-2 text-xs font-semibold text-[var(--muted)]">{registrationContent.letter.role}</p>
+              </div>
+
+              <div className="mt-6 rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-5 py-5 text-white sm:px-6">
+                <div className="grid gap-5 lg:grid-cols-[0.42fr_0.58fr] lg:items-start">
+                  <div>
+                    <p className="section-kicker text-[#b4caff]">{registrationContent.sections.listserv}</p>
+                    <h3 className="mt-3 text-2xl font-semibold leading-tight">
+                      {isFrench ? "Recevez les mises à jour de SSUNS directement dans votre boîte de réception" : "Get SSUNS updates straight to your inbox"}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[#e4eeff]">{registrationContent.listserv.body}</p>
+                  </div>
+                  <div className="rounded-[8px] border border-white/14 bg-white/5 p-4 sm:p-5">
+                    <ListservSignupForm text={registrationContent.listservForm} />
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>

@@ -1,60 +1,85 @@
 "use client";
 
-import { useState } from "react";
-
 type ListservSignupFormProps = {
-  fallbackEmail: string;
   text: {
-    nameLabel: string;
+    requiredLabel: string;
     emailLabel: string;
-    schoolLabel: string;
+    firstNameLabel: string;
+    lastNameLabel: string;
     submitLabel: string;
-    successLabel: string;
-    fallbackLabel: string;
   };
 };
 
-export function ListservSignupForm({ fallbackEmail, text }: ListservSignupFormProps) {
-  const [formState, setFormState] = useState({ name: "", email: "", school: "" });
-  const [message, setMessage] = useState<string | null>(null);
+const MAILCHIMP_ACTION =
+  "https://ssuns.us12.list-manage.com/subscribe/post?u=15d18135f3db2bb93664e6e26&id=73a33f3906&f_id=00bad6e8f0";
+const MAILCHIMP_HONEYPOT = "b_15d18135f3db2bb93664e6e26_73a33f3906";
 
+export function ListservSignupForm({ text }: ListservSignupFormProps) {
   return (
     <form
-      className="theme-panel paper-grain rounded-[8px] p-5"
-      onSubmit={(event) => {
-        event.preventDefault();
-        setMessage(text.fallbackLabel);
-        window.location.href = `mailto:${fallbackEmail}?subject=${encodeURIComponent("SSUNS Listserv Signup")}&body=${encodeURIComponent(
-          `Name: ${formState.name}\nEmail: ${formState.email}\nSchool: ${formState.school}`,
-        )}`;
-      }}
+      action={MAILCHIMP_ACTION}
+      className="space-y-4"
+      method="post"
+      name="mc-embedded-subscribe-form"
+      noValidate
+      target="_blank"
     >
-      {/* TODO(form): Connect this placeholder module to the listserv backend when the Apps Script endpoint is ready. This pass intentionally keeps the form as a styled mailto fallback only. */}
+      <p className="text-xs font-semibold uppercase tracking-[0.08em] text-white/70">
+        <span className="mr-1 text-[#8cc1ff]">*</span>
+        {text.requiredLabel}
+      </p>
+
       <div className="grid gap-4 sm:grid-cols-3">
-        <input
-          className="border border-[var(--rule)] bg-[var(--bg)] px-3 py-3 text-sm text-[var(--text)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
-          onChange={(event) => setFormState((current) => ({ ...current, name: event.target.value }))}
-          placeholder={text.nameLabel}
-          value={formState.name}
-        />
-        <input
-          className="border border-[var(--rule)] bg-[var(--bg)] px-3 py-3 text-sm text-[var(--text)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
-          onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
-          placeholder={text.emailLabel}
-          type="email"
-          value={formState.email}
-        />
-        <input
-          className="border border-[var(--rule)] bg-[var(--bg)] px-3 py-3 text-sm text-[var(--text)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
-          onChange={(event) => setFormState((current) => ({ ...current, school: event.target.value }))}
-          placeholder={text.schoolLabel}
-          value={formState.school}
-        />
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.08em] text-white/78">
+            {text.emailLabel} <span className="text-[#8cc1ff]">*</span>
+          </span>
+          <input
+            className="w-full rounded-[8px] border border-white/14 bg-white/7 px-3 py-3 text-sm text-white placeholder:text-white/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
+            id="mce-EMAIL"
+            name="EMAIL"
+            required
+            type="email"
+          />
+        </label>
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.08em] text-white/78">
+            {text.firstNameLabel} <span className="text-[#8cc1ff]">*</span>
+          </span>
+          <input
+            className="w-full rounded-[8px] border border-white/14 bg-white/7 px-3 py-3 text-sm text-white placeholder:text-white/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
+            id="mce-FNAME"
+            name="FNAME"
+            required
+            type="text"
+          />
+        </label>
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.08em] text-white/78">
+            {text.lastNameLabel} <span className="text-[#8cc1ff]">*</span>
+          </span>
+          <input
+            className="w-full rounded-[8px] border border-white/14 bg-white/7 px-3 py-3 text-sm text-white placeholder:text-white/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
+            id="mce-LNAME"
+            name="LNAME"
+            required
+            type="text"
+          />
+        </label>
       </div>
-      <button className="mt-4 border border-[var(--accent)] bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white" type="submit">
+
+      <div aria-hidden="true" className="absolute left-[-5000px]">
+        <input autoComplete="off" name={MAILCHIMP_HONEYPOT} tabIndex={-1} type="text" />
+      </div>
+
+      <button
+        className="inline-flex items-center justify-center rounded-[8px] border border-white/16 bg-white px-5 py-3 text-sm font-semibold text-[var(--accent)] transition hover:bg-[#eef3ff] hover:text-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
+        id="mc-embedded-subscribe"
+        name="subscribe"
+        type="submit"
+      >
         {text.submitLabel}
       </button>
-      {message ? <p className="mt-3 text-sm text-[var(--muted)]">{message}</p> : null}
     </form>
   );
 }

@@ -43,7 +43,7 @@ type GlassNavProps = {
 };
 
 const coreHrefs = new Set(["/", "/about", "/conference", "/committees", "/registration"]);
-const utilityHrefs = new Set(["/sponsor-us", "/staff-resources", "/contact"]);
+const utilityHrefs = new Set(["/sponsor-us", "/contact"]);
 
 function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
