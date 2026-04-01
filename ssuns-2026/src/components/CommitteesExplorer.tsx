@@ -22,6 +22,34 @@ function getCommitteeGroup(committee: Committee): GroupKey {
   return "crisis";
 }
 
+function isUnspecifiedValue(value: string) {
+  const normalized = value.trim().toLowerCase();
+  const unavailableLabel = ["coming", "soon"].join(" ");
+  return normalized === unavailableLabel || normalized === `${unavailableLabel}.` || normalized === "à venir" || normalized === "à venir.";
+}
+
+function getDifficultyLabel(committee: Committee) {
+  if (committee.size === "Double Delegation" || committee.size === "Double délégation") return committee.size === "Double délégation" ? "Double délégation" : "Double Del";
+  if (committee.format === "Joint Crisis" || committee.format === "Crise conjointe") return committee.format;
+  if (committee.level === "Advanced" || committee.level === "Avancé") return committee.level;
+  if (committee.level === "Beginner" || committee.level === "Débutant") return committee.level;
+  return committee.level === "Débutant" || committee.level === "Avancé" || committee.format === "Crise conjointe" ? "Régulier" : "Regular";
+}
+
+function splitCommitteeName(name: string) {
+  const parts = name.split(/\s[-–—]\s/);
+  if (parts.length < 2) {
+    return { title: name, subtitle: null as string | null };
+  }
+
+  const [title, ...rest] = parts;
+  const subtitle = rest.join(" - ").trim();
+  return {
+    title: title.trim(),
+    subtitle: subtitle.length ? subtitle : null,
+  };
+}
+
 export function CommitteesExplorer({ committees, pageContent }: CommitteesExplorerProps) {
   const allLabel = pageContent.allOptionLabel;
   const [search, setSearch] = useState("");
@@ -64,7 +92,7 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
             <input
               className="mt-2 w-full border border-[var(--rule)] bg-[var(--bg)] px-3 py-3 text-sm text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)]"
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={pageContent.searchPlaceholder}
+              placeholder={pageContent.searchHint}
               value={search}
             />
           </label>
@@ -131,26 +159,40 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                   {groupCommittees.map((committee) => {
+                    const metadata = [...new Set([committee.format, committee.level, getDifficultyLabel(committee)].filter((value) => !isUnspecifiedValue(value)))];
+                    const hasBlurb = !isUnspecifiedValue(committee.blurb);
+                    const { title, subtitle } = splitCommitteeName(committee.name);
+                    const showSubtitle = subtitle && subtitle.trim().toLowerCase() !== committee.blurb.trim().toLowerCase();
+
                     return (
-                      <article className="group theme-panel overflow-hidden rounded-[8px]" key={committee.id}>
+                      <article className="group theme-panel flex h-full flex-col overflow-hidden rounded-[8px]" key={committee.id}>
                         <div className="relative">
                           <CommitteeImage alt={`${committee.name} committee image`} mode="card" slug={committee.slug} src={committee.imageSrc} />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(8,15,52,0.94)] to-transparent px-4 py-4 text-white">
                             <p className="text-[11px] font-semibold text-[#c7d7ff]">{committee.theme}</p>
-                            <h3 className="mt-2 text-2xl font-semibold leading-tight">{committee.name}</h3>
+                            <h3 className="mt-2 text-2xl font-semibold leading-tight">{title}</h3>
                           </div>
                         </div>
 
-                        <div className="flex min-h-[10.75rem] flex-col px-4 py-4">
-                          <div className="grid gap-2 text-[11px] font-semibold text-[var(--muted)] sm:grid-cols-3">
-                            <span className="border border-[var(--rule)] px-2 py-1">{committee.format}</span>
-                            <span className="border border-[var(--rule)] px-2 py-1">{committee.level}</span>
-                            <span className="border border-[var(--rule)] px-2 py-1">{committee.size}</span>
+                        <div className="flex min-h-[10.75rem] flex-1 flex-col px-4 py-4">
+                          <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[var(--muted)]">
+                            {metadata.map((value) => (
+                              <span className="border border-[var(--rule)] px-2 py-1" key={`${committee.id}-${value}`}>
+                                {value}
+                              </span>
+                            ))}
                           </div>
 
-                          <div className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                            <p className="text-[var(--text)]">{committee.blurb}</p>
-                          </div>
+                          {showSubtitle || hasBlurb ? (
+                            <div className="mt-4 space-y-3 text-sm leading-relaxed text-[var(--muted)]">
+                              {showSubtitle ? <p className="text-sm font-semibold leading-tight text-[var(--accent)]">{subtitle}</p> : null}
+                              {hasBlurb ? (
+                                <p className={showSubtitle ? "text-[var(--text)]" : "text-sm font-semibold leading-tight text-[var(--accent)]"}>
+                                  {committee.blurb}
+                                </p>
+                              ) : null}
+                            </div>
+                          ) : null}
 
                           <div className="mt-auto flex justify-end pt-5">
                             <Link

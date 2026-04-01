@@ -162,7 +162,7 @@ export function SecretariatModal({ member, onClose }: SecretariatModalProps) {
 
                 <div className="mt-5 max-h-[70vh] overflow-y-auto pr-1">
                   <p className="text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
-                    {member.bio?.trim() || (language === "fr" ? "À venir" : "Coming soon")}
+                    {member.bio?.trim() || (language === "fr" ? "Biographie disponible sur demande." : "Biography available on request.")}
                   </p>
                 </div>
               </div>

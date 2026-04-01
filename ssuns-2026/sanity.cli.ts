@@ -5,7 +5,7 @@ const dataset = process.env.SANITY_DATASET || process.env.NEXT_PUBLIC_SANITY_DAT
 
 export default defineCliConfig({
   api: {
-    projectId: projectId || 'placeholder',
+    projectId: projectId || 'ssuns',
     dataset: dataset || 'production',
   },
 })

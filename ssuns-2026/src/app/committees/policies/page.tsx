@@ -3,13 +3,48 @@
 import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { PageHero } from "@/components/PageHero";
-import { ExpandablePanels } from "@/components/ui/expandable-panels";
+import { PolicyCard } from "@/components/policies/PolicyCard";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function CommitteesPoliciesPage() {
   const { committeesPageContent, language } = useSiteContent();
   const chapter = committeesPageContent.chapters.find((item) => item.href === "/committees/policies");
   const isFrench = language === "fr";
+  const policies = [
+    {
+      title: isFrench ? "Politique technologique" : "Technology Policy",
+      preview: isFrench
+        ? "Cette politique présente les attentes concernant l'utilisation des appareils et le format technologique selon le type de comité."
+        : "This policy outlines device-use expectations and technology format by committee type.",
+      bullets: [
+        isFrench ? "Document officiel en format PDF pour SSUNS 2026." : "Official SSUNS 2026 PDF policy document.",
+        isFrench ? "Couvre les attentes pour les GA, ECOSOC, agences spécialisées et crises." : "Covers expectations for GAs, ECOSOCs, specialized agencies, and crisis committees.",
+      ],
+      pdfHref: "/docs/SSUNS26_Tech_Policy.pdf",
+    },
+    {
+      title: isFrench ? "Politique sur l'usage de l'IA" : "AI Policy",
+      preview: isFrench
+        ? "Cette politique précise les attentes de SSUNS 2026 quant à l'utilisation des outils d'intelligence artificielle dans la préparation et le travail en comité."
+        : "This policy clarifies SSUNS 2026 expectations for the use of artificial intelligence tools in preparation and committee work.",
+      bullets: [
+        isFrench ? "Document officiel en format PDF pour SSUNS 2026." : "Official SSUNS 2026 PDF policy document.",
+        isFrench ? "À consulter avant la conférence par les délégués, advisors et membres du dais." : "Recommended reading for delegates, advisors, and dais members before conference weekend.",
+      ],
+      pdfHref: "/docs/SSUNS26_AI_Policy.pdf",
+    },
+    {
+      title: isFrench ? "Politique des prix" : "Awards Policy",
+      preview: isFrench
+        ? "Cette politique explique l'approche d'évaluation des distinctions individuelles et de délégation à SSUNS 2026."
+        : "This policy explains the evaluation approach for individual and delegation awards at SSUNS 2026.",
+      bullets: [
+        isFrench ? "Présente le cadre d'évaluation officiel des distinctions." : "Provides the official award evaluation framework.",
+        isFrench ? "À consulter par les délégués, dais et responsables de comité." : "Useful for delegates, dais members, and committee leadership.",
+      ],
+      pdfHref: "/docs/SSUNS26_Award_Eval_Policy.pdf",
+    },
+  ];
 
   if (!chapter) return null;
 
@@ -30,34 +65,19 @@ export default function CommitteesPoliciesPage() {
               </div>
             </article>
 
-            <ExpandablePanels
-              items={[
-                {
-                  id: "technology-policy",
-                  title: isFrench ? "Politique technologique" : "Technology Policy",
-                  summary: isFrench ? "Attentes techniques selon le format du comité." : "Technology expectations by committee format.",
-                  content: chapter.body.slice(1),
-                },
-                {
-                  id: "prewriting-policy",
-                  title: isFrench ? "Politique de pré-rédaction" : "Pre-Writing Policy",
-                  summary: isFrench ? "Préparation et rédaction avant le comité." : "Preparation and drafting expectations before committee.",
-                  content: [isFrench ? "À venir." : "Coming soon."],
-                },
-                {
-                  id: "award-policy",
-                  title: isFrench ? "Politique des prix" : "Award Policy",
-                  summary: isFrench ? "Critères et approche des distinctions." : "Award criteria and judging approach.",
-                  content: [isFrench ? "À venir." : "Coming soon."],
-                },
-                {
-                  id: "ai-policy",
-                  title: isFrench ? "Politique sur l’IA" : "AI Policy",
-                  summary: isFrench ? "Usage acceptable des outils d’IA." : "Acceptable use of AI tools and assistance.",
-                  content: [isFrench ? "À venir." : "Coming soon."],
-                },
-              ]}
-            />
+            <div className="space-y-3">
+              {policies.map((policy) => (
+                <PolicyCard
+                  bullets={policy.bullets}
+                  downloadLabel={isFrench ? "Télécharger" : "Download"}
+                  key={policy.title}
+                  openLabel={isFrench ? "Lire la politique complète (PDF)" : "Read full policy (PDF)"}
+                  pdfHref={policy.pdfHref}
+                  preview={policy.preview}
+                  title={policy.title}
+                />
+              ))}
+            </div>
 
             <article className="theme-panel-strong rounded-[8px] p-6 sm:p-8">
               <p className="section-kicker">{isFrench ? "Questions" : "Questions"}</p>

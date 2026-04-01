@@ -4,7 +4,7 @@ export const registrationContent = {
   ...en,
   title: "Inscription",
   intro:
-    "Les inscriptions à SSUNS 2026 ouvriront le 1er avril ! Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
+    "Les inscriptions à SSUNS 2026 sont maintenant ouvertes. Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
   sections: {
     ...en.sections,
     flow: "Comment s'inscrire",
@@ -19,14 +19,12 @@ export const registrationContent = {
     {
       ...en.chapters[0],
       title: "Information",
-      summary: "Les inscriptions à SSUNS 2026 ouvrent le 1er avril 2026.",
+      summary: "Les inscriptions à SSUNS 2026 sont maintenant ouvertes.",
       body: [
-        "Les inscriptions pour SSUNS 2026 ouvriront le 1er avril !",
+        "Les inscriptions pour SSUNS 2026 sont maintenant ouvertes.",
         "Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
-        "Des informations supplémentaires, y compris des instructions détaillées et des mises à jour importantes, seront publiées ici tout au long du mois de mars.",
-        "Nous encourageons tous les délégués et les encadrants à les consulter à l’avance afin d’assurer une inscription sans difficulté.",
+        "Consultez ici les instructions détaillées et les mises à jour importantes afin d’assurer une inscription sans difficulté.",
         "La conférence se déroulera du 12 au 15 novembre 2026.",
-        "Ouverture des inscriptions : 1er avril.",
         "Clôture des inscriptions : 16 octobre ou lorsque la capacité maximale est atteinte.",
       ],
     },
@@ -50,7 +48,7 @@ export const registrationContent = {
       title: "Aide financière",
       summary: "Information sur l'accessibilité financière.",
       body: [
-        "Les politiques financières et les informations relatives à l’aide financière seront mises à jour prochainement.",
+        "Consultez sur cette page les politiques financières de SSUNS 2026, les périodes d'aide financière et les échéances de facturation.",
         "Dates limites – Demandes d’aide financière.",
         "Précoce : 8 juin.",
         "Régulière : 8 septembre.",
@@ -87,7 +85,7 @@ export const registrationContent = {
     { ...en.timeline[2], label: "12-15 novembre 2026", text: "Dates de la conférence à Montréal." },
   ],
   currentTier: {
-    label: "Les inscriptions ouvrent le 1er avril",
+    label: "Les inscriptions sont ouvertes",
     detail: "La conférence se déroulera du 12 au 15 novembre 2026. Les inscriptions se terminent le 16 octobre ou lorsque la capacité maximale est atteinte.",
   },
   pricingTimeline: en.pricingTimeline,
@@ -95,16 +93,15 @@ export const registrationContent = {
     title: "Calendrier d'inscription",
     delegationFee: "Frais de délégation",
     delegateFee: "Par délégué",
-    current: "Actuel",
-    financialAidDeadlines: "Échéances d'aide financière",
+    current: "Fenêtre d'inscription actuelle",
     to: "au",
   },
   financialAidDeadlines: ["8 juin", "8 septembre", "16 octobre"],
   invoiceDeadlines: ["22 juin", "16 septembre", "23 octobre"],
-  feePlaceholders: [
-    { ...en.feePlaceholders[0], title: "Frais", body: "Les frais de délégué s’appliquent à chaque participant inscrit. Les frais de délégation constituent un montant unique couvrant l’ensemble de la délégation." },
-    { ...en.feePlaceholders[1], title: "Dates", body: "Ouverture des inscriptions : 1er avril. Clôture des inscriptions : 16 octobre ou lorsque la capacité maximale est atteinte." },
-    { ...en.feePlaceholders[2], title: "Aide financière", body: "Les politiques financières et les informations relatives à l’aide financière seront mises à jour prochainement." },
+  feeNotes: [
+    { ...en.feeNotes[0], title: "Frais", body: "Les frais de délégué s’appliquent à chaque participant inscrit. Les frais de délégation constituent un montant unique couvrant l’ensemble de la délégation." },
+    { ...en.feeNotes[1], title: "Dates", body: "Ouverture des inscriptions : 1er avril. Clôture des inscriptions : 16 octobre ou lorsque la capacité maximale est atteinte." },
+    { ...en.feeNotes[2], title: "Aide financière", body: "Les politiques financières, les périodes d'aide financière et les échéances de facturation sont disponibles sur la page d'aide financière." },
   ],
   tracks: [
     {
@@ -120,7 +117,7 @@ export const registrationContent = {
     {
       ...en.tracks[2],
       title: "Fenêtre d'aide financière",
-      body: "Les détails sur l'aide financière et les politiques connexes seront liés depuis le chapitre d'aide financière une fois publiés.",
+      body: "Les détails sur l'aide financière, les politiques financières et les échéances de facturation sont disponibles dans le chapitre d'aide financière.",
     },
   ],
   listserv: {
@@ -137,21 +134,22 @@ export const registrationContent = {
   },
   letter: {
     ...en.letter,
-    label: "Chargée d’Affaires",
+    label: "Chargé d’Affaires",
     title: "Lettre aux écoles",
     body: [
       "Chers délégués et conseillers pédagogiques de SSUNS,",
-      "Je m'appelle Costas Oreopoulos et j'ai l'immense privilège d'agir en tant que Chargé d’Affaires pour SSUNS 2026. Depuis ses débuts en 1993, SSUNS est devenu la principale conférence de Modélisation des Nations Unies au Canada. Aujourd'hui, à sa 34e édition, nous continuons d'offrir une expérience de conférence de calibre mondial aux élèves du secondaire et du CÉGEP. Chaque mois de novembre, plus de 1300 étudiants provenant du monde entier se joignent à nous pour quatre jours de sessions de comités dynamiques, de débats captivants et de simulations immersives.",
+      "Je m'appelle Costas Oreopoulos et j'ai l'immense privilège d'agir en tant que Chargé d’Affaires pour SSUNS 2026. Depuis ses débuts en 1993, SSUNS est devenu la principale conférence de Modélisation des Nations Unies au Canada. Aujourd'hui, à sa 34e édition, nous continuons d'offrir une expérience de conférence de calibre mondial aux élèves du secondaire et du CÉGEP. Chaque mois de novembre, 1300+ étudiants provenant du monde entier se joignent à nous pour quatre jours de sessions de comités dynamiques, de débats captivants et de simulations immersives.",
       "Au-delà des sessions de comités, SSUNS propose une variété d'activités pour enrichir votre expérience, notamment des ateliers, des événements sociaux et des visites guidées de l'Université McGill. Les conseillers pédagogiques auront l'occasion d'observer leurs délégués en action, d'échanger avec d'autres éducateurs et de profiter du salon des conseillers ainsi que d'événements sociaux. Le tout se déroule dans la ville de Montréal, où les participants peuvent découvrir des sites emblématiques et s'imprégner de sa culture unique.",
+      "Mon parcours en MUN a commencé à SSUNS lorsque j'étais au secondaire à Toronto. Cette expérience a nourri une passion qui m'a gardé engagé dans le circuit avant de me ramener à McGill avec l'envie d'offrir à une nouvelle génération de délégués une expérience aussi marquante. Après avoir vu la conférence du point de vue du délégué comme de celui du Secrétariat, je peux affirmer que SSUNS demeure une expérience exceptionnellement formatrice.",
       "Que vous reveniez à SSUNS ou que vous y participiez pour la première fois, nous sommes extrêmement heureux de vous accueillir pour un week-end inoubliable de diplomatie, de débats et de collaboration. J'ai hâte de vous voir tous en novembre !",
-      "Inscrivez-vous avec votre adresse courriel afin de recevoir les dernières nouvelles de SSUNS 2026 de la part de notre Chargé d’Affaires.",
+      "Cordialement,",
     ],
-    role: "Chargée d’Affaires, SSUNS 2026",
+    role: "Chargé d’Affaires, SSUNS 2026",
   },
-  cta: { ...en.cta, label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
+  cta: { ...en.cta, label: "S'inscrire", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
   munagerVideo: {
     ...en.munagerVideo,
     title: "Guide Munager",
-    unavailableLabel: "Vidéo à venir",
+    unavailableLabel: "Vidéo du guide indisponible",
   },
 };

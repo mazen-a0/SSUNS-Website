@@ -1,3 +1,5 @@
+import { pickImage } from "@/lib/images";
+
 export type ResourceItem = {
   id: string;
   title: string;
@@ -61,9 +63,8 @@ export const resourcesPageContent = {
       ],
     },
   ],
-  placeholderLabel: "Reference packet",
   heroImage: {
-    src: "/photos/committee-1200x800.jpg",
+    src: pickImage("committees", "resources-hero"),
     alt: "Delegates reviewing conference materials",
     note: "delegates reviewing printed conference packets, 3:2, recommended 1200x800",
   },

@@ -6,6 +6,7 @@ import { DossierNav } from "@/components/DossierNav";
 import { EditorialGallery } from "@/components/media/EditorialGallery";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
+import { ROOM_RATES_IMAGE, VENUE_GALLERY_IMAGES } from "@/lib/images";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 const mapsQuery = "https://www.google.com/maps?q=Le+Centre+Sheraton+Montreal&z=15&output=embed";
@@ -21,10 +22,10 @@ export default function ConferenceVenuePage() {
   const { conferenceContent } = useSiteContent();
   const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/venue");
   const venueGalleryItems = [
-    { id: "venue-photo-1", src: "/photos/hotel-1600x900.jpg", alt: "Sheraton exterior" },
-    { id: "venue-photo-2", src: "/photos/montreal-1600x900.jpg", alt: "Montreal city view" },
-    { id: "venue-photo-3", src: "/photos/gala(2).JPG", alt: "Delegates gathered in venue event space" },
-    { id: "venue-photo-4", src: "/photos/delegates(8).JPG", alt: "Delegates moving through conference space" },
+    { id: "venue-photo-1", src: VENUE_GALLERY_IMAGES[0], alt: "Sheraton exterior at arrival" },
+    { id: "venue-photo-2", src: VENUE_GALLERY_IMAGES[1], alt: "Sheraton lobby and common spaces" },
+    { id: "venue-photo-3", src: VENUE_GALLERY_IMAGES[2], alt: "Montreal city view near the venue" },
+    { id: "venue-photo-4", src: VENUE_GALLERY_IMAGES[3], alt: "Conference event space inside the Sheraton" },
   ];
 
   if (!chapter) return null;
@@ -82,6 +83,13 @@ export default function ConferenceVenuePage() {
                   All prices are in CAD and include Quebec tax. Please also note that all single and double occupancy rooms have 1 queen or 1 king sized bed.
                 </p>
               </div>
+
+              <DossierFigure
+                alt="Sheraton exterior prepared for conference arrival"
+                className="mt-5"
+                ratio="16/9"
+                src={ROOM_RATES_IMAGE}
+              />
 
               <div className="mt-5 overflow-hidden border border-[var(--rule)]">
                 <table className="w-full border-collapse text-left text-sm sm:text-base">

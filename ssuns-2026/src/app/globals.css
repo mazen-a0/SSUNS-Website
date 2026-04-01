@@ -40,7 +40,7 @@ html,
 body {
   min-height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 html {
@@ -57,7 +57,6 @@ body {
 
 main {
   width: 100%;
-  overflow-x: clip;
   padding-bottom: 4rem;
 }
 
@@ -77,8 +76,8 @@ img {
   scroll-margin-top: var(--site-sticky-top);
 }
 
-/** Sticky chapter nav below the site header (xl+ only; static on smaller breakpoints). */
-@media (min-width: 1280px) {
+/** Sticky chapter nav below the site header on desktop/tablet layouts. */
+@media (min-width: 768px) {
   .sticky-below-header {
     position: sticky;
     top: var(--site-sticky-top);
@@ -91,7 +90,7 @@ img {
   max-width: 65ch;
 }
 
-/** Responsive 16:9 embed shell (YouTube, placeholders). */
+/** Responsive 16:9 embed shell for video and iframe media. */
 .video-embed {
   position: relative;
   aspect-ratio: 16 / 9;

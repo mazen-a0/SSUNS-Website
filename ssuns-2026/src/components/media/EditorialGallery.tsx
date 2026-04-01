@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { DEFAULT_EDITORIAL_IMAGE } from "@/lib/images";
 
 type EditorialGalleryItem = {
   id: string;
@@ -23,7 +24,7 @@ type EditorialGalleryProps = {
 };
 
 function EditorialGalleryTile({ item }: { item: EditorialGalleryItem }) {
-  const fallbackSrc = item.fallbackSrc || "/photos/committee-1200x800.jpg";
+  const fallbackSrc = item.fallbackSrc || DEFAULT_EDITORIAL_IMAGE;
   const [resolvedSrc, setResolvedSrc] = useState(item.src || fallbackSrc);
 
   return (

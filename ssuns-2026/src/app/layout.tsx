@@ -10,6 +10,29 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: siteMeta.title,
   description: siteMeta.description,
+  metadataBase: new URL("https://www.ssuns.org"),
+  openGraph: {
+    title: siteMeta.title,
+    description: siteMeta.description,
+    url: "https://www.ssuns.org",
+    siteName: "SSUNS 2026",
+    locale: siteMeta.locale,
+    type: "website",
+    images: [
+      {
+        url: siteMeta.ogImage,
+        width: 1920,
+        height: 1080,
+        alt: "Delegates entering plenary at SSUNS 2026",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteMeta.title,
+    description: siteMeta.description,
+    images: [siteMeta.ogImage],
+  },
   icons: {
     icon: [{ url: "/logos/ssuns-dove-main-navy.png", type: "image/png" }],
     shortcut: "/logos/ssuns-dove-main-navy.png",

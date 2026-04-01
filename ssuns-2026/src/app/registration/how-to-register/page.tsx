@@ -2,171 +2,187 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { DossierNav } from "@/components/DossierNav";
-import { Container, Stack } from "@/components/layout";
-import { LiquidButton } from "@/components/LiquidButton";
-import { PageHero } from "@/components/PageHero";
-import { cn } from "@/lib/cn";
+import { Container, Section } from "@/components/layout";
+import { ScrollSpyStepper } from "@/components/ScrollSpyStepper";
 import { useSiteContent } from "@/lib/useSiteContent";
 
-const visibleRegistrationHrefs = new Set(["/registration", "/registration/how-to-register", "/registration/financial-aid"]);
+function getPhaseHeadline(title: string) {
+  const parts = title.split(":");
+  return parts.length > 1 ? parts.slice(1).join(":").trim() : title;
+}
 
 export default function RegistrationHowToRegisterPage() {
   const { language, registrationContent } = useSiteContent();
   const chapter = registrationContent.chapters.find((item) => item.href === "/registration/how-to-register");
-  const navItems = registrationContent.chapters.filter((item) => visibleRegistrationHrefs.has(item.href));
+  const feesChapter = registrationContent.chapters.find((item) => item.href === "/registration/fees");
+  const aidChapter = registrationContent.chapters.find((item) => item.href === "/registration/financial-aid");
   const isFrench = language === "fr";
   const guide = registrationContent.howToGuide;
-  const [activePhase, setActivePhase] = useState(guide.phases[0]?.id ?? "");
 
   if (!chapter) return null;
 
+  const steps = guide.phases.map((phase) => ({
+    id: phase.id,
+    label: String(phase.number),
+    title: `${isFrench ? "Phase" : "Phase"} ${phase.number}`,
+  }));
+
+  const labels = {
+    phase: isFrench ? "Phase" : "Phase",
+    openGuide: guide.openGuideLabel,
+    launchRegistration: isFrench ? "Ouvrir l'inscription" : "Open registration",
+    watchOnYoutube: isFrench ? "Voir sur YouTube" : "Watch on YouTube",
+    afterGuide: isFrench ? "Après le guide" : "After the guide",
+    afterGuideCopy: isFrench
+      ? "Passez ensuite à l'inscription, aux frais et à l'aide financière afin de finaliser votre délégation."
+      : "Then move into registration, fees, and financial aid to finish your delegation setup.",
+    fees: feesChapter?.title ?? (isFrench ? "Frais" : "Fees"),
+    feesCopy: feesChapter?.summary ?? (isFrench ? "Consultez les frais et les dates d'inscription." : "Review the registration fees and dates."),
+    aid: aidChapter?.title ?? (isFrench ? "Aide financière" : "Financial Aid"),
+    aidCopy:
+      aidChapter?.summary ??
+      (isFrench ? "Vérifiez les fenêtres d'aide financière et les échéances de facturation." : "Review financial-aid windows and invoice deadlines."),
+  };
+
   return (
-    <>
-      <PageHero eyebrow={registrationContent.title} intro={chapter.summary} title={chapter.title} />
-      <section className="pb-12">
-        <Container>
-        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="sticky-below-header">
-            <DossierNav currentHref={chapter.href} items={navItems} />
+    <Section className="bg-white pb-16 pt-10 sm:pt-12" spacing="none">
+      <Container className="max-w-[1220px]">
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-[var(--rule)] bg-[var(--panel)] px-4 py-2 text-sm text-[var(--muted)] shadow-[var(--shadow-soft)]">
+            <span className="font-semibold text-[var(--accent)]">{guide.courtesy}</span>
+            <span aria-hidden className="h-1 w-1 rounded-full bg-[var(--accent-2)]" />
+            <Image alt="MUNager logo" height={20} src="/logos/munager.png" width={92} />
+          </div>
+          <h1 className="mt-6 font-display text-4xl leading-[0.94] text-[var(--accent)] sm:text-6xl">{guide.title}</h1>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-[var(--muted)] sm:text-lg">{guide.intro}</p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
+            <Link
+              className="inline-flex items-center justify-center rounded-[8px] border border-[var(--accent)] bg-[var(--accent)] px-4 py-2.5 font-semibold text-white transition-colors hover:bg-[#1b2ea3]"
+              href={registrationContent.cta.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {labels.launchRegistration}
+            </Link>
+            <Link
+              className="inline-flex items-center justify-center rounded-[8px] border border-[var(--rule)] bg-white px-4 py-2.5 font-semibold text-[var(--accent)] transition-colors hover:border-[var(--accent)] hover:bg-[rgba(20,32,130,0.04)]"
+              href="https://munager.com/apply-guide/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              {labels.openGuide}
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-8 md:hidden">
+          <ScrollSpyStepper steps={steps} />
+        </div>
+
+        <div className="mt-10 md:grid md:grid-cols-[6.5rem_minmax(0,1fr)] md:items-start md:gap-8 lg:grid-cols-[7.5rem_minmax(0,1fr)] lg:gap-10">
+          <aside className="hidden md:block md:h-fit md:self-start md:sticky md:top-[calc(var(--site-sticky-top)+2.1rem)]">
+            <div className="flex justify-center border-r border-[var(--rule)] pr-4 lg:pr-6">
+              <ScrollSpyStepper steps={steps} />
+            </div>
           </aside>
 
-          <Stack className="max-w-none" gap="lg">
-            <section className="overflow-hidden border border-[#23379f] bg-[var(--panel-inverse)] text-white">
-              <div className="grid gap-4 px-6 py-6 sm:px-8 md:grid-cols-[1fr_auto] md:items-center">
-                <div>
-                  <p className="section-kicker text-[#b4caff]">{guide.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[#dce7ff]">{guide.courtesy}</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-4">
-                  <Image alt="SSUNS logo" height={28} src="/logos/ssuns2026-woodmark-white.png" width={132} />
-                  <span className="inline-flex items-center border border-white/16 bg-white px-3 py-2">
-                    <Image alt="MUNager logo" height={26} src="/logos/munager.png" width={120} />
-                  </span>
-                </div>
-              </div>
-            </section>
+          <div className="min-w-0">
+            <div className="mx-auto max-w-[980px]">
+              {guide.phases.map((phase) => {
+                const phaseHeadline = getPhaseHeadline(phase.title);
 
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-8 sm:p-10 md:p-12">
-              <p className="section-kicker">{guide.overviewHeading}</p>
-              <h2 className="mt-3 font-display text-2xl leading-tight text-[var(--accent)] sm:text-3xl">{guide.title}</h2>
-              <p className="measure-prose mt-5 text-base leading-relaxed text-[var(--text)]">{guide.intro}</p>
-              <div className="mt-8 flex flex-wrap gap-3 border-t border-[var(--rule)] pt-5">
-                <LiquidButton href={registrationContent.cta.href} label={registrationContent.cta.label} />
-                <Link className="inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="https://munager.com/apply-guide/" target="_blank">
-                  {guide.openGuideLabel}
-                </Link>
-              </div>
-            </article>
+                return (
+                  <section className="scroll-mt-28 pb-14 last:pb-0" id={phase.id} key={phase.id}>
+                    <div className="border-b border-[var(--rule)] pb-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
+                        {labels.phase} {phase.number}
+                      </p>
+                      <h2 className="mt-3 text-2xl font-semibold leading-tight text-[var(--heading)] sm:text-[2rem]">{phaseHeadline}</h2>
+                    </div>
 
-            <section className="grid gap-6 xl:grid-cols-[14rem_minmax(0,1fr)]">
-              <aside className="sticky-below-header hidden xl:block">
-                <div className="theme-panel rounded-[8px] p-4">
-                  <p className="section-kicker">{guide.title}</p>
-                  <div className="mt-4 space-y-2 border-t border-[var(--rule)] pt-4">
-                    {guide.phases.map((phase) => (
-                      <button
-                        key={phase.id}
-                        type="button"
-                        onClick={() => {
-                          setActivePhase(phase.id);
-                          document.getElementById(phase.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                        }}
-                        className={cn(
-                          "flex w-full items-start gap-3 border px-3 py-3 text-left transition-colors",
-                          activePhase === phase.id
-                            ? "border-[var(--accent)] bg-[rgba(20,32,130,0.06)]"
-                            : "border-[var(--rule)] bg-[var(--panel)] hover:border-[var(--accent)]",
-                        )}
-                      >
-                        <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center border border-[var(--accent-2)] text-[11px] font-semibold text-[var(--accent)]">
-                          {phase.number}
-                        </span>
-                        <span className="text-sm font-semibold leading-relaxed text-[var(--text)]">{phase.title}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </aside>
-
-              <div className="space-y-6">
-                <section className="theme-panel rounded-[8px] p-4 sm:p-5 xl:hidden">
-                  <div className="grid gap-2 md:grid-cols-2">
-                    {guide.phases.map((phase) => (
-                      <button
-                        key={phase.id}
-                        type="button"
-                        onClick={() => {
-                          setActivePhase(phase.id);
-                          document.getElementById(phase.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                        }}
-                        className={cn(
-                          "border px-4 py-4 text-left transition-colors",
-                          activePhase === phase.id
-                            ? "border-[var(--accent)] bg-[rgba(20,32,130,0.06)]"
-                            : "border-[var(--rule)] bg-[var(--panel)] hover:border-[var(--accent)]",
-                        )}
-                      >
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
-                          {isFrench ? "Phase" : "Phase"} {phase.number}
-                        </p>
-                        <p className="mt-2 text-sm font-semibold leading-relaxed text-[var(--text)]">{phase.title}</p>
-                      </button>
-                    ))}
-                  </div>
-                </section>
-
-                <section className="space-y-6">
-                  {guide.phases.map((phase, index) => (
-                    <article className="theme-panel-strong paper-grain scroll-mt-[var(--site-sticky-top)] rounded-[8px] p-6 sm:p-8" id={phase.id} key={phase.id}>
-                      <div className="grid gap-6 xl:grid-cols-[0.42fr_0.58fr] xl:items-start">
-                        <div>
-                          <p className="section-kicker">
-                            {isFrench ? "Phase" : "Phase"} {phase.number}
-                          </p>
-                          <h2 className="font-display mt-4 text-3xl leading-[1.05] text-[var(--accent)] sm:text-4xl">{phase.title}</h2>
-                          <div className="mt-6 grid gap-3">
-                            {phase.steps.map((step, stepIndex) => (
-                              <article className="border border-[var(--rule)] bg-[var(--panel)] p-4" key={`${phase.id}-${step.title}`}>
-                                <div className="flex items-start gap-3">
-                                  <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] border border-[var(--accent-2)] text-xs font-semibold text-[var(--accent)]">
-                                    {stepIndex + 1}
-                                  </span>
-                                  <div>
-                                    <h3 className="text-base font-semibold leading-tight text-[var(--text)]">{step.title}</h3>
-                                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{step.description}</p>
-                                  </div>
-                                </div>
-                              </article>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="min-w-0 border border-[var(--rule)] bg-[var(--paper)]">
-                          <div className="video-embed">
+                    <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,31rem)_minmax(0,1fr)] xl:items-start">
+                      <div>
+                        <div className="overflow-hidden rounded-[16px] border border-[var(--rule)] bg-[var(--paper)] shadow-[var(--shadow-soft)]">
+                          <div className="video-embed rounded-none border-0 bg-[var(--paper-deep)]">
                             <iframe
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                               allowFullScreen
                               referrerPolicy="strict-origin-when-cross-origin"
                               src={`https://www.youtube.com/embed/${phase.videoId}`}
-                              title={`${guide.title} video ${index + 1}`}
+                              title={`${phase.title} video`}
                             />
                           </div>
                         </div>
+                        <div className="mt-3 flex justify-end">
+                          <Link
+                            className="inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]"
+                            href={`https://www.youtube.com/watch?v=${phase.videoId}`}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {labels.watchOnYoutube}
+                          </Link>
+                        </div>
                       </div>
-                    </article>
-                  ))}
-                </section>
-              </div>
-            </section>
 
-            <section className="theme-panel rounded-[8px] p-6 sm:p-8">
-              <p className="measure-prose text-sm leading-relaxed text-[var(--muted)]">{guide.closing}</p>
-            </section>
-          </Stack>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {phase.steps.map((step, index) => (
+                          <article
+                            className="rounded-[12px] border border-[var(--rule)] bg-white p-4 shadow-[var(--shadow-soft)]"
+                            key={`${phase.id}-${step.title}`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--rule)] bg-[var(--panel)] text-sm font-semibold text-[var(--accent)]">
+                                {index + 1}
+                              </span>
+                              <div className="min-w-0">
+                                <h3 className="text-base font-semibold leading-tight text-[var(--heading)]">{step.title}</h3>
+                                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{step.description}</p>
+                              </div>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                );
+              })}
+
+              <section className="mt-2 grid gap-4 rounded-[16px] border border-[var(--rule)] bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)] sm:p-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(15rem,0.9fr)] lg:items-start">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">{labels.afterGuide}</p>
+                  <p className="mt-3 text-sm leading-7 text-[var(--muted)] sm:text-base">{labels.afterGuideCopy}</p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+                  <Link
+                    className="rounded-[12px] border border-[var(--rule)] bg-white px-4 py-3 text-sm font-semibold text-[var(--heading)] shadow-[var(--shadow-soft)] transition-colors hover:border-[var(--accent)]"
+                    href={registrationContent.cta.href}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {labels.launchRegistration}
+                  </Link>
+                  <Link
+                    className="rounded-[12px] border border-[var(--rule)] bg-white px-4 py-3 text-sm font-semibold text-[var(--heading)] shadow-[var(--shadow-soft)] transition-colors hover:border-[var(--accent)]"
+                    href={feesChapter?.href ?? "/registration/fees"}
+                  >
+                    <span className="block">{labels.fees}</span>
+                    <span className="mt-1 block text-xs font-normal leading-relaxed text-[var(--muted)]">{labels.feesCopy}</span>
+                  </Link>
+                  <Link
+                    className="rounded-[12px] border border-[var(--rule)] bg-white px-4 py-3 text-sm font-semibold text-[var(--heading)] shadow-[var(--shadow-soft)] transition-colors hover:border-[var(--accent)]"
+                    href={aidChapter?.href ?? "/registration/financial-aid"}
+                  >
+                    <span className="block">{labels.aid}</span>
+                    <span className="mt-1 block text-xs font-normal leading-relaxed text-[var(--muted)]">{labels.aidCopy}</span>
+                  </Link>
+                </div>
+              </section>
+            </div>
+          </div>
         </div>
-        </Container>
-      </section>
-    </>
+      </Container>
+    </Section>
   );
 }

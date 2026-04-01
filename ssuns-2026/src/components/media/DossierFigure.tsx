@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { DEFAULT_HERO_IMAGE } from "@/lib/images";
 
 type DossierFigureProps = {
   src: string;
@@ -30,7 +31,7 @@ export function DossierFigure({
   ratio = "16/9",
   eyebrow,
   caption,
-  fallbackSrc = "/photos/hero-1920x1080.jpg",
+  fallbackSrc = DEFAULT_HERO_IMAGE,
   className,
   imageClassName,
   priority = false,

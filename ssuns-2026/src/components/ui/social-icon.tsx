@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
-type SocialPlatform = "instagram" | "tiktok";
+type SocialPlatform = "instagram" | "tiktok" | "linkedin";
 
 type SocialIconButtonProps = {
   platform: SocialPlatform;
@@ -50,10 +50,30 @@ function InstagramIcon() {
   );
 }
 
+function LinkedInIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 24 24" width="16">
+      <rect height="15" rx="3" stroke="currentColor" strokeWidth="1.55" width="15" x="4.5" y="4.5" />
+      <path d="M8.2 10.2v5.6" stroke="currentColor" strokeLinecap="round" strokeWidth="1.55" />
+      <circle cx="8.2" cy="7.9" fill="currentColor" r="0.95" />
+      <path
+        d="M11.7 15.8v-3.2c0-1.4.8-2.4 2.1-2.4 1.2 0 1.9.83 1.9 2.24v3.36"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.55"
+      />
+      <path d="M11.7 10.2v5.6" stroke="currentColor" strokeLinecap="round" strokeWidth="1.55" />
+    </svg>
+  );
+}
+
 function getIcon(platform: SocialPlatform) {
   switch (platform) {
     case "instagram":
       return <InstagramIcon />;
+    case "linkedin":
+      return <LinkedInIcon />;
     case "tiktok":
       return <TikTokIcon />;
     default:

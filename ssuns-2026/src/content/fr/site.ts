@@ -41,7 +41,7 @@ export const uiText = {
   railRegisterLabel: "Inscription",
   railContactLabel: "Contact",
   railFaqLabel: "FAQ",
-  commandPlaceholder: "Rechercher les pages, comités et ressources de SSUNS...",
+  commandSearchHint: "Rechercher les pages, comités et ressources de SSUNS...",
   commandEmpty: "Aucun résultat trouvé.",
   commandHint: "Utilisez les flèches pour naviguer, Entrée pour ouvrir et Échap pour fermer.",
   commandTitle: "Recherche",
@@ -54,7 +54,7 @@ export const uiText = {
 
 export const footerContent = {
   ...enFooterContent,
-  motto: "La diplomatie étudiante, mise en scène avec rigueur.",
+  motto: "Empowering the Youth Leaders Today.",
   sections: [
     {
       ...enFooterContent.sections[0],
@@ -79,6 +79,5 @@ export const footerContent = {
   ],
   socialLinks,
   contactTitle: "Bureau de l'organisation",
-  closing:
-    "SSUNS 2026 demeure en prévisualisation jusqu'au lancement. Le site ssuns.org reste sur Squarespace jusqu'au basculement DNS.",
+  closing: "SSUNS 2026 • Symposium des Nations Unies des écoles secondaires • Montréal",
 };

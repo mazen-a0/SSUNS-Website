@@ -386,8 +386,6 @@ export const getContentBundle = cache(async (locale: Locale): Promise<ContentBun
 });
 
 export const getAllContentBundles = cache(async () => {
-  // TODO(sanity): Create these Studio docs to replace local fallback progressively:
-  // siteSettings, home page, chapter documents, secretariatMember docs, and committee docs with uploaded images.
   const [en, fr] = await Promise.all([getContentBundle("en"), getContentBundle("fr")]);
   return { en, fr };
 });

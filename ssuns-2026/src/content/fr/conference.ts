@@ -39,14 +39,17 @@ export const conferenceContent = {
       summary: "Cadence des arrivées, séances de comité, cérémonies et départs.",
       body: [
         "L'horaire est conçu pour préserver l'élan sans créer une compression inutile pour les délégués ou les conseillers.",
-        "Le texte d'horaire fictif pourra être remplacé plus tard par le programme quotidien final.",
+        "Le programme final sera communiqué comme un déroulé quotidien clair, de l'arrivée jusqu'aux départs.",
       ],
     },
     {
       href: "/conference/icao",
       title: "ICAO",
       summary: "Chapitre de référence pour le comité ICAO de SSUNS et son contexte dans la conférence.",
-      body: ["À venir."],
+      body: [
+        "L'Organisation de l'aviation civile internationale se trouve à Montréal, et cela compte. C'est l'un des rares endroits où la coordination mondiale n'est pas théorique, mais opérationnelle.",
+        "La programmation ICAO de SSUNS est conçue pour refléter cet univers : structurée, technique lorsque nécessaire, et profondément politique sous la surface. C'est un avantage propre à Montréal et une manière très SSUNS de faire de la ville une partie de l'apprentissage.",
+      ],
     },
     {
       href: "/conference/charity-partner",
@@ -54,7 +57,7 @@ export const conferenceContent = {
       summary: "Information sur le partenaire caritatif de la conférence et initiatives connexes.",
       body: [
         "Ce chapitre est réservé à l'information sur le partenaire caritatif de SSUNS et aux initiatives connexes tournées vers la conférence.",
-        "Lorsque le partenaire 2026 sera confirmé, ce chapitre devrait diriger les délégués et les conseillers vers l'information officielle et les détails pertinents.",
+        "Les délégués et les conseillers y trouveront les renseignements officiels sur la collaboration communautaire retenue pour la saison 2026.",
       ],
     },
     {
@@ -63,7 +66,7 @@ export const conferenceContent = {
       summary: "Soutien aux délégués, repères sur le site et ressources d'aide.",
       body: [
         "Le Centre de ressources des délégués vise à centraliser le matériel de soutien et les ressources destinées aux délégués pendant la préparation et les opérations de conférence.",
-        "Ce chapitre devrait orienter les délégués vers l'inscription, la préparation des comités, la logistique du lieu et les politiques.",
+        "Ce chapitre oriente les délégués vers l'inscription, la préparation des comités, la logistique du lieu et les politiques.",
       ],
     },
     {
@@ -72,7 +75,7 @@ export const conferenceContent = {
       summary: "Code de conduite, accessibilité, sécurité et attentes de supervision.",
       body: [
         "Les politiques sont traitées comme une architecture de conférence, non comme un ensemble secondaire de documents.",
-        "Ce chapitre accueillera plus tard les textes définitifs, les voies d'escalade et les consignes de signalement.",
+        "Ce chapitre rassemble les textes de référence, les voies d'escalade et les consignes de signalement applicables à SSUNS 2026.",
       ],
     },
     {
@@ -80,8 +83,8 @@ export const conferenceContent = {
       title: "Distinctions",
       summary: "Reconnaissance, honneurs et distinctions à la clôture de la conférence.",
       body: [
-        "Les informations relatives aux distinctions seront publiées ici lorsque le programme 2026 sera finalisé.",
-        "Ce chapitre pourra ensuite présenter les catégories, les critères et les notes de cérémonie de clôture.",
+        "Les distinctions reconnaissent l'excellence individuelle et la performance d'ensemble des délégations à la clôture de la conférence.",
+        "Ce chapitre présente le cadre général des catégories, des critères et des distinctions remises pendant la cérémonie de clôture.",
       ],
     },
   ],

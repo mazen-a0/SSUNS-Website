@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { useSiteContent } from "@/lib/useSiteContent";
 
-const detailSections = ["overview", "topic", "format", "chairs", "resources"] as const;
+const detailSections = ["overview", "dais"] as const;
 
 type SectionKey = (typeof detailSections)[number];
 
@@ -13,8 +13,16 @@ type CommitteeDetailSheetProps = {
   slug: string;
 };
 
+function getDifficultyLabel(level: string, size: string, format: string) {
+  if (size === "Double Delegation" || size === "Double délégation") return size === "Double délégation" ? "Double délégation" : "Double Del";
+  if (format === "Joint Crisis" || format === "Crise conjointe") return format;
+  if (level === "Advanced" || level === "Avancé") return level;
+  if (level === "Beginner" || level === "Débutant") return level;
+  return format === "Crise conjointe" || level === "Avancé" || level === "Débutant" ? "Régulier" : "Regular";
+}
+
 export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
-  const { committees, committeesPageContent } = useSiteContent();
+  const { committees, committeesPageContent, language } = useSiteContent();
   const committee = committees.find((entry) => entry.slug === slug);
   const [activeSection, setActiveSection] = useState<SectionKey>("overview");
 
@@ -43,6 +51,18 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
         : isFrenchTheme
           ? "Pour toute question, veuillez contacter Emma Ristic à gaecosoc@ssuns.org."
           : "If you have questions, please contact Emma Ristic at gaecosoc@ssuns.org.";
+  const isFrench = language === "fr";
+  const sectionLabels = {
+    overview: committeesPageContent.sections.overview,
+    dais: isFrench ? "Rencontrez le dais" : "Meet the Dais",
+    resources: committeesPageContent.sections.resources,
+    guide: committeesPageContent.sections.guide,
+    guideNote: isFrench
+      ? "Les background guides seront publiés plus près de la conférence."
+      : "Background guides will be released closer to the conference.",
+    daisNote: isFrench ? "Les biographies du dais seront publiées avec les mises à jour du comité." : "Dais profiles will be published with committee updates.",
+    resourcesNote: isFrench ? "Les ressources du comité seront ajoutées au fur et à mesure de leur publication." : "Committee resources will be added here as they are released.",
+  };
 
   return (
     <section className="page-shell mt-8">
@@ -62,25 +82,6 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
             <h1 className="mt-3 font-display text-4xl leading-[0.92] text-[var(--accent)] sm:text-5xl">{committee.name}</h1>
             <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--text)]">{committee.blurb}</p>
 
-            <div className="mt-6 grid gap-3 border-y border-[var(--rule)] py-4 sm:grid-cols-4">
-              <div>
-                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterThemeLabel}</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.theme}</p>
-              </div>
-              <div>
-                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.format}</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.format}</p>
-              </div>
-              <div>
-                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.level}</p>
-              </div>
-              <div>
-                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sizeLabel}</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.size}</p>
-              </div>
-            </div>
-
             <div className="mt-5 flex flex-wrap gap-2 border-b border-[var(--rule)] pb-3">
               {detailSections.map((section) => {
                 const isActive = activeSection === section;
@@ -95,7 +96,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                     onClick={() => setActiveSection(section)}
                     type="button"
                   >
-                    {committeesPageContent.sections[section]}
+                    {sectionLabels[section]}
                   </button>
                 );
               })}
@@ -103,9 +104,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
 
             <div className="mt-5 border-b border-[var(--rule)] pb-5">
               {activeSection === "overview" ? <p className="body-copy text-[0.98rem]">{committee.overview}</p> : null}
-              {activeSection === "topic" ? <p className="body-copy text-[0.98rem]">{committee.topic || "Coming soon."}</p> : null}
-              {activeSection === "format" ? <p className="body-copy text-[0.98rem]">{committee.format || "Coming soon."}</p> : null}
-              {activeSection === "chairs" ? (
+              {activeSection === "dais" ? (
                 committee.chairs.length ? (
                   <ul className="space-y-4">
                     {committee.chairs.map((chair) => (
@@ -116,27 +115,8 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                     ))}
                   </ul>
                 ) : (
-                  <p className="body-copy text-[0.98rem] text-[var(--muted)]">Coming soon.</p>
+                  <p className="body-copy text-[0.98rem] text-[var(--muted)]">{sectionLabels.daisNote}</p>
                 )
-              ) : null}
-              {activeSection === "resources" ? (
-                <div className="space-y-4">
-                  {committee.resources.length ? (
-                    <ul className="space-y-3 body-copy text-[0.98rem]">
-                      {committee.resources.map((resource) => (
-                        <li className="border-t border-[var(--rule)] pt-3 first:border-t-0 first:pt-0" key={resource}>
-                          {resource}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="body-copy text-[0.98rem] text-[var(--muted)]">Coming soon.</p>
-                  )}
-                  <div className="border-t border-[var(--rule)] pt-4">
-                    <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.guide}</p>
-                    <p className="mt-2 text-sm text-[var(--muted)]">{committee.backgroundGuide}</p>
-                  </div>
-                </div>
               ) : null}
             </div>
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{contactLine}</p>
@@ -148,8 +128,42 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
             </article>
 
             <article className="theme-panel paper-grain rounded-[8px] p-5">
-              <p className="section-kicker">{committeesPageContent.sections.difficulty}</p>
-              <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{committee.difficulty}</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterThemeLabel}</p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.theme}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.level}</p>
+                </div>
+              </div>
+              <div className="mt-4 border-t border-[var(--rule)] pt-4">
+                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.difficulty}</p>
+                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{getDifficultyLabel(committee.level, committee.size, committee.format)}</p>
+              </div>
+            </article>
+
+            <article className="theme-panel paper-grain rounded-[8px] p-5">
+              <p className="section-kicker">{sectionLabels.resources}</p>
+              <div className="mt-3 space-y-4">
+                {committee.resources.length ? (
+                  <ul className="space-y-3 text-sm leading-7 text-[var(--muted)]">
+                    {committee.resources.map((resource) => (
+                      <li className="border-t border-[var(--rule)] pt-3 first:border-t-0 first:pt-0" key={resource}>
+                        {resource}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm leading-7 text-[var(--muted)]">{sectionLabels.resourcesNote}</p>
+                )}
+
+                <div className="border-t border-[var(--rule)] pt-4">
+                  <p className="text-[11px] font-semibold text-[var(--muted)]">{sectionLabels.guide}</p>
+                  <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{sectionLabels.guideNote}</p>
+                </div>
+              </div>
             </article>
           </div>
         </div>

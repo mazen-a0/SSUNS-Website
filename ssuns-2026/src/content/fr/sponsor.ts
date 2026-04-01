@@ -31,10 +31,10 @@ export const sponsorContent = {
     { ...en.stats[2], label: "Lieu" },
     { ...en.stats[3], label: "Public" },
   ],
-  pastSponsorsTitle: "Commanditaires précédents",
-  pastSponsorsPlaceholder:
-    "Les logos et remerciements des commanditaires précédents pourront être ajoutés ici une fois le dossier 2026 finalisé.",
+  supportersTitle: "Partenaires",
+  supportersNote:
+    "SSUNS collabore avec des organisations qui valorisent le leadership jeunesse, l'éducation civique et l'accès à une expérience de conférence de grande qualité.",
   contactTitle: "Contact commandites",
-  packageLabel: "Dossier de commandite",
-  packageComingSoon: "Dossier à venir",
+  packageLabel: "Demander le dossier de commandite",
+  packageUnavailableLabel: "Notre équipe vous transmettra le dossier actuel par courriel.",
 };

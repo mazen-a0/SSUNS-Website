@@ -4,6 +4,7 @@ import { DossierNav } from "@/components/DossierNav";
 import { EditorialGallery } from "@/components/media/EditorialGallery";
 import { PageHero } from "@/components/PageHero";
 import { CobeGlobe } from "@/components/ui/cobe-globe";
+import { LEGACY_GALLERY_IMAGES } from "@/lib/images";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 const montreal: [number, number] = [45.5017, -73.5673];
@@ -45,8 +46,10 @@ export default function AboutLegacyPage() {
   const { aboutContent } = useSiteContent();
   const chapter = aboutContent.chapters.find((item) => item.href === "/about/legacy");
   const legacyGalleryItems = [
-    { id: "legacy-photo-1", src: "/photos/secretariat(2).JPG", alt: "SSUNS team members in conference setting" },
-    { id: "legacy-photo-2", src: "/photos/delegates(11).JPG", alt: "Delegates gathering between committee sessions" },
+    { id: "legacy-photo-1", src: LEGACY_GALLERY_IMAGES[0], alt: "SSUNS team members in conference setting" },
+    { id: "legacy-photo-2", src: LEGACY_GALLERY_IMAGES[1], alt: "Delegates gathering between committee sessions" },
+    { id: "legacy-photo-3", src: LEGACY_GALLERY_IMAGES[2], alt: "SSUNS participants during a conference ceremony" },
+    { id: "legacy-photo-4", src: LEGACY_GALLERY_IMAGES[3], alt: "Montreal city scene connected to the conference's international footprint" },
   ];
 
   if (!chapter) {

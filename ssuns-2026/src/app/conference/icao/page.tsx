@@ -7,6 +7,7 @@ import { PageHero } from "@/components/PageHero";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { DossierFigure } from "@/components/media/DossierFigure";
 import { EditorialGallery } from "@/components/media/EditorialGallery";
+import { ICAO_GALLERY_IMAGES } from "@/lib/images";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function ConferenceIcaoPage() {
@@ -14,9 +15,10 @@ export default function ConferenceIcaoPage() {
   const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/icao");
   const icaoCommittee = committees.find((committee) => committee.slug === "icao-2026");
   const icaoGalleryItems = [
-    { id: "icao-gallery-1", src: "/photos/icao(1).JPG", alt: "ICAO interior view" },
-    { id: "icao-gallery-2", src: "/photos/icao(2).jpg", alt: "ICAO exterior and grounds" },
-    { id: "icao-gallery-3", src: "/photos/icao(3).jpg", alt: "ICAO building detail" },
+    { id: "icao-gallery-1", src: ICAO_GALLERY_IMAGES[0], alt: "ICAO exterior view" },
+    { id: "icao-gallery-2", src: ICAO_GALLERY_IMAGES[1], alt: "ICAO grounds and entrance" },
+    { id: "icao-gallery-3", src: ICAO_GALLERY_IMAGES[2], alt: "ICAO building detail" },
+    { id: "icao-gallery-4", src: ICAO_GALLERY_IMAGES[3], alt: "ICAO interior architectural detail" },
   ];
 
   if (!chapter || !icaoCommittee) return null;
@@ -37,7 +39,7 @@ export default function ConferenceIcaoPage() {
                 className="mx-0 max-w-none"
                 priority
                 ratio="3/2"
-                src="/photos/icao.JPG"
+                src={ICAO_GALLERY_IMAGES[0]}
               />
 
               <article className="theme-panel-strong flex h-full flex-col overflow-hidden rounded-[8px] p-3">

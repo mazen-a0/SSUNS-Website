@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Carousel, CarouselContent, CarouselControls, CarouselItem } from "@/components/ui/carousel";
 import { cn } from "@/lib/cn";
+import { DEFAULT_HERO_IMAGE } from "@/lib/images";
 
 type DossierCarouselItem = {
   id: string;
@@ -23,8 +24,8 @@ type DossierCarouselProps = {
 };
 
 function DossierCarouselSlide({ item }: { item: DossierCarouselItem }) {
-  const [resolvedSrc, setResolvedSrc] = useState(item.src || item.fallbackSrc || "/photos/hero-1920x1080.jpg");
-  const fallbackSrc = item.fallbackSrc || "/photos/hero-1920x1080.jpg";
+  const [resolvedSrc, setResolvedSrc] = useState(item.src || item.fallbackSrc || DEFAULT_HERO_IMAGE);
+  const fallbackSrc = item.fallbackSrc || DEFAULT_HERO_IMAGE;
 
   return (
     <figure className="theme-panel section-entrance overflow-hidden rounded-[8px] p-3">

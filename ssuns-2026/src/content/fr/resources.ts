@@ -56,7 +56,6 @@ export const resourcesPageContent = {
       ],
     },
   ],
-  placeholderLabel: "Dossier de référence",
 };
 
 export const commonResources = [

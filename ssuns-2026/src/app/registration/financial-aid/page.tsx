@@ -1,137 +1,122 @@
 "use client";
 
-import Image from "next/image";
 import { DossierNav } from "@/components/DossierNav";
-import { DossierCarousel } from "@/components/media/DossierCarousel";
-import { DossierFigure } from "@/components/media/DossierFigure";
 import { PageHero } from "@/components/PageHero";
+import { PolicyCard } from "@/components/policies/PolicyCard";
 import { useSiteContent } from "@/lib/useSiteContent";
 
-export default function AboutPage() {
-  const { aboutContent, homeContent } = useSiteContent();
-  const overviewChapter =
-    aboutContent.chapters.find((chapter) => chapter.href === "/about") ??
-    aboutContent.chapters[0];
-  const legacyChapter = aboutContent.chapters.find(
-    (chapter) => chapter.href === "/about/legacy"
-  );
-  const aboutSlides = [
-    {
-      id: "about-overview",
-      alt: aboutContent.image.alt,
-      caption: aboutContent.legacy,
-      eyebrow: aboutContent.sections.legacy,
-      src: aboutContent.image.src,
-    },
-    ...homeContent.gallery.items.slice(0, 2).map((item) => ({
-      id: item.id,
-      alt: item.alt,
-      caption: item.caption,
-      eyebrow: item.title,
-      src: item.src,
-    })),
-  ];
+const visibleRegistrationHrefs = new Set(["/registration", "/registration/how-to-register", "/registration/financial-aid"]);
+
+export default function RegistrationFinancialAidPage() {
+  const { registrationContent } = useSiteContent();
+  const chapter =
+    registrationContent.chapters.find((item) => item.href === "/registration/financial-aid") ??
+    registrationContent.chapters[3];
+  const navItems = registrationContent.chapters.filter((item) => visibleRegistrationHrefs.has(item.href));
+  const isFrench = registrationContent.title === "Inscription";
+  const financialPolicy = {
+    title: isFrench ? "Politiques financières" : "Financial Policies",
+    preview: isFrench
+      ? "Ce document présente les échéances financières, les attentes de paiement, les remboursements et le calendrier de l'aide financière pour SSUNS 2026."
+      : "This document outlines financial deadlines, payment expectations, refunds, and financial aid timing for SSUNS 2026.",
+    bullets: [
+      isFrench ? "Document officiel SSUNS 2026 en format PDF." : "Official SSUNS 2026 PDF policy document.",
+      isFrench ? "À consulter avant de soumettre une demande d'aide financière ou de régler une facture." : "Useful before applying for financial aid or arranging payment.",
+    ],
+    pdfHref: "/docs/SSUNS26_Financial_Policies.pdf",
+  };
+
+  if (!chapter) return null;
+
+  const phaseRows = registrationContent.pricingTimeline.map((phase, index) => ({
+    id: phase.id,
+    label: phase.label,
+    range: `${phase.start} ${registrationContent.pricingTimelineText.to} ${phase.end}`,
+    financialAidDeadline: registrationContent.financialAidDeadlines[index] ?? "",
+    invoiceDeadline: registrationContent.invoiceDeadlines[index] ?? "",
+  }));
 
   return (
     <>
-      {/* Taller hero (targets internal video + common hero wrappers) */}
-      <div className="[&_video]:min-h-[68vh] [&_video]:h-[68vh] [&_video]:object-cover [&>section]:min-h-[68vh]">
-        <PageHero intro={aboutContent.intro} title={aboutContent.title} />
-      </div>
-
-      {/* Less space between hero and content */}
-      <section className="page-shell -mt-10 sm:-mt-12">
+      <PageHero intro={chapter.summary} title={chapter.title} />
+      <section className="page-shell">
         <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="sticky-below-header space-y-6">
-            <DossierNav currentHref="/about" items={aboutContent.chapters} />
-            <div className="theme-panel-strong paper-grain rounded-[8px] p-5">
-              <div className="grid gap-0 border border-[var(--rule)]">
-                {aboutContent.metrics.map((metric) => (
-                  <article
-                    className="border-t border-[var(--rule)] px-4 py-4 first:border-t-0"
-                    key={metric.label}
-                  >
-                    <p className="section-kicker">{metric.label}</p>
-                    <p className="mt-3 text-3xl font-semibold leading-none text-[var(--accent)]">
-                      {metric.value}
-                    </p>
-                  </article>
-                ))}
-              </div>
-            </div>
+          <aside className="sticky-below-header">
+            <DossierNav currentHref={chapter.href} items={navItems} />
           </aside>
 
           <div className="space-y-8">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-8 sm:p-11">
-              <p className="section-kicker">{overviewChapter.title}</p>
-              <Image
-                alt=""
-                aria-hidden="true"
-                className="mt-4 opacity-85"
-                height={18}
-                src="/graphics/report-rule.svg"
-                width={300}
-              />
-              <div className="mt-5 space-y-5 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
-                {overviewChapter.body.map((paragraph) => (
+              <p className="section-kicker">{chapter.title}</p>
+              <div className="mt-5 space-y-3 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
+                {chapter.body.slice(0, 2).map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-              <div className="mt-8 border-l border-[var(--rule)] pl-5">
-                <p className="text-2xl font-semibold leading-[1.2] text-[var(--accent)] sm:text-3xl">
-                  {aboutContent.mission}
-                </p>
-              </div>
-            </article>
 
-            <DossierFigure
-              alt={aboutContent.image.alt}
-              caption={aboutContent.legacy}
-              eyebrow={aboutContent.sections.legacy}
-              ratio="3/2"
-              src={aboutContent.image.src}
-            />
-
-            <DossierCarousel
-              description={aboutContent.legacy}
-              eyebrow={aboutContent.sections.legacy}
-              items={aboutSlides}
-              title={legacyChapter?.title}
-            />
-
-            <div className="grid gap-5 md:grid-cols-3">
-              {aboutContent.pillars.map((pillar) => (
-                <article
-                  className="theme-panel paper-grain rounded-[8px] p-5"
-                  key={pillar.title}
-                >
-                  <p className="section-kicker">{aboutContent.sections.mission}</p>
-                  <h2 className="mt-4 text-xl font-semibold leading-tight text-[var(--accent)]">
-                    {pillar.title}
-                  </h2>
-                  <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                    {pillar.body}
+              <div className="mt-8 rounded-[12px] border border-[var(--rule)] bg-[var(--panel)] p-5 sm:p-6">
+                <div className="flex flex-col gap-3 border-b border-[var(--rule)] pb-4 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="section-kicker">{isFrench ? "Dates limites" : "Deadlines"}</p>
+                    <h2 className="mt-2 text-lg font-semibold text-[var(--heading)] sm:text-[1.3rem]">
+                      {isFrench
+                        ? "La date limite d'aide financière dépend de votre palier d'inscription"
+                        : "Your financial aid deadline depends on your registration phase"}
+                    </h2>
+                  </div>
+                  <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">
+                    {isFrench
+                      ? "Repérez votre période d'inscription actuelle, puis utilisez la date associée à ce palier pour l'aide financière et la facturation."
+                      : "Match your current registration window to the corresponding financial aid and invoice deadline below."}
                   </p>
-                </article>
-              ))}
-            </div>
+                </div>
 
-            <article className="bg-[var(--panel-inverse)] p-6 text-white sm:p-7">
-              <p className="section-kicker text-[#b4caff]">{aboutContent.sections.team}</p>
-              <div className="mt-5 space-y-4 border-t border-white/12 pt-5">
-                {aboutContent.secretariatMembers.slice(0, 3).map((member) => (
-                  <article
-                    className="grid gap-3 sm:grid-cols-[0.34fr_0.66fr]"
-                    key={member.name}
-                  >
-                    <p className="text-sm font-semibold tracking-[0.06em] text-white">
-                      {member.name}
-                    </p>
-                    <p className="text-sm leading-relaxed text-[#dbe7ff]">{member.role}</p>
-                  </article>
-                ))}
+                <div className="mt-5 grid gap-4 xl:grid-cols-3">
+                  {phaseRows.map((phase) => (
+                    <article
+                      key={phase.id}
+                      className="rounded-[12px] border border-[var(--rule)] bg-[var(--paper)] p-5 shadow-[var(--shadow-soft)]"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+                            {isFrench ? "Palier d'inscription" : "Registration phase"}
+                          </p>
+                          <h3 className="mt-2 text-lg font-semibold text-[var(--heading)]">{phase.label}</h3>
+                        </div>
+                        <span className="rounded-full border border-[var(--rule)] bg-[var(--panel)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
+                          {phase.range}
+                        </span>
+                      </div>
+
+                      <div className="mt-4 space-y-3 border-t border-[var(--rule)] pt-4">
+                        <div className="rounded-[10px] border border-[var(--rule)] bg-[var(--panel)] px-4 py-3">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
+                            {isFrench ? "Date limite d'aide financière" : "Financial aid deadline"}
+                          </p>
+                          <p className="mt-1 text-sm font-medium text-[var(--text)]">{phase.financialAidDeadline}</p>
+                        </div>
+                        <div className="rounded-[10px] border border-[var(--rule)] bg-[var(--panel)] px-4 py-3">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
+                            {isFrench ? "Date limite de facture" : "Invoice deadline"}
+                          </p>
+                          <p className="mt-1 text-sm font-medium text-[var(--text)]">{phase.invoiceDeadline}</p>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </article>
+
+            <PolicyCard
+              bullets={financialPolicy.bullets}
+              downloadLabel={isFrench ? "Télécharger" : "Download"}
+              openLabel={isFrench ? "Lire la politique complète (PDF)" : "Read full policy (PDF)"}
+              pdfHref={financialPolicy.pdfHref}
+              preview={financialPolicy.preview}
+              title={financialPolicy.title}
+            />
           </div>
         </div>
       </section>

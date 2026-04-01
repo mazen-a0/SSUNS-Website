@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { DossierNav } from "@/components/DossierNav";
+import { SecretaryLetterModal } from "@/components/home/SecretaryLetterModal";
 import { ListservSignupForm } from "@/components/ListservSignupForm";
 import { LiquidButton } from "@/components/LiquidButton";
 import { PageHero } from "@/components/PageHero";
-import { RegistrationTimeline } from "@/components/RegistrationTimeline";
+import { RegistrationTimelineModule } from "@/components/registration/RegistrationTimelineModule";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 const visibleRegistrationHrefs = new Set(["/registration", "/registration/how-to-register", "/registration/financial-aid"]);
@@ -41,6 +43,9 @@ export default function RegistrationPage() {
   const navItems = registrationContent.chapters.filter((item) => visibleRegistrationHrefs.has(item.href));
   const status = getRegistrationStatus(new Date());
   const isFrench = registrationContent.title === "Inscription";
+  const [isLetterOpen, setIsLetterOpen] = useState(false);
+  const letterOpeningPreview = registrationContent.letter.body.slice(0, 3);
+  const letterClosingPreview = registrationContent.letter.body.slice(-2);
 
   if (!chapter) return null;
 
@@ -57,6 +62,9 @@ export default function RegistrationPage() {
             <article className="rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-6 py-7 text-white sm:px-8">
               <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr] lg:items-end">
                 <div>
+                  <div className="mb-5">
+                    <LiquidButton href="/registration/how-to-register" label={isFrench ? "S'inscrire ici" : "Register Here"} variant="inverse" />
+                  </div>
                   <p className="section-kicker text-[#b4caff]">{isFrench ? "Statut actuel des inscriptions" : "Current registration status"}</p>
                   <h2 className="mt-3 text-3xl font-semibold leading-tight">{status.label}</h2>
                   <p className="mt-4 text-sm leading-relaxed text-[#e4eeff]">{status.detail}</p>
@@ -71,10 +79,37 @@ export default function RegistrationPage() {
               </div>
             </article>
 
-            <RegistrationTimeline
-              financialAidDeadlines={registrationContent.financialAidDeadlines}
-              stages={registrationContent.pricingTimeline}
-              text={registrationContent.pricingTimelineText}
+            <RegistrationTimelineModule
+              labels={{
+                title: registrationContent.pricingTimelineText.title,
+                currentPrefix: isFrench ? "Actuel" : "Current",
+                currentWindow: registrationContent.pricingTimelineText.current,
+                selectHint: isFrench ? "Sélectionnez un palier pour afficher les détails" : "Select a phase to view details",
+                openDetails: isFrench ? "Voir les détails" : "View details",
+                detailsVisible: isFrench ? "Détails affichés" : "Details shown",
+                registrationOpens: isFrench ? "Ouverture" : "Registration opens",
+                registrationCloses: isFrench ? "Clôture" : "Closes",
+                refundCutoff: isFrench ? "Date limite de remboursement" : "Refund cutoff",
+                lastPayment: isFrench ? "Dernier paiement" : "Last payment",
+                delegationFee: registrationContent.pricingTimelineText.delegationFee,
+                perDelegate: registrationContent.pricingTimelineText.delegateFee,
+                financialAid: isFrench ? "Aide financière" : "Financial Aid",
+                invoice: isFrench ? "Facturation" : "Invoice",
+                current: isFrench ? "Actuel" : "Current",
+                completed: isFrench ? "Terminé" : "Completed",
+                upcoming: isFrench ? "À venir" : "Upcoming",
+                to: registrationContent.pricingTimelineText.to,
+              }}
+              phases={registrationContent.pricingTimeline.map((stage, index) => ({
+                id: stage.id,
+                title: stage.label,
+                start: stage.start,
+                end: stage.end,
+                delegationFee: stage.delegationFee,
+                perDelegate: stage.delegateFee,
+                financialAidDeadline: registrationContent.financialAidDeadlines[index],
+                invoiceDeadline: registrationContent.invoiceDeadlines[index],
+              }))}
             />
 
             <section className="grid gap-8 xl:grid-cols-[0.56fr_0.44fr]">
@@ -84,7 +119,7 @@ export default function RegistrationPage() {
                     <p className="section-kicker">{isFrench ? "Frais et dates" : "Fees & Dates"}</p>
                     <h2 className="font-display mt-3 text-4xl leading-tight text-[var(--accent)]">{isFrench ? "Frais d'inscription" : "Registration fees"}</h2>
                   </div>
-                  <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{registrationContent.feePlaceholders[0]?.body}</p>
+                  <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{registrationContent.feeNotes[0]?.body}</p>
                 </div>
                 <div className="mt-5 overflow-hidden border border-[var(--rule)]">
                   <table className="w-full border-collapse text-left text-sm sm:text-base">
@@ -107,6 +142,22 @@ export default function RegistrationPage() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+
+                <div className="mt-5 border-t border-[var(--rule)] pt-5">
+                  <p className="text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+                    {isFrench
+                      ? "Vous voudrez peut-être aussi consulter les tarifs et les chambres du Sheraton."
+                      : "You might also want to check out the Sheraton rates and rooms."}
+                  </p>
+                  <div className="mt-4">
+                    <Link
+                      className="inline-flex items-center rounded-full border border-[var(--rule-strong)] bg-[var(--panel-strong)] px-4 py-2 text-sm font-semibold text-[var(--accent)] transition-colors duration-150 hover:bg-[var(--paper)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--panel)]"
+                      href="/conference/venue"
+                    >
+                      {isFrench ? "Voir la page du lieu" : "Open venue page"}
+                    </Link>
+                  </div>
                 </div>
               </article>
 
@@ -141,7 +192,20 @@ export default function RegistrationPage() {
                   <p className="section-kicker">{registrationContent.letter.label}</p>
                   <h2 className="font-display mt-4 text-4xl leading-tight text-[var(--accent)]">{registrationContent.letter.title}</h2>
                   <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
-                    {registrationContent.letter.body.map((paragraph) => (
+                    {letterOpeningPreview.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                  <button
+                    aria-haspopup="dialog"
+                    className="mt-4 text-sm font-semibold text-[var(--accent)]"
+                    onClick={() => setIsLetterOpen(true)}
+                    type="button"
+                  >
+                    {isFrench ? "Lire la suite" : "Read more"}
+                  </button>
+                  <div className="mt-4 space-y-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">
+                    {letterClosingPreview.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
                   </div>
@@ -182,6 +246,17 @@ export default function RegistrationPage() {
           </div>
         </div>
       </section>
+      <SecretaryLetterModal
+        body={registrationContent.letter.body}
+        imageAlt="Costas Oreopoulos"
+        imageSrc="/headshots/costas.jpg"
+        kicker={registrationContent.letter.label}
+        onClose={() => setIsLetterOpen(false)}
+        open={isLetterOpen}
+        role={registrationContent.letter.role}
+        signature={registrationContent.letter.signature}
+        title={registrationContent.letter.title}
+      />
     </>
   );
 }

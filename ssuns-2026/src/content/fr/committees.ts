@@ -23,7 +23,7 @@ export const committeesPageContent = {
       summary: "Prix individuels et prix de délégation à SSUNS 2026.",
       body: [
         "SSUNS est avant tout un environnement amical et une expérience d'apprentissage collective. Ainsi, les distinctions à SSUNS sont accordées aux délégués dont le comportement enrichit l'apprentissage de leurs pairs de manière exceptionnelle. Les distinctions de SSUNS sont réparties en deux grandes catégories : les distinctions individuelles et les distinctions de délégation.",
-        "Détails complets à venir en français. En attendant, veuillez consulter la version anglaise de cette page si nécessaire.",
+        "Les distinctions individuelles reconnaissent notamment l'advocacy, le leadership, l'ingéniosité et la diplomatie. Les distinctions de délégation sont calculées en fonction des performances d'ensemble et de la taille relative des délégations.",
       ],
     },
     {
@@ -31,15 +31,15 @@ export const committeesPageContent = {
       title: "Politiques des comités",
       summary: "Politique technologique selon la taille et le format du comité pour SSUNS 2026.",
       body: [
-        "Technology Policy SSUNS 2026.",
-        "Please note that the SSUNS 2026 technology policy has changed and will vary by committee size and format. As SSUNS will run as a hybrid conference, the policies for GAs, ECOSOCs, Specialized Agencies, and Crisis committees will differ.",
-        "Le texte français complet sera ajouté lorsque la version finale sera approuvée.",
+        "Politique technologique SSUNS 2026.",
+        "La politique technologique de SSUNS 2026 varie selon la taille et le format du comité. Les attentes applicables aux AG, ECOSOC, agences spécialisées et comités de crise diffèrent donc selon le cadre de travail du comité.",
+        "Les délégués doivent consulter le document PDF officiel avant la conférence afin de préparer correctement leur matériel et leur méthode de travail.",
       ],
     },
   ],
   continueLabel: "Continuer vers le programme de la conférence",
   searchLabel: "Rechercher des comités",
-  searchPlaceholder: "Rechercher par nom, sujet, format ou niveau",
+  searchHint: "Rechercher par nom, sujet, format ou niveau",
   allOptionLabel: "Tous",
   filterThemeLabel: "Volet",
   filterLevelLabel: "Niveau",
@@ -75,9 +75,7 @@ export const committees = enCommittees.map((committee) => ({
       ? "Avancé"
       : committee.level === "Beginner"
         ? "Débutant"
-        : committee.level === "Coming soon"
-          ? "À venir"
-          : committee.level,
+        : committee.level,
   theme:
     committee.theme === "General Assemblies"
       ? "Assemblées générales"
@@ -93,20 +91,21 @@ export const committees = enCommittees.map((committee) => ({
   size:
     committee.size === "Double Delegation"
       ? "Double délégation"
-      : committee.size === "Coming soon"
-        ? "À venir"
+      : committee.size === "Single Delegation"
+        ? "Délégation simple"
         : committee.size,
   difficulty:
-    committee.difficulty === "Coming soon"
-      ? "À venir"
-      : committee.difficulty
-          .replace("This is a Double Delegate Committee.", "Il s'agit d'un comité à double délégation.")
-          .replace("This is an Advanced Committee.", "Il s'agit d'un comité avancé.")
-          .replace("This is a Beginner Committee.", "Il s'agit d'un comité pour débutants.")
-          .replace("This is a General Assembly Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée lourde de l'Assemblée générale.")
-          .replace("This is a Crisis Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée comprenant des éléments de crise de haut niveau.")
-          .replace("This is a Joint-Crisis Committee.", "Il s'agit d'un comité de crise conjoint.")
-          .replace("Some sessions might take place outside the Sheraton Hotel.", "Certaines séances pourraient avoir lieu à l'extérieur de l'hôtel Sheraton."),
+    committee.difficulty
+      .replace("This is a Double Delegate Committee.", "Il s'agit d'un comité à double délégation.")
+      .replace("This is an Advanced Committee.", "Il s'agit d'un comité avancé.")
+      .replace("This is a Beginner Committee.", "Il s'agit d'un comité pour débutants.")
+      .replace("This is a General Assembly Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée à dominante d'assemblée générale.")
+      .replace("This is a Crisis Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée à forte composante de crise.")
+      .replace("This is a Joint-Crisis Committee.", "Il s'agit d'un comité de crise conjoint.")
+      .replace("This is a regular committee.", "Il s'agit d'un comité régulier.")
+      .replace("This is an Ad Hoc Specialized Agency.", "Il s'agit d'une agence spécialisée Ad Hoc.")
+      .replace("This is an Ad Hoc Crisis committee.", "Il s'agit d'un comité de crise Ad Hoc.")
+      .replace("Some sessions might take place outside the Sheraton Hotel.", "Certaines séances pourraient avoir lieu à l'extérieur de l'hôtel Sheraton."),
   format:
     committee.format === "General Assembly"
       ? "Assemblée générale"
@@ -119,8 +118,8 @@ export const committees = enCommittees.map((committee) => ({
             : committee.format === "Crisis"
               ? "Crise"
               : committee.format,
-  blurb: committee.blurb === "Coming soon." ? "À venir." : committee.blurb,
-  overview: committee.overview === "Coming soon." ? "À venir." : committee.overview,
-  topic: committee.topic === "Coming soon" ? "À venir" : committee.topic,
-  backgroundGuide: committee.backgroundGuide === "Coming soon" ? "À venir" : committee.backgroundGuide,
+  backgroundGuide:
+    committee.backgroundGuide === "Background guides will be released closer to the conference."
+      ? "Les guides préparatoires seront publiés plus près de la conférence."
+      : committee.backgroundGuide,
 }));

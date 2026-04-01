@@ -1,3 +1,5 @@
+import { pickImage } from "@/lib/images";
+
 export const conferenceContent = {
   title: "Conference",
   intro:
@@ -56,7 +58,9 @@ export const conferenceContent = {
       title: "Charity partner",
       summary: "Conference-facing partner information and future charitable collaboration details.",
       body: [
-        "Coming soon.",
+        "SSUNS uses its conference platform to support community-minded initiatives alongside the core academic programme.",
+        "Our 2026 charitable collaboration will focus on a Montréal-based partner aligned with youth development, education, or community support.",
+        "Partnership details will be shared through official SSUNS channels once the season's charitable programming is finalized.",
       ],
     },
     {
@@ -65,7 +69,6 @@ export const conferenceContent = {
       summary: "Delegate support, on-site reference points, and conference help resources.",
       body: [
         "The Delegate Handbook, containing key information on conference policies, preparation, and procedures, will be released prior to the conference.",
-        "Merch.",
       ],
     },
     {
@@ -94,7 +97,7 @@ export const conferenceContent = {
       title: "General Assemblies",
       body: "Large-format rooms with robust caucusing, amendment workflow, and a clear emphasis on bloc discipline.",
       image: {
-        src: "/photos/chairs.JPG",
+        src: pickImage("committees", "conference-track-ga"),
         alt: "General assembly with delegate placards",
         note: "general assembly floor, 3:2, recommended 1200x800",
       },
@@ -103,7 +106,7 @@ export const conferenceContent = {
       title: "Specialized Committees",
       body: "Smaller rooms with focused mandates, more technical framing, and deeper policy tradeoff analysis.",
       image: {
-        src: "/photos/delegates.JPG",
+        src: pickImage("delegates", "conference-track-specialized"),
         alt: "Delegates discussing draft resolution text",
         note: "delegates drafting resolutions, 3:2, recommended 1600x1067",
       },
@@ -112,7 +115,7 @@ export const conferenceContent = {
       title: "Crisis Simulations",
       body: "Fast-turn scenario rooms emphasizing rapid strategy, high-information updates, and disciplined directive writing.",
       image: {
-        src: "/photos/gala(1).JPG",
+        src: pickImage("events", "conference-track-crisis"),
         alt: "Crisis room update briefing with live notices",
         note: "crisis room briefing, 16:9, recommended 1920x1080",
       },
@@ -137,7 +140,7 @@ export const conferenceContent = {
     body:
       "Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
     image: {
-      src: "/photos/hotel-1600x900.jpg",
+      src: pickImage("sheraton", "venue-overview"),
       alt: "Conference hotel exterior in evening light",
       note: "conference hotel exterior, 16:9, recommended 1600x900",
     },
@@ -152,14 +155,14 @@ export const conferenceContent = {
   sponsorshipCallout: {
     title: "Support SSUNS 2026",
     body:
-      "Organizations interested in supporting SSUNS 2026 can review the sponsorship chapter while package details are finalized.",
+      "Organizations interested in supporting SSUNS 2026 can review the sponsorship chapter or contact the team directly for current partnership materials.",
     href: "/sponsor-us",
   },
   crisisFeature: {
     title: "Crisis simulation",
     body: "Fast-moving updates, directive writing, and strategic adaptation remain a defining part of the SSUNS programme.",
     image: {
-      src: "/photos/delegates(6).JPG",
+      src: pickImage("delegates", "conference-crisis-feature"),
       alt: "Delegates caucusing during a crisis simulation",
       note: "delegates caucusing during crisis simulation, 3:2, recommended 1600x1067",
     },
@@ -167,15 +170,15 @@ export const conferenceContent = {
   policyCallouts: [
     {
       title: "Code of Conduct",
-      body: "Coming soon.",
+      body: "Delegates, advisors, and staff are expected to participate with professionalism, respect, and good faith throughout the conference.",
     },
     {
       title: "Accessibility",
-      body: "Coming soon.",
+      body: "SSUNS works to make conference spaces navigable and supportive for delegates, advisors, and guests with accessibility needs.",
     },
     {
       title: "Safety Policies",
-      body: "Coming soon.",
+      body: "Clear supervisory expectations, venue procedures, and escalation channels support a safe and well-managed conference environment.",
     },
   ],
 };

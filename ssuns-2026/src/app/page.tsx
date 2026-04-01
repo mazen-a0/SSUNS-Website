@@ -12,6 +12,7 @@ import { LiquidButton } from "@/components/LiquidButton";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { EditorialGallery } from "@/components/media/EditorialGallery";
 import { DossierFigure } from "@/components/media/DossierFigure";
+import { HOME_MONTAGE_IMAGES, pickImage } from "@/lib/images";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 function RegistrationVideoPanel() {
@@ -204,12 +205,14 @@ export default function HomePage() {
     })
     .filter((committee): committee is NonNullable<typeof committee> => committee !== null);
   const homeGalleryItems = [
-    { id: "home-photo-1", src: "/photos/delegates(3).JPG", alt: "Delegates debating during session", eyebrow: "Delegates", caption: "Debate is strongest when the room feels active but composed." },
-    { id: "home-photo-2", src: "/photos/secretariat(2).JPG", alt: "Secretariat members preparing conference materials", eyebrow: "Secretariat", caption: "Student leadership shapes the conference from preparation to close." },
-    { id: "home-photo-3", src: "/photos/gala(2).JPG", alt: "Conference ceremony or gala setting", eyebrow: "Ceremony", caption: "Plenary and evening moments carry the conference's ceremonial weight." },
-    { id: "home-photo-4", src: "/photos/hotel-1600x900.jpg", alt: "Sheraton exterior in Montréal", eyebrow: "Arrival", caption: "The venue anchors the conference rhythm from check-in to closing." },
-    { id: "home-photo-5", src: "/photos/icao(1).JPG", alt: "ICAO scene in Montréal", eyebrow: "ICAO", caption: "Montréal itself becomes part of the learning experience." },
-    { id: "home-photo-6", src: "/photos/delegates(8).JPG", alt: "Delegates moving between conference spaces", eyebrow: "Circulation", caption: "The best conference layouts support movement, conversation, and momentum." },
+    { id: "home-photo-1", src: HOME_MONTAGE_IMAGES[0], alt: "Delegates debating during session", eyebrow: "Delegates", caption: "Debate is strongest when the room feels active but composed." },
+    { id: "home-photo-2", src: HOME_MONTAGE_IMAGES[1], alt: "Secretariat members preparing conference materials", eyebrow: "Secretariat", caption: "Student leadership shapes the conference from preparation to close." },
+    { id: "home-photo-3", src: HOME_MONTAGE_IMAGES[2], alt: "Conference ceremony or gala setting", eyebrow: "Ceremony", caption: "Plenary and evening moments carry the conference's ceremonial weight." },
+    { id: "home-photo-4", src: HOME_MONTAGE_IMAGES[3], alt: "Sheraton exterior in Montréal", eyebrow: "Arrival", caption: "The venue anchors the conference rhythm from check-in to closing." },
+    { id: "home-photo-5", src: HOME_MONTAGE_IMAGES[4], alt: "ICAO scene in Montréal", eyebrow: "ICAO", caption: "Montréal itself becomes part of the learning experience." },
+    { id: "home-photo-6", src: HOME_MONTAGE_IMAGES[5], alt: "Delegates moving between conference spaces", eyebrow: "Circulation", caption: "The best conference layouts support movement, conversation, and momentum." },
+    { id: "home-photo-7", src: HOME_MONTAGE_IMAGES[6], alt: "Committee room preparing for formal debate", eyebrow: "Committees", caption: "Each room carries its own visual language, but the structure stays legible." },
+    { id: "home-photo-8", src: HOME_MONTAGE_IMAGES[7], alt: "Montreal streetscape near the conference experience", eyebrow: "City", caption: "The conference feels grounded because the city remains present throughout it." },
   ];
 
   return (
@@ -225,7 +228,6 @@ export default function HomePage() {
                 WebkitMaskImage: "-webkit-radial-gradient(white, black)",
               }}
             >
-              {/* TODO(video): Replace with final Montréal panorama loop (16:9, 1920x1080). Suggested subject: downtown skyline, river approach, or city arrival footage. */}
               <HeroBackgroundMedia
                 poster={homeContent.hero.image.src}
                 posterAlt={homeContent.hero.image.alt}
@@ -273,12 +275,12 @@ export default function HomePage() {
             items={homeContent.atGlance.items}
             label={homeContent.atGlance.label}
             photoAlt="Delegates in session at SSUNS"
-            photoSrc="/photos/delegates(11).JPG"
+            photoSrc={pickImage("delegates", "at-a-glance-primary")}
             photoSlides={[
-              { src: "/photos/delegates(11).JPG", alt: "Delegates in session at SSUNS" },
-              { src: "/photos/delegates(3).JPG", alt: "Delegates debating during session" },
-              { src: "/photos/chairs.JPG", alt: "Chairs preparing committee proceedings" },
-              { src: "/photos/gala(2).JPG", alt: "The Delegate Gala social event" },
+              { src: pickImage("delegates", "at-a-glance-1"), alt: "Delegates in session at SSUNS" },
+              { src: pickImage("delegates", "at-a-glance-2"), alt: "Delegates debating during session" },
+              { src: HOME_MONTAGE_IMAGES[6], alt: "Committee room preparing for formal debate" },
+              { src: pickImage("events", "at-a-glance-3"), alt: "The Delegate Gala social event" },
             ]}
             stats={homeContent.hero.stats}
           />
@@ -341,7 +343,7 @@ export default function HomePage() {
               </Reveal>
 
               <Reveal delay={160} once>
-                <div className="grid h-full gap-4 xl:grid-rows-[1fr_auto]">
+                <div className="grid h-full gap-4">
                   <article className="theme-panel-strong paper-grain p-4 sm:p-5">
                   <p className="section-kicker">{homeContent.conferenceStandard.label}</p>
                   <div className="mt-4 space-y-4 border-t border-[var(--rule)] pt-4">
@@ -357,18 +359,6 @@ export default function HomePage() {
                       </article>
                     ))}
                   </div>
-                  </article>
-
-                  <article className="rounded-[10px] border border-[#23379f] bg-[var(--panel-inverse)] p-4 text-white shadow-[var(--shadow-soft)] sm:p-5">
-                  <p className="section-kicker text-[#b4caff]">{homeContent.conferenceStandard.policyCallout.label}</p>
-                  <h3 className="mt-3 text-[1.45rem] font-semibold leading-tight">{homeContent.conferenceStandard.policyCallout.title}</h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-[#dbe6ff] sm:text-[0.92rem]">{homeContent.conferenceStandard.policyCallout.body}</p>
-                  <LiquidButton
-                    className="mt-4"
-                    href={homeContent.conferenceStandard.policyCallout.cta.href}
-                    label={homeContent.conferenceStandard.policyCallout.cta.label}
-                    variant="inverse"
-                  />
                   </article>
                 </div>
               </Reveal>

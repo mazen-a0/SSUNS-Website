@@ -8,6 +8,7 @@ import { useSiteContent } from "@/lib/useSiteContent";
 type SecretaryLetterModalProps = {
   open: boolean;
   onClose: () => void;
+  kicker?: string;
   title: string;
   body: string[];
   imageSrc: string;
@@ -20,6 +21,7 @@ type SecretaryLetterModalProps = {
 export function SecretaryLetterModal({
   open,
   onClose,
+  kicker,
   title,
   body,
   imageSrc,
@@ -153,7 +155,7 @@ export function SecretaryLetterModal({
               <div className="min-w-0">
                 <div className="flex items-start justify-between gap-4 border-b border-[var(--rule)] pb-4">
                   <div>
-                    <p className="section-kicker">{language === "fr" ? "Lettre du secrétariat" : "Secretary-General Letter"}</p>
+                    <p className="section-kicker">{kicker ?? (language === "fr" ? "Lettre du secrétariat" : "Secretary-General Letter")}</p>
                     <h2 className="font-display mt-4 text-4xl leading-[0.95] text-[var(--accent)]" id={dialogId}>
                       {title}
                     </h2>

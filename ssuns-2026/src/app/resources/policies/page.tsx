@@ -1,11 +1,5 @@
-"use client";
-
-import { DossierChapterPage } from "@/components/DossierChapterPage";
-import { useSiteContent } from "@/lib/useSiteContent";
+import { redirect } from "next/navigation";
 
 export default function ResourcesPoliciesPage() {
-  const { resourcesPageContent } = useSiteContent();
-  const chapter = resourcesPageContent.chapters.find((item) => item.href === "/resources/policies");
-  if (!chapter) return null;
-  return <DossierChapterPage chapter={chapter} chapters={resourcesPageContent.chapters} eyebrow={resourcesPageContent.title} />;
+  redirect("/conference/delegate-resource-center");
 }

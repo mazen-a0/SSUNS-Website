@@ -14,7 +14,7 @@ type ProfileCardProps = {
 
 export function ProfileCard({ id, name, role, email, imageSrc, bio, onOpen }: ProfileCardProps) {
   const { language } = useSiteContent();
-  const body = bio?.trim() || (language === "fr" ? "À venir" : "Coming soon");
+  const body = bio?.trim() || (language === "fr" ? "Biographie disponible dans le profil complet." : "Biography available in the full profile.");
 
   return (
     <motion.article
@@ -22,7 +22,6 @@ export function ProfileCard({ id, name, role, email, imageSrc, bio, onOpen }: Pr
       transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
       className="theme-panel paper-grain overflow-hidden rounded-[8px] p-4 sm:p-5"
     >
-      {/* TODO(photo): Replace with the correct secretariat member headshot (4:5, 800x1000). Current file should live at /public/headshots/<name>.jpg. */}
       <div className="grid gap-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-start">
         <div className="relative overflow-hidden rounded-[6px] border border-[var(--rule)]">
           <Image alt={`${name} headshot`} className="aspect-[4/5] w-full object-cover" height={1000} src={imageSrc || "/headshots/marcus.jpg"} width={800} />

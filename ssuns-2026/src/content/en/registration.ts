@@ -1,7 +1,7 @@
 export const registrationContent = {
   title: "Registration",
   intro:
-    "Registration for SSUNS 2026 will open on April 1st! This year, we are introducing a new registration system designed to improve your experience and streamline the process.",
+    "Registration for SSUNS 2026 is now open. This year, we are introducing a new registration system designed to improve your experience and streamline the process.",
   sections: {
     flow: "How To Register",
     pathways: "Registration Pathways",
@@ -15,13 +15,12 @@ export const registrationContent = {
     {
       href: "/registration",
       title: "Information",
-      summary: "Registration for SSUNS 2026 opens April 1, 2026.",
+      summary: "Registration for SSUNS 2026 is now open.",
       body: [
-        "Registration for SSUNS 2026 will open on April 1st!",
+        "Registration for SSUNS 2026 is now open.",
         "This year, we are introducing a new registration system designed to improve your experience and streamline the process.",
-        "Additional details, including step-by-step instructions and important updates, will be posted here throughout March. We encourage all delegates and advisors to review this information in advance to ensure a smooth registration.",
+        "Review the step-by-step instructions and important updates here to ensure a smooth registration.",
         "The conference will take place from November 12-15, 2026.",
-        "Registration opens: April 1st.",
         "Registration closes: October 16 or upon reaching capacity.",
       ],
     },
@@ -48,7 +47,7 @@ export const registrationContent = {
       title: "Financial Aid",
       summary: "Support information for financial accessibility.",
       body: [
-        "Financial Policies and Aid will be updated soon!",
+        "Review SSUNS 2026 financial policies, financial aid windows, and invoice deadlines on this page.",
         "Financial Aid Application Deadlines.",
         "Early: June 8th.",
         "Regular: September 8th.",
@@ -144,7 +143,7 @@ export const registrationContent = {
     { label: "November 12-15, 2026", text: "Conference dates in Montreal." },
   ],
   currentTier: {
-    label: "Registration opens April 1st",
+    label: "Registration is open",
     detail: "Registration closes October 16 or upon reaching capacity. The conference will take place from November 12-15, 2026.",
   },
   pricingTimeline: [
@@ -177,16 +176,15 @@ export const registrationContent = {
     title: "Registration timeline",
     delegationFee: "Delegation fee",
     delegateFee: "Per delegate",
-    current: "Current",
-    financialAidDeadlines: "Financial aid deadlines",
+    current: "Current registration window",
     to: "to",
   },
   financialAidDeadlines: ["June 8", "September 8", "October 16"],
   invoiceDeadlines: ["June 22", "September 16", "October 23"],
-  feePlaceholders: [
+  feeNotes: [
     { title: "Fees", body: "The Delegate Fee applies to each delegate who wishes to register. The Delegation Fee is an additional one time fee that covers the entire delegation." },
     { title: "Dates", body: "Registration opens: April 1st. Registration closes: October 16 or upon reaching capacity." },
-    { title: "Financial Aid", body: "Financial Policies and Aid will be updated soon." },
+    { title: "Financial Aid", body: "Financial policies, financial aid windows, and invoice deadlines are available on the Financial Aid page." },
   ],
   tracks: [
     {
@@ -201,7 +199,7 @@ export const registrationContent = {
     },
     {
       title: "Financial Aid Window",
-      body: "Financial aid details and supporting policies will be linked from the financial aid chapter once published.",
+      body: "Financial aid details, financial policies, and invoice deadlines are linked from the Financial Aid chapter.",
       href: "/registration/financial-aid",
     },
   ],
@@ -218,25 +216,26 @@ export const registrationContent = {
     submitLabel: "Join newsletter",
   },
   letter: {
-    label: "Chargée d’Affaires",
+    label: "Chargé d’Affaires",
     title: "A message from the Chargé d'affaires",
     body: [
       "Dear SSUNS Delegates and Faculty Advisors,",
       "My name is Costas Oreopoulos and it is my distinct privilege to serve as your Chargé d’Affaires for SSUNS 2026. Since its debut in 1993, SSUNS has grown to be Canada’s premier Model United Nations conference. Now in its 34th edition, we continue to provide a world-class conference experience for high school and CEGEP students. Each November, over 1400 students from around the globe join us for four days of dynamic committee sessions, captivating debate and immersive simulations.",
       "Beyond committee sessions, SSUNS offers a range of opportunities to enrich your experience, including workshops, social events and guided tours of McGill University. Faculty Advisors will have the chance to observe their delegates in action, connect with fellow educators and enjoy the Faculty Advisor Lounge and social events. All of this takes place in the beautifully vibrant city of Montreal, where attendees can explore iconic landmarks and experience its unique culture.",
+      "I started my journey with MUN competing at SSUNS while I was in high school in Toronto. That experience sparked a passion that kept me involved in the circuit and eventually brought me back to McGill determined to help deliver the same kind of conference for a new generation of delegates. Having now seen Model UN from both the delegate and Secretariat side, I can truly attest to its transformative impact, and I firmly believe that SSUNS remains one of the most exceptional conference experiences anywhere in the world.",
       "Whether you are returning to SSUNS or joining us for the first time, we are incredibly excited to welcome you for an unforgettable weekend of diplomacy, debate and collaboration. I look forward to seeing you all this November!",
-      "Sign up with your email address to receive SSUNS 2026 latest news from our Chargée d’Affaires.",
+      "Warm regards,",
     ],
     signature: "Costas Oreopoulos",
-    role: "Chargée d’Affaires, SSUNS 2026",
+    role: "Chargé d’Affaires, SSUNS 2026",
   },
   cta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
   munagerVideo: {
-    src: "/video/munager-howto.mp4",
-    poster: "/photos/hero-1920x1080.jpg",
-    fallbackSrc: "/video/ssuns-recap-2025.mp4",
+    src: "/video/registration-open.mp4",
+    poster: DEFAULT_HERO_IMAGE,
+    fallbackSrc: "/video/registration-open.mp4",
     title: "Munager walkthrough",
-    unavailableLabel: "Video coming soon",
+    unavailableLabel: "Walkthrough video unavailable",
     note: "screen capture of Munager registration flow, 16:9, recommended 1920x1080",
   },
   image: {
@@ -245,3 +244,4 @@ export const registrationContent = {
     note: "delegate registration portrait, 4:5, recommended 800x1000",
   },
 };
+import { DEFAULT_HERO_IMAGE } from "@/lib/images";

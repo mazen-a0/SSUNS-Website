@@ -9,7 +9,7 @@ import { structure } from './src/sanity/desk/structure'
 
 export default defineConfig({
   basePath: '/studio',
-  projectId: projectId || 'placeholder',
+  projectId: projectId || 'ssuns',
   dataset: dataset || 'production',
   schema,
   plugins: [

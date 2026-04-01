@@ -58,6 +58,9 @@ export default function AboutPage() {
               </div>
               <div className="mt-8 border-l border-[var(--rule)] pl-5">
                 <p className="text-2xl font-semibold leading-[1.2] text-[var(--accent)] sm:text-3xl">{aboutContent.mission}</p>
+                <p className="mt-3 text-sm font-semibold italic leading-relaxed text-[var(--muted)]">
+                  Empowering the Youth Leaders Today.
+                </p>
               </div>
             </article>
 

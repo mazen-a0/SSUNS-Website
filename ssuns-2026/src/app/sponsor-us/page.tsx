@@ -1,27 +1,18 @@
 "use client";
 
 import { PageHero } from "@/components/PageHero";
-import { PublicAssetLink } from "@/components/PublicAssetLink";
 import { DossierCarousel } from "@/components/media/DossierCarousel";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function SponsorUsPage() {
   const { homeContent, sponsorContent } = useSiteContent();
-  const sponsorSlides = [
-    {
-      id: "sponsor-hero",
-      alt: sponsorContent.heroImage.alt,
-      eyebrow: sponsorContent.title,
-      src: sponsorContent.heroImage.src,
-    },
-    ...homeContent.gallery.items.slice(1, 4).map((item) => ({
-      id: item.id,
-      alt: item.alt,
-      caption: item.caption,
-      eyebrow: item.title,
-      src: item.src,
-    })),
-  ];
+  const sponsorSlides = homeContent.gallery.items.slice(1, 4).map((item) => ({
+    id: item.id,
+    alt: item.alt,
+    caption: item.caption,
+    eyebrow: item.title,
+    src: item.src,
+  }));
 
   return (
     <>
@@ -41,9 +32,10 @@ export default function SponsorUsPage() {
             </div>
             <div className="mt-6 border-t border-[var(--rule)] pt-5">
               <p className="section-kicker">{sponsorContent.packageLabel}</p>
-              <div className="mt-3">
-                <PublicAssetLink href={sponsorContent.packagePath} label={sponsorContent.packageLabel} unavailableLabel={sponsorContent.packageComingSoon} />
-              </div>
+              <a className="mt-3 inline-flex text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href={sponsorContent.packagePath}>
+                {sponsorContent.packageLabel}
+              </a>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{sponsorContent.packageUnavailableLabel}</p>
             </div>
           </article>
         </div>
@@ -61,8 +53,8 @@ export default function SponsorUsPage() {
 
           <div className="space-y-6">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">{sponsorContent.pastSponsorsTitle}</p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{sponsorContent.pastSponsorsPlaceholder}</p>
+              <p className="section-kicker">{sponsorContent.supportersTitle}</p>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{sponsorContent.supportersNote}</p>
             </article>
 
             <article className="bg-[var(--panel-inverse)] p-6 text-white sm:p-8">
@@ -70,7 +62,6 @@ export default function SponsorUsPage() {
               <a className="mt-4 block text-lg font-semibold text-white" href={`mailto:${sponsorContent.contactEmail}`}>
                 {sponsorContent.contactEmail}
               </a>
-              <p className="mt-3 text-sm text-[#dbe7ff]">Fallback: {sponsorContent.fallbackEmail}</p>
             </article>
           </div>
         </div>

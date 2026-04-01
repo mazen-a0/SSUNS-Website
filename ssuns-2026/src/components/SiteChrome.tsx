@@ -145,7 +145,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           empty: uiText.commandEmpty,
           hint: uiText.commandHint,
           navigationGroupLabel: uiText.commandGroupNavigation,
-          placeholder: uiText.commandPlaceholder,
+          placeholder: uiText.commandSearchHint,
           title: uiText.commandTitle,
         }}
       />

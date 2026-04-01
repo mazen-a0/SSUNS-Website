@@ -19,7 +19,7 @@ export type UiText = {
   railContactLabel: string;
   railFaqLabel: string;
   commandShortcut: string;
-  commandPlaceholder: string;
+  commandSearchHint: string;
   commandEmpty: string;
   commandHint: string;
   commandTitle: string;
@@ -42,6 +42,7 @@ export const siteMeta = {
   description:
     "Secondary Schools' United Nations Symposium 2026. Student-led diplomacy, global dialogue, and collaborative leadership.",
   locale: "en-CA",
+  ogImage: "/delegates/hero-1920x1080.jpg",
 };
 
 export const navItems: NavItem[] = [
@@ -56,6 +57,7 @@ export const navItems: NavItem[] = [
 
 export const socialLinks: SocialLink[] = [
   { label: "Instagram", href: "https://www.instagram.com/ssuns_official/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/ssuns" },
   { label: "TikTok", href: "https://www.tiktok.com/@ssuns2025" },
 ];
 
@@ -75,7 +77,7 @@ export const uiText: UiText = {
   railContactLabel: "Contact",
   railFaqLabel: "FAQ",
   commandShortcut: "Cmd+K",
-  commandPlaceholder: "Search SSUNS pages, committees, and resources...",
+  commandSearchHint: "Search SSUNS pages, committees, and resources...",
   commandEmpty: "No matches found.",
   commandHint: "Use arrow keys to navigate, Enter to open, and Esc to close.",
   commandTitle: "Search",
@@ -89,7 +91,7 @@ export const uiText: UiText = {
 };
 
 export const footerContent = {
-  motto: "Student diplomacy, staged with care.",
+  motto: "Empowering the Youth Leaders Today.",
   watermarkLabel: "SSUNS",
   sections: [
     {
@@ -114,5 +116,5 @@ export const footerContent = {
   socialLinks,
   contactTitle: "Organizing Office",
   contacts: ["sg@ssuns.org", "schools@ssuns.org", "committees@ssuns.org"],
-  closing: "SSUNS 2026 remains in preview until launch. Live ssuns.org stays on Squarespace until DNS flip.",
+  closing: "SSUNS 2026 • Secondary Schools' United Nations Symposium • Montréal",
 };

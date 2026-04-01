@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { NavPreviewDeck } from "@/components/nav/nav-preview-deck";
+import { SocialIconRow } from "@/components/ui/social-icon";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/content/registry";
 
@@ -108,13 +109,39 @@ export function GlassNav({
 
   const coreItems = useMemo(() => items.filter((item) => coreHrefs.has(item.href)), [items]);
   const utilityItems = useMemo(() => items.filter((item) => utilityHrefs.has(item.href)), [items]);
-  void socialLinks;
+  const socialItems = useMemo(
+    () =>
+      socialLinks
+        .map((link) => {
+          const lower = link.label.toLowerCase();
+          if (lower.includes("instagram")) {
+            return { platform: "instagram" as const, href: link.href, label: link.label };
+          }
+          if (lower.includes("linkedin")) {
+            return { platform: "linkedin" as const, href: link.href, label: link.label };
+          }
+          if (lower.includes("tiktok")) {
+            return { platform: "tiktok" as const, href: link.href, label: link.label };
+          }
+          return null;
+        })
+        .filter(
+          (
+            item,
+          ): item is {
+            platform: "instagram" | "linkedin" | "tiktok";
+            href: string;
+            label: string;
+          } => item !== null,
+        ),
+    [socialLinks],
+  );
 
   return (
     <header
       ref={headerRef}
       className={cn(
-        "sticky top-0 z-50 border-b border-white/14 bg-[rgba(13,24,92,0.98)] text-white backdrop-blur-[10px]",
+        "sticky top-0 z-50 border-b border-white/14 bg-[rgba(13,24,92,0.98)] text-white backdrop-blur-[10px] transition-all duration-300",
         isScrolled && "shadow-[0_14px_28px_-28px_rgba(5,10,35,0.7)]",
       )}
     >
@@ -122,43 +149,57 @@ export function GlassNav({
 
       <div className="hidden xl:block" onMouseLeave={() => setOpenPreview(null)}>
         <div className="page-shell">
-          <div className="flex min-h-5 items-center justify-between gap-3 border-b border-white/12 text-[11px] text-[#d6e2ff]">
-            <p className="truncate text-[11px] font-semibold tracking-[0.03em] text-[#d6e2ff]">{mastheadLabel}</p>
-            <div className="flex shrink-0 items-center gap-2 py-1">
-              <div aria-label={languageSwitchLabel} className="inline-flex h-6 items-center border border-white/16 bg-white/8 p-0.5">
+          <div
+            className={cn(
+              "overflow-hidden border-b border-white/12 transition-all duration-300",
+              isScrolled ? "max-h-0 opacity-0" : "max-h-12 opacity-100",
+            )}
+          >
+            <div className="flex min-h-5 items-center justify-between gap-3 text-[11px] text-[#d6e2ff]">
+              <p className="truncate text-[11px] font-semibold tracking-[0.03em] text-[#d6e2ff]">{mastheadLabel}</p>
+              <div className="flex shrink-0 items-center gap-2 py-1">
+                <div aria-label={languageSwitchLabel} className="inline-flex h-6 items-center border border-white/16 bg-white/8 p-0.5">
+                  <button
+                    className={cn(
+                      "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
+                      language === "en" ? "bg-white text-[var(--accent)]" : "text-[#d6e2ff] hover:text-white",
+                    )}
+                    onClick={() => setLanguage("en")}
+                    type="button"
+                  >
+                    {languageEnglishLabel}
+                  </button>
+                  <button
+                    className={cn(
+                      "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
+                      language === "fr" ? "bg-white text-[var(--accent)]" : "text-[#d6e2ff] hover:text-white",
+                    )}
+                    onClick={() => setLanguage("fr")}
+                    type="button"
+                  >
+                    {languageFrenchLabel}
+                  </button>
+                </div>
                 <button
                   className={cn(
-                    "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
-                    language === "en" ? "bg-white text-[var(--accent)]" : "text-[#d6e2ff] hover:text-white",
+                    "inline-flex h-6 items-center border border-white/16 bg-white/8 px-3 text-[11px] font-semibold text-white transition-colors duration-200 hover:border-white/40 hover:bg-white/12",
                   )}
-                  onClick={() => setLanguage("en")}
+                  aria-label={openPaletteLabel}
+                  onClick={onOpenPalette}
                   type="button"
                 >
-                  {languageEnglishLabel}
-                </button>
-                <button
-                  className={cn(
-                    "inline-flex h-full min-w-9 items-center justify-center px-2 text-[11px] font-semibold transition-colors duration-200",
-                    language === "fr" ? "bg-white text-[var(--accent)]" : "text-[#d6e2ff] hover:text-white",
-                  )}
-                  onClick={() => setLanguage("fr")}
-                  type="button"
-                >
-                  {languageFrenchLabel}
+                  {searchLabel}
                 </button>
               </div>
-              <button
-                aria-label={openPaletteLabel}
-                className="inline-flex h-6 items-center border border-white/16 bg-white/8 px-3 text-[11px] font-semibold text-white transition-colors duration-200 hover:border-white/40 hover:bg-white/12"
-                onClick={onOpenPalette}
-                type="button"
-              >
-                {searchLabel}
-              </button>
             </div>
           </div>
 
-          <div className="grid min-h-[2.1rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+          <div
+            className={cn(
+              "grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 transition-all duration-300",
+              isScrolled ? "min-h-[1.7rem]" : "min-h-[2.1rem]",
+            )}
+          >
             <Link
               aria-label={homeAriaLabel}
               className="inline-flex items-center"
@@ -168,11 +209,11 @@ export function GlassNav({
                 setOpenPreview(null);
               }}
             >
-              <Image alt="SSUNS logo" height={24} priority src="/logos/ssuns2026-woodmark-white.png" width={118} />
+              <Image alt="SSUNS logo" height={isScrolled ? 20 : 24} priority src="/logos/ssuns2026-woodmark-white.png" width={isScrolled ? 104 : 118} />
             </Link>
 
             <nav aria-label="Primary" className="min-w-0">
-              <div className="flex min-w-0 items-center justify-center gap-3 2xl:gap-4">
+              <div className={cn("flex min-w-0 items-center justify-center 2xl:gap-4 transition-all duration-300", isScrolled ? "gap-2.5" : "gap-3")}>
                 {coreItems.map((item) => {
                   const isActive = isActivePath(pathname, item.href);
                   const hasPreview = Boolean(previewMenus[item.href]?.length);
@@ -186,7 +227,8 @@ export function GlassNav({
                       <Link
                         aria-expanded={hasPreview ? openPreview === item.href : undefined}
                         className={cn(
-                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap py-1.5 text-[1.0625rem] font-semibold leading-tight text-[#eaf0ff] transition-colors duration-200 hover:text-white xl:text-[1.125rem]",
+                          "nav-link inline-flex min-w-0 shrink items-center whitespace-nowrap font-semibold leading-tight text-[#eaf0ff] transition-all duration-300 hover:text-white",
+                          isScrolled ? "py-1 text-[1rem] xl:text-[1.03rem]" : "py-1.5 text-[1.0625rem] xl:text-[1.125rem]",
                           isActive && "is-active text-white",
                         )}
                         href={item.href}
@@ -207,13 +249,27 @@ export function GlassNav({
               </div>
             </nav>
 
-            <div className="flex items-center gap-2.5">
+            <div className={cn("flex items-center transition-all duration-300", isScrolled ? "gap-2" : "gap-2.5")}>
+              {socialItems.length ? (
+                <SocialIconRow
+                  className="mr-0.5 hidden gap-1.5 xl:flex"
+                  items={socialItems.map((item) => ({
+                    ...item,
+                    className:
+                      isScrolled
+                        ? "h-6 w-6 rounded-[5px] border-white/16 bg-white/8 text-white hover:border-white/40 hover:bg-white/12"
+                        : "h-7 w-7 rounded-[5px] border-white/16 bg-white/8 text-white hover:border-white/40 hover:bg-white/12",
+                  }))}
+                  variant="inverse"
+                />
+              ) : null}
               {utilityItems.map((item) => {
                 const isActive = isActivePath(pathname, item.href);
                 return (
                   <Link
                     className={cn(
-                      "nav-link inline-flex items-center whitespace-nowrap py-1.5 text-[0.9375rem] font-semibold text-[#d6e2ff] transition-colors duration-200 hover:text-white",
+                      "nav-link inline-flex items-center whitespace-nowrap font-semibold text-[#d6e2ff] transition-all duration-300 hover:text-white",
+                      isScrolled ? "py-1 text-[0.875rem]" : "py-1.5 text-[0.9375rem]",
                       isActive && "is-active text-white",
                     )}
                     href={item.href}
@@ -241,7 +297,7 @@ export function GlassNav({
         </div>
       </div>
 
-      <div className="page-shell flex min-h-[2.2rem] items-center justify-between gap-3 xl:hidden">
+      <div className={cn("page-shell flex items-center justify-between gap-3 transition-all duration-300 xl:hidden", isScrolled ? "min-h-[1.85rem]" : "min-h-[2.2rem]")}>
         <Link
           aria-label={homeAriaLabel}
           className="inline-flex items-center"
@@ -251,12 +307,25 @@ export function GlassNav({
             setOpenPreview(null);
           }}
         >
-          <Image alt="SSUNS logo" height={24} priority src="/logos/ssuns2026-woodmark-white.png" width={118} />
+          <Image alt="SSUNS logo" height={isScrolled ? 20 : 24} priority src="/logos/ssuns2026-woodmark-white.png" width={isScrolled ? 104 : 118} />
         </Link>
         <div className="flex items-center gap-2">
+          {socialItems.length ? (
+            <SocialIconRow
+              className="hidden gap-1.5 sm:flex"
+              items={socialItems.map((item) => ({
+                ...item,
+                className:
+                  isScrolled
+                    ? "h-7 w-7 rounded-[5px] border-white/16 bg-white/8 text-white hover:border-white/40 hover:bg-white/12"
+                    : "h-8 w-8 rounded-[5px] border-white/16 bg-white/8 text-white hover:border-white/40 hover:bg-white/12",
+              }))}
+              variant="inverse"
+            />
+          ) : null}
           <button
             aria-label={openPaletteLabel}
-            className="inline-flex h-8 items-center border border-white/16 bg-white/8 px-3 text-sm font-semibold text-white"
+            className={cn("inline-flex items-center border border-white/16 bg-white/8 px-3 font-semibold text-white transition-all duration-300", isScrolled ? "h-7 text-[0.8125rem]" : "h-8 text-sm")}
             onClick={onOpenPalette}
             type="button"
           >
@@ -265,7 +334,7 @@ export function GlassNav({
           <button
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? closeMenuLabel : openMenuLabel}
-            className="inline-flex h-8 items-center border border-white/16 bg-white/8 px-3 text-sm font-semibold text-white"
+            className={cn("inline-flex items-center border border-white/16 bg-white/8 px-3 font-semibold text-white transition-all duration-300", isScrolled ? "h-7 text-[0.8125rem]" : "h-8 text-sm")}
             onClick={() => setMobileOpen((prev) => !prev)}
             type="button"
           >
@@ -354,6 +423,16 @@ export function GlassNav({
                   {languageFrenchLabel}
                 </button>
               </div>
+              {socialItems.length ? (
+                <SocialIconRow
+                  className="w-full pt-1"
+                  items={socialItems.map((item) => ({
+                    ...item,
+                    className: "border-white/16 bg-white/8 text-white hover:border-white/40 hover:bg-white/12",
+                  }))}
+                  variant="inverse"
+                />
+              ) : null}
             </div>
           </div>
         </nav>

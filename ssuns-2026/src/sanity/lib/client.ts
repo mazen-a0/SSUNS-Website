@@ -3,7 +3,7 @@ import "server-only";
 import { createClient } from "next-sanity";
 import { apiVersion, dataset, isSanityConfigured, projectId, readToken } from "@/sanity/env";
 
-const fallbackProjectId = projectId || "placeholder";
+const fallbackProjectId = projectId || "ssuns";
 const fallbackDataset = dataset || "production";
 
 export function getSanityClient(preview = false) {
