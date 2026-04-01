@@ -10,10 +10,7 @@ type SectionRevealProps = {
 
 export function SectionReveal({ children, className }: SectionRevealProps) {
   const ref = useRef<HTMLElement | null>(null);
-  const [visible, setVisible] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -44,10 +41,10 @@ export function SectionReveal({ children, className }: SectionRevealProps) {
     <section
       ref={ref}
       className={cn(
-        "transition-all duration-700 ease-out motion-reduce:transition-none",
+        "transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:blur-0 motion-reduce:transition-none",
         visible
           ? "translate-y-0 scale-100 opacity-100 blur-none"
-          : "translate-y-5 scale-[0.985] opacity-0 blur-[2px]",
+          : "translate-y-0 scale-100 opacity-100 blur-none md:translate-y-5 md:scale-[0.985] md:opacity-0 md:blur-[2px]",
         className,
       )}
     >

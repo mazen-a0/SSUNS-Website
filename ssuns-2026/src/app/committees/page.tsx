@@ -11,13 +11,15 @@ import { COMMITTEE_SLATE_IMAGES } from "@/lib/images";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function CommitteesPage() {
-  const { committees, committeesPageContent, language } = useSiteContent();
+  const { committees, committeesPageContent, contactContent, language } = useSiteContent();
   const slatingChapter = committeesPageContent.chapters.find((chapter) => chapter.href === "/committees") ?? committeesPageContent.chapters[0];
   const isFrench = language === "fr";
   const [isLetterOpen, setIsLetterOpen] = useState(false);
   const letterOpeningPreview = slatingChapter.body.slice(0, 3);
   const letterClosingPreview = slatingChapter.body.slice(-2);
   const letterKicker = isFrench ? "SGA Affaires des comités" : "USG Committee Affairs";
+  const committeeAffairsEmail =
+    contactContent.directory.find((entry) => entry.name === "Valeria Fonseca Ortega")?.email ?? null;
   const committeeGalleryItems = [
     { id: "committee-photo-1", src: COMMITTEE_SLATE_IMAGES[0], alt: "Delegates debating in committee" },
     { id: "committee-photo-2", src: COMMITTEE_SLATE_IMAGES[1], alt: "Chairs and dais preparing materials" },
@@ -36,7 +38,17 @@ export default function CommitteesPage() {
 
           <div className="space-y-6">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <div className="flex items-start gap-4 sm:gap-5">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-5">
+                <div className="mx-auto w-full max-w-[16rem] overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] sm:hidden">
+                  <Image
+                    alt="Valeria Fonseca Ortega"
+                    className="h-auto w-full object-cover"
+                    height={425}
+                    sizes="(max-width: 639px) 16rem, 340px"
+                    src="/headshots/vale.jpg"
+                    width={340}
+                  />
+                </div>
                 <div className="min-w-0 flex-1">
                   <p className="section-kicker">{letterKicker}</p>
                   <div className="mt-5 space-y-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">
@@ -65,7 +77,7 @@ export default function CommitteesPage() {
                   </div>
                 </div>
 
-                <div className="w-[340px] max-w-[40vw] shrink-0 self-start overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)]">
+                <div className="hidden w-[340px] max-w-[40vw] shrink-0 self-start overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] sm:block">
                     <Image
                       alt="Valeria Fonseca Ortega"
                       className="h-auto w-full object-cover"
@@ -86,6 +98,7 @@ export default function CommitteesPage() {
       </section>
       <SecretaryLetterModal
         body={slatingChapter.body}
+        email={committeeAffairsEmail}
         imageAlt="Valeria Fonseca Ortega"
         imageSrc="/headshots/vale.jpg"
         kicker={letterKicker}

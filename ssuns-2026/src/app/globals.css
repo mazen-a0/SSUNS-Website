@@ -250,6 +250,28 @@ img {
   padding-block: 1.5rem;
 }
 
+@media (max-width: 767px) {
+  .page-shell,
+  .section-shell {
+    padding-inline: 0.95rem;
+  }
+
+  .page-shell > *,
+  .section-shell > * {
+    min-width: 0;
+  }
+
+  .page-shell :where(div, section, article, aside, nav, header, main, footer, figure, figcaption),
+  .section-shell :where(div, section, article, aside, nav, header, main, footer, figure, figcaption) {
+    min-width: 0;
+  }
+
+  .page-shell :where(p, li, a, button, span),
+  .section-shell :where(p, li, a, button, span) {
+    overflow-wrap: anywhere;
+  }
+}
+
 .body-copy {
   font-family: var(--font-chivo), ui-sans-serif, system-ui;
   font-size: 1rem;

@@ -56,8 +56,20 @@ function RegistrationVideoPanel() {
       setIsFullscreen(document.fullscreenElement === panelRef.current);
     };
 
+    const video = videoRef.current;
+    const handleNativeVideoEnter = () => setIsFullscreen(true);
+    const handleNativeVideoExit = () => setIsFullscreen(false);
+
     document.addEventListener("fullscreenchange", syncFullscreen);
-    return () => document.removeEventListener("fullscreenchange", syncFullscreen);
+
+    video?.addEventListener("webkitbeginfullscreen", handleNativeVideoEnter as EventListener);
+    video?.addEventListener("webkitendfullscreen", handleNativeVideoExit as EventListener);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", syncFullscreen);
+      video?.removeEventListener("webkitbeginfullscreen", handleNativeVideoEnter as EventListener);
+      video?.removeEventListener("webkitendfullscreen", handleNativeVideoExit as EventListener);
+    };
   }, []);
 
   const progress = useMemo(() => {
@@ -86,14 +98,35 @@ function RegistrationVideoPanel() {
 
   const toggleFullscreen = async () => {
     const panel = panelRef.current;
-    if (!panel) return;
+    const video = videoRef.current;
+    if (!panel || !video) return;
 
     if (document.fullscreenElement === panel) {
       await document.exitFullscreen();
       return;
     }
 
-    await panel.requestFullscreen();
+    const nativeVideo = video as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+      webkitDisplayingFullscreen?: boolean;
+    };
+
+    if (nativeVideo.webkitDisplayingFullscreen) {
+      return;
+    }
+
+    if (typeof panel.requestFullscreen === "function") {
+      try {
+        await panel.requestFullscreen();
+        return;
+      } catch {
+        // Fall through to mobile-native video fullscreen when the container API is unavailable.
+      }
+    }
+
+    if (typeof nativeVideo.webkitEnterFullscreen === "function") {
+      nativeVideo.webkitEnterFullscreen();
+    }
   };
 
   const handleSeek = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,7 +252,7 @@ export default function HomePage() {
     <>
       <Section className="pt-6 md:pt-8 xl:pt-10" id="hero" spacing="none">
         <Container>
-          <div className="film-grain relative isolate h-[480px] overflow-hidden rounded-[12px] border border-[#20349c] bg-[#0f183e] px-6 py-10 shadow-[var(--shadow-strong)] sm:h-[560px] sm:px-10 sm:py-14 lg:h-[620px]">
+          <div className="film-grain relative isolate min-h-[480px] overflow-hidden rounded-[12px] border border-[#20349c] bg-[#0f183e] px-5 py-8 shadow-[var(--shadow-strong)] sm:h-[560px] sm:px-10 sm:py-14 lg:h-[620px]">
             <div
               className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
               style={{
@@ -244,18 +277,24 @@ export default function HomePage() {
                   {homeContent.hero.eyebrow}
                 </p>
                 <div aria-hidden className="mx-auto mt-4 h-px max-w-[14rem] bg-[linear-gradient(90deg,transparent,var(--accent-2),transparent)]" />
-                <h1 className="mx-auto mt-5 max-w-3xl font-display text-[2.35rem] leading-[0.97] text-white sm:text-[3.6rem]">{homeContent.hero.title}</h1>
-                <p className="mx-auto mt-4 max-w-3xl text-[1.02rem] font-semibold leading-snug text-[#d5e2ff] sm:text-[1.45rem]">{homeContent.hero.accent}</p>
-                <p className="mx-auto mt-4 max-w-2xl text-[0.96rem] leading-relaxed text-[#eef3ff] sm:text-[1.02rem]">{homeContent.hero.description}</p>
-                <div className="mt-12 flex flex-wrap justify-center gap-2.5">
+                <h1 className="mx-auto mt-5 max-w-3xl text-balance font-display text-[2rem] leading-[1.02] text-white sm:text-[3.6rem]">
+                  {homeContent.hero.title}
+                </h1>
+                <p className="mx-auto mt-4 max-w-3xl text-[0.96rem] font-semibold leading-snug text-[#d5e2ff] sm:text-[1.45rem]">
+                  {homeContent.hero.accent}
+                </p>
+                <p className="mx-auto mt-3 max-w-2xl text-[0.92rem] leading-relaxed text-[#eef3ff] sm:mt-4 sm:text-[1.02rem]">
+                  {homeContent.hero.description}
+                </p>
+                <div className="mt-8 flex flex-wrap justify-center gap-2.5 sm:mt-12">
                   <LiquidButton
-                    className="border-white/50 bg-[rgba(8,14,44,0.52)] px-4 py-2.5 text-[13px] hover:border-white/65 hover:bg-[rgba(255,255,255,0.18)]"
+                    className="border-white/50 bg-[rgba(8,14,44,0.52)] px-4 py-2.5 text-[12.5px] hover:border-white/65 hover:bg-[rgba(255,255,255,0.18)] sm:text-[13px]"
                     href={homeContent.hero.primaryCta.href}
                     label={homeContent.hero.primaryCta.label}
                     variant="inverseGhost"
                   />
                   <LiquidButton
-                    className="border-white/50 bg-[rgba(8,14,44,0.52)] px-4 py-2.5 text-[13px] hover:border-white/65 hover:bg-[rgba(255,255,255,0.18)]"
+                    className="border-white/50 bg-[rgba(8,14,44,0.52)] px-4 py-2.5 text-[12.5px] hover:border-white/65 hover:bg-[rgba(255,255,255,0.18)] sm:text-[13px]"
                     href={homeContent.hero.secondaryCta.href}
                     label={homeContent.hero.secondaryCta.label}
                     variant="inverseGhost"
@@ -426,7 +465,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section className={sectionSpacing} id="venue" spacing="none">
+      <Section className="hidden sm:block sm:pt-0 sm:pb-0 md:pt-8 md:pb-10 xl:pt-10 xl:pb-12" id="venue" spacing="none">
         <Container>
           <Reveal once>
             <div>
@@ -449,7 +488,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section className={sectionSpacing} spacing="none">
+      <Section className="pt-6 pb-8 sm:-mt-12 sm:pt-0 md:mt-0 md:pt-8 md:pb-10 xl:pt-10 xl:pb-12" spacing="none">
         <Container>
           <Reveal once>
             <LandAcknowledgementBlock

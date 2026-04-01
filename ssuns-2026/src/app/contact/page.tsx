@@ -41,7 +41,7 @@ export default function ContactPage() {
                     <p className="section-kicker">{contact.role}</p>
                     <h3 className="mt-3 text-xl font-semibold leading-tight text-[var(--heading)]">{contact.name}</h3>
                     <a
-                      className="mt-5 block text-base font-semibold text-[var(--accent)] transition-colors hover:text-[var(--accent-2)]"
+                      className="mt-5 block break-all text-base font-semibold text-[var(--accent)] transition-colors hover:text-[var(--accent-2)]"
                       href={`mailto:${contact.email}`}
                     >
                       {contact.email}

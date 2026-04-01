@@ -10,7 +10,7 @@ type LiquidButtonProps = {
 };
 
 const baseClass =
-  "liquid-button ui-copy group relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-[6px] border px-5 py-2.5 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]";
+  "liquid-button ui-copy group relative inline-flex items-center justify-center overflow-hidden rounded-[6px] border px-5 py-2.5 text-center text-sm font-semibold whitespace-normal sm:whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]";
 
 export function LiquidButton({
   label,

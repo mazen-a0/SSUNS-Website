@@ -14,26 +14,42 @@ type RevealProps = {
 export function Reveal({ children, className, delay = 0, once = true, as = "div" }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
-  const [reduced, setReduced] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+  const [isMobile, setIsMobile] = useState(false);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateReduced = () => setReduced(media.matches);
-    media.addEventListener("change", updateReduced);
+    const reducedMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileMedia = window.matchMedia("(max-width: 767px)");
+    const updateReduced = () => setReduced(reducedMedia.matches);
+    const updateMobile = () => setIsMobile(mobileMedia.matches);
+
+    updateReduced();
+    updateMobile();
+
+    if (typeof reducedMedia.addEventListener === "function") {
+      reducedMedia.addEventListener("change", updateReduced);
+      mobileMedia.addEventListener("change", updateMobile);
+
+      return () => {
+        reducedMedia.removeEventListener("change", updateReduced);
+        mobileMedia.removeEventListener("change", updateMobile);
+      };
+    }
+
+    reducedMedia.addListener(updateReduced);
+    mobileMedia.addListener(updateMobile);
 
     return () => {
-      media.removeEventListener("change", updateReduced);
+      reducedMedia.removeListener(updateReduced);
+      mobileMedia.removeListener(updateMobile);
     };
   }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (reduced) return;
+    if (reduced || isMobile) return;
 
     const node = ref.current;
     if (!node) return;
@@ -49,7 +65,7 @@ export function Reveal({ children, className, delay = 0, once = true, as = "div"
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [once, reduced]);
+  }, [once, reduced, isMobile]);
 
   const Component = as;
 
@@ -57,7 +73,9 @@ export function Reveal({ children, className, delay = 0, once = true, as = "div"
     <Component
       className={cn(
         "motion-reduce:transition-none",
-        visible || reduced ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-[12px] blur-[2px]",
+        visible || reduced || isMobile
+          ? "opacity-100 translate-y-0 blur-0"
+          : "opacity-100 translate-y-0 blur-0 md:opacity-0 md:translate-y-[12px] md:blur-[2px]",
         className,
       )}
       ref={ref as never}

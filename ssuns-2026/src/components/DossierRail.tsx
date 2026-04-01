@@ -179,10 +179,10 @@ export function DossierRail({ items, currentHref, variant = "rail", contextTitle
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="section-kicker">{uiText.railCurrentLabel}</p>
-            <p className="mt-2 truncate text-sm font-semibold text-[var(--accent)]">{title}</p>
+            <p className="mt-2 text-sm font-semibold leading-snug text-[var(--accent)]">{title}</p>
           </div>
           <button
-            className="border border-[var(--rule)] px-3 py-2 text-sm font-semibold text-[var(--accent)]"
+            className="shrink-0 whitespace-nowrap border border-[var(--rule)] px-3 py-2 text-sm font-semibold text-[var(--accent)]"
             onClick={() => setMobileOpen(true)}
             type="button"
           >

@@ -24,7 +24,7 @@ export function ConferenceChapterPage({ href }: ConferenceChapterPageProps) {
           <aside className="sticky-below-header">
             <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>
-          <article className="theme-panel-strong paper-grain p-8 sm:p-10 md:p-12">
+          <article className="theme-panel-strong paper-grain min-w-0 p-8 sm:p-10 md:p-12">
             <div className="space-y-6 body-copy">
               {chapter.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>

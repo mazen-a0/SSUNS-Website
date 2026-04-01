@@ -73,7 +73,7 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
   const selectedIndex = Math.max(phases.findIndex((phase) => phase.id === selectedPhase?.id), 0);
 
   return (
-    <section className="theme-panel-strong paper-grain overflow-hidden rounded-[12px] border border-[var(--rule-strong)] shadow-[var(--shadow-strong)]">
+    <section className="theme-panel-strong paper-grain overflow-hidden rounded-[12px] border border-[#23379f]/45 shadow-[0_0_0_1px_rgba(35,55,159,0.14),0_18px_36px_-32px_rgba(10,19,66,0.28)]">
       <div className="border-b border-[var(--rule)] px-5 py-4 sm:px-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -85,7 +85,7 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
               {labels.selectHint}
             </p>
           </div>
-          <span className="inline-flex items-center rounded-full border border-[var(--accent)] bg-[rgba(20,32,130,0.08)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+          <span className="inline-flex max-w-full items-center rounded-full border border-[var(--accent)] bg-[rgba(20,32,130,0.08)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)] sm:text-xs">
             {labels.currentPrefix}: {phases[currentIndex]?.title}
           </span>
         </div>
@@ -120,8 +120,8 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
                   className={cn(
                     "group relative rounded-[12px] border bg-[var(--panel)] p-4 text-left transition duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] motion-safe:hover:-translate-y-[1px]",
                     isSelected
-                      ? "border-[var(--accent)] bg-[rgba(20,32,130,0.06)] shadow-[var(--shadow-soft)]"
-                      : "border-[var(--rule)] hover:border-[var(--accent-2)]",
+                      ? "border-[var(--accent)] bg-[rgba(20,32,130,0.06)] shadow-[0_0_0_1px_rgba(20,32,130,0.14),0_10px_24px_-24px_rgba(10,19,66,0.24)]"
+                      : "border-[#23379f]/55 shadow-[0_0_0_1px_rgba(35,55,159,0.16),0_10px_24px_-24px_rgba(10,19,66,0.2)] hover:border-[var(--accent-2)]",
                   )}
                   aria-pressed={isSelected}
                 >
@@ -171,14 +171,14 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
         </div>
 
         {selectedPhase ? (
-          <div className="mt-4 rounded-[12px] border border-[var(--rule)] bg-[var(--panel)] p-4 transition duration-300 ease-out motion-safe:animate-[sheet-in_260ms_ease-out] sm:p-5">
+          <div className="relative mt-4 rounded-[12px] border border-[#23379f]/55 bg-[var(--panel)] p-4 shadow-[0_0_0_1px_rgba(35,55,159,0.16),0_12px_24px_-24px_rgba(10,19,66,0.22)] transition duration-300 ease-out motion-safe:animate-[sheet-in_260ms_ease-out] sm:p-5">
             <div className="grid gap-4 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-lg font-semibold leading-tight text-[var(--text)]">{selectedPhase.title}</h3>
                   <span
                     className={cn(
-                      "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em]",
+                      "inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] sm:text-[11px]",
                       statuses[selectedIndex] === "active"
                         ? "border border-[var(--accent)] bg-[rgba(20,32,130,0.08)] text-[var(--accent)]"
                         : statuses[selectedIndex] === "completed"
@@ -199,11 +199,11 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <article className="rounded-[10px] border border-[var(--rule)] bg-[var(--paper)] px-4 py-3">
+                <article className="rounded-[10px] border border-[#23379f]/50 bg-[var(--paper)] px-4 py-3 shadow-[inset_0_1px_0_rgba(35,55,159,0.1)]">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">{labels.delegationFee}</p>
                   <p className="mt-2 text-lg font-semibold text-[var(--accent)]">{selectedPhase.delegationFee}</p>
                 </article>
-                <article className="rounded-[10px] border border-[var(--rule)] bg-[var(--paper)] px-4 py-3">
+                <article className="rounded-[10px] border border-[#23379f]/50 bg-[var(--paper)] px-4 py-3 shadow-[inset_0_1px_0_rgba(35,55,159,0.1)]">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">{labels.perDelegate}</p>
                   <p className="mt-2 text-lg font-semibold text-[var(--accent)]">{selectedPhase.perDelegate}</p>
                 </article>
@@ -212,12 +212,12 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
 
             <div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--rule)] pt-4">
               {selectedPhase.financialAidDeadline ? (
-                <span className="inline-flex items-center rounded-full border border-[var(--rule)] bg-[var(--paper)] px-3 py-1.5 text-xs font-semibold text-[var(--text)]">
+                <span className="inline-flex items-center rounded-full border border-[#23379f]/45 bg-[var(--paper)] px-3 py-1.5 text-xs font-semibold text-[var(--text)]">
                   {labels.financialAid}: {selectedPhase.financialAidDeadline}
                 </span>
               ) : null}
               {selectedPhase.invoiceDeadline ? (
-                <span className="inline-flex items-center rounded-full border border-[var(--rule)] bg-[var(--paper)] px-3 py-1.5 text-xs font-semibold text-[var(--text)]">
+                <span className="inline-flex items-center rounded-full border border-[#23379f]/45 bg-[var(--paper)] px-3 py-1.5 text-xs font-semibold text-[var(--text)]">
                   {labels.invoice}: {selectedPhase.invoiceDeadline}
                 </span>
               ) : null}

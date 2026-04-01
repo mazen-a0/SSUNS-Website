@@ -49,8 +49,6 @@ export const registrationContent = {
       summary: "Information sur l'accessibilité financière.",
       body: [
         "Consultez sur cette page les politiques financières de SSUNS 2026, les périodes d'aide financière et les échéances de facturation.",
-        "Dates limites – Demandes d’aide financière.",
-        "Précoce : 8 juin.",
         "Régulière : 8 septembre.",
         "Dernière ronde : 16 octobre.",
         "Dates limites – Facturation.",

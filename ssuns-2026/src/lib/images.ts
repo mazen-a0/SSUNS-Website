@@ -73,8 +73,8 @@ export const IMAGE_REGISTRY = {
   },
   icao: {
     gallery: [
-      "/icao/icao(1).JPG",
       "/icao/icao(2).jpg",
+      "/icao/icao(4).jpg",
       "/icao/icao(6).jpg",
       "/icao/icao(8).jpg",
     ],
@@ -90,14 +90,14 @@ export const IMAGE_REGISTRY = {
 } as const;
 
 export const HOME_MONTAGE_IMAGES = [
-  IMAGE_REGISTRY.delegates.floor[0],
+  "/delegates/hero-1920x1080.jpg",
   IMAGE_REGISTRY.staff.secretariat[0],
-  IMAGE_REGISTRY.events.ceremony[0],
-  IMAGE_REGISTRY.venue.sheraton[1],
+  "/events/gala(4).jpg",
+  "/sheraton/hotel(1).jpg",
   IMAGE_REGISTRY.icao.gallery[0],
-  IMAGE_REGISTRY.delegates.floor[1],
-  IMAGE_REGISTRY.committees.debate[0],
-  IMAGE_REGISTRY.montreal.city[0],
+  "/delegates/delegates(17).jpg",
+  "/committees/committee(10).jpg",
+  "/montreal/montreal(1).jpg",
 ] as const;
 
 export const COMMITTEE_SLATE_IMAGES = [

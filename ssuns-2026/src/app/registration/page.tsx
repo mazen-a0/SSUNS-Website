@@ -38,7 +38,7 @@ function getRegistrationStatus(now: Date) {
 }
 
 export default function RegistrationPage() {
-  const { registrationContent } = useSiteContent();
+  const { contactContent, registrationContent } = useSiteContent();
   const chapter = registrationContent.chapters.find((item) => item.href === "/registration");
   const navItems = registrationContent.chapters.filter((item) => visibleRegistrationHrefs.has(item.href));
   const status = getRegistrationStatus(new Date());
@@ -46,6 +46,8 @@ export default function RegistrationPage() {
   const [isLetterOpen, setIsLetterOpen] = useState(false);
   const letterOpeningPreview = registrationContent.letter.body.slice(0, 3);
   const letterClosingPreview = registrationContent.letter.body.slice(-2);
+  const chargeeEmail =
+    contactContent.directory.find((entry) => entry.name === registrationContent.letter.signature)?.email ?? null;
 
   if (!chapter) return null;
 
@@ -58,10 +60,10 @@ export default function RegistrationPage() {
             <DossierNav currentHref={chapter.href} items={navItems} />
           </aside>
 
-          <div className="space-y-8">
-            <article className="rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-6 py-7 text-white sm:px-8">
+          <div className="min-w-0 space-y-8">
+            <article className="overflow-hidden rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-5 py-7 text-white sm:px-8">
               <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr] lg:items-end">
-                <div>
+                <div className="min-w-0">
                   <div className="mb-5">
                     <LiquidButton href="/registration/how-to-register" label={isFrench ? "S'inscrire ici" : "Register Here"} variant="inverse" />
                   </div>
@@ -69,7 +71,7 @@ export default function RegistrationPage() {
                   <h2 className="mt-3 text-3xl font-semibold leading-tight">{status.label}</h2>
                   <p className="mt-4 text-sm leading-relaxed text-[#e4eeff]">{status.detail}</p>
                 </div>
-                <div className="grid gap-3 border-t border-white/14 pt-4 lg:border-t-0 lg:border-l lg:pl-5 lg:pt-0">
+                <div className="min-w-0 grid gap-3 border-t border-white/14 pt-4 lg:border-t-0 lg:border-l lg:pl-5 lg:pt-0">
                   {chapter.body.map((paragraph) => (
                     <p className="text-sm leading-relaxed text-[#eef4ff]" key={paragraph}>
                       {paragraph}
@@ -113,16 +115,16 @@ export default function RegistrationPage() {
             />
 
             <section className="grid gap-8 xl:grid-cols-[0.56fr_0.44fr]">
-              <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+              <article className="theme-panel-strong paper-grain min-w-0 overflow-hidden rounded-[8px] p-5 sm:p-8">
                 <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-4">
-                  <div>
+                  <div className="min-w-0">
                     <p className="section-kicker">{isFrench ? "Frais et dates" : "Fees & Dates"}</p>
                     <h2 className="font-display mt-3 text-4xl leading-tight text-[var(--accent)]">{isFrench ? "Frais d'inscription" : "Registration fees"}</h2>
                   </div>
-                  <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{registrationContent.feeNotes[0]?.body}</p>
+                  <p className="w-full text-sm leading-relaxed text-[var(--muted)] sm:max-w-xl">{registrationContent.feeNotes[0]?.body}</p>
                 </div>
-                <div className="mt-5 overflow-hidden border border-[var(--rule)]">
-                  <table className="w-full border-collapse text-left text-sm sm:text-base">
+                <div className="mt-5 max-w-full overflow-x-auto border border-[var(--rule)]">
+                  <table className="w-full min-w-[39rem] border-collapse text-left text-sm sm:min-w-0 sm:text-base">
                     <thead className="bg-[var(--paper-deep)] text-[var(--accent)]">
                       <tr>
                         <th className="px-4 py-3 font-semibold">{isFrench ? "Palier" : "Stage"}</th>
@@ -161,7 +163,7 @@ export default function RegistrationPage() {
                 </div>
               </article>
 
-              <article className="theme-panel rounded-[8px] p-6 sm:p-8">
+              <article className="theme-panel min-w-0 rounded-[8px] p-5 sm:p-8">
                 <p className="section-kicker">{isFrench ? "Comment s'inscrire" : "How to Register"}</p>
                 <h2 className="font-display mt-4 text-3xl leading-tight text-[var(--accent)]">
                   {isFrench ? "Complétez l'inscription de votre délégation dans MUNager" : "Complete your delegation registration in MUNager"}
@@ -186,8 +188,18 @@ export default function RegistrationPage() {
               </article>
             </section>
 
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <div className="flex items-start gap-6 sm:gap-7">
+            <article className="theme-panel-strong paper-grain min-w-0 rounded-[8px] p-5 sm:p-8">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-7">
+                <div className="mx-auto w-full max-w-[9.5rem] overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] sm:hidden">
+                  <Image
+                    alt="Costas Oreopoulos"
+                    className="h-auto w-full object-cover"
+                    height={210}
+                    sizes="(max-width: 639px) 9.5rem, 168px"
+                    src="/headshots/costas.jpg"
+                    width={168}
+                  />
+                </div>
                 <div className="min-w-0 flex-1">
                   <p className="section-kicker">{registrationContent.letter.label}</p>
                   <h2 className="font-display mt-4 text-4xl leading-tight text-[var(--accent)]">{registrationContent.letter.title}</h2>
@@ -211,7 +223,7 @@ export default function RegistrationPage() {
                   </div>
                 </div>
 
-                <div className="mt-1 w-[9.5rem] max-w-[28vw] shrink-0 self-start overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] sm:mt-2 sm:w-[10.5rem]">
+                <div className="mt-1 hidden w-[9.5rem] max-w-[28vw] shrink-0 self-start overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] sm:block sm:mt-2 sm:w-[10.5rem]">
                   <Image
                     alt="Costas Oreopoulos"
                     className="h-auto w-full object-cover"
@@ -228,7 +240,7 @@ export default function RegistrationPage() {
                 <p className="mt-2 text-xs font-semibold text-[var(--muted)]">{registrationContent.letter.role}</p>
               </div>
 
-              <div className="mt-6 rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-5 py-5 text-white sm:px-6">
+              <div className="mt-6 rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-4 py-5 text-white sm:px-6">
                 <div className="grid gap-5 lg:grid-cols-[0.42fr_0.58fr] lg:items-start">
                   <div>
                     <p className="section-kicker text-[#b4caff]">{registrationContent.sections.listserv}</p>
@@ -248,6 +260,7 @@ export default function RegistrationPage() {
       </section>
       <SecretaryLetterModal
         body={registrationContent.letter.body}
+        email={chargeeEmail}
         imageAlt="Costas Oreopoulos"
         imageSrc="/headshots/costas.jpg"
         kicker={registrationContent.letter.label}

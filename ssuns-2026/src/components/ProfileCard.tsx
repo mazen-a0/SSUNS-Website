@@ -20,26 +20,45 @@ export function ProfileCard({ id, name, role, email, imageSrc, bio, onOpen }: Pr
     <motion.article
       layoutId={`secretariat-card-${id}`}
       transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
-      className="theme-panel paper-grain overflow-hidden rounded-[8px] p-4 sm:p-5"
+      className="theme-panel paper-grain mx-auto flex h-full w-full max-w-[20rem] overflow-hidden rounded-[8px] p-3.5 sm:p-4"
     >
-      <div className="grid gap-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-start">
+      <div className="flex min-h-0 w-full flex-col gap-3">
         <div className="relative overflow-hidden rounded-[6px] border border-[var(--rule)]">
-          <Image alt={`${name} headshot`} className="aspect-[4/5] w-full object-cover" height={1000} src={imageSrc || "/headshots/marcus.jpg"} width={800} />
+          <Image
+            alt={`${name} headshot`}
+            className="h-[8.75rem] w-full object-cover object-top sm:h-[9.25rem]"
+            height={1000}
+            src={imageSrc || "/headshots/marcus.jpg"}
+            width={800}
+          />
         </div>
-        <div>
-          <h3 className="font-display text-2xl leading-tight text-[var(--accent)]">{name}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{role}</p>
+        <div className="flex min-h-0 flex-1 flex-col">
+          <h3 className="font-display text-[1.5rem] leading-tight text-[var(--accent)]">{name}</h3>
+          <p
+            className="mt-1.5 min-h-[2.4rem] text-[0.88rem] leading-relaxed text-[var(--muted)]"
+            style={{
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
+              display: "-webkit-box",
+              overflow: "hidden",
+            }}
+          >
+            {role}
+          </p>
           {email ? (
-            <a className="mt-2 inline-flex text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href={`mailto:${email}`}>
+            <a
+              className="mt-1.5 inline-flex min-h-[2.3rem] items-start break-words text-[0.86rem] font-semibold leading-relaxed text-[var(--accent)] underline-offset-4 hover:underline"
+              href={`mailto:${email}`}
+            >
               {email}
             </a>
           ) : null}
-          <div className="mt-4 border-t border-[var(--rule)] pt-4">
+          <div className="mt-3 flex min-h-0 flex-1 flex-col border-t border-[var(--rule)] pt-3">
             <p
-              className="text-sm leading-relaxed text-[var(--muted)]"
+              className="text-[0.88rem] leading-relaxed text-[var(--muted)]"
               style={{
                 WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
+                WebkitLineClamp: 3,
                 display: "-webkit-box",
                 overflow: "hidden",
               }}
@@ -48,7 +67,7 @@ export function ProfileCard({ id, name, role, email, imageSrc, bio, onOpen }: Pr
             </p>
             <button
               aria-haspopup="dialog"
-              className="mt-3 text-sm font-semibold text-[var(--accent)]"
+              className="mt-auto pt-3 text-left text-[0.88rem] font-semibold text-[var(--accent)]"
               onClick={onOpen}
               type="button"
             >

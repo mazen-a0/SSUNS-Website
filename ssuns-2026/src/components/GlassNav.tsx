@@ -148,7 +148,7 @@ export function GlassNav({
       <div className="h-px bg-[var(--accent-2)]" />
 
       <div className="hidden xl:block" onMouseLeave={() => setOpenPreview(null)}>
-        <div className="page-shell">
+        <div className="page-shell relative">
           <div
             className={cn(
               "overflow-hidden border-b border-white/12 transition-all duration-300",
@@ -287,29 +287,38 @@ export function GlassNav({
           </div>
 
           {openPreview && previewMenus[openPreview]?.length ? (
-            <div className="border-t border-white/12 py-4">
-              <NavPreviewDeck
-                items={previewMenus[openPreview]}
-                onNavigate={() => setOpenPreview(null)}
-              />
+            <div className="absolute inset-x-0 top-full z-40 border-t border-white/12 bg-[rgba(13,24,92,0.98)] py-4 shadow-[0_18px_40px_-30px_rgba(5,10,35,0.9)] backdrop-blur-[12px]">
+              <div className="mx-auto max-w-[72rem] px-3">
+                <NavPreviewDeck
+                  items={previewMenus[openPreview]}
+                  onNavigate={() => setOpenPreview(null)}
+                />
+              </div>
             </div>
           ) : null}
         </div>
       </div>
 
-      <div className={cn("page-shell flex items-center justify-between gap-3 transition-all duration-300 xl:hidden", isScrolled ? "min-h-[1.85rem]" : "min-h-[2.2rem]")}>
+      <div className={cn("page-shell flex items-center justify-between gap-2 transition-all duration-300 xl:hidden", isScrolled ? "min-h-[1.85rem]" : "min-h-[2.2rem]")}>
         <Link
           aria-label={homeAriaLabel}
-          className="inline-flex items-center"
+          className="inline-flex min-w-0 items-center"
           href="/"
           onClick={() => {
             setMobileOpen(false);
             setOpenPreview(null);
           }}
         >
-          <Image alt="SSUNS logo" height={isScrolled ? 20 : 24} priority src="/logos/ssuns2026-woodmark-white.png" width={isScrolled ? 104 : 118} />
+          <Image
+            alt="SSUNS logo"
+            className="h-auto w-auto max-w-[6rem] sm:max-w-none"
+            height={isScrolled ? 20 : 24}
+            priority
+            src="/logos/ssuns2026-woodmark-white.png"
+            width={isScrolled ? 104 : 118}
+          />
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {socialItems.length ? (
             <SocialIconRow
               className="hidden gap-1.5 sm:flex"
@@ -325,7 +334,10 @@ export function GlassNav({
           ) : null}
           <button
             aria-label={openPaletteLabel}
-            className={cn("inline-flex items-center border border-white/16 bg-white/8 px-3 font-semibold text-white transition-all duration-300", isScrolled ? "h-7 text-[0.8125rem]" : "h-8 text-sm")}
+            className={cn(
+              "inline-flex min-w-[4.75rem] shrink-0 items-center justify-center whitespace-nowrap border border-white/16 bg-white/8 px-2.5 font-semibold text-white transition-all duration-300 sm:min-w-[5rem] sm:px-3",
+              isScrolled ? "h-7 text-[0.76rem] sm:text-[0.8125rem]" : "h-8 text-[0.8rem] sm:text-sm",
+            )}
             onClick={onOpenPalette}
             type="button"
           >
@@ -334,7 +346,10 @@ export function GlassNav({
           <button
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? closeMenuLabel : openMenuLabel}
-            className={cn("inline-flex items-center border border-white/16 bg-white/8 px-3 font-semibold text-white transition-all duration-300", isScrolled ? "h-7 text-[0.8125rem]" : "h-8 text-sm")}
+            className={cn(
+              "inline-flex min-w-[5.5rem] shrink-0 items-center justify-center whitespace-nowrap border border-white/16 bg-white/8 px-2.5 font-semibold text-white transition-all duration-300 sm:min-w-[6rem] sm:px-3",
+              isScrolled ? "h-7 text-[0.76rem] sm:text-[0.8125rem]" : "h-8 text-[0.8rem] sm:text-sm",
+            )}
             onClick={() => setMobileOpen((prev) => !prev)}
             type="button"
           >
@@ -344,7 +359,10 @@ export function GlassNav({
       </div>
 
       {mobileOpen ? (
-        <nav aria-label="Mobile" className="border-t border-white/12 bg-[rgba(12,20,64,0.98)] px-4 py-4 text-white xl:hidden sm:px-6">
+        <nav
+          aria-label="Mobile"
+          className="max-h-[calc(100vh-var(--site-sticky-top))] overflow-y-auto overscroll-contain border-t border-white/12 bg-[rgba(12,20,64,0.98)] px-4 py-4 pb-6 text-white xl:hidden sm:px-6"
+        >
           <div className="space-y-5">
             <p className="text-[12px] font-semibold text-[#d6e2ff]">{mastheadLabel}</p>
             <div className="grid gap-2">

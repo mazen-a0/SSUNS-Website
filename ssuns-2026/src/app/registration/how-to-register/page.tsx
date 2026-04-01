@@ -48,13 +48,13 @@ export default function RegistrationHowToRegisterPage() {
     <Section className="bg-white pb-16 pt-10 sm:pt-12" spacing="none">
       <Container className="max-w-[1220px]">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="inline-flex items-center gap-3 rounded-full border border-[var(--rule)] bg-[var(--panel)] px-4 py-2 text-sm text-[var(--muted)] shadow-[var(--shadow-soft)]">
+          <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-[var(--rule)] bg-[var(--panel)] px-4 py-2 text-center text-sm text-[var(--muted)] shadow-[var(--shadow-soft)]">
             <span className="font-semibold text-[var(--accent)]">{guide.courtesy}</span>
             <span aria-hidden className="h-1 w-1 rounded-full bg-[var(--accent-2)]" />
             <Image alt="MUNager logo" height={20} src="/logos/munager.png" width={92} />
           </div>
-          <h1 className="mt-6 font-display text-4xl leading-[0.94] text-[var(--accent)] sm:text-6xl">{guide.title}</h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-[var(--muted)] sm:text-lg">{guide.intro}</p>
+          <h1 className="mt-6 font-display text-[2.4rem] leading-[0.96] text-[var(--accent)] sm:text-6xl">{guide.title}</h1>
+          <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">{guide.intro}</p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
             <Link
               className="inline-flex items-center justify-center rounded-[8px] border border-[var(--accent)] bg-[var(--accent)] px-4 py-2.5 font-semibold text-white transition-colors hover:bg-[#1b2ea3]"

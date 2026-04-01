@@ -28,7 +28,7 @@ export function ConferenceQuickLinks({ currentHref, className }: ConferenceQuick
     <nav aria-label="Conference quick links" className={cn("theme-panel-strong paper-grain p-4 sm:p-5", className)}>
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--rule)] pb-4">
         <p className="section-kicker">{isFrench ? "Liens rapides de la conférence" : "Conference quick links"}</p>
-        <p className="text-sm leading-relaxed text-[var(--muted)]">
+        <p className="w-full text-sm leading-relaxed text-[var(--muted)] sm:w-auto">
           {isFrench ? "Accédez directement aux sections clés de la conférence." : "Navigate the key conference sections directly."}
         </p>
       </div>

@@ -39,8 +39,8 @@ export default function ConferenceVenuePage() {
           <aside className="sticky-below-header">
             <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
           </aside>
-          <div className="space-y-8">
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-7 sm:p-10">
+          <div className="min-w-0 space-y-8">
+            <article className="theme-panel-strong paper-grain min-w-0 rounded-[8px] p-6 sm:p-10">
               <div className="space-y-5 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
                 {chapter.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -73,7 +73,7 @@ export default function ConferenceVenuePage() {
               </article>
             </div>
 
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
+            <article className="theme-panel-strong paper-grain min-w-0 overflow-hidden rounded-[8px] p-5 sm:p-8">
               <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-4">
                 <div>
                   <p className="section-kicker">Preferential Sheraton Rates</p>
@@ -91,8 +91,8 @@ export default function ConferenceVenuePage() {
                 src={ROOM_RATES_IMAGE}
               />
 
-              <div className="mt-5 overflow-hidden border border-[var(--rule)]">
-                <table className="w-full border-collapse text-left text-sm sm:text-base">
+              <div className="mt-5 max-w-full overflow-x-auto border border-[var(--rule)]">
+                <table className="w-full min-w-[30rem] border-collapse text-left text-sm sm:min-w-0 sm:text-base">
                   <thead className="bg-[var(--paper-deep)] text-[var(--accent)]">
                     <tr>
                       <th className="px-4 py-3 font-semibold">Room Type</th>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { PageHero } from "@/components/PageHero";
 import { PolicyCard } from "@/components/policies/PolicyCard";
@@ -48,13 +49,19 @@ export default function RegistrationFinancialAidPage() {
           <div className="space-y-8">
             <article className="theme-panel-strong paper-grain rounded-[8px] p-8 sm:p-11">
               <p className="section-kicker">{chapter.title}</p>
-              <div className="mt-5 space-y-3 text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">
-                {chapter.body.slice(0, 2).map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+              <div className="mt-5 flex flex-col gap-4 border-b border-[var(--rule)] pb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                <p className="max-w-3xl text-sm leading-7 text-[var(--text)] sm:text-[1.02rem]">{chapter.body[0]}</p>
+                <Link
+                  className="inline-flex shrink-0 items-center justify-center rounded-[8px] border border-[var(--accent)] bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#1b2ea3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-2)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--panel)]"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScAZf9Kh4ckkcumqryw9KAnk3yscsCBt9gyQyCEAVxD2rhyRA/viewform"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {isFrench ? "Faire une demande" : "Apply Here"}
+                </Link>
               </div>
 
-              <div className="mt-8 rounded-[12px] border border-[var(--rule)] bg-[var(--panel)] p-5 sm:p-6">
+              <div className="mt-8 rounded-[12px] border border-[#23379f]/60 bg-[var(--panel)] p-5 shadow-[0_0_0_1px_rgba(35,55,159,0.18),0_18px_36px_-32px_rgba(10,19,66,0.22)] ring-1 ring-inset ring-[#23379f]/12 sm:p-6">
                 <div className="flex flex-col gap-3 border-b border-[var(--rule)] pb-4 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <p className="section-kicker">{isFrench ? "Dates limites" : "Deadlines"}</p>
@@ -64,18 +71,13 @@ export default function RegistrationFinancialAidPage() {
                         : "Your financial aid deadline depends on your registration phase"}
                     </h2>
                   </div>
-                  <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">
-                    {isFrench
-                      ? "Repérez votre période d'inscription actuelle, puis utilisez la date associée à ce palier pour l'aide financière et la facturation."
-                      : "Match your current registration window to the corresponding financial aid and invoice deadline below."}
-                  </p>
                 </div>
 
                 <div className="mt-5 grid gap-4 xl:grid-cols-3">
                   {phaseRows.map((phase) => (
                     <article
                       key={phase.id}
-                      className="rounded-[12px] border border-[var(--rule)] bg-[var(--paper)] p-5 shadow-[var(--shadow-soft)]"
+                      className="rounded-[12px] border border-[#23379f]/70 bg-[linear-gradient(180deg,rgba(20,32,130,0.055),rgba(255,255,255,0.97))] p-5 shadow-[0_0_0_1px_rgba(35,55,159,0.22),0_12px_28px_-24px_rgba(10,19,66,0.24)] ring-1 ring-inset ring-[#23379f]/14"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
@@ -84,19 +86,19 @@ export default function RegistrationFinancialAidPage() {
                           </p>
                           <h3 className="mt-2 text-lg font-semibold text-[var(--heading)]">{phase.label}</h3>
                         </div>
-                        <span className="rounded-full border border-[var(--rule)] bg-[var(--panel)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
+                        <span className="rounded-full border border-[#23379f]/60 bg-[rgba(20,32,130,0.06)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
                           {phase.range}
                         </span>
                       </div>
 
                       <div className="mt-4 space-y-3 border-t border-[var(--rule)] pt-4">
-                        <div className="rounded-[10px] border border-[var(--rule)] bg-[var(--panel)] px-4 py-3">
+                        <div className="rounded-[10px] border border-[#23379f]/65 bg-[rgba(20,32,130,0.05)] px-4 py-3 shadow-[0_0_0_1px_rgba(35,55,159,0.12)] ring-1 ring-inset ring-[#23379f]/10">
                           <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
                             {isFrench ? "Date limite d'aide financière" : "Financial aid deadline"}
                           </p>
                           <p className="mt-1 text-sm font-medium text-[var(--text)]">{phase.financialAidDeadline}</p>
                         </div>
-                        <div className="rounded-[10px] border border-[var(--rule)] bg-[var(--panel)] px-4 py-3">
+                        <div className="rounded-[10px] border border-[#23379f]/65 bg-[rgba(20,32,130,0.05)] px-4 py-3 shadow-[0_0_0_1px_rgba(35,55,159,0.12)] ring-1 ring-inset ring-[#23379f]/10">
                           <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
                             {isFrench ? "Date limite de facture" : "Invoice deadline"}
                           </p>

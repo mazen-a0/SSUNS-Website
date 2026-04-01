@@ -48,8 +48,6 @@ export const registrationContent = {
       summary: "Support information for financial accessibility.",
       body: [
         "Review SSUNS 2026 financial policies, financial aid windows, and invoice deadlines on this page.",
-        "Financial Aid Application Deadlines.",
-        "Early: June 8th.",
         "Regular: September 8th.",
         "Final Round: October 16th.",
         "Invoice Deadlines.",
