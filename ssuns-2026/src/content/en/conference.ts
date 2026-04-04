@@ -103,7 +103,7 @@ export const conferenceContent = {
       },
     },
     {
-      title: "Specialized Committees",
+      title: "Specialized Agencies",
       body: "Smaller rooms with focused mandates, more technical framing, and deeper policy tradeoff analysis.",
       image: {
         src: pickImage("delegates", "conference-track-specialized"),

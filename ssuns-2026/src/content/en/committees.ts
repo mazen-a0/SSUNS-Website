@@ -20,7 +20,7 @@ export type Committee = {
 export const committeesPageContent = {
   title: "Committees",
   intro:
-    "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Committees (SPECs), and Crisis Committees.",
+    "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Agencies (SPECs), and Crisis Committees.",
   chapters: [
     {
       href: "/committees",
@@ -91,7 +91,7 @@ export const committeesPageContent = {
   groups: {
     ga: "General Assemblies",
     ecosoc: "ECOSOCs",
-    specialized: "Specialized",
+    specialized: "Specialized Agencies",
     crisis: "Crisis",
     jointCrisis: "Joint Crisis",
   },
@@ -233,7 +233,7 @@ export const committees: Committee[] = [
     slug: "penguins-2026",
     name: "Waddle We Do Now? - Penguin Random House, Board of Directors",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Responding to the Generational Shift in Media Consumption.",
     overview:
@@ -246,7 +246,7 @@ export const committees: Committee[] = [
     slug: "nhl-2026",
     name: "On Thin Ice - The National Hockey League",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "2004-2005 NHL Lockout.",
     overview:
@@ -259,7 +259,7 @@ export const committees: Committee[] = [
     slug: "icj-2026",
     name: "Temple Turmoil - International Court of Justice",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Temple of Preah Vihear (Cambodia v. Thailand).",
     overview:
@@ -272,7 +272,7 @@ export const committees: Committee[] = [
     slug: "praguematic-2026",
     name: "Prague-matic Unity - First Pan-Slavic Congress of 1848",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Constructing the Slavic Identity.",
     overview:
@@ -285,7 +285,7 @@ export const committees: Committee[] = [
     slug: "mof-2026",
     name: "Outre-Mer or Outrage? - Ministry of Overseas France, French Bilingual",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "2009 Guadeloupe and Martinique Labor Strikes.",
     overview:
@@ -298,7 +298,7 @@ export const committees: Committee[] = [
     slug: "dam-right-2026",
     name: "Dam Right - Cree & Inuit Summit",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "The James Bay Hydroelectric Project.",
     overview:
@@ -311,7 +311,7 @@ export const committees: Committee[] = [
     slug: "tyre-siege-2026",
     name: "Great Expectations - War Council of Alexander the Great, 332 BC",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "The Siege of Tyre.",
     overview:
@@ -324,7 +324,7 @@ export const committees: Committee[] = [
     slug: "ad-hoc-2026",
     name: "Ad-Hoc Specialized Agency",
     level: "Regular",
-    theme: "Specialized Committees",
+    theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Topic revealed at conference check-in.",
     overview:

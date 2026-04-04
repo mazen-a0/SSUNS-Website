@@ -54,7 +54,7 @@ export const homeContent = {
     items: [
       { label: "Delegates", value: "1300+", detail: "Attended by 1300+ delegates from around the world." },
       { label: "Venue", value: "Sheraton Montréal", detail: "Hosting SSUNS 34th itinerary from November 12–15." },
-      { label: "Committees", value: "26", detail: "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Committees (SPECs), and Crisis Committees." },
+      { label: "Committees", value: "26", detail: "Featuring General Assemblies (GAs), Economic and Social Councils (ECOSOCs), Specialized Agencies (SPECs), and Crisis Committees." },
       { label: "Schools", value: "60+", detail: "Representing delegations from Canada and around the world." },
     ],
   },

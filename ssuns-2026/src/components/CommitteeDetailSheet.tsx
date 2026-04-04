@@ -31,13 +31,17 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   }
 
   const isFrenchTheme =
+    committee.theme === "Agences spécialisées" ||
     committee.theme === "Comités spécialisés" ||
     committee.theme === "Comités de crise" ||
     committee.theme === "Comités de crise conjoints" ||
     committee.theme === "Assemblées générales" ||
     committee.theme === "Conseils économiques et sociaux";
   const contactLine =
-    committee.theme === "Specialized Committees" || committee.theme === "Comités spécialisés"
+    committee.theme === "Specialized Agencies" ||
+    committee.theme === "Specialized Committees" ||
+    committee.theme === "Agences spécialisées" ||
+    committee.theme === "Comités spécialisés"
       ? isFrenchTheme
         ? "Pour toute question, veuillez contacter Eitan Pessin à spec@ssuns.org."
         : "If you have questions, please contact Eitan Pessin at spec@ssuns.org."

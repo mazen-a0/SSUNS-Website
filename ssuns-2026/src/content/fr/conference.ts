@@ -96,7 +96,7 @@ export const conferenceContent = {
     },
     {
       ...en.tracks[1],
-      title: "Comités spécialisés",
+      title: "Agences spécialisées",
       body: "Des salles plus petites avec des mandats ciblés, des cadres plus techniques et une analyse plus poussée des compromis politiques.",
     },
     {

@@ -245,12 +245,12 @@ function committeeTheme(type: string | null | undefined, locale: Locale) {
     return locale === "fr" ? "Assemblées générales" : "General Assemblies";
   }
   if (type === "Specialized") {
-    return locale === "fr" ? "Comités spécialisés" : "Specialized Committees";
+    return locale === "fr" ? "Agences spécialisées" : "Specialized Agencies";
   }
   if (type === "Crisis") {
     return "Crisis";
   }
-  return locale === "fr" ? "Comités spécialisés" : "Specialized Committees";
+  return locale === "fr" ? "Agences spécialisées" : "Specialized Agencies";
 }
 
 function committeeFormat(type: string | null | undefined) {

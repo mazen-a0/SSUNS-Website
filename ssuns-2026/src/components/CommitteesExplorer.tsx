@@ -17,7 +17,13 @@ type GroupKey = "ga" | "ecosoc" | "specialized" | "jointCrisis" | "crisis";
 function getCommitteeGroup(committee: Committee): GroupKey {
   if (committee.theme === "General Assemblies" || committee.theme === "Assemblées générales") return "ga";
   if (committee.theme === "Economic and Social Councils" || committee.theme === "Conseils économiques et sociaux") return "ecosoc";
-  if (committee.theme === "Specialized Committees" || committee.theme === "Comités spécialisés") return "specialized";
+  if (
+    committee.theme === "Specialized Agencies" ||
+    committee.theme === "Specialized Committees" ||
+    committee.theme === "Agences spécialisées" ||
+    committee.theme === "Comités spécialisés"
+  )
+    return "specialized";
   if (committee.theme === "Joint Crisis Committees" || committee.theme === "Comités de crise conjoints") return "jointCrisis";
   return "crisis";
 }

@@ -59,7 +59,7 @@ export const homeContent = {
         ...en.atGlance.items[2],
         label: "Comités",
         value: "26",
-        detail: "Comprend des assemblées générales, des ECOSOC, des comités spécialisés et des comités de crise.",
+        detail: "Comprend des assemblées générales, des ECOSOC, des agences spécialisées et des comités de crise.",
       },
       {
         ...en.atGlance.items[3],

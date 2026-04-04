@@ -4,7 +4,7 @@ export const committeesPageContent = {
   ...en,
   title: "Comités",
   intro:
-    "Comprend des assemblées générales (AG), des conseils économiques et sociaux (ECOSOC), des comités spécialisés (SPEC) et des comités de crise.",
+    "Comprend des assemblées générales (AG), des conseils économiques et sociaux (ECOSOC), des agences spécialisées (SPEC) et des comités de crise.",
   chapters: [
     {
       href: "/committees",
@@ -52,7 +52,7 @@ export const committeesPageContent = {
   groups: {
     ga: "Assemblées générales",
     ecosoc: "ECOSOC",
-    specialized: "Spécialisés",
+    specialized: "Agences spécialisées",
     crisis: "Crise",
     jointCrisis: "Crise conjointe",
   },
@@ -81,8 +81,8 @@ export const committees = enCommittees.map((committee) => ({
       ? "Assemblées générales"
       : committee.theme === "Economic and Social Councils"
         ? "Conseils économiques et sociaux"
-        : committee.theme === "Specialized Committees"
-          ? "Comités spécialisés"
+        : committee.theme === "Specialized Agencies" || committee.theme === "Specialized Committees"
+          ? "Agences spécialisées"
           : committee.theme === "Joint Crisis Committees"
             ? "Comités de crise conjoints"
             : committee.theme === "Crisis Committees"
