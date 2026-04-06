@@ -28,6 +28,30 @@ const secretariatMembers: SecretariatMember[] = [
     bio: "Meet our amazing Director-General, Mazen Asali (he/him/il). Originally from Amman, Jordan, Mazen is currently in his fourth year at McGill and is studying Computer Science and Biology with a minor in Entrepreneurship. Mazen's MUN journey began in high school, where he was a delegate and even organised his school's Model UN conference. He first became involved with SSUNS as a DRC Staffer in 2023 during his first year at McGill and later got involved with the Operations portfolio for both SSUNS and McMUN, serving as the Chief of Operations at SSUNS 2025. Outside of his academic pursuits, Mazen is actively involved in student governance at McGill through the Science Undergrad Society (SUS) and the McGill Biology Student Union. He also has a passion for policy writing and is currently learning French. When not studying, Mazen enjoys reading motivational books, swimming, playing video games, and coding the SSUNS website… Mazen is very excited to meet all the delegates at SSUNS 2026, and if he could give you one piece of advice, it would be: \"Take advantage of being in Montréal and explore this awesome city!\"",
   },
   {
+    name: "Valeria Fonseca Ortega",
+    role: "USG Committees",
+    headshotSrc: "/headshots/vale.jpg",
+    bio: "Introducing Valeria (she/her/elle), our amazing Under-Secretary-General of Committees, back for round two! She is currently in her fourth year, pursuing a joint honors degree in Economics and International Development Studies, with a minor in Urban Geography. Now in her third year at SSUNS, she first got involved as a Vice Chair for FEALAC before stepping into Secretariat. Before university, Valeria was heavily involved in public speaking and was selected to represent Mexico at the International Public Speaking Competition (IPSC) hosted by the English-Speaking Union in 2023, where she placed third in the world. At McGill, she has also been part of the delegation team, continuing her passion for MUN and international dialogue. Currently on exchange in Paris, she enjoys finding a good St-Germain Spritz, trying soupe à l’oignon, and stands by quesadillas as the perfect meal at any hour especially at 3 a.m. Valeria speaks “two and a half” languages (with French as the half!), so don’t hesitate to practice your French with her during the conference. Her advice to delegates: think of MUN as “socializing on steroids”. Put yourself out there and make new friends!",
+  },
+  {
+    name: "Emma Ristic",
+    role: "Dep GA/ECOSOCs",
+    headshotSrc: "/headshots/emma.jpg",
+    bio: "Introducing our amazing Undersecretary General of GAs and ECOSOCs, Emma Ristic (she/her/elle). Emma is a third-year student studying Political Science and started her journey with Model UN in university. She has competed across the collegiate circuit with McGill’s delegation team for the past year and a half, travelling to top conferences in Berkeley and Los Angeles while always making sure to find the nearest Chipotle. This year, she hopes to build off her wonderful experience chairing last year at both SSUNS and its sister conference, McMUN. Outside of school and Model UN, she loves going to live music events at Parc Jean-Drapeau and breaking a sweat at hot yoga, so feel free to ask her about her hot takes on pop culture (although she will not debate the cultural influence of 365 by Charli XCX). As a GA delegate her piece of advice for delegates is to be confident in your own speaking style because your personal touch is more important than fitting a checkbox!",
+  },
+  {
+    name: "Eitan Pessin",
+    role: "Dep Specs",
+    headshotSrc: "/headshots/eitan.jpg",
+    bio: "Presenting our passionate Undersecretary General of Specialized Agencies (Dep Spec for short) Eitan Pessin (he/him). Eitan is a second year History and Philosophy major, so you know his committees are crafted with great detail and enthusiasm! In his first semester at McGill, Eitan got rejected from the Ultimate Frisbee team and needed to find an extracurricular to be involved in, which is where he found IRSAM and got involved as part of the McGill Delegation Team, competing on the collegiate circuit and attending multiple conferences. After vice chairing at SSUNS 2025, Eitan knew he wanted to be more involved in the organization of the conference. Outside of IRSAM, Eitan enjoys reading, and although nowadays he only has time for class readings, he is currently reading through “On Photography.” Eitan’s advice to delegates is to never be afraid to ask questions.",
+  },
+  {
+    name: "Will Greer",
+    role: "Dep Crisis",
+    headshotSrc: "/headshots/will.jpg",
+    bio: "Meet Will (he/him/il), our outstanding Deputy USG Crisis. Born and raised in Point Edward, Ontario, Will is a second year student at McGill, where he is double majoring in political science and history. SSUNS 2026 will be Will’s 4th SSUNS, he competed twice in high school, gavelling in the ICJ, and was a committee staffer last year before becoming our Dep Crisis. In his free time, Will is a pitcher for the McGill Redbirds baseball team, an avid sports fan, and a major enthusiast of global politics. If you just so happen to have a problem throughout the weekend, just remember: when there’s a Will, there's a way. His advice to delegates: be authentic and consistent, it’s a marathon, not a sprint.",
+  },
+  {
     name: "Andrew Tobin",
     role: "USG Finance",
     headshotSrc: "/headshots/andrew.jpg",
@@ -74,30 +98,6 @@ const secretariatMembers: SecretariatMember[] = [
     role: "Dep PR Brand Management",
     headshotSrc: "/headshots/hannah.jpg",
     bio: "Meet Hannah (she/her), our Deputy Director of Public Relations for Brand Management! Hailing from Moncton, New Brunswick, Hannah is going into her fourth year at McGill studying Linguistics and German. A woman of many languages and many talents, you can find her strumming a guitar or playing piano when she's not behind the camera. From crafting fun TikToks to capturing the magic of the opening and closing ceremonies, Hannah is the creative force making sure delegates arrive excited and leave with unforgettable memories. Having joined the team as a photographer for SSUNS and videographer for McMUN, she's no stranger to finding the perfect shot, so smile, because she's probably already got one of you. And to all delegates: four days go by faster than you think, so make every moment count! Come say hi to Hannah at SSUNS 2026!",
-  },
-  {
-    name: "Valeria Fonseca Ortega",
-    role: "USG Committees",
-    headshotSrc: "/headshots/vale.jpg",
-    bio: "Introducing Valeria (she/her/elle), our amazing Under-Secretary-General of Committees, back for round two! She is currently in her fourth year, pursuing a joint honors degree in Economics and International Development Studies, with a minor in Urban Geography. Now in her third year at SSUNS, she first got involved as a Vice Chair for FEALAC before stepping into Secretariat. Before university, Valeria was heavily involved in public speaking and was selected to represent Mexico at the International Public Speaking Competition (IPSC) hosted by the English-Speaking Union in 2023, where she placed third in the world. At McGill, she has also been part of the delegation team, continuing her passion for MUN and international dialogue. Currently on exchange in Paris, she enjoys finding a good St-Germain Spritz, trying soupe à l’oignon, and stands by quesadillas as the perfect meal at any hour especially at 3 a.m. Valeria speaks “two and a half” languages (with French as the half!), so don’t hesitate to practice your French with her during the conference. Her advice to delegates: think of MUN as “socializing on steroids”. Put yourself out there and make new friends!",
-  },
-  {
-    name: "Emma Ristic",
-    role: "Dep GA/ECOSOCs",
-    headshotSrc: "/headshots/emma.jpg",
-    bio: "Introducing our amazing Undersecretary General of GAs and ECOSOCs, Emma Ristic (she/her/elle). Emma is a third-year student studying Political Science and started her journey with Model UN in university. She has competed across the collegiate circuit with McGill’s delegation team for the past year and a half, travelling to top conferences in Berkeley and Los Angeles while always making sure to find the nearest Chipotle. This year, she hopes to build off her wonderful experience chairing last year at both SSUNS and its sister conference, McMUN. Outside of school and Model UN, she loves going to live music events at Parc Jean-Drapeau and breaking a sweat at hot yoga, so feel free to ask her about her hot takes on pop culture (although she will not debate the cultural influence of 365 by Charli XCX). As a GA delegate her piece of advice for delegates is to be confident in your own speaking style because your personal touch is more important than fitting a checkbox!",
-  },
-  {
-    name: "Eitan Pessin",
-    role: "Dep Specs",
-    headshotSrc: "/headshots/eitan.jpg",
-    bio: "Presenting our passionate Undersecretary General of Specialized Agencies (Dep Spec for short) Eitan Pessin (he/him). Eitan is a second year History and Philosophy major, so you know his committees are crafted with great detail and enthusiasm! In his first semester at McGill, Eitan got rejected from the Ultimate Frisbee team and needed to find an extracurricular to be involved in, which is where he found IRSAM and got involved as part of the McGill Delegation Team, competing on the collegiate circuit and attending multiple conferences. After vice chairing at SSUNS 2025, Eitan knew he wanted to be more involved in the organization of the conference. Outside of IRSAM, Eitan enjoys reading, and although nowadays he only has time for class readings, he is currently reading through “On Photography.” Eitan’s advice to delegates is to never be afraid to ask questions.",
-  },
-  {
-    name: "Will Greer",
-    role: "Dep Crisis",
-    headshotSrc: "/headshots/will.jpg",
-    bio: "Meet Will (he/him/il), our outstanding Deputy USG Crisis. Born and raised in Point Edward, Ontario, Will is a second year student at McGill, where he is double majoring in political science and history. SSUNS 2026 will be Will’s 4th SSUNS, he competed twice in high school, gavelling in the ICJ, and was a committee staffer last year before becoming our Dep Crisis. In his free time, Will is a pitcher for the McGill Redbirds baseball team, an avid sports fan, and a major enthusiast of global politics. If you just so happen to have a problem throughout the weekend, just remember: when there’s a Will, there's a way. His advice to delegates: be authentic and consistent, it’s a marathon, not a sprint.",
   },
 ];
 
