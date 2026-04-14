@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
 import { DEFAULT_EDITORIAL_IMAGE } from "@/lib/images";
 
@@ -19,6 +19,11 @@ const fallbackSrc = DEFAULT_EDITORIAL_IMAGE;
 export function CommitteeImage({ slug, alt, src, mode = "card", className, priority = false }: CommitteeImageProps) {
   const initialSrc = src || fallbackSrc;
   const [resolvedSrc, setResolvedSrc] = useState(initialSrc);
+
+  useEffect(() => {
+    setResolvedSrc(initialSrc);
+  }, [initialSrc]);
+
   const wrapperClassName = useMemo(
     () =>
       mode === "hero"
