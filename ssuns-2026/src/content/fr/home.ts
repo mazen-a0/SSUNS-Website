@@ -130,7 +130,7 @@ export const homeContent = {
   featuredCommittees: {
     ...en.featuredCommittees,
     label: "Comités en vedette",
-    title: "Un programme choisi avec soin, présenté comme un dossier.",
+    title: "Notre liste des comités.",
     intro:
       "Des premières expériences rassurantes jusqu'aux salles techniques de haute stratégie, SSUNS est conçu comme un portefeuille d'expériences plutôt qu'un seul format répété.",
     ctaLabel: "Voir le catalogue complet des comités",

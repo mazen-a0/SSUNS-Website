@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
+import { getCommitteeBadges, getCommitteeLevelLabel } from "@/lib/committeeBadges";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 const detailSections = ["overview", "dais"] as const;
@@ -12,14 +13,6 @@ type SectionKey = (typeof detailSections)[number];
 type CommitteeDetailSheetProps = {
   slug: string;
 };
-
-function getDifficultyLabel(level: string, size: string, format: string) {
-  if (size === "Double Delegation" || size === "Double délégation") return size === "Double délégation" ? "Double délégation" : "Double Del";
-  if (format === "Joint Crisis" || format === "Crise conjointe") return format;
-  if (level === "Advanced" || level === "Avancé") return level;
-  if (level === "Beginner" || level === "Débutant") return level;
-  return format === "Crise conjointe" || level === "Avancé" || level === "Débutant" ? "Régulier" : "Regular";
-}
 
 export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   const { committees, committeesPageContent, language } = useSiteContent();
@@ -56,6 +49,8 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
           ? "Pour toute question, veuillez contacter Emma Ristic à gaecosoc@ssuns.org."
           : "If you have questions, please contact Emma Ristic at gaecosoc@ssuns.org.";
   const isFrench = language === "fr";
+  const levelLabel = getCommitteeLevelLabel(committee.level);
+  const metadataBadges = getCommitteeBadges(committee).filter((badge) => badge !== levelLabel);
   const sectionLabels = {
     overview: committeesPageContent.sections.overview,
     dais: isFrench ? "Rencontrez le dais" : "Meet the Dais",
@@ -132,20 +127,24 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
             </article>
 
             <article className="theme-panel paper-grain rounded-[8px] p-5">
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className={`grid gap-4 ${levelLabel ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}>
                 <div>
                   <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterThemeLabel}</p>
                   <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.theme}</p>
                 </div>
-                <div>
-                  <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
-                  <p className="mt-2 text-sm font-semibold text-[var(--text)]">{committee.level}</p>
+                {levelLabel ? (
+                  <div>
+                    <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.filterLevelLabel}</p>
+                    <p className="mt-2 text-sm font-semibold text-[var(--text)]">{levelLabel}</p>
+                  </div>
+                ) : null}
+              </div>
+              {metadataBadges.length ? (
+                <div className="mt-4 border-t border-[var(--rule)] pt-4">
+                  <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.difficulty}</p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--text)]">{metadataBadges.join(" • ")}</p>
                 </div>
-              </div>
-              <div className="mt-4 border-t border-[var(--rule)] pt-4">
-                <p className="text-[11px] font-semibold text-[var(--muted)]">{committeesPageContent.sections.difficulty}</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--text)]">{getDifficultyLabel(committee.level, committee.size, committee.format)}</p>
-              </div>
+              ) : null}
             </article>
 
             <article className="theme-panel paper-grain rounded-[8px] p-5">

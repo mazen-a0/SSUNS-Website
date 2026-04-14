@@ -61,13 +61,9 @@ export const committeesPageContent = {
     {
       href: "/committees/policies",
       title: "Committee Policies",
-      summary: "Technology policy by committee size and format for SSUNS 2026.",
+      summary: "Access the official policy PDFs for all relevant information.",
       body: [
-        "Technology Policy SSUNS 2026.",
-        "Please note that the SSUNS 2026 technology policy has changed and will vary by committee size and format. As SSUNS will run as a hybrid conference, the policies for GAs, ECOSOCs, Specialized Agencies, and Crisis committees will differ.",
-        "Double-Delegate General Assemblies. Double-Delegate General Assemblies (FAO and UNHR) will operate as paperless committees, with Slack serving as the primary platform for communication between Dais and delegates. Delegates are allowed to use laptops and personal devices during committee sessions, both in-room and out-of-room. Despite this, delegates are expected to arrive fully prepared, with all research completed prior to the conference. During moderated caucuses, devices must only be for note-passing via Slack.",
-        "Small General Assemblies, ECOSOCs, and Specialized Agencies. These committees will follow a tech-free format, with the exception of online draft writing. Notes must be passed physically, digital note-passing is not allowed. Laptops and personal devices must be put away during moderated caucuses, unless specific accommodations have been approved. Devices may be used only during unmoderated caucuses for drafting working papers or resolutions. Delegates should come prepared with printed copies of their research to minimize reliance on devices during sessions. For Specialized Agencies, directives will be written by hand on paper.",
-        "Crises. Delegates are required to use paper for all in-committee functions. Additional crisis-specific policy updates will be communicated by dais as materials are finalized.",
+        "Access the PDF for all relevant information.",
       ],
     },
   ],
@@ -84,10 +80,10 @@ export const committeesPageContent = {
   filterLevelLabel: "Level",
   sizeLabel: "Room Size",
   clearFiltersLabel: "Clear filters",
-  openDetailsLabel: "Open dossier",
+  openDetailsLabel: "Open Committee File",
   noResults: "No committees match your filters.",
   detailBackLabel: "Back to all committees",
-  detailCloseLabel: "Close dossier",
+  detailCloseLabel: "Close file",
   groups: {
     ga: "General Assemblies",
     ecosoc: "ECOSOCs",
@@ -239,7 +235,7 @@ export const committees: Committee[] = [
     overview:
       "In an era where screens compete with shelves, the art of storytelling faces a generational reckoning. Young readers increasingly consume stories through digital platforms, audiobooks, and something the adults keep calling TikTok, and with literacy development and reading rates rapidly falling. For the Penguin Random House Board of Directors, this challenge must become opportunity if the company is to survive. While print remains iconic, the future demands innovation in formats, distribution, and marketing, and a strong response to the challenges of contemporary publishing. From book banning to content mills and endlessly recycled online storytelling, Penguin Random House must find the balance between honoring its literary heritage and adapting to the desires of an online generation, otherwise its future may remain unwritten.",
     topic: "Responding to the Generational Shift in Media Consumption",
-    difficulty: "This is a regular committee.",
+    difficulty: "Low General Assembly, High Crisis.",
     format: "Specialized",
   }),
   makeCommittee({
@@ -252,33 +248,33 @@ export const committees: Committee[] = [
     overview:
       "On the ice of North America’s most famous arenas, a cold war erupts, not of skates and sticks, but dollars and contracts. The 2004-2005 NHL faces an unprecedented shutdown as owners and players clash over salaries, revenue sharing, and the implementation of a hard salary cap. Owners argue that financial stability demands tough reforms, while players insist that their decades of skill and training deserve fair compensation. Media speculations run rampant, sponsors grow anxious and international leagues begin to see opportunities for growth. Across the months of tense negotiations, teams fracture, arenas remain silent, and loyal fans are left staring at empty rinks. Will the league emerge with a new financial order that preserves the sport’s integrity, or will the game’s players, fans, and culture suffer irreparable damage?",
     topic: "2004-2005 NHL Lockout",
-    difficulty: "This is a regular committee.",
+    difficulty: "Low General Assembly, High Crisis.",
     format: "Specialized",
   }),
   makeCommittee({
     slug: "icj-2026",
     name: "Temple Turmoil - International Court of Justice",
-    level: "Regular",
+    level: "Advanced",
     theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Temple of Preah Vihear (Cambodia v. Thailand).",
     overview:
       "At The Hague, history and law collide over a centuries-old temple perched atop the Dangrek Mountains. Cambodia and Thailand face one another before the International Court of Justice in a dispute over sovereignty of the Temple of Preah Vihear, an ancient Khmer sanctuary that has become a flashpoint of nationalism, diplomacy, and international law. Colonial-era maps, contested borders, and decades of political tension will be placed under judicial scrutiny as the Court weighs the legal status of the territory and the authority of past rulings. Yet the case extends beyond the temple’s stone walls. At stake are questions of territorial sovereignty, the power of international adjudication, and the lingering consequences of borders drawn in another era. Will the Court deliver a decisive legal precedent that settles the dispute, or will the echoes of history continue to challenge the reach of international law?",
     topic: "Temple of Preah Vihear (Cambodia v. Thailand)",
-    difficulty: "This is a regular committee.",
+    difficulty: "Differing Rules of Procedure.",
     format: "Specialized",
   }),
   makeCommittee({
     slug: "praguematic-2026",
     name: "Prague-matic Unity - First Pan-Slavic Congress of 1848",
-    level: "Regular",
+    level: "Beginner",
     theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Constructing the Slavic Identity.",
     overview:
       "In the heart of Europe, revolution is in the air. It’s 1848, and the streets of Prague buzz with the energy of change. Delegates from across the Slavic lands; Czechs, Poles, Slovaks, and South Slavs, gather for the inaugural First Pan Slavic Congress, to cooperate and develop a vision for the future of Slavic peoples. They will debate language rights, national autonomy, empire, and the promise of democracy, even as violent revolutions sweep through central Europe. The air is thick with both hope and tension: can diverse peoples, long suppressed by imperial structures, find common cause? Conservative forces beg caution while liberal and radical movements push for bold change. Will the outcomes of the Congress shape the future of nationalist movements across Central and Eastern Europe? Or will they might be diluted and drowned in a sea of repression and political compromise?",
     topic: "Constructing the Slavic Identity",
-    difficulty: "This is a regular committee.",
+    difficulty: "Low Crisis, High General Assembly.",
     format: "Specialized",
   }),
   makeCommittee({
@@ -291,7 +287,7 @@ export const committees: Committee[] = [
     overview:
       "In the Caribbean, islands of vibrant culture erupt with unrest. It’s 2009, and Guadeloupe and Martinique are facing labor strikes that are shaking their economies and societies. Workers, angered by soaring living costs, stagnant wages, and entrenched inequality, shut down ports, factories and streets, turning protests into a vivid display of local identity. Carnival rhythms, folk songs, and Creole slogans echoed through the demonstrations, integrating cultural pride with political demands. The strikes are the outcome of long-standing tensions between the islands and metropolitan France, occurring against a backdrop of cultural dissonance and colonial legacy. With each passing day, the situation grows worse, as food shortages, disrupted tourism and high-stakes negotiations threaten the island's already fragile economy. Can the islands secure meaningful reforms, or will the protests deepen fractures between citizens and government? Amid chants, barricades, and impassioned speeches, the 2009 strikes reveal the delicate balance between justice, survival, and the weight of history in postcolonial societies.",
     topic: "2009 Guadeloupe and Martinique Labor Strikes",
-    difficulty: "Debate will be in French and English.",
+    difficulty: "Low Crisis, High General Assembly.",
     format: "Specialized",
   }),
   makeCommittee({
@@ -317,20 +313,20 @@ export const committees: Committee[] = [
     overview:
       "On the rocky shores of the eastern Mediterranean, a small island fortress has the gall to defy the greatest conqueror of their age. The city of Tyre, with towering walls, powerful navy, and wealthy merchants, is one of the most formidable strongholds in the region, yet it stands directly in the path of Alexander the Great, and his relentless campaign against the Achaemenid Kingdom. After a Tyrian refusal to let Alexander sacrifice at a temple in their city, a siege unlike any other is set in motion. With no fleet strong enough to challenge Tyre at sea, Alexander and his army must overcome Tyre’s defenses through creativity and ingenuity, before time, resources, and morale run out. In a struggle of resourcefulness, endurance, and ambition, the fate of a city and the legend of a conqueror hang in the balance.",
     topic: "The Siege of Tyre",
-    difficulty: "This is a Crisis Heavy Specialized Agency.",
+    difficulty: "Low General Assembly, High Crisis.",
     format: "Specialized",
   }),
   makeCommittee({
     slug: "ad-hoc-2026",
     name: "Ad-Hoc Specialized Agency",
-    level: "Regular",
+    level: "Advanced",
     theme: "Specialized Agencies",
     size: "Single Delegation",
     blurb: "Topic revealed at conference check-in.",
     overview:
       "SSUNS’ Ad-Hoc Specialized Agency is intentionally kept under wraps until the conference begins. Delegates should expect a surprise briefing, a room that rewards adaptable research habits, and a committee experience that asks them to think quickly once the full mandate is unveiled.",
     topic: "To be revealed at the conference",
-    difficulty: "This is an Ad Hoc Specialized Agency.",
+    difficulty: "Ad Hoc Specialized Agency.",
     format: "Specialized",
   }),
   makeCommittee({
@@ -388,7 +384,7 @@ export const committees: Committee[] = [
   makeCommittee({
     slug: "unsc-2026",
     name: "Las Malvinas or the Falklands? - United Nations Security Council",
-    level: "Regular",
+    level: "Advanced",
     theme: "Crisis Committees",
     size: "Double Delegation",
     blurb: "The Falklands War (1982).",
@@ -427,7 +423,7 @@ export const committees: Committee[] = [
   makeCommittee({
     slug: "ad-hoc-sg-2026",
     name: "Ad Hoc of the Secretary General",
-    level: "Regular",
+    level: "Advanced",
     theme: "Crisis Committees",
     size: "Single Delegation",
     blurb: "Topic revealed during conference opening.",

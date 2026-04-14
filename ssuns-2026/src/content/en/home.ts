@@ -120,7 +120,7 @@ export const homeContent = {
   },
   featuredCommittees: {
     label: "Featured Committees",
-    title: "A curated programme, presented like a dossier.",
+    title: "Our committee slate.",
     intro:
       "From first-committee confidence building to technical strategy rooms, SSUNS is designed as a portfolio of experiences rather than a single repeated format.",
     ctaLabel: "View full committee catalogue",

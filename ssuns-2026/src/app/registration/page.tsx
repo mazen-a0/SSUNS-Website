@@ -44,6 +44,7 @@ export default function RegistrationPage() {
   const status = getRegistrationStatus(new Date());
   const isFrench = registrationContent.title === "Inscription";
   const [isLetterOpen, setIsLetterOpen] = useState(false);
+  const registrationCapacity = 27;
   const letterOpeningPreview = registrationContent.letter.body.slice(0, 3);
   const letterClosingPreview = registrationContent.letter.body.slice(-2);
   const chargeeEmail =
@@ -70,6 +71,21 @@ export default function RegistrationPage() {
                   <p className="section-kicker text-[#b4caff]">{isFrench ? "Statut actuel des inscriptions" : "Current registration status"}</p>
                   <h2 className="mt-3 text-3xl font-semibold leading-tight">{status.label}</h2>
                   <p className="mt-4 text-sm leading-relaxed text-[#e4eeff]">{status.detail}</p>
+                  <div className="mt-6 max-w-md border-t border-white/14 pt-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm font-semibold text-white">{isFrench ? "Capacité d'inscription actuelle" : "Live Registration Capacity"}</p>
+                      <p className="text-sm font-semibold text-[#d7e3ff]">{registrationCapacity}%</p>
+                    </div>
+                    <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/12">
+                      <div
+                        className="h-full rounded-full bg-[linear-gradient(90deg,#8bb1ff_0%,#4f78ef_100%)]"
+                        style={{ width: `${registrationCapacity}%` }}
+                      />
+                    </div>
+                    <p className="mt-3 text-xs leading-relaxed text-[#d7e3ff]">
+                      {isFrench ? `${registrationCapacity} % de la capacité actuelle est remplie.` : `${registrationCapacity}% of current capacity is filled.`}
+                    </p>
+                  </div>
                 </div>
                 <div className="min-w-0 grid gap-3 border-t border-white/14 pt-4 lg:border-t-0 lg:border-l lg:pl-5 lg:pt-0">
                   {chapter.body.map((paragraph) => (

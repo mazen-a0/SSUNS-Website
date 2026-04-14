@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Committee } from "@/content/en/committees";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
+import { getCommitteeBadges, getCommitteeLevelLabel } from "@/lib/committeeBadges";
 
 type CommitteesPageContent = typeof import("@/content/en/committees").committeesPageContent;
 
@@ -34,14 +35,6 @@ function isUnspecifiedValue(value: string) {
   return normalized === unavailableLabel || normalized === `${unavailableLabel}.` || normalized === "à venir" || normalized === "à venir.";
 }
 
-function getDifficultyLabel(committee: Committee) {
-  if (committee.size === "Double Delegation" || committee.size === "Double délégation") return committee.size === "Double délégation" ? "Double délégation" : "Double Del";
-  if (committee.format === "Joint Crisis" || committee.format === "Crise conjointe") return committee.format;
-  if (committee.level === "Advanced" || committee.level === "Avancé") return committee.level;
-  if (committee.level === "Beginner" || committee.level === "Débutant") return committee.level;
-  return committee.level === "Débutant" || committee.level === "Avancé" || committee.format === "Crise conjointe" ? "Régulier" : "Regular";
-}
-
 function splitCommitteeName(name: string) {
   const parts = name.split(/\s[-–—]\s/);
   if (parts.length < 2) {
@@ -62,7 +55,7 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
   const [track, setTrack] = useState<string>(allLabel);
   const [level, setLevel] = useState<string>(allLabel);
   const tracks = [allLabel, pageContent.groups.ga, pageContent.groups.ecosoc, pageContent.groups.specialized, pageContent.groups.jointCrisis, pageContent.groups.crisis];
-  const levels = [allLabel, ...new Set(committees.map((item) => item.level))];
+  const levels = [allLabel, ...new Set(committees.map((item) => getCommitteeLevelLabel(item.level)).filter((value): value is string => Boolean(value)))];
 
   const filtered = useMemo(() => {
     return committees.filter((committee) => {
@@ -165,7 +158,7 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                   {groupCommittees.map((committee) => {
-                    const metadata = [...new Set([committee.format, committee.level, getDifficultyLabel(committee)].filter((value) => !isUnspecifiedValue(value)))];
+                    const metadata = getCommitteeBadges(committee).filter((value) => !isUnspecifiedValue(value));
                     const hasBlurb = !isUnspecifiedValue(committee.blurb);
                     const { title, subtitle } = splitCommitteeName(committee.name);
                     const showSubtitle = subtitle && subtitle.trim().toLowerCase() !== committee.blurb.trim().toLowerCase();

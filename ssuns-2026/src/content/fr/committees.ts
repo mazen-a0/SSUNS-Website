@@ -29,11 +29,9 @@ export const committeesPageContent = {
     {
       href: "/committees/policies",
       title: "Politiques des comités",
-      summary: "Politique technologique selon la taille et le format du comité pour SSUNS 2026.",
+      summary: "Consultez les PDF officiels pour toute l’information pertinente.",
       body: [
-        "Politique technologique SSUNS 2026.",
-        "La politique technologique de SSUNS 2026 varie selon la taille et le format du comité. Les attentes applicables aux AG, ECOSOC, agences spécialisées et comités de crise diffèrent donc selon le cadre de travail du comité.",
-        "Les délégués doivent consulter le document PDF officiel avant la conférence afin de préparer correctement leur matériel et leur méthode de travail.",
+        "Consultez le PDF pour toute l’information pertinente.",
       ],
     },
   ],
@@ -45,10 +43,10 @@ export const committeesPageContent = {
   filterLevelLabel: "Niveau",
   sizeLabel: "Taille de la salle",
   clearFiltersLabel: "Effacer les filtres",
-  openDetailsLabel: "Ouvrir le dossier",
+  openDetailsLabel: "Ouvrir la fiche du comité",
   noResults: "Aucun comité ne correspond à vos filtres.",
   detailBackLabel: "Retour à tous les comités",
-  detailCloseLabel: "Fermer le dossier",
+  detailCloseLabel: "Fermer la fiche",
   groups: {
     ga: "Assemblées générales",
     ecosoc: "ECOSOC",
@@ -251,11 +249,15 @@ export const committees = enCommittees.map((committee) => {
         .replace("This is a Beginner Committee.", "Il s'agit d'un comité pour débutants.")
         .replace("This is a General Assembly Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée à dominante d'assemblée générale.")
         .replace("This is a Crisis Heavy Specialized Agency.", "Il s'agit d'une agence spécialisée à forte composante de crise.")
-        .replace("This is a Joint-Crisis Committee.", "Il s'agit d'un comité de crise conjoint.")
-        .replace("This is a regular committee.", "Il s'agit d'un comité régulier.")
-        .replace("This is an Ad Hoc Specialized Agency.", "Il s'agit d'une agence spécialisée Ad Hoc.")
-        .replace("This is an Ad Hoc Crisis committee.", "Il s'agit d'un comité de crise Ad Hoc.")
-        .replace("Some sessions might take place outside the Sheraton Hotel.", "Certaines séances pourraient avoir lieu à l'extérieur de l'hôtel Sheraton."),
+      .replace("This is a Joint-Crisis Committee.", "Il s'agit d'un comité de crise conjoint.")
+      .replace("This is a regular committee.", "Il s'agit d'un comité régulier.")
+      .replace("This is an Ad Hoc Specialized Agency.", "Il s'agit d'une agence spécialisée Ad Hoc.")
+      .replace("This is an Ad Hoc Crisis committee.", "Il s'agit d'un comité de crise Ad Hoc.")
+      .replace("Low General Assembly, High Crisis.", "Faible AG, forte crise.")
+      .replace("Low Crisis, High General Assembly.", "Faible crise, forte AG.")
+      .replace("Differing Rules of Procedure.", "Règles de procédure distinctes.")
+      .replace("Ad Hoc Specialized Agency.", "Agence spécialisée Ad Hoc.")
+      .replace("Some sessions might take place outside the Sheraton Hotel.", "Certaines séances pourraient avoir lieu à l'extérieur de l'hôtel Sheraton."),
     format:
       committee.format === "General Assembly"
         ? "Assemblée générale"
