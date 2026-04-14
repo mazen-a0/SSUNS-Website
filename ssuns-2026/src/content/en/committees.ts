@@ -188,7 +188,7 @@ export const committees: Committee[] = [
   }),
   makeCommittee({
     slug: "sdg-12-2026",
-    name: "SDG 12 - Global Fashion Summit, Copenhagen 2026",
+    name: "SDG 12 - Global Fashion Summit, Copenhagen 2027",
     level: "Regular",
     theme: "Economic and Social Councils",
     size: "Single Delegation",
