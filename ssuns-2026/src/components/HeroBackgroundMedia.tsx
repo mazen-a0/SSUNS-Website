@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type HeroBackgroundMediaProps = {
   poster: string;
@@ -13,9 +13,8 @@ export function HeroBackgroundMedia({ poster, posterAlt, videoMp4Src }: HeroBack
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hasLoadedVideoRef = useRef(false);
+  const [isInViewport, setIsInViewport] = useState(false);
   const [videoSrc, setVideoSrc] = useState<string | undefined>(undefined);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [videoFailed, setVideoFailed] = useState(false);
@@ -28,17 +27,11 @@ export function HeroBackgroundMedia({ poster, posterAlt, videoMp4Src }: HeroBack
     const observer = new IntersectionObserver(
       ([entry]) => {
         const nextInViewport = Boolean(entry?.isIntersecting);
+        setIsInViewport(nextInViewport);
 
         if (nextInViewport && !hasLoadedVideoRef.current) {
           hasLoadedVideoRef.current = true;
           setVideoSrc(resolvedVideoSrc);
-        }
-
-        if (!nextInViewport) {
-          const video = videoRef.current;
-          if (video && !video.paused) {
-            video.pause();
-          }
         }
       },
       { threshold: 0.25 },
@@ -68,24 +61,10 @@ export function HeroBackgroundMedia({ poster, posterAlt, videoMp4Src }: HeroBack
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
     video.muted = isMuted;
-
-    const syncState = () => {
-      setIsPlaying(!video.paused);
-      if (!video.paused) {
-        setHasStartedPlayback(true);
-      }
-    };
-
-    syncState();
-    video.addEventListener("play", syncState);
-    video.addEventListener("pause", syncState);
-
-    return () => {
-      video.removeEventListener("play", syncState);
-      video.removeEventListener("pause", syncState);
-    };
+    video.defaultMuted = isMuted;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
   }, [isMuted]);
 
   useEffect(() => {
@@ -102,17 +81,30 @@ export function HeroBackgroundMedia({ poster, posterAlt, videoMp4Src }: HeroBack
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  const startPlayback = async () => {
+  useEffect(() => {
     const video = videoRef.current;
-    if (!video || !videoSrc || videoFailed) return;
+    if (!video) return;
 
-    try {
-      await video.play();
-      setHasStartedPlayback(true);
-    } catch {
-      // Keep the poster visible if playback is blocked.
+    if (!isInViewport && !video.paused) {
+      video.pause();
     }
-  };
+  }, [isInViewport]);
+
+  const tryPlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !videoSrc || videoFailed || prefersReducedMotion || !isInViewport) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    void video.play().catch(() => {
+      // Keep the poster visible if autoplay is blocked or the resource is rejected.
+    });
+  }, [isInViewport, prefersReducedMotion, videoFailed, videoSrc]);
+
+  useEffect(() => {
+    tryPlay();
+  }, [tryPlay]);
 
   const toggleMuted = () => {
     const video = videoRef.current;
@@ -142,34 +134,20 @@ export function HeroBackgroundMedia({ poster, posterAlt, videoMp4Src }: HeroBack
         <video
           ref={videoRef}
           aria-hidden="true"
-          className={`h-full w-full object-cover [border-radius:inherit] transition-opacity duration-200 ${hasStartedPlayback ? "opacity-100" : "opacity-0"}`}
+          autoPlay
+          className="h-full w-full object-cover [border-radius:inherit]"
           loop
           muted={isMuted}
+          onCanPlay={tryPlay}
+          onLoadedData={tryPlay}
           onError={() => setVideoFailed(true)}
           playsInline
-          preload="auto"
+          poster={poster}
+          preload="metadata"
           src={videoSrc}
           style={{ borderRadius: "inherit" }}
         />
       ) : null}
-
-      <div className="absolute inset-0 z-10 flex items-center justify-center">
-        {!isPlaying ? (
-          <button
-            aria-label="Play hero video"
-            className="inline-flex items-center gap-3 rounded-full border border-white/24 bg-[rgba(7,15,49,0.58)] px-5 py-3 text-sm font-semibold text-white shadow-[0_24px_60px_-28px_rgba(5,11,37,0.95)] backdrop-blur-md transition-colors duration-200 hover:border-white/40 hover:bg-[rgba(7,15,49,0.74)]"
-            onClick={startPlayback}
-            type="button"
-          >
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-white/10">
-              <svg aria-hidden="true" className="ml-0.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5.5v13l10-6.5-10-6.5z" />
-              </svg>
-            </span>
-            <span>{prefersReducedMotion ? "Play Video" : "Play"}</span>
-          </button>
-        ) : null}
-      </div>
 
       {videoSrc && !videoFailed ? (
         <div className="absolute bottom-4 right-4 z-10">

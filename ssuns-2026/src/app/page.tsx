@@ -18,11 +18,13 @@ import { useSiteContent } from "@/lib/useSiteContent";
 function RegistrationVideoPanel() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const { registrationContent } = useSiteContent();
 
   useEffect(() => {
     const video = videoRef.current;
@@ -49,6 +51,56 @@ function RegistrationVideoPanel() {
       video.removeEventListener("loadedmetadata", syncState);
       video.removeEventListener("durationchange", syncState);
     };
+  }, []);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setHasLoaded(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden && !video.paused) {
+        video.pause();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    const video = videoRef.current;
+    if (!panel || !video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting && !video.paused) {
+          video.pause();
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(panel);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -82,7 +134,11 @@ function RegistrationVideoPanel() {
     if (!video) return;
 
     if (video.paused) {
-      await video.play();
+      try {
+        await video.play();
+      } catch {
+        // Keep the preview visible if the browser blocks playback.
+      }
     } else {
       video.pause();
     }
@@ -143,14 +199,29 @@ function RegistrationVideoPanel() {
       <video
         ref={videoRef}
         aria-hidden="true"
-        autoPlay
         className="h-full w-full object-cover"
         loop
+        muted={isMuted}
+        poster={registrationContent.munagerVideo.poster}
         playsInline
         preload="metadata"
       >
-        <source src="/video/registration-open.mp4" type="video/mp4" />
+        {hasLoaded ? <source src={registrationContent.munagerVideo.src} type="video/mp4" /> : null}
       </video>
+      {!isPlaying ? (
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
+          <button
+            aria-label="Play registration video"
+            className="inline-flex h-20 w-20 items-center justify-center rounded-full border border-white/22 bg-[rgba(8,14,44,0.56)] text-white shadow-[0_20px_48px_-20px_rgba(5,11,37,0.9)] backdrop-blur-md transition-colors duration-200 hover:border-white/40 hover:bg-[rgba(8,14,44,0.72)]"
+            onClick={togglePlayback}
+            type="button"
+          >
+            <svg aria-hidden="true" className="ml-1 h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5.5v13l10-6.5-10-6.5z" />
+            </svg>
+          </button>
+        </div>
+      ) : null}
       <div className="absolute inset-x-0 bottom-0 z-10 border-t border-white/12 bg-[rgba(8,14,44,0.52)] px-4 py-3 backdrop-blur-md transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">
         <div className="flex items-center gap-3">
           <button
