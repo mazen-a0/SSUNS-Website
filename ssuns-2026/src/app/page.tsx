@@ -18,18 +18,11 @@ import { useSiteContent } from "@/lib/useSiteContent";
 function RegistrationVideoPanel() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
-  const pendingPlayRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [isInViewport, setIsInViewport] = useState(false);
-  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const { registrationContent } = useSiteContent();
-  const videoSrc = registrationContent.munagerVideo.src;
-  const videoPoster = registrationContent.munagerVideo.poster;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -48,8 +41,6 @@ function RegistrationVideoPanel() {
     video.addEventListener("timeupdate", syncState);
     video.addEventListener("loadedmetadata", syncState);
     video.addEventListener("durationchange", syncState);
-    video.addEventListener("emptied", syncState);
-    video.addEventListener("volumechange", syncState);
 
     return () => {
       video.removeEventListener("play", syncState);
@@ -57,84 +48,8 @@ function RegistrationVideoPanel() {
       video.removeEventListener("timeupdate", syncState);
       video.removeEventListener("loadedmetadata", syncState);
       video.removeEventListener("durationchange", syncState);
-      video.removeEventListener("emptied", syncState);
-      video.removeEventListener("volumechange", syncState);
     };
   }, []);
-
-  useEffect(() => {
-    const panel = panelRef.current;
-    if (!panel) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInViewport(Boolean(entry?.isIntersecting));
-      },
-      {
-        threshold: 0.45,
-      },
-    );
-
-    observer.observe(panel);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      setIsDocumentVisible(!document.hidden);
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    handleVisibilityChange();
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (shouldLoadVideo && pendingPlayRef.current) {
-      const attemptPlayback = async () => {
-        try {
-          await video.play();
-        } catch {
-          // Leave the poster visible and keep controls available if playback is blocked.
-        } finally {
-          pendingPlayRef.current = false;
-        }
-      };
-
-      void attemptPlayback();
-    }
-  }, [shouldLoadVideo]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (isInViewport && isDocumentVisible) {
-      return;
-    }
-
-    pendingPlayRef.current = false;
-
-    if (!video.paused) {
-      video.pause();
-    }
-
-    if (shouldLoadVideo) {
-      video.removeAttribute("src");
-      video.load();
-      setShouldLoadVideo(false);
-      setIsPlaying(false);
-      setCurrentTime(0);
-      setDuration(0);
-    }
-  }, [isDocumentVisible, isInViewport, shouldLoadVideo]);
 
   useEffect(() => {
     const syncFullscreen = () => {
@@ -166,21 +81,10 @@ function RegistrationVideoPanel() {
     const video = videoRef.current;
     if (!video) return;
 
-    if (!shouldLoadVideo) {
-      pendingPlayRef.current = true;
-      setShouldLoadVideo(true);
-      return;
-    }
-
-    if (!video.paused) {
-      video.pause();
-      return;
-    }
-
-    try {
+    if (video.paused) {
       await video.play();
-    } catch {
-      // Keep the poster and controls intact if the browser blocks playback.
+    } else {
+      video.pause();
     }
   };
 
@@ -239,13 +143,14 @@ function RegistrationVideoPanel() {
       <video
         ref={videoRef}
         aria-hidden="true"
+        autoPlay
         className="h-full w-full object-cover"
         loop
-        poster={videoPoster}
         playsInline
-        preload="none"
-        src={shouldLoadVideo ? videoSrc : undefined}
-      />
+        preload="metadata"
+      >
+        <source src="/video/registration-open.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-x-0 bottom-0 z-10 border-t border-white/12 bg-[rgba(8,14,44,0.52)] px-4 py-3 backdrop-blur-md transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">
         <div className="flex items-center gap-3">
           <button
@@ -360,6 +265,7 @@ export default function HomePage() {
                 poster={homeContent.hero.image.src}
                 posterAlt={homeContent.hero.image.alt}
                 videoMp4Src={homeContent.hero.video.mp4Src}
+                videoWebmSrc={homeContent.hero.video.webmSrc}
               />
               <div className="absolute inset-0 z-10 rounded-[inherit]" style={{ background: "linear-gradient(110deg, rgba(8, 14, 44, 0.88) 0%, rgba(20, 32, 130, 0.74) 38%, rgba(8, 14, 44, 0.5) 100%)" }} />
               <div className="absolute inset-0 z-10 rounded-[inherit] bg-[linear-gradient(180deg,rgba(6,11,34,0.12),rgba(6,11,34,0.38))]" />

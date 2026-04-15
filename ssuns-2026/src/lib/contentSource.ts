@@ -75,6 +75,7 @@ function applySiteSettings(bundle: ContentBundle, settings: SanitySiteSettings |
     },
     video: {
       ...bundle.homeContent.hero.video,
+      webmSrc: settings.heroVideoUrl || bundle.homeContent.hero.video.webmSrc,
       mp4Src: settings.heroVideoUrl || bundle.homeContent.hero.video.mp4Src,
     },
     image: {
