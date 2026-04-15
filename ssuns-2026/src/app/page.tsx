@@ -265,7 +265,6 @@ export default function HomePage() {
                 poster={homeContent.hero.image.src}
                 posterAlt={homeContent.hero.image.alt}
                 videoMp4Src={homeContent.hero.video.mp4Src}
-                videoWebmSrc={homeContent.hero.video.webmSrc}
               />
               <div className="absolute inset-0 z-10 rounded-[inherit]" style={{ background: "linear-gradient(110deg, rgba(8, 14, 44, 0.88) 0%, rgba(20, 32, 130, 0.74) 38%, rgba(8, 14, 44, 0.5) 100%)" }} />
               <div className="absolute inset-0 z-10 rounded-[inherit] bg-[linear-gradient(180deg,rgba(6,11,34,0.12),rgba(6,11,34,0.38))]" />

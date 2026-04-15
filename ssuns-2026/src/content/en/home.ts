@@ -30,7 +30,6 @@ export const homeContent = {
     countdownEndedMessage: "The countdown has ended — see the conference schedule for SSUNS 2026.",
     countdownEndedCta: { label: "Conference schedule", href: "/conference/schedule" },
     video: {
-      webmSrc: "/video/montreal-panorama.webm",
       mp4Src: "/video/montreal-panorama.mp4",
     },
     image: {
