@@ -130,7 +130,7 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       id: `committee-${committee.slug}`,
       title: committee.name,
       snippet: `${committee.topic} ${committee.overview} ${committee.difficulty} ${committee.chairs
-        .map((chair) => `${chair.name} ${chair.bio}`)
+        .map((chair) => `${chair.name} ${chair.role ?? chair.bio ?? ""}`)
         .join(" ")} ${committee.resources.join(" ")}`,
       href: `/committees/${committee.slug}`,
       group: "content" as const,

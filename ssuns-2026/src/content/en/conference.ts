@@ -3,7 +3,7 @@ import { pickImage } from "@/lib/images";
 export const conferenceContent = {
   title: "Conference",
   intro:
-    "SSUNS 2026 will take place November 12–15 in Montreal. The full conference schedule will be released closer to the event.",
+    "SSUNS 2026 will take place November 12–15 in Montréal. The full conference schedule will be released closer to the event.",
   sections: {
     tracks: "What To Expect",
     schedule: "Schedule Highlights",
@@ -18,7 +18,7 @@ export const conferenceContent = {
       title: "Overview",
       summary: "Programme overview, room formats, and event expectations.",
       body: [
-        "SSUNS 2026 will take place November 12–15 in Montreal.",
+        "SSUNS 2026 will take place November 12–15 in Montréal.",
         "The full conference schedule will be released closer to the event.",
       ],
     },
@@ -27,12 +27,12 @@ export const conferenceContent = {
       title: "Venue",
       summary: "Hotel footprint, city access, and movement through the conference environment.",
       body: [
-        "Le Centre Sheraton Hotel, one of Montreal’s most prestigious hotels, has long been the venue of SSUNS. Committee sessions, workshops, and socials are all held on-site. Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
-        "For many years we have been lucky to host SSUNS at le Centre Sheraton, the hotel providing a spacious and welcoming venue for delegates to debate, socialize, and explore Montreal. With newly renovated rooms and a prime location, your time at the Sheraton is sure to exceed expectations.",
+        "Le Centre Sheraton Hotel, one of Montréal’s most prestigious hotels, has long been the venue of SSUNS. Committee sessions, workshops, and socials are all held on-site. Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montréal.",
+        "For many years we have been lucky to host SSUNS at le Centre Sheraton, the hotel providing a spacious and welcoming venue for delegates to debate, socialize, and explore Montréal. With newly renovated rooms and a prime location, your time at the Sheraton is sure to exceed expectations.",
         "* All independent delegates must be accompanied by an adult chaperone both to the conference and at the hotel. Independent delegates under 18 must have an adult staying in the same hotel room as them.",
         "SSUNS 2026 Preferential Sheraton Hotel Rates. *All prices are in CAD and include Quebec tax. Please also note that all single and double occupancy rooms have 1 queen or 1 king sized bed.",
         "Please note that room availability at the SSUNS preferential Sheraton Hotel rate is limited.",
-        "Delegations can still book rooms at the hotel at its normal rate, through the Sheraton's website. Other hotels are located nearby, SSUNS does not have any partnerships or agreements other than with the Centre Sheraton Montreal.",
+        "Delegations can still book rooms at the hotel at its normal rate, through the Sheraton's website. Other hotels are located nearby, SSUNS does not have any partnerships or agreements other than with the Centre Sheraton Montréal.",
       ],
     },
     {
@@ -40,7 +40,7 @@ export const conferenceContent = {
       title: "Schedule",
       summary: "Cadence of arrival, committee sessions, ceremonies, and departures.",
       body: [
-        "SSUNS 2026 will take place November 12–15 in Montreal.",
+        "SSUNS 2026 will take place November 12–15 in Montréal.",
         "The full conference schedule will be released closer to the event.",
       ],
     },
@@ -129,7 +129,7 @@ export const conferenceContent = {
   scheduleBand: {
     title: "Schedule Highlights",
     items: [
-      { label: "Dates", text: "SSUNS 2026 will take place November 12–15 in Montreal." },
+      { label: "Dates", text: "SSUNS 2026 will take place November 12–15 in Montréal." },
       { label: "Schedule", text: "The full conference schedule will be released closer to the event." },
       { label: "Venue", text: "Committee sessions, workshops, and socials are all held on-site at Le Centre Sheraton Hotel." },
       { label: "Guidance", text: "Delegates should continue to check the venue, registration, and committee chapters as materials are released." },
@@ -138,7 +138,7 @@ export const conferenceContent = {
   venueSection: {
     title: "Venue & City",
     body:
-      "Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montreal.",
+      "Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montréal.",
     image: {
       src: pickImage("sheraton", "venue-overview"),
       alt: "Conference hotel exterior in evening light",
@@ -149,8 +149,8 @@ export const conferenceContent = {
     title: "About this committee",
     body:
       "With natural disasters increasing in both frequency and intensity, immense pressure is being placed on global emergency response systems. Simultaneously, aviation has become a critical tool in delivering humanitarian aid, conducting search-and-rescue missions, and restoring stability in affected regions when ground infrastructure is not accessible. This International Civil Aviation Organization committee will dive into how aviation technology can strengthen disaster response through initiatives like quicker airspace coordination, the establishment of emergency air corridors, and the deployment of unmanned aerial systems for damage assessment. Delegates will work to develop resolutions international authorities can adapt to coordinate air space response more effectively, alleviating the damage in social, economic, and cultural facets in the lives of those most affected.",
-    mapQuery: "https://www.google.com/maps?q=ICAO+Montreal&z=15&output=embed",
-    mapLink: "https://www.google.com/maps/search/?api=1&query=ICAO+Montreal",
+    mapQuery: "https://www.google.com/maps?q=ICAO+Montréal&z=15&output=embed",
+    mapLink: "https://www.google.com/maps/search/?api=1&query=ICAO+Montréal",
   },
   sponsorshipCallout: {
     title: "Support SSUNS 2026",

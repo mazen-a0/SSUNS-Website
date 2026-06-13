@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { getCommitteeBadges, getCommitteeLevelLabel } from "@/lib/committeeBadges";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 const detailSections = ["overview", "dais"] as const;
+const daisPlaceholderSrc = "/dais_headshots/Portrait_Placeholder.png";
 
 type SectionKey = (typeof detailSections)[number];
 
@@ -105,13 +107,34 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
               {activeSection === "overview" ? <p className="body-copy text-[0.98rem]">{committee.overview}</p> : null}
               {activeSection === "dais" ? (
                 committee.chairs.length ? (
-                  <ul className="space-y-4">
-                    {committee.chairs.map((chair) => (
-                      <li className="border-t border-[var(--rule)] pt-4 first:border-t-0 first:pt-0" key={chair.name}>
-                        <p className="text-2xl font-semibold leading-tight text-[var(--text)]">{chair.name}</p>
-                        <p className="body-copy mt-2 text-[0.98rem] text-[var(--muted)]">{chair.bio}</p>
-                      </li>
-                    ))}
+                  <ul className="grid gap-3 sm:grid-cols-2">
+                    {committee.chairs.map((chair) => {
+                      const roleText = chair.role ?? chair.bio ?? (isFrench ? "Membre du dais" : "Dais member");
+                      const imageSrc = chair.imageSrc ?? daisPlaceholderSrc;
+
+                      return (
+                        <li
+                          className="min-w-0 rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] p-3"
+                          key={`${chair.name}-${roleText}`}
+                        >
+                          <div className="grid grid-cols-[5.25rem_minmax(0,1fr)] gap-3">
+                            <div className="relative h-[6.5rem] overflow-hidden rounded-[6px] border border-[var(--rule)] bg-[var(--paper)]">
+                              <Image
+                                alt={`${chair.name}, ${roleText}`}
+                                className="object-cover object-top"
+                                fill
+                                sizes="110px"
+                                src={imageSrc}
+                              />
+                            </div>
+                            <div className="min-w-0 self-center">
+                              <p className="text-base font-semibold leading-tight text-[var(--text)]">{chair.name}</p>
+                              <p className="mt-1 text-sm font-semibold leading-relaxed text-[var(--muted)]">{roleText}</p>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : (
                   <p className="body-copy text-[0.98rem] text-[var(--muted)]">{sectionLabels.daisNote}</p>

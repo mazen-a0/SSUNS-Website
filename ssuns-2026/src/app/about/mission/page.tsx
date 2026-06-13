@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { PageHero } from "@/components/PageHero";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -29,6 +31,30 @@ export default function AboutMissionPage() {
                   {homeContent.editorial.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
+                </div>
+              </div>
+            </article>
+
+            <article className="theme-panel-strong paper-grain overflow-hidden rounded-[8px] p-5 sm:p-6">
+              <div className="grid gap-6 lg:grid-cols-[0.48fr_0.52fr] lg:items-center">
+                <div className="relative aspect-[5/4] overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--paper)]">
+                  <Image
+                    alt="The SSUNS 2026 Secretariat group portrait"
+                    className="object-cover"
+                    fill
+                    sizes="(min-width: 1280px) 420px, (min-width: 1024px) 45vw, 92vw"
+                    src="/headshots/full_sec.jpeg"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="section-kicker">{aboutContent.title}</p>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight text-[var(--accent)]">Who we are</h2>
+                  <p className="mt-4 text-sm leading-7 text-[var(--text)] sm:text-base">
+                    The SSUNS Secretariat comprises 15 McGill students working under the Secretary-General to make SSUNS happen. After a year of work, the Secretariat hopes to break conference standards and deliver a smooth and enriching experience for all delegations this upcoming fall. To learn more about our individual Secretariat members, check out our Meet the Secretariat page.
+                  </p>
+                  <Link className="mt-5 inline-flex border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/about/secretariat">
+                    Meet the Secretariat
+                  </Link>
                 </div>
               </div>
             </article>

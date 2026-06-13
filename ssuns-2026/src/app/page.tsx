@@ -316,7 +316,7 @@ export default function HomePage() {
     { id: "home-photo-5", src: HOME_MONTAGE_IMAGES[4], alt: "ICAO scene in Montréal", eyebrow: "ICAO", caption: "Montréal itself becomes part of the learning experience." },
     { id: "home-photo-6", src: HOME_MONTAGE_IMAGES[5], alt: "Delegates moving between conference spaces", eyebrow: "Circulation", caption: "The best conference layouts support movement, conversation, and momentum." },
     { id: "home-photo-7", src: HOME_MONTAGE_IMAGES[6], alt: "Committee room preparing for formal debate", eyebrow: "Committees", caption: "Each room carries its own visual language, but the structure stays legible." },
-    { id: "home-photo-8", src: HOME_MONTAGE_IMAGES[7], alt: "Montreal streetscape near the conference experience", eyebrow: "City", caption: "The conference feels grounded because the city remains present throughout it." },
+    { id: "home-photo-8", src: HOME_MONTAGE_IMAGES[7], alt: "Montréal streetscape near the conference experience", eyebrow: "City", caption: "The conference feels grounded because the city remains present throughout it." },
   ];
 
   return (

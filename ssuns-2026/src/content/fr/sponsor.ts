@@ -4,7 +4,7 @@ export const sponsorContent = {
   ...en,
   title: "Commanditer SSUNS",
   intro:
-    "Soutenez une conférence étudiante phare qui réunit plus d'un millier de délégués à Montréal pour quatre jours de débat, de prise de parole en public et d'éducation civique.",
+    "Soutenez une conférence étudiante phare qui réunit plus de 1 300 délégués à Montréal pour quatre jours de débat, de prise de parole en public et de leadership jeunesse.",
   reasons: [
     {
       ...en.reasons[0],
@@ -27,14 +27,15 @@ export const sponsorContent = {
   ],
   stats: [
     { ...en.stats[0], label: "Délégués" },
-    { ...en.stats[1], label: "Dates" },
-    { ...en.stats[2], label: "Lieu" },
-    { ...en.stats[3], label: "Public" },
+    { ...en.stats[1], label: "Personnel McGill" },
+    { ...en.stats[2], label: "Dates" },
+    { ...en.stats[3], label: "Lieu" },
+    { ...en.stats[4], label: "Public" },
   ],
   supportersTitle: "Partenaires",
   supportersNote:
-    "SSUNS collabore avec des organisations qui valorisent le leadership jeunesse, l'éducation civique et l'accès à une expérience de conférence de grande qualité.",
+    "SSUNS collabore avec des organisations qui valorisent le leadership jeunesse, la prise de parole en public et l'accès à une expérience de conférence de grande qualité.",
   contactTitle: "Contact commandites",
-  packageLabel: "Demander le dossier de commandite",
-  packageUnavailableLabel: "Notre équipe vous transmettra le dossier actuel par courriel.",
+  packageLabel: "Consultez notre dossier complet de commandite ici",
+  packageUnavailableLabel: "Consultez le dossier complet pour connaître les possibilités de commandite, les prix et les détails des partenariats personnalisés.",
 };

@@ -53,7 +53,7 @@ export const contactContent = {
   },
   image: {
     src: pickImage("montreal", "contact-hero"),
-    alt: "Montreal downtown streets near conference district",
-    note: "Montreal streetscape, 16:9, recommended 1600x900",
+    alt: "Montréal downtown streets near conference district",
+    note: "Montréal streetscape, 16:9, recommended 1600x900",
   },
 };

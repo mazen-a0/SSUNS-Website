@@ -138,7 +138,7 @@ export const registrationContent = {
   timeline: [
     { label: "April 1, 2026", text: "Registration opens." },
     { label: "October 16, 2026", text: "Registration closes or earlier upon reaching capacity." },
-    { label: "November 12-15, 2026", text: "Conference dates in Montreal." },
+    { label: "November 12-15, 2026", text: "Conference dates in Montréal." },
   ],
   currentTier: {
     label: "Registration is open",
@@ -219,7 +219,7 @@ export const registrationContent = {
     body: [
       "Dear SSUNS Delegates and Faculty Advisors,",
       "My name is Costas Oreopoulos and it is my distinct privilege to serve as your Chargé d’Affaires for SSUNS 2026. Since its debut in 1993, SSUNS has grown to be Canada’s premier Model United Nations conference. Now in its 34th edition, we continue to provide a world-class conference experience for high school and CEGEP students. Each November, over 1400 students from around the globe join us for four days of dynamic committee sessions, captivating debate and immersive simulations.",
-      "Beyond committee sessions, SSUNS offers a range of opportunities to enrich your experience, including workshops, social events and guided tours of McGill University. Faculty Advisors will have the chance to observe their delegates in action, connect with fellow educators and enjoy the Faculty Advisor Lounge and social events. All of this takes place in the beautifully vibrant city of Montreal, where attendees can explore iconic landmarks and experience its unique culture.",
+      "Beyond committee sessions, SSUNS offers a range of opportunities to enrich your experience, including workshops, social events and guided tours of McGill University. Faculty Advisors will have the chance to observe their delegates in action, connect with fellow educators and enjoy the Faculty Advisor Lounge and social events. All of this takes place in the beautifully vibrant city of Montréal, where attendees can explore iconic landmarks and experience its unique culture.",
       "I started my journey with MUN competing at SSUNS while I was in high school in Toronto. That experience sparked a passion that kept me involved in the circuit and eventually brought me back to McGill determined to help deliver the same kind of conference for a new generation of delegates. Having now seen Model UN from both the delegate and Secretariat side, I can truly attest to its transformative impact, and I firmly believe that SSUNS remains one of the most exceptional conference experiences anywhere in the world.",
       "Whether you are returning to SSUNS or joining us for the first time, we are incredibly excited to welcome you for an unforgettable weekend of diplomacy, debate and collaboration. I look forward to seeing you all this November!",
       "Warm regards,",

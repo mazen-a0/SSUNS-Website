@@ -9,8 +9,8 @@ import { PageHero } from "@/components/PageHero";
 import { ROOM_RATES_IMAGE, VENUE_GALLERY_IMAGES } from "@/lib/images";
 import { useSiteContent } from "@/lib/useSiteContent";
 
-const mapsQuery = "https://www.google.com/maps?q=Le+Centre+Sheraton+Montreal&z=15&output=embed";
-const mapsLink = "https://www.google.com/maps/search/?api=1&query=Le+Centre+Sheraton+Montreal";
+const mapsQuery = "https://www.google.com/maps?q=Le+Centre+Sheraton+Montréal&z=15&output=embed";
+const mapsLink = "https://www.google.com/maps/search/?api=1&query=Le+Centre+Sheraton+Montréal";
 const hotelRates = [
   { occupancy: "Single", roomRate: "$332.01", luggageFees: "$15.87" },
   { occupancy: "Double", roomRate: "$332.01", luggageFees: "$31.74" },
@@ -24,7 +24,7 @@ export default function ConferenceVenuePage() {
   const venueGalleryItems = [
     { id: "venue-photo-1", src: VENUE_GALLERY_IMAGES[0], alt: "Sheraton exterior at arrival" },
     { id: "venue-photo-2", src: VENUE_GALLERY_IMAGES[1], alt: "Sheraton lobby and common spaces" },
-    { id: "venue-photo-3", src: VENUE_GALLERY_IMAGES[2], alt: "Montreal city view near the venue" },
+    { id: "venue-photo-3", src: VENUE_GALLERY_IMAGES[2], alt: "Montréal city view near the venue" },
     { id: "venue-photo-4", src: VENUE_GALLERY_IMAGES[3], alt: "Conference event space inside the Sheraton" },
   ];
 
@@ -51,7 +51,7 @@ export default function ConferenceVenuePage() {
             <div className="grid gap-8 xl:grid-cols-[0.48fr_0.52fr]">
               <DossierFigure
                 alt={conferenceContent.venueSection.image.alt}
-                caption="Le Centre Sheraton Montreal Hotel, 1201 René-Lévesque Blvd W, Montreal, QC H3B 2L7"
+                caption="Le Centre Sheraton Montréal Hotel, 1201 René-Lévesque Blvd W, Montréal, QC H3B 2L7"
                 eyebrow="Address"
                 ratio="16/9"
                 src={conferenceContent.venueSection.image.src}
@@ -63,7 +63,7 @@ export default function ConferenceVenuePage() {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   src={mapsQuery}
-                  title="Le Centre Sheraton Montreal map"
+                  title="Le Centre Sheraton Montréal map"
                 />
                 <div className="border-t border-[var(--rule)] px-3 py-4">
                   <Link className="inline-block border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href={mapsLink} target="_blank">

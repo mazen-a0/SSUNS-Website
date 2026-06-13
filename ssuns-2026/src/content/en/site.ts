@@ -108,7 +108,7 @@ export const footerContent = {
       items: [
         { label: "How To Register", href: "/registration/how-to-register" },
         { label: "Financial Aid", href: "/registration/financial-aid" },
-        { label: "Committee Policies", href: "/committees/policies" },
+        { label: "Policies + Resources", href: "/committees/policies" },
         { label: "FAQ", href: "/about/faqs" },
       ],
     },

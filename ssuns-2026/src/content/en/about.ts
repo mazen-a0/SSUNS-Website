@@ -13,7 +13,7 @@ const secretariatMembers: SecretariatMember[] = [
     name: "Marcus Kelly",
     role: "Secretary-General",
     headshotSrc: "/headshots/marcus.jpg",
-    bio: "Meet Marcus, our beloved Secretary General for SSUNS 2026. If you have not already met him through social media or running around the hotel, Marcus is a 4th year student majoring in International Management and minoring in Political Science. It goes without saying that our Secretary General knows it all about SSUNS and Model UN, from within the committee when he was Vice-chair at SSUNS 2024, to outside committees as SSUNS 2025 Director of Events, but also as a delegate from high-school to McGill’s very own competitive delegation team. Outside of SSUNS, you can see him running or biking around, looking for a place to read or a beach to relax on (most likely in Boston than Montreal). Marcus also enjoys getting involved in other activities on campus, so do not hesitate to give a read to articles from Bull and Bear, a McGill’s student run news magazine, where he is a Managing Editor! As SSUNS 2026 guiding torch, Marcus feels the utmost excitement leading an incredible team and conference for this year, hoping everyone gets to enjoy the full conference experience. His advice for you to have the bestest time? Learn to enjoy waiting for elevators at the Sheraton, it is part of the SSUNS journey. On a MUN related note: “True competition is about respect,” at SSUNS, disrespect will not be tolerated, competition is about respect, fairness, and growth.",
+    bio: "Meet Marcus, our beloved Secretary General for SSUNS 2026. If you have not already met him through social media or running around the hotel, Marcus is a 4th year student majoring in International Management and minoring in Political Science. It goes without saying that our Secretary General knows it all about SSUNS and Model UN, from within the committee when he was Vice-chair at SSUNS 2024, to outside committees as SSUNS 2025 Director of Events, but also as a delegate from high-school to McGill’s very own competitive delegation team. Outside of SSUNS, you can see him running or biking around, looking for a place to read or a beach to relax on (most likely in Boston than Montréal). Marcus also enjoys getting involved in other activities on campus, so do not hesitate to give a read to articles from Bull and Bear, a McGill’s student run news magazine, where he is a Managing Editor! As SSUNS 2026 guiding torch, Marcus feels the utmost excitement leading an incredible team and conference for this year, hoping everyone gets to enjoy the full conference experience. His advice for you to have the bestest time? Learn to enjoy waiting for elevators at the Sheraton, it is part of the SSUNS journey. On a MUN related note: “True competition is about respect,” at SSUNS, disrespect will not be tolerated, competition is about respect, fairness, and growth.",
   },
   {
     name: "Costas Oreopoulos",
@@ -26,6 +26,18 @@ const secretariatMembers: SecretariatMember[] = [
     role: "Director-General",
     headshotSrc: "/headshots/mazen.jpg",
     bio: "Meet our amazing Director-General, Mazen Asali (he/him/il). Originally from Amman, Jordan, Mazen is currently in his fourth year at McGill and is studying Computer Science and Biology with a minor in Entrepreneurship. Mazen's MUN journey began in high school, where he was a delegate and even organised his school's Model UN conference. He first became involved with SSUNS as a DRC Staffer in 2023 during his first year at McGill and later got involved with the Operations portfolio for both SSUNS and McMUN, serving as the Chief of Operations at SSUNS 2025. Outside of his academic pursuits, Mazen is actively involved in student governance at McGill through the Science Undergrad Society (SUS) and the McGill Biology Student Union. He also has a passion for policy writing and is currently learning French. When not studying, Mazen enjoys reading motivational books, swimming, playing video games, and coding the SSUNS website… Mazen is very excited to meet all the delegates at SSUNS 2026, and if he could give you one piece of advice, it would be: \"Take advantage of being in Montréal and explore this awesome city!\"",
+  },
+  {
+    name: "Andrew Tobin",
+    role: "USG Finance",
+    headshotSrc: "/headshots/andrew.jpg",
+    bio: "Introducing Andrew Tobin (he/him/il), our outstanding Undersecretary-General Finance for SSUNS 2026. Andrew is a fourth-year student at McGill, enrolled in the Honours Political Science program alongside a Minor in History. He first got involved with Model UN as an Operations Coordinator McMUN 2025, and then for SSUNS 2025 in November of that same year, and he credits Paul for telling him about the experience and convincing to join the team! He is on exchange in Lund, Sweden for the start of 2026, and then looking forward to returning to Montréal for his final year in the Fall. Andrew is a big hockey fan (Go Habs Go!) and has also been involved in the Political Science Students Association. His piece of advice for delegates is: don’t be afraid to ask questions, and meet as many people as you can, everyone is in the same boat as you so no need to be shy!",
+  },
+  {
+    name: "Julien Fournier",
+    role: "Chief of HR",
+    headshotSrc: "/headshots/julien.jpg",
+    bio: "Meet Julien (he/him/il), our wonderful Chief of Human Resources. Hailing from Montréal, Quebec, he is in his second year of studying International Development and Economics at McGill. This will be his fourth SSUNS, having participated as a delegate and as a DRC coordinator in previous iterations. His MUN journey started at Cégep, where he oversaw the Public Relations, Marketing, and Communications for their high-school level conference and semi-collegiate delegation team. Julien continues to compete on the circuit with the McGill Delegation Team, and although he is ardently committed to Model UN, he has also been doing parliamentary debate for nearly seven years! Outside of academia, he is a \"professional\" barista, a voracious reader, and an architecture aficionado. Feel free to ask him for his opinion on the design of Le centre Sheraton (he's a big fan). Julien is also an assiduous language learner, boasting an incredible 1,200-day Duolingo streak. His advice to delegates is to debate in good faith; think before you speak and be confident in the ethics of your arguments, that is what makes good diplomacy!",
   },
   {
     name: "Valeria Fonseca Ortega",
@@ -52,22 +64,10 @@ const secretariatMembers: SecretariatMember[] = [
     bio: "Meet Will (he/him/il), our outstanding Deputy USG Crisis. Born and raised in Point Edward, Ontario, Will is a second year student at McGill, where he is double majoring in political science and history. SSUNS 2026 will be Will’s 4th SSUNS, he competed twice in high school, gavelling in the ICJ, and was a committee staffer last year before becoming our Dep Crisis. In his free time, Will is a pitcher for the McGill Redbirds baseball team, an avid sports fan, and a major enthusiast of global politics. If you just so happen to have a problem throughout the weekend, just remember: when there’s a Will, there's a way. His advice to delegates: be authentic and consistent, it’s a marathon, not a sprint.",
   },
   {
-    name: "Andrew Tobin",
-    role: "USG Finance",
-    headshotSrc: "/headshots/andrew.jpg",
-    bio: "Introducing Andrew Tobin (he/him/il), our outstanding Undersecretary-General Finance for SSUNS 2026. Andrew is a fourth-year student at McGill, enrolled in the Honours Political Science program alongside a Minor in History. He first got involved with Model UN as an Operations Coordinator McMUN 2025, and then for SSUNS 2025 in November of that same year, and he credits Paul for telling him about the experience and convincing to join the team! He is on exchange in Lund, Sweden for the start of 2026, and then looking forward to returning to Montreal for his final year in the Fall. Andrew is a big hockey fan (Go Habs Go!) and has also been involved in the Political Science Students Association. His piece of advice for delegates is: don’t be afraid to ask questions, and meet as many people as you can, everyone is in the same boat as you so no need to be shy!",
-  },
-  {
     name: "Hortense Bonnet",
     role: "USG Admin",
     headshotSrc: "/headshots/hortense.jpg",
     bio: "Meet Hortense, our lovely Under-Secretary-General of Administration, the mind behind our beautiful merch, roses, and website. She is currently a third-year at McGill, studying Economics with not one, but two minors in International Development and Management. This is her second year stepping into the role at SSUNS. Last year, you may have seen her as a Registration Coordinator. So how did she end up in the (slightly chaotic) world of MUN? Her friends convinced her that SSUNS was the best way to find a welcoming community at McGill, and along the way, her interest in diplomacy quickly grew. Hortense doesn’t consider herself a “MUN kid,” but rather an “OG UN kid”! When she’s not busy helping out, you’ll likely find her enjoying tiramisu and fondant baulois. Her favorite restaurant? Keeping it very French: L’Entrecôte, where she always orders her steak rare. Her advice? “Connect with everyone. Try new things. Experiment with new debate techniques! In general… get out of your comfort zone…and of course, buy merch!”",
-  },
-  {
-    name: "Julien Fournier",
-    role: "Chief of HR",
-    headshotSrc: "/headshots/julien.jpg",
-    bio: "Meet Julien (he/him/il), our wonderful Chief of Human Resources. Hailing from Montreal, Quebec, he is in his second year of studying International Development and Economics at McGill. This will be his fourth SSUNS, having participated as a delegate and as a DRC coordinator in previous iterations. His MUN journey started at Cégep, where he oversaw the Public Relations, Marketing, and Communications for their high-school level conference and semi-collegiate delegation team. Julien continues to compete on the circuit with the McGill Delegation Team, and although he is ardently committed to Model UN, he has also been doing parliamentary debate for nearly seven years! Outside of academia, he is a \"professional\" barista, a voracious reader, and an architecture aficionado. Feel free to ask him for his opinion on the design of Le centre Sheraton (he's a big fan). Julien is also an assiduous language learner, boasting an incredible 1,200-day Duolingo streak. His advice to delegates is to debate in good faith; think before you speak and be confident in the ethics of your arguments, that is what makes good diplomacy!",
   },
   {
     name: "Léandre Noël",
@@ -79,13 +79,13 @@ const secretariatMembers: SecretariatMember[] = [
     name: "Kiara Gilroy",
     role: "Director of Events",
     headshotSrc: "/headshots/kiara.jpg",
-    bio: "Meet Kiara (she/her/elle), our outstanding director of events! Going from the island-life of the south-pacific to the island-life of Montreal, she hails from Tahiti, French Polynesia. She is currently focused on attaining her BA at McGill, majoring in Political Science as a 3rd year. This will be her second SSUNS, having excelled in her role as an Events coordinator in the last iteration of the conference and at McMUN, our sister event! Beyond her extensive MUN experience, Kiara is also an all-star track athlete, and is both on varsity and her national team. Beyond direct participation, she is also an outspoken advocate for sports, believing that they are beneficial for both personal health and community-building. Her advice for delegates is to be kind, be smart, and to think outside of the box! If you need help, reach out; the team is here to support you! And above all else, come to the del gala!!",
+    bio: "Meet Kiara (she/her/elle), our outstanding director of events! Going from the island-life of the south-pacific to the island-life of Montréal, she hails from Tahiti, French Polynesia. She is currently focused on attaining her BA at McGill, majoring in Political Science as a 3rd year. This will be her second SSUNS, having excelled in her role as an Events coordinator in the last iteration of the conference and at McMUN, our sister event! Beyond her extensive MUN experience, Kiara is also an all-star track athlete, and is both on varsity and her national team. Beyond direct participation, she is also an outspoken advocate for sports, believing that they are beneficial for both personal health and community-building. Her advice for delegates is to be kind, be smart, and to think outside of the box! If you need help, reach out; the team is here to support you! And above all else, come to the del gala!!",
   },
   {
     name: "Tracy Jiang",
     role: "Director of PR",
     headshotSrc: "/headshots/tracy.jpg",
-    bio: "Meet Tracy Jiang (she/her/elle), our fantastic Chief of Public Relations for SSUNS 2026! Hailing from Montreal, Tracy is a U4 student working towards a BA in Political Science with a minor in International Development Studies. She traces her Model UN roots back to SSUNS, having participated as a delegate before becoming a Branding Design Coordinator in 2025. She is also an active member of the McGill Model UN Delegation Team, having competed in a plethora of collegiate conferences. Beyond being an inspiring presence on the circuit, Tracy is also an avid traveller. She is soon returning from her exchange, which brought her all the way to Hong Kong to enrich her studies. Outside of academics and extracurriculars, she also has a passion for photography, chess, and music. She is one of singer-songwriter Malcolm Todd’s biggest fans, and can listen to hours of music on end. Her advice to SSUNS 2026 delegates is that feeling nervous is normal, but don’t let that stop you from speaking up and engaging with other delegates.",
+    bio: "Meet Tracy Jiang (she/her/elle), our fantastic Chief of Public Relations for SSUNS 2026! Hailing from Montréal, Tracy is a U4 student working towards a BA in Political Science with a minor in International Development Studies. She traces her Model UN roots back to SSUNS, having participated as a delegate before becoming a Branding Design Coordinator in 2025. She is also an active member of the McGill Model UN Delegation Team, having competed in a plethora of collegiate conferences. Beyond being an inspiring presence on the circuit, Tracy is also an avid traveller. She is soon returning from her exchange, which brought her all the way to Hong Kong to enrich her studies. Outside of academics and extracurriculars, she also has a passion for photography, chess, and music. She is one of singer-songwriter Malcolm Todd’s biggest fans, and can listen to hours of music on end. Her advice to SSUNS 2026 delegates is that feeling nervous is normal, but don’t let that stop you from speaking up and engaging with other delegates.",
   },
   {
     name: "Paul Malpartida Durroux",
@@ -137,7 +137,7 @@ export const aboutContent = {
       body: [
         "OUR 15-PEOPLE LEADERSHIP TEAM WORKS YEAR-ROUND TO BUILD THE SSUNS EXPERIENCE.",
         "Throughout the year, the Secretariat works to shape every aspect of the conference from developing committees and guiding the academic program to coordinating logistics and events. Working alongside hundreds of McGill student volunteers, the team brings together the people and ideas that make SSUNS possible.",
-        "As students, organizers, and leaders, the Secretariat is proud to help build a conference that challenges delegates, fosters collaboration, and brings the global MUN community together in Montreal.",
+        "As students, organizers, and leaders, the Secretariat is proud to help build a conference that challenges delegates, fosters collaboration, and brings the global MUN community together in Montréal.",
         "WE LOOK FORWARD TO WELCOMING YOU TO SSUNS!",
       ],
     },
@@ -252,7 +252,7 @@ export const aboutContent = {
         },
         {
           question: "When and where will SSUNS 2026 take place?",
-          answer: "The 34th Itinerary of SSUNS will take place November 12–15, 2026 at the Sheraton Montreal Hotel in Montreal.",
+          answer: "The 34th iteration of SSUNS will take place November 12–15, 2026 at the Sheraton Montréal Hotel in Montréal.",
         },
         {
           question: "Can university students attend SSUNS?",

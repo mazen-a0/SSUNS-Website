@@ -1,3 +1,5 @@
+import { committeeDaisBySlug, type StaffProfile } from "@/content/en/staff";
+
 export type Committee = {
   id: string;
   slug: string;
@@ -10,7 +12,7 @@ export type Committee = {
   topic: string;
   difficulty: string;
   format: string;
-  chairs: Array<{ name: string; bio: string }>;
+  chairs: StaffProfile[];
   resources: string[];
   backgroundGuide: string;
   imageSrc?: string;
@@ -60,10 +62,10 @@ export const committeesPageContent = {
     },
     {
       href: "/committees/policies",
-      title: "Committee Policies",
-      summary: "Access the official policy PDFs for all relevant information.",
+      title: "Committees Policies + Resources",
+      summary: "Committee expectations, procedure resources, and resolution-writing support.",
       body: [
-        "Access the PDF for all relevant information.",
+        "This page houses committee expectations, procedure resources, and resolution-writing support for delegates preparing for SSUNS 2026.",
       ],
     },
   ],
@@ -102,7 +104,6 @@ export const committeesPageContent = {
   },
 };
 
-const noChairs: Array<{ name: string; bio: string }> = [];
 const noResources: string[] = [];
 
 function committeeImage(slug: string) {
@@ -113,7 +114,7 @@ function makeCommittee(input: Omit<Committee, "id" | "chairs" | "resources" | "b
   return {
     ...input,
     id: input.slug,
-    chairs: noChairs,
+    chairs: committeeDaisBySlug[input.slug] ?? [],
     resources: noResources,
     backgroundGuide: "Background guides will be released closer to the conference.",
     imageSrc: committeeImage(input.slug),
@@ -350,7 +351,7 @@ export const committees: Committee[] = [
     size: "Single Delegation",
     blurb: "Osheaga vs Lollapalooza.",
     overview:
-      "In the summer of 2027, two festival giants are set to collide. Osheaga and Lollapalooza are both scheduled to take place from August 1–3, 2027, within just miles of each other; competing for the same artists, audiences, and headlines. With overlapping lineups and clashing schedules, the race is on to see which festival can draw the biggest crowds and dominate the summer music scene. On one hand, Osheaga has become a Montreal summer icon, hosting headlining artists such as Tate McRae and Lorde in recent years and earning praise from major performers like Noah Kahan, who called it one of the “best music festivals.” On the other, Lollapalooza brings the legacy of a global festival powerhouse, featuring chart-topping artists such as Olivia Rodrigo, Sabrina Carpenter, and RÜFÜS DU SOL. Will the iconic Canadian festival hold its ground, or will the Chicago-born classic steal the spotlight? In this Joint Crisis Committee, delegates will step into the roles of the two festivals’ management teams, competing to secure artists, attract fans, and ultimately determine which festival will reign supreme.",
+      "In the summer of 2027, two festival giants are set to collide. Osheaga and Lollapalooza are both scheduled to take place from August 1–3, 2027, within just miles of each other; competing for the same artists, audiences, and headlines. With overlapping lineups and clashing schedules, the race is on to see which festival can draw the biggest crowds and dominate the summer music scene. On one hand, Osheaga has become a Montréal summer icon, hosting headlining artists such as Tate McRae and Lorde in recent years and earning praise from major performers like Noah Kahan, who called it one of the “best music festivals.” On the other, Lollapalooza brings the legacy of a global festival powerhouse, featuring chart-topping artists such as Olivia Rodrigo, Sabrina Carpenter, and RÜFÜS DU SOL. Will the iconic Canadian festival hold its ground, or will the Chicago-born classic steal the spotlight? In this Joint Crisis Committee, delegates will step into the roles of the two festivals’ management teams, competing to secure artists, attract fans, and ultimately determine which festival will reign supreme.",
     topic: "Osheaga vs Lollapalooza",
     difficulty: "This is a Joint-Crisis Committee.",
     format: "Joint Crisis",

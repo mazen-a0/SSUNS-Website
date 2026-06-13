@@ -28,10 +28,10 @@ export const committeesPageContent = {
     },
     {
       href: "/committees/policies",
-      title: "Politiques des comités",
-      summary: "Consultez les PDF officiels pour toute l’information pertinente.",
+      title: "Politiques et ressources des comités",
+      summary: "Attentes des comités, ressources de procédure et soutien à la rédaction de résolutions.",
       body: [
-        "Consultez le PDF pour toute l’information pertinente.",
+        "Cette page regroupe les attentes des comités, les ressources de procédure et le soutien à la rédaction de résolutions pour les délégués de SSUNS 2026.",
       ],
     },
   ],

@@ -72,7 +72,7 @@ export const footerContent = {
       items: [
         { ...enFooterContent.sections[1].items[0], label: "Comment s'inscrire" },
         { ...enFooterContent.sections[1].items[1], label: "Aide financière" },
-        { ...enFooterContent.sections[1].items[2], label: "Politiques des comités" },
+        { ...enFooterContent.sections[1].items[2], label: "Politiques et ressources" },
         { ...enFooterContent.sections[1].items[3], label: "FAQ" },
       ],
     },
