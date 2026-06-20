@@ -37,7 +37,7 @@ export const sponsorContent = {
   supportersNote:
     "SSUNS partners with organizations that value youth leadership, public speaking, and access to high-quality conference experiences.",
   contactTitle: "Sponsorship contact",
-  contactEmail: "sponsorship@ssuns.org",
+  contactEmail: "pr@ssuns.org",
   packageLabel: "Find our full sponsorship package here.",
   packagePath: "/docs/Marketing Brochure SSUNS26.pdf",
   packageUnavailableLabel: "Review the complete sponsorship package for the full matrix of opportunities, pricing, and custom partnership details.",
