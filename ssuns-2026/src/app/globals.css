@@ -330,6 +330,10 @@ img {
   }
 }
 
+.faq-toggle[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

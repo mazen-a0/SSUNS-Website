@@ -15,6 +15,14 @@ type CommitteesExplorerProps = {
 
 type GroupKey = "ga" | "ecosoc" | "specialized" | "jointCrisis" | "crisis";
 
+const groupAccents: Record<GroupKey, string> = {
+  ga: "#1d3aa8",
+  ecosoc: "#0f766e",
+  specialized: "#8a5a2b",
+  jointCrisis: "#9b2c4f",
+  crisis: "#b3402f",
+};
+
 function getCommitteeGroup(committee: Committee): GroupKey {
   if (committee.theme === "General Assemblies" || committee.theme === "Assemblées générales") return "ga";
   if (committee.theme === "Economic and Social Councils" || committee.theme === "Conseils économiques et sociaux") return "ecosoc";
@@ -145,15 +153,24 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
           {orderedGroups.map((groupKey) => {
             const groupCommittees = groupedCommittees[groupKey];
             if (!groupCommittees.length) return null;
+            const accent = groupAccents[groupKey];
 
             return (
               <section key={groupKey}>
                 <div className="mb-5 flex items-end justify-between gap-3 border-b border-[var(--rule)] pb-3">
-                  <div>
-                    <p className="section-kicker">{pageContent.filterThemeLabel}</p>
-                    <h2 className="text-2xl font-semibold leading-tight text-[var(--accent)]">{pageContent.groups[groupKey]}</h2>
+                  <div className="flex items-stretch gap-3">
+                    <span aria-hidden className="w-1 shrink-0 rounded-full" style={{ backgroundColor: accent }} />
+                    <div>
+                      <p className="section-kicker" style={{ color: accent }}>{pageContent.filterThemeLabel}</p>
+                      <h2 className="text-2xl font-semibold leading-tight text-[var(--accent)]">{pageContent.groups[groupKey]}</h2>
+                    </div>
                   </div>
-                  <p className="text-sm font-semibold text-[var(--muted)]">{groupCommittees.length}</p>
+                  <span
+                    className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full px-2 text-xs font-semibold"
+                    style={{ color: accent, backgroundColor: `${accent}14`, border: `1px solid ${accent}` }}
+                  >
+                    {groupCommittees.length}
+                  </span>
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -164,7 +181,15 @@ export function CommitteesExplorer({ committees, pageContent }: CommitteesExplor
                     const showSubtitle = subtitle && subtitle.trim().toLowerCase() !== committee.blurb.trim().toLowerCase();
 
                     return (
-                      <article className="group theme-panel flex h-full flex-col overflow-hidden rounded-[8px]" key={committee.id}>
+                      <article
+                        className="group theme-panel relative flex h-full flex-col overflow-hidden rounded-[8px] transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-strong)]"
+                        key={committee.id}
+                      >
+                        <span
+                          aria-hidden
+                          className="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 transition-transform duration-200 group-hover:scale-x-100"
+                          style={{ backgroundColor: accent }}
+                        />
                         <div className="relative">
                           <CommitteeImage alt={`${committee.name} committee image`} mode="card" slug={committee.slug} src={committee.imageSrc} />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(8,15,52,0.94)] to-transparent px-4 py-4 text-white">
