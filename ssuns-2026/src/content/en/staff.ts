@@ -74,9 +74,9 @@ export const coordinatorProfiles: StaffProfile[] = [
 export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
   "who-2026": [
     {
-      "name": "Malaika Lavoie",
+      "name": "Brianne Bower",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/MalaikaLavoie_WHO.jpg"
+      "imageSrc": "/dais_headshots/BrianneBower_WTO.png"
     },
     {
       "name": "Lucie Quief",
@@ -123,9 +123,9 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
   ],
   "wto-2026": [
     {
-      "name": "Brianne Bower",
+      "name": "Malaika Lavoie",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/BrianneBower_WTO.png"
+      "imageSrc": "/dais_headshots/MalaikaLavoie_WHO.jpg"
     },
     {
       "name": "Audrey Henry",
