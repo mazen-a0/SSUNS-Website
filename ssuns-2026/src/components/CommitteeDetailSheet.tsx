@@ -117,13 +117,13 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                           className="min-w-0 rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] p-3"
                           key={`${chair.name}-${roleText}`}
                         >
-                          <div className="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-4">
-                            <div className="relative h-[7.5rem] overflow-hidden rounded-[6px] border border-[var(--rule)] bg-[var(--paper)] sm:h-[8.5rem]">
+                          <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 sm:grid-cols-[8.5rem_minmax(0,1fr)]">
+                            <div className="relative h-[9rem] overflow-hidden rounded-[6px] border border-[var(--rule)] bg-[var(--paper)] sm:h-[10.75rem]">
                               <Image
                                 alt={`${chair.name}, ${roleText}`}
                                 className="object-cover object-top"
                                 fill
-                                sizes="(min-width: 640px) 140px, 120px"
+                                sizes="(min-width: 640px) 170px, 140px"
                                 src={imageSrc}
                               />
                             </div>
