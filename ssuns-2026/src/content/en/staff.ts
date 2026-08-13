@@ -3,6 +3,7 @@ export type StaffProfile = {
   role?: string;
   bio?: string;
   imageSrc?: string;
+  daisGroup?: string;
 };
 
 export const coordinatorProfiles: StaffProfile[] = [
@@ -438,101 +439,121 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
   "chess-2026": [
     {
       "name": "Rian Reichel",
-      "role": "Coordinating Crisis Director - The Great Game"
+      "role": "Coordinating Crisis Director - The Great Game",
+      "daisGroup": "Joint Crisis Coordinator"
     },
     {
       "name": "Eloise Barriault",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/ Eloise Barriault_Russia.jpg"
+      "imageSrc": "/dais_headshots/ Eloise Barriault_Russia.jpg",
+      "daisGroup": "Russia"
     },
     {
       "name": "Lou Didelot",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Lou Didelot_Russia.jpeg"
+      "imageSrc": "/dais_headshots/Lou Didelot_Russia.jpeg",
+      "daisGroup": "Russia"
     },
     {
       "name": "Dahlia Harrison-Irwin",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Dahlia Harrison-Irwin_Russia.JPG"
+      "imageSrc": "/dais_headshots/Dahlia Harrison-Irwin_Russia.JPG",
+      "daisGroup": "Russia"
     },
     {
       "name": "Philippe Valtat",
-      "role": "Crisis Director"
+      "role": "Crisis Director",
+      "daisGroup": "Russia"
     },
     {
       "name": "Daiwik Dhawan",
       "role": "Assistant Crisis Director",
-      "imageSrc": "/dais_headshots/Daiwik Dhawan_Britain.jpg"
+      "imageSrc": "/dais_headshots/Daiwik Dhawan_Britain.jpg",
+      "daisGroup": "Russia"
     },
     {
       "name": "Hannah Kassam",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/Hannah Kassam_Britain.jpeg"
+      "imageSrc": "/dais_headshots/Hannah Kassam_Britain.jpeg",
+      "daisGroup": "Britain"
     },
     {
       "name": "Matheo Negreanu Stribley",
-      "role": "Vice Chair"
+      "role": "Vice Chair",
+      "daisGroup": "Britain"
     },
     {
       "name": "Thomas Wylie",
       "role": "Crisis Director",
-      "imageSrc": "/dais_headshots/Thomas Wylie_Russia.PNG"
+      "imageSrc": "/dais_headshots/Thomas Wylie_Russia.PNG",
+      "daisGroup": "Britain"
     },
     {
       "name": "Noah Deschenes",
       "role": "Assistant Crisis Director",
-      "imageSrc": "/dais_headshots/Noah Deschenes_Russia.jpg"
+      "imageSrc": "/dais_headshots/Noah Deschenes_Russia.jpg",
+      "daisGroup": "Britain"
     }
   ],
   "festival-rivalry-2026": [
     {
       "name": "Hande Soran",
       "role": "Coordinating Crisis Director - Festival Rivalry",
-      "imageSrc": "/dais_headshots/HandeSoran_Festival.JPG"
+      "imageSrc": "/dais_headshots/HandeSoran_Festival.JPG",
+      "daisGroup": "Joint Crisis Coordinator"
     },
     {
       "name": "Noosha Aval",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/NooshaAval_Osheagajpeg.jpg"
+      "imageSrc": "/dais_headshots/NooshaAval_Osheagajpeg.jpg",
+      "daisGroup": "Osheaga"
     },
     {
       "name": "Joia Tavares",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/JoiaTavares_Osheaga.jpeg"
+      "imageSrc": "/dais_headshots/JoiaTavares_Osheaga.jpeg",
+      "daisGroup": "Osheaga"
     },
     {
       "name": "Genevieve Hart",
       "role": "Crisis Director",
-      "imageSrc": "/dais_headshots/Genevieve Hart_Osheaga.jpg"
+      "imageSrc": "/dais_headshots/Genevieve Hart_Osheaga.jpg",
+      "daisGroup": "Osheaga"
     },
     {
       "name": "Nicole McAdoo",
       "role": "Assistant Crisis Director",
-      "imageSrc": "/dais_headshots/Nicole McAdoo_Osheaga.JPG"
+      "imageSrc": "/dais_headshots/Nicole McAdoo_Osheaga.JPG",
+      "daisGroup": "Osheaga"
     },
     {
       "name": "Hana Tomoum",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/HanaTomoum_Lollapalooza.jpg"
+      "imageSrc": "/dais_headshots/HanaTomoum_Lollapalooza.jpg",
+      "daisGroup": "Lollapalooza"
     },
     {
       "name": "Ivy Zheng",
-      "role": "Vice Chair"
+      "role": "Vice Chair",
+      "daisGroup": "Lollapalooza"
     },
     {
       "name": "Penelope Cramer",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Penelope_Lollapalooza.png"
+      "imageSrc": "/dais_headshots/Penelope_Lollapalooza.png",
+      "daisGroup": "Lollapalooza"
     },
     {
       "name": "Forest Jones",
       "role": "Crisis Director",
-      "imageSrc": "/dais_headshots/Forest Jones_Lollapalooza.jpg"
+      "imageSrc": "/dais_headshots/Forest Jones_Lollapalooza.jpg",
+      "daisGroup": "Lollapalooza"
     },
     {
       "name": "Olive Chiu",
       "role": "Assistant Crisis Director",
-      "imageSrc": "/dais_headshots/OliveChiu_Lollapalooza.JPG"
+      "imageSrc": "/dais_headshots/OliveChiu_Lollapalooza.JPG",
+      "daisGroup": "Lollapalooza"
     }
   ],
   "versace-2026": [

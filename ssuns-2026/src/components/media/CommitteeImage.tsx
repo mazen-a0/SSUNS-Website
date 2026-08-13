@@ -9,7 +9,7 @@ type CommitteeImageProps = {
   slug: string;
   alt: string;
   src?: string;
-  mode?: "card" | "hero";
+  mode?: "banner" | "card" | "hero";
   className?: string;
   priority?: boolean;
 };
@@ -26,9 +26,11 @@ export function CommitteeImage({ slug, alt, src, mode = "card", className, prior
 
   const wrapperClassName = useMemo(
     () =>
-      mode === "hero"
-        ? "aspect-[4/3] max-h-[min(380px,40vh)] w-full max-w-full sm:max-h-[min(400px,42vh)]"
-        : "aspect-[4/3] max-h-[clamp(160px,20vw,240px)] w-full max-w-full",
+      mode === "banner"
+        ? "aspect-[16/7] max-h-[min(300px,34vh)] w-full max-w-full"
+        : mode === "hero"
+          ? "aspect-[4/3] max-h-[min(380px,40vh)] w-full max-w-full sm:max-h-[min(400px,42vh)]"
+          : "aspect-[4/3] max-h-[clamp(160px,20vw,240px)] w-full max-w-full",
     [mode],
   );
 
@@ -44,7 +46,13 @@ export function CommitteeImage({ slug, alt, src, mode = "card", className, prior
           }
         }}
         priority={priority}
-        sizes={mode === "hero" ? "(min-width: 1280px) 52vw, 100vw" : "(min-width: 1280px) 30vw, (min-width: 768px) 48vw, 100vw"}
+        sizes={
+          mode === "banner"
+            ? "(min-width: 1280px) 1040px, 100vw"
+            : mode === "hero"
+              ? "(min-width: 1280px) 52vw, 100vw"
+              : "(min-width: 1280px) 30vw, (min-width: 768px) 48vw, 100vw"
+        }
         src={resolvedSrc}
       />
     </div>

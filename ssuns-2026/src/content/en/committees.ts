@@ -9,6 +9,10 @@ export type Committee = {
   size: string;
   blurb: string;
   overview: string;
+  descriptionReveal?: {
+    label: string;
+    message: string;
+  };
   topic: string;
   difficulty: string;
   format: string;
@@ -325,7 +329,8 @@ export const committees: Committee[] = [
     size: "Single Delegation",
     blurb: "Topic revealed at conference check-in.",
     overview:
-      "SSUNS’ Ad-Hoc Specialized Agency is intentionally kept under wraps until the conference begins. Delegates should expect a surprise briefing, a room that rewards adaptable research habits, and a committee experience that asks them to think quickly once the full mandate is unveiled.",
+      "Topic revealed at conference check-in.",
+    descriptionReveal: {"label": "Click here for description", "message": "Nice try! Committee descriptions for ad hoc committees will release day of, get excited!"},
     topic: "To be revealed at the conference",
     difficulty: "Ad Hoc Specialized Agency.",
     format: "Specialized",
@@ -351,7 +356,7 @@ export const committees: Committee[] = [
     size: "Single Delegation",
     blurb: "Osheaga vs Lollapalooza.",
     overview:
-      "In the summer of 2027, two festival giants are set to collide. Osheaga and Lollapalooza are both scheduled to take place from August 1–3, 2027, within just miles of each other; competing for the same artists, audiences, and headlines. With overlapping lineups and clashing schedules, the race is on to see which festival can draw the biggest crowds and dominate the summer music scene. On one hand, Osheaga has become a Montréal summer icon, hosting headlining artists such as Tate McRae and Lorde in recent years and earning praise from major performers like Noah Kahan, who called it one of the “best music festivals.” On the other, Lollapalooza brings the legacy of a global festival powerhouse, featuring chart-topping artists such as Olivia Rodrigo, Sabrina Carpenter, and RÜFÜS DU SOL. Will the iconic Canadian festival hold its ground, or will the Chicago-born classic steal the spotlight? In this Joint Crisis Committee, delegates will step into the roles of the two festivals’ management teams, competing to secure artists, attract fans, and ultimately determine which festival will reign supreme.",
+      "The recent festival frenzy in North America has led to an immense growth in music festival attendance, popularity, and significance within pop culture. Fueled by headliners who are among the most in-demand artists consistently topping the Billboard charts, as well as the influence of social media platforms that amplify performances and festival experiences, Lollapalooza and Osheaga draw hundreds of thousands of concertgoers every year. Their lineups, unique atmospheres, and strong online presence have transformed them into more than just music events, they have become major cultural experiences that attract fans from across North America and beyond. However, since both festivals were cemented as official annual music festivals in 2005 and 2006, their festival dates have frequently overlapped, creating a competitive rivalry as each strives to attract attendees and secure the industry's most sought-after performers. In the Lollapalooza and Osheaga committees, each will begin their separate festival preparations, marketing campaigns, and navigation of concert logistics, while being forced to determine how they can maximize ticket sales despite funding limitations and operational challenges. They must negotiate with artists, coordinate sponsorships, organize security and transportation, and balance the expectations of fans, local governments, and surrounding communities. At the same time, each festival must respond to the unique circumstances of its host city. Chicago's downtown location presents challenges related to crowd management, public infrastructure, and the use of public parks, while Montréal's festival scene requires Osheaga to compete for tourism, local support, and media attention within a city known for hosting numerous cultural events. As the committees progress through the planning process, the decisions they make will directly influence the success of their respective festivals while also shaping the cities of Montréal and Chicago. Beyond music and entertainment, both festivals generate significant economic activity by increasing tourism, supporting local businesses, creating temporary employment opportunities, and showcasing each city's cultural identity. Their success or failure can affect public perception, future investment, and the long-term reputation of each destination as a premier location for live music and large-scale events.",
     topic: "Osheaga vs Lollapalooza",
     difficulty: "This is a Joint-Crisis Committee.",
     format: "Joint Crisis",
@@ -403,7 +408,7 @@ export const committees: Committee[] = [
     size: "Single Delegation",
     blurb: "Collapse of the Pax Mongolica and the struggle to control Eurasian trade.",
     overview:
-      "For most of the 13th century, the empire founded by Genghis Khan controlled a majority of Eurasia, a period often referred to as the Pax Mongolica. During this time, trade flourished along the Silk Roads, allowing merchants to travel relatively safely from China to the Mediterranean. Taxes were often standardized across routes, and cultural exchange expanded across regions and civilizations. However, by the late 13th century (1270–1290), the empire had begun to fragment into rival states. Stability was weakening as competing khans fought for legitimacy. As a result, the question arises: which of the main Mongol successor states will dominate the future of Eurasia? Will it be the Yuan Dynasty in China, the Ilkhanate in Iran and the Middle East, the Chagatai Khanate in Central Asia, or the Golden Horde in the western steppe? Delegates will step into the roles of leaders, merchants, and power brokers across Eurasia, competing to restore stability and reestablish control over the Silk Roads.",
+      "For most of the 13th century, the Mongol Empire, founded by Genghis Khan, controlled much of Eurasia during the period known as the Pax Mongolica. During this era, Mongol borders rapidly expanded, trade flourished along the Silk Road, and societies across both continents had to adjust to a new dominant hegemon. This dynamic forced neighboring states to shift resources to resist Mongol conquests. Other states accepted Mongol rule but maintained semi-autonomy as vassal states while other neighbors joined the empire as diplomatic and trade partners. The internal standardization of resources and cultural exchange expanded across regions, fostering a centralized Mongolian state. Local traditions merged with Mongol political structures, creating new systems of taxation, communication, and governance. This combination of centralized authority and cross-cultural exchange allowed the Mongol Empire to maintain influence over a massive territory for much of the 13th century. However, by the late 13th century (1270–1290), the empire began fragmenting into rival states. Internal stability faltered as competing khanates sought to establish their own political legitimacy. As a result, a pivotal question emerged: how would the main Mongol successor states shape the future of Eurasia? Delegates will step into the roles of leaders, merchants, and power brokers from the four successor states: the Yuan Dynasty in China, the Ilkhanate in Persia and Anatolia, the Chagatai Khanate in Central Asia, the Golden Horde from the Western Steppe to Crimea, as well as other neighboring Eurasian groups. As part of committee assignments, delegates will be faced with managing the goals and interests of all of these groups unilaterally while also progressing the individual power and vision for the khannate or group you represent. Delegates will navigate intense geopolitical tensions, manage economic networks, and resolve diplomatic crises. In this collective Pax Mongolica environment, delegates will have to negotiate and be creative in order to chart the path of the Mongol Empire while also advancing their distinct strategic ambitions in a moment that would change the outcome of Eurasia forever.",
     topic: "Collapse of the Pax Mongolica and the struggle to control Eurasian trade",
     difficulty: "This is a regular committee.",
     format: "Crisis",
@@ -429,7 +434,8 @@ export const committees: Committee[] = [
     size: "Single Delegation",
     blurb: "Topic revealed during conference opening.",
     overview:
-      "The Secretary-General’s Ad Hoc remains confidential until delegates are on-site. This room is designed for delegates who enjoy uncertainty, rapid adaptation, and high-attention crisis pacing once the scenario is formally introduced.",
+      "Topic revealed during conference opening.",
+    descriptionReveal: {"label": "Click here for description", "message": "Nice try! Committee descriptions for ad hoc committees will release day of, get excited!"},
     topic: "To be revealed at the conference",
     difficulty: "This is an Ad Hoc Crisis committee.",
     format: "Crisis",

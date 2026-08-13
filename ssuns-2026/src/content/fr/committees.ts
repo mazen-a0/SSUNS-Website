@@ -66,7 +66,7 @@ export const committeesPageContent = {
   },
 };
 
-const committeeTranslationsBySlug: Record<string, { blurb: string; overview: string; topic: string }> = {
+const committeeTranslationsBySlug: Record<string, { blurb: string; overview: string; topic: string; descriptionReveal?: { label: string; message: string } }> = {
   "who-2026": {
     blurb: "Renforcer le soutien aux travailleurs de la santé dans les marchés émergents.",
     topic: "Renforcer le soutien aux travailleurs de la santé dans les marchés émergents",
@@ -161,7 +161,8 @@ const committeeTranslationsBySlug: Record<string, { blurb: string; overview: str
     blurb: "Sujet révélé lors de l’enregistrement à la conférence.",
     topic: "Sujet révélé pendant la conférence",
     overview:
-      "L’agence spécialisée Ad Hoc de SSUNS est volontairement tenue secrète jusqu’au début de la conférence. Les délégués doivent s’attendre à un briefing surprise, à une salle qui récompense des habitudes de recherche adaptables et à une expérience de comité exigeant de réfléchir rapidement une fois le mandat complet dévoilé.",
+      "Sujet révélé pendant la conférence.",
+    descriptionReveal: {"label": "Cliquez ici pour la description", "message": "Bien essayé! Les descriptions des comités Ad Hoc seront publiées le jour même, préparez-vous!"},
   },
   "chess-2026": {
     blurb: "Empire russe c. Empire britannique.",
@@ -173,7 +174,7 @@ const committeeTranslationsBySlug: Record<string, { blurb: string; overview: str
     blurb: "Osheaga c. Lollapalooza.",
     topic: "Osheaga c. Lollapalooza",
     overview:
-      "À l’été 2027, deux géants des festivals musicaux sont sur le point d’entrer en collision. Osheaga et Lollapalooza doivent tous deux se dérouler du 1er au 3 août 2027, à seulement quelques kilomètres l’un de l’autre, se disputant les mêmes artistes, le même public et les mêmes manchettes. Avec des programmations qui se chevauchent et des horaires concurrents, la course est lancée pour savoir quel festival attirera les plus grandes foules et dominera l’été musical. D’un côté, Osheaga s’est imposé comme une institution estivale montréalaise ; de l’autre, Lollapalooza bénéficie du prestige d’une marque internationale. Dans ce comité de crise conjointe, les délégués incarneront les équipes de direction des deux festivals et devront rivaliser pour obtenir les artistes, séduire les foules et imposer leur événement comme référence incontestée.",
+      "La récente frénésie des festivals en Amérique du Nord a entraîné une immense croissance de la fréquentation, de la popularité et de l'importance des festivals de musique dans la culture populaire. Portés par des têtes d'affiche parmi les artistes les plus demandés et régulièrement en tête des palmarès Billboard, ainsi que par l'influence des réseaux sociaux qui amplifient les performances et les expériences festivalières, Lollapalooza et Osheaga attirent chaque année des centaines de milliers de spectateurs. Leurs programmations, leurs atmosphères distinctes et leur forte présence en ligne les ont transformés en bien plus que de simples événements musicaux: ils sont devenus de grandes expériences culturelles qui attirent des fans de partout en Amérique du Nord et au-delà. Toutefois, depuis que les deux festivals se sont établis comme festivals annuels officiels en 2005 et 2006, leurs dates se chevauchent fréquemment, créant une rivalité concurrentielle alors que chacun cherche à attirer les participants et à obtenir les artistes les plus convoités de l'industrie. Dans les comités Lollapalooza et Osheaga, chaque festival commencera ses propres préparatifs, campagnes marketing et décisions logistiques, tout en devant déterminer comment maximiser ses ventes de billets malgré des limites de financement et des défis opérationnels. Les délégués devront négocier avec les artistes, coordonner les commandites, organiser la sécurité et le transport, et équilibrer les attentes des fans, des gouvernements locaux et des communautés environnantes. Chaque festival devra aussi répondre aux réalités propres à sa ville hôte. Le site du centre-ville de Chicago pose des défis liés à la gestion des foules, aux infrastructures publiques et à l'utilisation des parcs publics, tandis que la scène festivalière de Montréal oblige Osheaga à rivaliser pour le tourisme, l'appui local et l'attention médiatique dans une ville reconnue pour ses nombreux événements culturels. À mesure que les comités avanceront dans le processus de planification, leurs décisions influenceront directement le succès de leurs festivals respectifs tout en façonnant les villes de Montréal et de Chicago. Au-delà de la musique et du divertissement, les deux festivals génèrent une activité économique importante en stimulant le tourisme, en soutenant les entreprises locales, en créant des emplois temporaires et en mettant en valeur l'identité culturelle de chaque ville. Leur réussite ou leur échec peut influencer la perception du public, les investissements futurs et la réputation à long terme de chaque destination comme lieu de premier plan pour la musique en direct et les grands événements.",
   },
   "versace-2026": {
     blurb: "Conseil d’administration.",
@@ -197,7 +198,7 @@ const committeeTranslationsBySlug: Record<string, { blurb: string; overview: str
     blurb: "L’effondrement de la Pax Mongolica et la lutte pour contrôler le commerce eurasiatique.",
     topic: "L’effondrement de la Pax Mongolica et la lutte pour contrôler le commerce eurasiatique",
     overview:
-      "Pendant la majeure partie du XIIIe siècle, l’empire fondé par Gengis Khan contrôle une grande partie de l’Eurasie, période souvent qualifiée de Pax Mongolica. Les routes commerciales prospèrent, permettant aux marchands de voyager relativement en sécurité de la Chine à la Méditerranée. Les taxes sont souvent harmonisées et les échanges culturels s’intensifient. Mais à la fin du XIIIe siècle, l’empire commence à se fragmenter en États rivaux. La stabilité s’effrite tandis que plusieurs khans se disputent la légitimité. La question devient alors la suivante : lequel des grands États successeurs dominera l’avenir de l’Eurasie ? Dans ce comité, les délégués incarneront des dirigeants, des marchands et des courtiers de pouvoir à travers le continent, tous engagés dans une compétition pour rétablir l’ordre et reprendre le contrôle des routes de la soie.",
+      "Pendant la majeure partie du XIIIe siècle, l'Empire mongol, fondé par Gengis Khan, contrôlait une grande partie de l'Eurasie durant la période connue sous le nom de Pax Mongolica. À cette époque, les frontières mongoles s'étendaient rapidement, le commerce prospérait le long de la route de la soie, et les sociétés des deux continents devaient s'adapter à un nouvel hégémon dominant. Cette dynamique força les États voisins à réaffecter leurs ressources pour résister aux conquêtes mongoles. Certains États acceptèrent la domination mongole tout en conservant une semi-autonomie comme États vassaux, tandis que d'autres voisins rejoignirent l'empire comme partenaires diplomatiques et commerciaux. La standardisation interne des ressources et les échanges culturels se développèrent à travers les régions, favorisant un État mongol centralisé. Les traditions locales fusionnèrent avec les structures politiques mongoles, créant de nouveaux systèmes de taxation, de communication et de gouvernance. Cette combinaison d'autorité centralisée et d'échanges interculturels permit à l'Empire mongol de maintenir son influence sur un immense territoire pendant une grande partie du XIIIe siècle. Cependant, à la fin du XIIIe siècle (1270-1290), l'empire commença à se fragmenter en États rivaux. La stabilité interne vacilla alors que des khanats concurrents cherchaient à établir leur propre légitimité politique. Une question centrale émergea alors: comment les principaux États successeurs mongols allaient-ils façonner l'avenir de l'Eurasie? Les délégués incarneront des dirigeants, des marchands et des acteurs de pouvoir provenant des quatre États successeurs: la dynastie Yuan en Chine, l'Ilkhanat en Perse et en Anatolie, le khanat de Djaghataï en Asie centrale, la Horde d'or de la steppe occidentale à la Crimée, ainsi que d'autres groupes eurasiens voisins. Dans le cadre de leurs assignations, les délégués devront gérer les objectifs et les intérêts de tous ces groupes de manière unilatérale tout en faisant progresser le pouvoir et la vision propres au khanat ou au groupe qu'ils représentent. Ils navigueront des tensions géopolitiques intenses, géreront des réseaux économiques et résoudront des crises diplomatiques. Dans cet environnement collectif de Pax Mongolica, les délégués devront négocier et faire preuve de créativité afin de tracer la voie de l'Empire mongol, tout en avançant leurs ambitions stratégiques distinctes dans un moment appelé à transformer durablement l'Eurasie.",
   },
   "pour-decisions-2026": {
     blurb: "La guerre de succession de Bourgogne, 1477.",
@@ -209,7 +210,8 @@ const committeeTranslationsBySlug: Record<string, { blurb: string; overview: str
     blurb: "Sujet révélé pendant l’ouverture de la conférence.",
     topic: "Sujet révélé pendant la conférence",
     overview:
-      "Le comité Ad Hoc du Secrétaire général demeure confidentiel jusqu’à l’arrivée des délégués sur place. Cette salle est pensée pour les participants qui aiment l’incertitude, l’adaptation rapide et le rythme soutenu d’un scénario de crise une fois la situation officiellement dévoilée.",
+      "Sujet révélé pendant la conférence.",
+    descriptionReveal: {"label": "Cliquez ici pour la description", "message": "Bien essayé! Les descriptions des comités Ad Hoc seront publiées le jour même, préparez-vous!"},
   },
 };
 
@@ -276,6 +278,7 @@ export const committees = enCommittees.map((committee) => {
         : committee.backgroundGuide,
     blurb: translation?.blurb ?? committee.blurb,
     overview: translation?.overview ?? committee.overview,
+    descriptionReveal: translation?.descriptionReveal ?? committee.descriptionReveal,
     topic: translation?.topic ?? committee.topic,
   };
 });
