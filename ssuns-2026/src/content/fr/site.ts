@@ -63,7 +63,7 @@ export const footerContent = {
         { ...enFooterContent.sections[0].items[0], label: "Lieu" },
         { ...enFooterContent.sections[0].items[1], label: "Comités" },
         { ...enFooterContent.sections[0].items[2], label: "Horaire" },
-        { ...enFooterContent.sections[0].items[3], label: "Commanditer SSUNS" },
+        { ...enFooterContent.sections[0].items[3], label: "Commandites" },
       ],
     },
     {

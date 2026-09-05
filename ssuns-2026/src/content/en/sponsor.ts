@@ -1,7 +1,7 @@
 import { pickImage } from "@/lib/images";
 
 export const sponsorContent = {
-  title: "Sponsor Us",
+  title: "Sponsorships",
   intro:
     "Support a flagship student-led conference that brings 1,300+ delegates to Montréal for four days of debate, public speaking, and youth leadership.",
   heroImage: {
@@ -36,6 +36,21 @@ export const sponsorContent = {
   supportersTitle: "Supporters",
   supportersNote:
     "SSUNS partners with organizations that value youth leadership, public speaking, and access to high-quality conference experiences.",
+  sponsorsTitle: "Our sponsors",
+  sponsorsHeading: "Thank you to the partners making SSUNS possible.",
+  sponsorsIntro:
+    "We appreciate all of our sponsors for making this conference possible. Their support helps SSUNS welcome delegates, advisors, and staff into a polished and accessible conference weekend.",
+  sponsorVisitLabel: "Visit sponsor site",
+  sponsors: [
+    {
+      name: "GS-JJ",
+      href: "https://www.gs-jj.com",
+      logoSrc: "/sponsors/gsjj.jpg",
+      logoAlt: "GS-JJ sponsor logo",
+      description:
+        "GS-JJ supports SSUNS 2026 as part of the community of sponsors helping make the conference possible.",
+    },
+  ],
   contactTitle: "Sponsorship contact",
   contactEmail: "pr@ssuns.org",
   packageLabel: "Find our full sponsorship package here.",

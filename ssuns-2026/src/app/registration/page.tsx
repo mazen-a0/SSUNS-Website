@@ -44,7 +44,7 @@ export default function RegistrationPage() {
   const status = getRegistrationStatus(new Date());
   const isFrench = registrationContent.title === "Inscription";
   const [isLetterOpen, setIsLetterOpen] = useState(false);
-  const registrationCapacity = 61;
+  const registrationCapacity = 82;
   const letterOpeningPreview = registrationContent.letter.body.slice(0, 3);
   const letterClosingPreview = registrationContent.letter.body.slice(-2);
   const chargeeEmail =

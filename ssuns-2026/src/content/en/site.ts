@@ -51,7 +51,7 @@ export const navItems: NavItem[] = [
   { label: "Conference", href: "/conference" },
   { label: "Committees", href: "/committees" },
   { label: "Registration", href: "/registration" },
-  { label: "Sponsor Us", href: "/sponsor-us" },
+  { label: "Sponsorships", href: "/sponsor-us" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -100,7 +100,7 @@ export const footerContent = {
         { label: "Venue", href: "/conference/venue" },
         { label: "Committees", href: "/committees" },
         { label: "Schedule", href: "/conference/schedule" },
-        { label: "Sponsor Us", href: "/sponsor-us" },
+        { label: "Sponsorships", href: "/sponsor-us" },
       ],
     },
     {

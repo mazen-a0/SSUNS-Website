@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { PageHero } from "@/components/PageHero";
@@ -74,6 +75,45 @@ export default function SponsorUsPage() {
             </Link>
           </div>
         </div>
+
+        <article className="theme-panel-strong paper-grain mb-6 overflow-hidden rounded-[12px] p-6 shadow-[var(--shadow-soft)] sm:p-8">
+          <div className="grid gap-6 lg:grid-cols-[0.38fr_minmax(0,1fr)] lg:items-center">
+            <div>
+              <p className="section-kicker">{sponsorContent.sponsorsTitle}</p>
+              <h2 className="mt-4 text-3xl font-semibold leading-tight text-[var(--accent)]">{sponsorContent.sponsorsHeading}</h2>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{sponsorContent.sponsorsIntro}</p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {sponsorContent.sponsors.map((sponsor) => (
+                <Link
+                  className="group relative overflow-hidden rounded-[12px] border border-[var(--rule-strong)] bg-[var(--panel)] p-4 shadow-[0_18px_45px_rgba(20,32,130,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-[0_24px_55px_rgba(20,32,130,0.14)]"
+                  href={sponsor.href}
+                  key={sponsor.name}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#142082,#789cf4,#142082)] opacity-85" />
+                  <div className="relative flex min-h-[11rem] items-center justify-center rounded-[10px] border border-[var(--rule)] bg-white p-5">
+                    <Image
+                      alt={sponsor.logoAlt}
+                      className="object-contain"
+                      fill
+                      sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 100vw"
+                      src={sponsor.logoSrc}
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <p className="text-lg font-semibold text-[var(--accent)]">{sponsor.name}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{sponsor.description}</p>
+                    <p className="mt-4 text-sm font-semibold text-[var(--accent)] transition-colors group-hover:text-[var(--accent-2)]">
+                      {sponsorContent.sponsorVisitLabel}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </article>
 
         <div className="grid gap-6 lg:grid-cols-[0.44fr_0.56fr]">
           <DossierCarousel items={sponsorSlides} />

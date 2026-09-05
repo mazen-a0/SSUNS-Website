@@ -2,7 +2,7 @@ import { sponsorContent as en } from "@/content/en/sponsor";
 
 export const sponsorContent = {
   ...en,
-  title: "Commanditer SSUNS",
+  title: "Commandites",
   intro:
     "Soutenez une conférence étudiante phare qui réunit plus de 1 300 délégués à Montréal pour quatre jours de débat, de prise de parole en public et de leadership jeunesse.",
   reasons: [
@@ -35,6 +35,18 @@ export const sponsorContent = {
   supportersTitle: "Partenaires",
   supportersNote:
     "SSUNS collabore avec des organisations qui valorisent le leadership jeunesse, la prise de parole en public et l'accès à une expérience de conférence de grande qualité.",
+  sponsorsTitle: "Nos commanditaires",
+  sponsorsHeading: "Merci aux partenaires qui rendent SSUNS possible.",
+  sponsorsIntro:
+    "Nous remercions tous nos commanditaires de rendre cette conférence possible. Leur soutien aide SSUNS à accueillir les délégués, les conseillers pédagogiques et le personnel dans une fin de semaine de conférence soignée et accessible.",
+  sponsorVisitLabel: "Visiter le site du commanditaire",
+  sponsors: en.sponsors.map((sponsor) => ({
+    ...sponsor,
+    description:
+      sponsor.name === "GS-JJ"
+        ? "GS-JJ soutient SSUNS 2026 au sein de la communauté de commanditaires qui contribuent à rendre la conférence possible."
+        : sponsor.description,
+  })),
   contactTitle: "Contact commandites",
   packageLabel: "Consultez notre dossier complet de commandite ici",
   packageUnavailableLabel: "Consultez le dossier complet pour connaître les possibilités de commandite, les prix et les détails des partenariats personnalisés.",
