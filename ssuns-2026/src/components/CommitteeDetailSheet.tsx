@@ -4,17 +4,68 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
-import { getCommitteeBadges, getCommitteeLevelLabel } from "@/lib/committeeBadges";
+import { backgroundGuideLinksBySlug } from "@/content/backgroundGuides";
+import { positionPaperFormsBySlug } from "@/content/positionPapers";
+import { getCommitteeLevelLabel } from "@/lib/committeeBadges";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 const detailSections = ["overview", "dais"] as const;
 const daisPlaceholderSrc = "/dais_headshots/Portrait_Placeholder.png";
+const genericDetailNotes = new Set([
+  "",
+  "This is a regular committee.",
+  "Il s'agit d'un comité régulier.",
+  "This is a Double Delegate Committee.",
+  "This is a Joint-Crisis Committee.",
+  "This is an Advanced Committee.",
+  "This is a Beginner Committee.",
+  "Ad Hoc Specialized Agency.",
+  "This is an Ad Hoc Crisis committee.",
+  "Agence spécialisée Ad Hoc.",
+  "Il s'agit d'un comité de crise Ad Hoc.",
+]);
 
 type SectionKey = (typeof detailSections)[number];
 
 type CommitteeDetailSheetProps = {
   slug: string;
 };
+
+function getCommitteeDetailNote(difficulty: string, isFrench: boolean) {
+  if (genericDetailNotes.has(difficulty)) {
+    return null;
+  }
+
+  if (difficulty === "Low General Assembly, High Crisis.") {
+    return { label: isFrench ? "Équilibre procédural" : "Procedure mix", value: isFrench ? "Faible AG • Forte crise" : "Low GA • High Crisis" };
+  }
+
+  if (difficulty === "Faible AG, forte crise.") {
+    return { label: "Équilibre procédural", value: "Faible AG • Forte crise" };
+  }
+
+  if (difficulty === "Low Crisis, High General Assembly.") {
+    return { label: isFrench ? "Équilibre procédural" : "Procedure mix", value: isFrench ? "Faible crise • Forte AG" : "Low Crisis • High GA" };
+  }
+
+  if (difficulty === "Faible crise, forte AG.") {
+    return { label: "Équilibre procédural", value: "Faible crise • Forte AG" };
+  }
+
+  if (difficulty === "Differing Rules of Procedure.") {
+    return { label: isFrench ? "Procédure" : "Procedure", value: isFrench ? "Règles distinctes" : "Differing Rules" };
+  }
+
+  if (difficulty === "Règles de procédure distinctes.") {
+    return { label: "Procédure", value: "Règles distinctes" };
+  }
+
+  if (difficulty === "Some sessions might take place outside the Sheraton Hotel.") {
+    return { label: isFrench ? "Logistique" : "Logistics", value: difficulty };
+  }
+
+  return { label: isFrench ? "Note" : "Note", value: difficulty };
+}
 
 export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   const { committees, committeesPageContent, language } = useSiteContent();
@@ -52,8 +103,10 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
           ? "Pour toute question, veuillez contacter Emma Ristic à gaecosoc@ssuns.org."
           : "If you have questions, please contact Emma Ristic at gaecosoc@ssuns.org.";
   const isFrench = language === "fr";
+  const positionPaperFormHref = positionPaperFormsBySlug[committee.slug];
+  const backgroundGuideHref = backgroundGuideLinksBySlug[committee.slug];
   const levelLabel = getCommitteeLevelLabel(committee.level);
-  const metadataBadges = getCommitteeBadges(committee).filter((badge) => badge !== levelLabel);
+  const detailNote = getCommitteeDetailNote(committee.difficulty, isFrench);
   const sectionLabels = {
     overview: committeesPageContent.sections.overview,
     dais: isFrench ? "Rencontrez le dais" : "Meet the Dais",
@@ -64,6 +117,19 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
       : "Background guides will be released closer to the conference.",
     daisNote: isFrench ? "Les biographies du dais seront publiées avec les mises à jour du comité." : "Dais profiles will be published with committee updates.",
     resourcesNote: isFrench ? "Les ressources du comité seront ajoutées au fur et à mesure de leur publication." : "Committee resources will be added here as they are released.",
+    profile: isFrench ? "Fiche du comité" : "Committee profile",
+    profileNote: isFrench ? "Détails clés pour les délégués." : "Key room details for delegates.",
+    documents: isFrench ? "Documents délégués" : "Delegate documents",
+    documentsNote: isFrench ? "Liens essentiels pour préparer ce comité." : "Essential links for preparing this committee.",
+    positionPaper: isFrench ? "Exposé de position" : "Position Paper",
+    positionPaperNote: isFrench
+      ? "Utilisez le formulaire de ce comité pour soumettre votre exposé de position."
+      : "Use this committee's form to submit your position paper.",
+    submitPositionPaper: isFrench ? "Soumettre l'exposé de position" : "Submit position paper",
+    guideAvailableNote: isFrench
+      ? "Le guide préparatoire de ce comité est maintenant disponible. Utilisez le mot de passe fourni par votre conseiller pédagogique si demandé."
+      : "This committee's background guide is now available. Use the password provided by your faculty advisor if prompted.",
+    accessGuide: isFrench ? "Accéder au guide préparatoire" : "Access background guide",
   };
   const hasDaisGroups = committee.chairs.some((chair) => chair.daisGroup);
   const daisGroups = committee.chairs.reduce<Array<{ title: string | null; chairs: typeof committee.chairs }>>((groups, chair) => {
@@ -102,15 +168,11 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
     return groupTitle;
   };
   const factCards = [
-    { label: committeesPageContent.filterThemeLabel, value: committee.theme },
-    { label: committeesPageContent.sections.format, value: committee.format },
     { label: committeesPageContent.sizeLabel, value: committee.size },
-    levelLabel
-      ? { label: committeesPageContent.filterLevelLabel, value: levelLabel }
-      : metadataBadges.length
-        ? { label: committeesPageContent.sections.difficulty, value: metadataBadges.join(" • ") }
-        : null,
+    levelLabel ? { label: committeesPageContent.filterLevelLabel, value: levelLabel } : null,
+    detailNote,
   ].filter((fact): fact is { label: string; value: string } => Boolean(fact));
+  const hasCommitteeDocuments = Boolean(positionPaperFormHref || backgroundGuideHref);
 
   return (
     <section className="page-shell mt-8">
@@ -134,21 +196,63 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
           <article className="theme-panel overflow-hidden rounded-[10px] p-3">
             <div className="relative overflow-hidden rounded-[8px]">
               <CommitteeImage alt="Committee room with placards and dais" mode="banner" slug={committee.slug} src={committee.imageSrc} />
-              <div className="mt-3 grid gap-2 border-t border-[var(--rule)] pt-3 sm:grid-cols-2 lg:grid-cols-4">
-                {factCards.map((fact) => (
-                  <div
-                    className="rounded-[7px] border border-[rgba(20,32,130,0.16)] bg-[rgba(253,247,234,0.72)] p-3"
-                    key={`${fact.label}-${fact.value}`}
-                  >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{fact.label}</p>
-                    <p className="mt-1 text-sm font-semibold leading-snug text-[var(--text)]">{fact.value}</p>
+              {factCards.length ? (
+                <div className="mt-3 rounded-[8px] border border-[rgba(20,32,130,0.22)] bg-[rgba(180,202,255,0.28)] p-4">
+                  <div className="grid gap-4 md:grid-cols-[12rem_minmax(0,1fr)] md:items-start">
+                    <div>
+                      <p className="section-kicker text-[var(--accent)]">{sectionLabels.profile}</p>
+                      <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{sectionLabels.profileNote}</p>
+                    </div>
+                    <dl className="flex flex-wrap gap-2">
+                      {factCards.map((fact) => (
+                        <div
+                          className="min-w-[12rem] flex-1 rounded-[7px] border border-[rgba(20,32,130,0.16)] bg-[rgba(255,255,255,0.42)] p-3"
+                          key={`${fact.label}-${fact.value}`}
+                        >
+                          <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{fact.label}</dt>
+                          <dd className="mt-1 text-sm font-semibold leading-snug text-[var(--text)]">{fact.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </div>
-                ))}
-              </div>
+                </div>
+              ) : null}
             </div>
           </article>
 
           <article className="theme-panel paper-grain rounded-[8px] p-5">
+            {hasCommitteeDocuments ? (
+              <div className="mb-5 rounded-[9px] border border-[rgba(20,32,130,0.22)] bg-[rgba(180,202,255,0.30)] p-4 sm:p-5">
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.45fr)] lg:items-center">
+                  <div>
+                    <p className="section-kicker text-[var(--accent)]">{sectionLabels.documents}</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--text)]">{sectionLabels.documentsNote}</p>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {positionPaperFormHref ? (
+                      <Link
+                        className="inline-flex min-h-12 items-center justify-center rounded-full border border-[var(--accent)] bg-[var(--accent)] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_10px_26px_rgba(20,32,130,0.18)] transition-colors duration-150 hover:bg-[color-mix(in_srgb,var(--accent)_88%,black)]"
+                        href={positionPaperFormHref}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        {sectionLabels.submitPositionPaper}
+                      </Link>
+                    ) : null}
+                    {backgroundGuideHref ? (
+                      <Link
+                        className="inline-flex min-h-12 items-center justify-center rounded-full border border-[rgba(20,32,130,0.36)] bg-[rgba(255,255,255,0.55)] px-5 py-3 text-center text-sm font-semibold text-[var(--accent)] transition-colors duration-150 hover:border-[var(--accent)] hover:bg-white"
+                        href={backgroundGuideHref}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        {sectionLabels.accessGuide}
+                      </Link>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ) : null}
             <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(16rem,0.85fr)] lg:items-start">
               <div>
                 <p className="section-kicker">{sectionLabels.resources}</p>
@@ -163,10 +267,11 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                 ) : (
                   <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{sectionLabels.resourcesNote}</p>
                 )}
+                {positionPaperFormHref ? <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{sectionLabels.positionPaperNote}</p> : null}
               </div>
               <div className="border-t border-[var(--rule)] pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
                 <p className="section-kicker">{sectionLabels.guide}</p>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{sectionLabels.guideNote}</p>
+                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{backgroundGuideHref ? sectionLabels.guideAvailableNote : sectionLabels.guideNote}</p>
               </div>
               <div className="border-t border-[var(--rule)] pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
                 <p className="section-kicker">Contact</p>

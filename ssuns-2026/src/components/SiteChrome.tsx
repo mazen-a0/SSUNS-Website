@@ -25,7 +25,7 @@ const conferencePreviewOrder = [
   "/conference/charity-partner",
   "/conference/delegate-resource-center",
 ] as const;
-const committeesPreviewOrder = ["/committees", "/committees/awards", "/committees/policies"] as const;
+const committeesPreviewOrder = ["/committees", "/committees/position-papers", "/committees/awards", "/committees/policies"] as const;
 const registrationPreviewOrder = ["/registration", "/registration/how-to-register", "/registration/financial-aid"] as const;
 
 function pickPreviewSections(
@@ -81,6 +81,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           "/conference/charity-partner": "Information sur le partenaire",
           "/conference/delegate-resource-center": "Documents et aide pour les délégués",
           "/committees": "Liste des comités et dossiers",
+          "/committees/position-papers": "Instructions et formulaires de soumission",
           "/committees/awards": "Prix et distinctions",
           "/committees/policies": "Politiques et ressources",
           "/registration": "Information sur l'inscription",
@@ -100,6 +101,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           "/conference/charity-partner": "Partner information",
           "/conference/delegate-resource-center": "Delegate documents and help",
           "/committees": "Committee list and dossiers",
+          "/committees/position-papers": "Instructions and submission forms",
           "/committees/awards": "Awards and distinctions",
           "/committees/policies": "Policies and resources",
           "/registration": "Registration information",

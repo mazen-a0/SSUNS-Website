@@ -237,6 +237,10 @@ img {
   animation: image-drift 1200ms ease-out both;
 }
 
+.guide-announcement-enter {
+  animation: guide-announcement-up 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .page-shell {
   width: min(100%, 92rem);
   margin-inline: auto;
@@ -326,6 +330,21 @@ img {
     transform: translateY(-10px) scale(1.02);
   }
   to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes guide-announcement-up {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1);
+  }
+  100% {
+    opacity: 1;
     transform: translateY(0) scale(1);
   }
 }

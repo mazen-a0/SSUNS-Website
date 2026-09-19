@@ -27,6 +27,15 @@ export const committeesPageContent = {
       ],
     },
     {
+      href: "/committees/position-papers",
+      title: "Exposés de position",
+      summary: "Instructions de soumission, attentes de mise en forme et formulaires par comité.",
+      body: [
+        "Les délégués participant à une Assemblée générale, un Conseil économique et social ou une Agence spécialisée à SSUNS 2026 doivent soumettre un exposé de position avant le début de la conférence.",
+        "Les exposés de position ne sont pas requis pour les comités de crise et ne seront pas acceptés.",
+      ],
+    },
+    {
       href: "/committees/policies",
       title: "Politiques et ressources des comités",
       summary: "Attentes des comités, ressources de procédure et soutien à la rédaction de résolutions.",
