@@ -29,6 +29,12 @@ export default function CommitteesPoliciesPage() {
           openLabel: isFrench ? "Lire la politique complète (PDF)" : "Read full policy (PDF)",
         },
         {
+          title: isFrench ? "Politique de pré-rédaction" : "Pre-Writing Policy",
+          preview: policyPreview,
+          pdfHref: "/docs/SSUNS2026 - Pre-Writing Policy.pdf",
+          openLabel: isFrench ? "Lire la politique complète (PDF)" : "Read full policy (PDF)",
+        },
+        {
           title: isFrench ? "Politique des prix" : "Awards Policy",
           preview: policyPreview,
           pdfHref: "/docs/SSUNS26_Award_Eval_Policy.pdf",

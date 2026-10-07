@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
-import { backgroundGuideLinksBySlug } from "@/content/backgroundGuides";
+import { additionalCommitteeDocumentsBySlug, backgroundGuideLinksBySlug } from "@/content/backgroundGuides";
 import { positionPaperFormsBySlug } from "@/content/positionPapers";
 import { getCommitteeLevelLabel } from "@/lib/committeeBadges";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -105,6 +105,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   const isFrench = language === "fr";
   const positionPaperFormHref = positionPaperFormsBySlug[committee.slug];
   const backgroundGuideHref = backgroundGuideLinksBySlug[committee.slug];
+  const additionalDocuments = additionalCommitteeDocumentsBySlug[committee.slug] ?? [];
   const levelLabel = getCommitteeLevelLabel(committee.level);
   const detailNote = getCommitteeDetailNote(committee.difficulty, isFrench);
   const sectionLabels = {
@@ -172,7 +173,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
     levelLabel ? { label: committeesPageContent.filterLevelLabel, value: levelLabel } : null,
     detailNote,
   ].filter((fact): fact is { label: string; value: string } => Boolean(fact));
-  const hasCommitteeDocuments = Boolean(positionPaperFormHref || backgroundGuideHref);
+  const hasCommitteeDocuments = Boolean(positionPaperFormHref || backgroundGuideHref || additionalDocuments.length);
 
   return (
     <section className="page-shell mt-8">
@@ -249,7 +250,29 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                         {sectionLabels.accessGuide}
                       </Link>
                     ) : null}
+                    {additionalDocuments.map((document) => (
+                      <Link
+                        className="inline-flex min-h-12 items-center justify-center rounded-full border border-[rgba(20,32,130,0.36)] bg-[rgba(255,255,255,0.55)] px-5 py-3 text-center text-sm font-semibold text-[var(--accent)] transition-colors duration-150 hover:border-[var(--accent)] hover:bg-white"
+                        href={document.href}
+                        key={document.href}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        {document.label}
+                      </Link>
+                    ))}
                   </div>
+                  {additionalDocuments.some((document) => document.note) ? (
+                    <div className="lg:col-start-2">
+                      {additionalDocuments.map((document) =>
+                        document.note ? (
+                          <p className="text-xs italic leading-relaxed text-[var(--muted)]" key={`${document.href}-note`}>
+                            {document.note}
+                          </p>
+                        ) : null,
+                      )}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ) : null}

@@ -23,13 +23,13 @@ export function ProfileCard({ id, name, role, email, imageSrc, bio, onOpen }: Pr
       className="theme-panel paper-grain mx-auto flex h-full w-full max-w-[20rem] overflow-hidden rounded-[8px] p-3.5 sm:p-4"
     >
       <div className="flex min-h-0 w-full flex-col gap-3">
-        <div className="relative overflow-hidden rounded-[6px] border border-[var(--rule)]">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] border border-[var(--rule)]">
           <Image
             alt={`${name} headshot`}
-            className="h-[8.75rem] w-full object-cover object-top sm:h-[9.25rem]"
-            height={1000}
+            className="object-cover object-top"
+            fill
+            sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
             src={imageSrc || "/headshots/marcus.jpg"}
-            width={800}
           />
         </div>
         <div className="flex min-h-0 flex-1 flex-col">
