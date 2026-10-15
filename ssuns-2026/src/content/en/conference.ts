@@ -1,4 +1,5 @@
 import { pickImage } from "@/lib/images";
+import { charityPartner } from "@/content/charityPartner";
 
 export const conferenceContent = {
   title: "Conference",
@@ -56,12 +57,8 @@ export const conferenceContent = {
     {
       href: "/conference/charity-partner",
       title: "Charity partner",
-      summary: "Conference-facing partner information and future charitable collaboration details.",
-      body: [
-        "SSUNS uses its conference platform to support community-minded initiatives alongside the core academic programme.",
-        "Our 2026 charitable collaboration will focus on a Montréal-based partner aligned with youth development, education, or community support.",
-        "Partnership details will be shared through official SSUNS channels once the season's charitable programming is finalized.",
-      ],
+      summary: "War Child — SSUNS 2026 charity partner.",
+      body: charityPartner.paragraphs,
     },
     {
       href: "/conference/delegate-resource-center",

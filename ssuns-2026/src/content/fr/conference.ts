@@ -1,4 +1,5 @@
 import { conferenceContent as en } from "@/content/en/conference";
+import { charityPartner } from "@/content/charityPartner";
 
 export const conferenceContent = {
   ...en,
@@ -54,11 +55,9 @@ export const conferenceContent = {
     {
       href: "/conference/charity-partner",
       title: "Partenaire caritatif",
-      summary: "Information sur le partenaire caritatif de la conférence et initiatives connexes.",
-      body: [
-        "Ce chapitre est réservé à l'information sur le partenaire caritatif de SSUNS et aux initiatives connexes tournées vers la conférence.",
-        "Les délégués et les conseillers y trouveront les renseignements officiels sur la collaboration communautaire retenue pour la saison 2026.",
-      ],
+      // Keep the supplied English copy until an approved French version is available.
+      summary: "War Child — SSUNS 2026 charity partner.",
+      body: charityPartner.paragraphs,
     },
     {
       href: "/conference/delegate-resource-center",
