@@ -106,6 +106,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   const positionPaperFormHref = positionPaperFormsBySlug[committee.slug];
   const backgroundGuideHref = backgroundGuideLinksBySlug[committee.slug];
   const additionalDocuments = additionalCommitteeDocumentsBySlug[committee.slug] ?? [];
+  const hasBackgroundGuide = Boolean(backgroundGuideHref || additionalDocuments.some((document) => document.label.includes("background guide")));
   const levelLabel = getCommitteeLevelLabel(committee.level);
   const detailNote = getCommitteeDetailNote(committee.difficulty, isFrench);
   const sectionLabels = {
@@ -294,7 +295,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
               </div>
               <div className="border-t border-[var(--rule)] pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
                 <p className="section-kicker">{sectionLabels.guide}</p>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{backgroundGuideHref ? sectionLabels.guideAvailableNote : sectionLabels.guideNote}</p>
+                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{hasBackgroundGuide ? sectionLabels.guideAvailableNote : sectionLabels.guideNote}</p>
               </div>
               <div className="border-t border-[var(--rule)] pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
                 <p className="section-kicker">Contact</p>

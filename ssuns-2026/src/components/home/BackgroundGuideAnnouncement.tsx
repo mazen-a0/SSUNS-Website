@@ -21,7 +21,7 @@ export function BackgroundGuideAnnouncement() {
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold leading-6 text-[var(--accent)]">
-              Background Guides for GA & ECOSOCs + Specialized Agencies are now released. Access them with the provided password from your faculty advisor!
+              All background guides are now available. Access them with the provided password from your faculty advisor!
             </p>
             <Link className="mt-3 inline-flex border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/committees">
               View committees
