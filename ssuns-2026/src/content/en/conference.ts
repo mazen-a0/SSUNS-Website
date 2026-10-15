@@ -1,10 +1,11 @@
 import { pickImage } from "@/lib/images";
 import { charityPartner } from "@/content/charityPartner";
+import { scheduleDays, scheduleDayHighlights } from "@/content/schedule";
 
 export const conferenceContent = {
   title: "Conference",
   intro:
-    "SSUNS 2026 will take place November 12–15 in Montréal. The full conference schedule will be released closer to the event.",
+    "SSUNS 2026 will take place November 12–15 in Montréal. Explore the interactive delegate schedule for event times, details, and preparation resources.",
   sections: {
     tracks: "What To Expect",
     schedule: "Schedule Highlights",
@@ -20,7 +21,7 @@ export const conferenceContent = {
       summary: "Programme overview, room formats, and event expectations.",
       body: [
         "SSUNS 2026 will take place November 12–15 in Montréal.",
-        "The full conference schedule will be released closer to the event.",
+        "The interactive delegate schedule is now available, with event times, details, and preparation resources.",
       ],
     },
     {
@@ -39,10 +40,10 @@ export const conferenceContent = {
     {
       href: "/conference/schedule",
       title: "Schedule",
-      summary: "Cadence of arrival, committee sessions, ceremonies, and departures.",
+      summary: "Interactive delegate schedule for November 12–15, with event times, details, and related resources.",
       body: [
         "SSUNS 2026 will take place November 12–15 in Montréal.",
-        "The full conference schedule will be released closer to the event.",
+        "Explore committee sessions by bloc, workshops, ceremonies, feedback sessions, and social events. All times are local to Montréal.",
       ],
     },
     {
@@ -125,12 +126,7 @@ export const conferenceContent = {
   ],
   scheduleBand: {
     title: "Schedule Highlights",
-    items: [
-      { label: "Dates", text: "SSUNS 2026 will take place November 12–15 in Montréal." },
-      { label: "Schedule", text: "The full conference schedule will be released closer to the event." },
-      { label: "Venue", text: "Committee sessions, workshops, and socials are all held on-site at Le Centre Sheraton Hotel." },
-      { label: "Guidance", text: "Delegates should continue to check the venue, registration, and committee chapters as materials are released." },
-    ],
+    items: scheduleDays.map((day) => ({ label: day.en, text: scheduleDayHighlights(day.id, "en") })),
   },
   venueSection: {
     title: "Venue & City",

@@ -1,4 +1,5 @@
 import type { ContentBundle } from "@/content/registry";
+import { eventDescription, eventTime, eventTitle, scheduleDays, scheduleDayLabel, scheduleEvents } from "@/content/schedule";
 
 export type SearchEntry = {
   id: string;
@@ -29,6 +30,7 @@ function chapterEntries(prefix: string, parentTitle: string, chapters: Chapter[]
 }
 
 export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
+  const language = content.conferenceContent.title === "Conférence" ? "fr" : "en";
   const navigationEntries: SearchEntry[] = [
     {
       id: "nav-home",
@@ -49,6 +51,14 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
   ];
 
   const contentEntries: SearchEntry[] = [
+    ...scheduleEvents.map((item) => ({
+      id: `schedule-event-${item.id}`,
+      title: eventTitle(item, language),
+      snippet: `${scheduleDayLabel(scheduleDays.find((day) => day.id === item.day)!, language)} ${eventTime(item)} ${eventDescription(item, language)}`,
+      href: `/conference/schedule?event=${item.id}`,
+      group: "content" as const,
+      breadcrumb: language === "fr" ? "Conférence → Horaire" : "Conference → Schedule",
+    })),
     {
       id: "home-hero",
       title: content.homeContent.hero.title,

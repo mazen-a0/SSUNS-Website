@@ -1,5 +1,6 @@
 import { conferenceContent as en } from "@/content/en/conference";
 import { charityPartner } from "@/content/charityPartner";
+import { scheduleDays, scheduleDayHighlights } from "@/content/schedule";
 
 export const conferenceContent = {
   ...en,
@@ -37,10 +38,10 @@ export const conferenceContent = {
     {
       ...en.chapters[2],
       title: "Horaire",
-      summary: "Cadence des arrivées, séances de comité, cérémonies et départs.",
+      summary: "Horaire interactif des délégués du 12 au 15 novembre, avec les heures, les détails et les ressources utiles.",
       body: [
-        "L'horaire est conçu pour préserver l'élan sans créer une compression inutile pour les délégués ou les conseillers.",
-        "Le programme final sera communiqué comme un déroulé quotidien clair, de l'arrivée jusqu'aux départs.",
+        "SSUNS 2026 aura lieu du 12 au 15 novembre à Montréal.",
+        "Découvrez les séances de comité par bloc, les ateliers, les cérémonies, les séances de retour et les événements sociaux. Toutes les heures sont locales à Montréal.",
       ],
     },
     {
@@ -112,12 +113,7 @@ export const conferenceContent = {
   scheduleBand: {
     ...en.scheduleBand,
     title: "Temps forts de l'horaire",
-    items: [
-      { ...en.scheduleBand.items[0], label: "Jour 1", text: "Arrivée, cérémonie d'ouverture, formation des blocs et premières directives." },
-      { ...en.scheduleBand.items[1], label: "Jour 2", text: "Accélération des comités, ateliers et coordination des conseillers." },
-      { ...en.scheduleBand.items[2], label: "Jour 3", text: "Rédaction des résolutions, intensification des crises et présélection des distinctions." },
-      { ...en.scheduleBand.items[3], label: "Jour 4", text: "Votes finaux, cérémonie de clôture et départs." },
-    ],
+    items: scheduleDays.map((day) => ({ label: day.fr, text: scheduleDayHighlights(day.id, "fr") })),
   },
   venueSection: {
     ...en.venueSection,
