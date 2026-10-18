@@ -30,7 +30,7 @@ export const scheduleDays: Array<{ id: ScheduleDayId; date: string; en: string; 
 const event = (id: string, day: ScheduleDayId, start: string, end: string, kind: ScheduleKind, en: string, fr: string, lane = 0, span = 4, related?: string[]): ScheduleEvent =>
   ({ id, day, start, end, kind, title: { en, fr }, lane, span, related });
 const session = (day: ScheduleDayId, number: number, bloc: ScheduleBloc, start: string, end: string, lane: number): ScheduleEvent =>
-  ({ id: `${day}-session-${number}-${lane}`, day, start, end, kind: "session", session: number, bloc, lane, span: 1, related: ["/committees", "/committees/policies", "/committees/position-papers"] });
+  ({ id: `${day}-session-${number}-${lane}`, day, start, end, kind: "session", session: number, bloc, lane, span: 1, related: ["/committees", "/committees/policies", "/committees/position-papers", "/conference/venue"] });
 
 export const scheduleEvents: ScheduleEvent[] = [
   event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration/how-to-register", "/conference/venue"]),
@@ -149,12 +149,13 @@ export function scheduleDayHighlights(day: ScheduleDayId, language: ScheduleLoca
 }
 
 // Only title-derived descriptions or supplied site facts are used. Programme details
-// (rooms, workshop topics, speakers, tours meeting points) need confirmation.
+// (workshop topics, speakers, tours meeting points) need confirmation.
+// Confirmed committee rooms are maintained in venueRooms for the in-conference guide.
 export function eventDescription(item: ScheduleEvent, language: ScheduleLocale): string {
   const fr = language === "fr";
   if (item.kind === "session") return fr
-    ? `Séance de comité ${item.session} pour le bloc ${item.bloc}. Consultez les pages des comités pour les guides préparatoires et les ressources de préparation.`
-    : `Committee session ${item.session} for Bloc ${item.bloc}. Visit the committee pages for background guides and preparation resources.`;
+    ? `Séance de comité ${item.session} pour le bloc ${item.bloc}. Consultez le guide de conférence pour votre salle et votre étage, et les pages des comités pour les guides préparatoires et les ressources de préparation.`
+    : `Committee session ${item.session} for Bloc ${item.bloc}. Check the in-conference guide for your room and floor, and the committee pages for background guides and preparation resources.`;
   if (item.id === "opening" || item.id === "closing") {
     const doors = scheduleEvents.find((event) => event.id === `${item.id}-doors`);
     const start = `${eventTitle(item, language)} ${fr ? "à" : "at"} ${item.start}.`;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { CommandPalette } from "@/components/CommandPalette";
 import { GlassNav } from "@/components/GlassNav";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -47,6 +48,7 @@ function pickPreviewSections(
 }
 
 export function SiteChrome({ children }: SiteChromeProps) {
+  const pathname = usePathname();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const { language, setLanguage } = useAppPreferences();
   const {
@@ -115,6 +117,8 @@ export function SiteChrome({ children }: SiteChromeProps) {
     "/committees": pickPreviewSections(committeesPageContent.chapters, committeesPreviewOrder, descriptions),
     "/registration": pickPreviewSections(registrationContent.chapters, registrationPreviewOrder, descriptions),
   };
+
+  if (pathname === "/live" || pathname.startsWith("/live/")) return <main>{children}</main>;
 
   return (
     <>
