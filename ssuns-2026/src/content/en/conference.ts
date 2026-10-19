@@ -2,7 +2,17 @@ import { pickImage } from "@/lib/images";
 import { charityPartner } from "@/content/charityPartner";
 import { scheduleDays, scheduleDayHighlights } from "@/content/schedule";
 
+// Add the published URL here when the handbook is ready; null keeps access unavailable.
+export const delegateHandbook = {
+  title: "Delegate Handbook",
+  description: "Conference policies, preparation, and procedures. The handbook will be available before the conference.",
+  href: null as string | null,
+  accessLabel: "Access handbook",
+  comingSoonLabel: "Coming soon",
+};
+
 export const conferenceContent = {
+  delegateHandbook,
   title: "Conference",
   intro:
     "SSUNS 2026 will take place November 12–15 in Montréal. Explore the interactive delegate schedule for event times, details, and preparation resources.",
@@ -64,10 +74,8 @@ export const conferenceContent = {
     {
       href: "/conference/delegate-resource-center",
       title: "Delegate Resource Center (DRC)",
-      summary: "Delegate support, on-site reference points, and conference help resources.",
-      body: [
-        "The Delegate Handbook, containing key information on conference policies, preparation, and procedures, will be released prior to the conference.",
-      ],
+      summary: "The delegate handbook, conference policies, and preparation resources for SSUNS 2026.",
+      body: [delegateHandbook.description],
     },
     {
       href: "/conference/policies",

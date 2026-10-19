@@ -1,68 +1,72 @@
 "use client";
 
-import { ConferenceQuickLinks } from "@/components/ConferenceQuickLinks";
-import { DossierNav } from "@/components/DossierNav";
-import { PageHero } from "@/components/PageHero";
+import Link from "next/link";
 import { PolicyCard } from "@/components/policies/PolicyCard";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function ConferenceDrcPage() {
-  const { conferenceContent } = useSiteContent();
+  const { conferenceContent, language } = useSiteContent();
   const chapter = conferenceContent.chapters.find((item) => item.href === "/conference/delegate-resource-center");
-  const isFrench = conferenceContent.title === "Conférence";
-  const policies = [
-    {
-      title: isFrench ? "Déclaration d'équité" : "Equity Statement",
-      preview: isFrench
-        ? "Ce document présente les principes d'équité, d'inclusion et de conduite qui s'appliquent à tous les participants."
-        : "This document outlines the equity, inclusion, and conduct expectations that apply to all participants.",
-      bullets: [
-        isFrench ? "Conçu pour les délégués, encadrants et membres du staff." : "Intended for delegates, advisors, and staff members.",
-        isFrench ? "Présente le cadre officiel de respect, de sécurité et de participation." : "Provides the official framework for respectful, safe participation.",
-      ],
-      pdfHref: "/docs/SSUNS26_Equity_Statement.pdf",
-    },
-  ];
+  const handbook = conferenceContent.delegateHandbook;
+  const isFrench = language === "fr";
 
   if (!chapter) return null;
 
   return (
-    <>
-      <PageHero eyebrow={conferenceContent.title} intro={chapter.summary} title={chapter.title} />
-      <section className="page-shell">
-        <ConferenceQuickLinks className="mb-6" currentHref={chapter.href} />
-        <div className="grid gap-10 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-12">
-          <aside className="sticky-below-header">
-            <DossierNav currentHref={chapter.href} items={conferenceContent.chapters} />
-          </aside>
-          <div className="space-y-8">
-            <article className="theme-panel-strong paper-grain p-8 sm:p-10 md:p-12">
-              <div className="space-y-6 body-copy">
-                {chapter.body.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </article>
+    <div className="page-shell pt-6 sm:pt-8">
+      <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--rule)] pb-4">
+        <Link className="text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href="/conference">
+          ← {conferenceContent.title}
+        </Link>
+        <p className="section-kicker">SSUNS 2026 / {chapter.title}</p>
+      </header>
 
-            <section className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">{isFrench ? "Politiques pour les délégués" : "Delegate Policies"}</p>
-              <div className="mt-5 space-y-4 border-t border-[var(--rule)] pt-5">
-                {policies.map((policy) => (
-                  <PolicyCard
-                    bullets={policy.bullets}
-                    downloadLabel={isFrench ? "Télécharger" : "Download"}
-                    key={policy.title}
-                    openLabel={isFrench ? "Lire la politique complète (PDF)" : "Read full policy (PDF)"}
-                    pdfHref={policy.pdfHref}
-                    preview={policy.preview}
-                    title={policy.title}
-                  />
-                ))}
-              </div>
-            </section>
-          </div>
+      <section aria-labelledby="handbook-title" className="py-6 sm:py-8" lang="en">
+        {isFrench ? <p className="mb-5 text-sm text-[var(--muted)]">Handbook information is currently provided in English.</p> : null}
+        <div className="min-w-0 rounded-xl bg-[var(--accent)] px-6 py-8 text-white sm:px-8 sm:py-10 lg:px-10">
+          <h1 className="font-display max-w-4xl text-[clamp(2.2rem,5.6vw,4.75rem)] leading-[1.02]" id="handbook-title">
+            {handbook.title}
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[#e3ebff]" id="handbook-availability">
+            {handbook.description}
+          </p>
+          {handbook.href ? (
+            <a
+              className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#142082] transition-colors hover:bg-[#e5eeff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              href={handbook.href}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {handbook.accessLabel}
+            </a>
+          ) : (
+            <button
+              aria-describedby="handbook-availability"
+              aria-label={`${handbook.accessLabel} — ${handbook.comingSoonLabel}`}
+              className="mt-6 inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-full bg-[#edf2fc] px-6 py-3 text-sm font-semibold text-[#334475]"
+              disabled
+              type="button"
+            >
+              {handbook.comingSoonLabel}
+            </button>
+          )}
         </div>
       </section>
-    </>
+
+      <section aria-labelledby="delegate-policies" className="grid min-w-0 gap-4 border-t border-[var(--rule)] pt-6 lg:grid-cols-[0.3fr_1fr] lg:gap-8">
+        <h2 className="text-lg font-semibold text-[var(--accent)]" id="delegate-policies">
+          {isFrench ? "Politiques pour les délégués" : "Delegate policies"}
+        </h2>
+        <PolicyCard
+          downloadLabel={isFrench ? "Télécharger" : "Download"}
+          openLabel={isFrench ? "Lire la politique complète (PDF)" : "Read PDF"}
+          pdfHref="/docs/SSUNS26_Equity_Statement.pdf"
+          preview={isFrench
+            ? "Ce document présente les principes d'équité, d'inclusion et de conduite qui s'appliquent à tous les participants."
+            : "This document outlines the equity, inclusion, and conduct expectations that apply to all participants."}
+          title={isFrench ? "Déclaration d'équité" : "Equity Statement"}
+        />
+      </section>
+    </div>
   );
 }
