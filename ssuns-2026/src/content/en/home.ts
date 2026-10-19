@@ -1,3 +1,4 @@
+import { registrationContent } from "@/content/en/registration";
 import { pickImage } from "@/lib/images";
 
 export const homeContent = {
@@ -9,7 +10,7 @@ export const homeContent = {
       "Each year, SSUNS welcomes 1300+ delegates representing 60+ school delegations from around the world. Organized entirely by students and staffed by 250+ McGill volunteers, the conference provides a dynamic forum where high school and Cégep students develop leadership, negotiation, and public speaking skills while tackling complex global issues through committee debate and collaboration.",
     statement:
       "Hosted annually in Montréal, Quebec, SSUNS brings together students from across the globe for an unforgettable conference experience.",
-    primaryCta: { label: "Register now", href: "/registration" },
+    primaryCta: { label: registrationContent.closure.label, href: "/registration" },
     secondaryCta: { label: "Explore Committees", href: "/committees" },
     stats: [
       { label: "Delegates", value: "1300+" },
@@ -233,9 +234,9 @@ export const homeContent = {
   },
   registrationBand: {
     label: "Registration",
-    title: "Registration for SSUNS 2026 is now open.",
+    title: registrationContent.closure.label,
     body:
-      "Registration for SSUNS 2026 is open through MUNager. Delegations can now review the step-by-step guide, current fees, deadlines, and financial aid information before finalizing their roster.",
-    cta: { label: "Register now", href: "/registration" },
+      registrationContent.closure.homeFollowUp,
+    cta: { label: registrationContent.closure.updatesLabel, href: registrationContent.cta.href },
   },
 };

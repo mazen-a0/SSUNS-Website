@@ -361,12 +361,35 @@ const getSanitySnapshot = cache(async (): Promise<SanitySnapshot | null> => {
   }
 });
 
+// A confirmed closure takes precedence over older CMS application links and copy.
+export function applyRegistrationClosure(bundle: ContentBundle): ContentBundle {
+  if (!bundle.registrationContent.isClosed) return bundle;
+  const { closure } = bundle.registrationContent;
+  const updatesHref = "/registration#registration-updates";
+  bundle.registrationContent.intro = closure.summary;
+  bundle.registrationContent.cta = { label: closure.label, href: updatesHref };
+  const chapter = bundle.registrationContent.chapters.find((item) => item.href === "/registration");
+  if (chapter) {
+    chapter.summary = closure.summary;
+    chapter.body = [closure.summary, closure.followUp];
+  }
+  bundle.homeContent.hero.primaryCta = { label: closure.label, href: "/registration" };
+  bundle.homeContent.registrationBand = {
+    ...bundle.homeContent.registrationBand,
+    title: closure.label,
+    body: closure.homeFollowUp,
+    cta: { label: closure.updatesLabel, href: updatesHref },
+  };
+  bundle.sponsorContent.cta = { label: closure.label, href: updatesHref };
+  return bundle;
+}
+
 export const getContentBundle = cache(async (locale: Locale): Promise<ContentBundle> => {
   const bundle = cloneBundle(locale);
   const snapshot = await getSanitySnapshot();
 
   if (!snapshot) {
-    return bundle;
+    return applyRegistrationClosure(bundle);
   }
 
   applySiteSettings(bundle, snapshot.siteSettings, locale);
@@ -381,7 +404,7 @@ export const getContentBundle = cache(async (locale: Locale): Promise<ContentBun
     applyCommittees(bundle, snapshot.archivedCommittees, locale, true);
   }
 
-  return bundle;
+  return applyRegistrationClosure(bundle);
 });
 
 export const getAllContentBundles = cache(async () => {

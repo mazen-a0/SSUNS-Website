@@ -1,7 +1,23 @@
+import { delegateHandbook } from "@/content/en/conference";
+
+export const registrationClosure = {
+  label: "Registration closed",
+  summary: "Registration for SSUNS 2026 has closed and capacity has been reached.",
+  followUp: "Look out for SSUNS 2027 registration on our Instagram, or sign up below to be kept in the loop.",
+  instagramLabel: "Follow us on Instagram",
+  signupLabel: "Sign up below",
+  homeFollowUp: "Capacity has been reached. Look out for SSUNS 2027 registration on our Instagram, or sign up for updates on the registration page.",
+  updatesLabel: "Get updates",
+  capacityLabel: "Registration capacity",
+};
+
 export const registrationContent = {
+  isClosed: true,
+  capacity: 100,
+  closure: registrationClosure,
   title: "Registration",
   intro:
-    "Registration for SSUNS 2026 is now open. This year, we are introducing a new registration system designed to improve your experience and streamline the process.",
+    registrationClosure.summary,
   sections: {
     flow: "How To Register",
     pathways: "Registration Pathways",
@@ -15,19 +31,13 @@ export const registrationContent = {
     {
       href: "/registration",
       title: "Information",
-      summary: "Registration for SSUNS 2026 is now open.",
-      body: [
-        "Registration for SSUNS 2026 is now open.",
-        "This year, we are introducing a new registration system designed to improve your experience and streamline the process.",
-        "Review the step-by-step instructions and important updates here to ensure a smooth registration.",
-        "The conference will take place from November 12-15, 2026.",
-        "Registration closes: October 16 or upon reaching capacity.",
-      ],
+      summary: registrationClosure.summary,
+      body: [registrationClosure.summary, registrationClosure.followUp],
     },
     {
       href: "/registration/how-to-register",
       title: "How to Register",
-      summary: "Use Munager to complete delegation registration.",
+      summary: "Registration is closed. The MUNager guide remains available for reference.",
       body: ["A step-by-step guide to registering your delegation, managing attendees, and securing committee assignments."],
     },
     {
@@ -192,7 +202,7 @@ export const registrationContent = {
     },
     {
       title: "Delegate Handbook",
-      body: "The Delegate Handbook, containing key information on conference policies, preparation, and procedures, will be released prior to the conference.",
+      body: delegateHandbook.description,
       href: "/resources/handbook",
     },
     {
@@ -203,7 +213,7 @@ export const registrationContent = {
   ],
   listserv: {
     label: "Join the newsletter",
-    body: "Subscribe to the SSUNS newsletter to receive weekly updates, registration information, and important announcements throughout the season.",
+    body: "Sign up for SSUNS updates, including registration announcements for SSUNS 2027.",
     href: "https://www.ssuns.org/registration-information",
   },
   listservForm: {
@@ -227,7 +237,7 @@ export const registrationContent = {
     signature: "Costas Oreopoulos",
     role: "Chargé d’Affaires, SSUNS 2026",
   },
-  cta: { label: "Register now", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
+  cta: { label: registrationClosure.label, href: "/registration#registration-updates" },
   munagerVideo: {
     src: "/video/registration-open.mp4",
     poster: "/video/registration-open-poster.jpg",

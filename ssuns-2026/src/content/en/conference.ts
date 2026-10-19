@@ -2,12 +2,12 @@ import { pickImage } from "@/lib/images";
 import { charityPartner } from "@/content/charityPartner";
 import { scheduleDays, scheduleDayHighlights } from "@/content/schedule";
 
-// Add the published URL here when the handbook is ready; null keeps access unavailable.
 export const delegateHandbook = {
   title: "Delegate Handbook",
-  description: "Conference policies, preparation, and procedures. The handbook will be available before the conference.",
-  href: null as string | null,
+  description: "Conference policies, preparation, and procedures for SSUNS 2026.",
+  href: "https://drive.google.com/file/d/1CGBfzNDG4Nb6WbFk63gTYCAuyZ7Hgy9D/view?usp=sharing" as string | null,
   accessLabel: "Access handbook",
+  passwordNote: "The password is the same as the background guide passwords.",
   comingSoonLabel: "Coming soon",
 };
 
@@ -75,7 +75,7 @@ export const conferenceContent = {
       href: "/conference/delegate-resource-center",
       title: "Delegate Resource Center (DRC)",
       summary: "The delegate handbook, conference policies, and preparation resources for SSUNS 2026.",
-      body: [delegateHandbook.description],
+      body: [delegateHandbook.description, delegateHandbook.passwordNote],
     },
     {
       href: "/conference/policies",

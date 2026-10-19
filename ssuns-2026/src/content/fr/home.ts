@@ -1,3 +1,4 @@
+import { registrationContent } from "@/content/fr/registration";
 import { homeContent as en } from "@/content/en/home";
 
 export const homeContent = {
@@ -11,7 +12,7 @@ export const homeContent = {
       "Le Secondary Schools’ United Nations Symposium (SSUNS) est la plus grande conférence de simulation des Nations Unies (MUN) au niveau secondaire au Canada, accueillant 1300+ élèves chaque mois de novembre au centre-ville de Montréal.",
     statement:
       "Le Model United Nations permet aux délégués de se mettre à la place des chefs d'État et des diplomates, en utilisant le débat et la prise de parole en public pour aborder des enjeux du monde réel.",
-    primaryCta: { ...en.hero.primaryCta, label: "Register now" },
+    primaryCta: { ...en.hero.primaryCta, label: registrationContent.closure.label },
     secondaryCta: { ...en.hero.secondaryCta, label: "Découvrir les comités" },
     stats: [
       { ...en.hero.stats[0], label: "Délégués" },
@@ -214,9 +215,9 @@ export const homeContent = {
   registrationBand: {
     ...en.registrationBand,
     label: "Inscription",
-    title: "Les inscriptions à SSUNS 2026 sont maintenant ouvertes.",
+    title: registrationContent.closure.label,
     body:
-      "Les délégations peuvent maintenant utiliser MUNager pour consulter le guide d'inscription, les frais, les échéances et l'aide financière avant de finaliser leur inscription.",
-    cta: { ...en.registrationBand.cta, label: "S'inscrire" },
+      registrationContent.closure.homeFollowUp,
+    cta: { ...en.registrationBand.cta, label: registrationContent.closure.updatesLabel },
   },
 };

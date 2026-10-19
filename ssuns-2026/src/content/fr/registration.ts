@@ -1,10 +1,22 @@
 import { registrationContent as en } from "@/content/en/registration";
 
+export const registrationClosure = {
+  label: "Inscriptions fermées",
+  summary: "Les inscriptions à SSUNS 2026 sont closes et la capacité maximale a été atteinte.",
+  followUp: "Surveillez l’ouverture des inscriptions à SSUNS 2027 sur notre compte Instagram, ou abonnez-vous ci-dessous pour rester au courant.",
+  instagramLabel: "Suivez-nous sur Instagram",
+  signupLabel: "S’abonner ci-dessous",
+  homeFollowUp: "La capacité maximale a été atteinte. Surveillez les inscriptions à SSUNS 2027 sur notre compte Instagram, ou abonnez-vous aux nouvelles sur la page d’inscription.",
+  updatesLabel: "Recevoir les nouvelles",
+  capacityLabel: "Capacité d’inscription",
+};
+
 export const registrationContent = {
   ...en,
+  closure: registrationClosure,
   title: "Inscription",
   intro:
-    "Les inscriptions à SSUNS 2026 sont maintenant ouvertes. Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
+    registrationClosure.summary,
   sections: {
     ...en.sections,
     flow: "Comment s'inscrire",
@@ -19,19 +31,13 @@ export const registrationContent = {
     {
       ...en.chapters[0],
       title: "Information",
-      summary: "Les inscriptions à SSUNS 2026 sont maintenant ouvertes.",
-      body: [
-        "Les inscriptions pour SSUNS 2026 sont maintenant ouvertes.",
-        "Cette année, nous introduisons un nouveau système d’inscription conçu pour améliorer votre expérience et simplifier le processus.",
-        "Consultez ici les instructions détaillées et les mises à jour importantes afin d’assurer une inscription sans difficulté.",
-        "La conférence se déroulera du 12 au 15 novembre 2026.",
-        "Clôture des inscriptions : 16 octobre ou lorsque la capacité maximale est atteinte.",
-      ],
+      summary: registrationClosure.summary,
+      body: [registrationClosure.summary, registrationClosure.followUp],
     },
     {
       ...en.chapters[1],
       title: "Comment s'inscrire",
-      summary: "Utilisez Munager pour compléter l'inscription de votre délégation.",
+      summary: "Les inscriptions sont closes. Le guide MUNager reste disponible à titre de référence.",
       body: [en.howToGuide.intro],
     },
     {
@@ -121,7 +127,7 @@ export const registrationContent = {
   listserv: {
     ...en.listserv,
     label: "Abonnez-vous à l'infolettre",
-    body: "Abonnez-vous à l'infolettre de SSUNS pour recevoir nos mises à jour hebdomadaires, les informations d'inscription et les annonces importantes tout au long de la saison.",
+    body: "Abonnez-vous pour recevoir les nouvelles de SSUNS, notamment les annonces concernant les inscriptions à SSUNS 2027.",
   },
   listservForm: {
     requiredLabel: "indique un champ obligatoire",
@@ -144,7 +150,7 @@ export const registrationContent = {
     ],
     role: "Chargé d’Affaires, SSUNS 2026",
   },
-  cta: { ...en.cta, label: "S'inscrire", href: "https://www.munager.com/user/newApplication/SSUNS2026" },
+  cta: { ...en.cta, label: registrationClosure.label },
   munagerVideo: {
     ...en.munagerVideo,
     title: "Guide Munager",

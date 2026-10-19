@@ -13,38 +13,15 @@ import { useSiteContent } from "@/lib/useSiteContent";
 
 const visibleRegistrationHrefs = new Set(["/registration", "/registration/how-to-register", "/registration/financial-aid"]);
 
-function getRegistrationStatus(now: Date) {
-  const openDate = new Date("2026-04-01T00:00:00-04:00");
-  const closeDate = new Date("2026-10-16T23:59:59-04:00");
-
-  if (now < openDate) {
-    return {
-      label: "Not open",
-      detail: "Registration opens April 1, 2026.",
-    };
-  }
-
-  if (now > closeDate) {
-    return {
-      label: "Closed",
-      detail: "Registration closed on October 16, 2026 or earlier upon reaching capacity.",
-    };
-  }
-
-  return {
-    label: "Open",
-    detail: "Registration closes October 16, 2026 or earlier upon reaching capacity.",
-  };
-}
-
 export default function RegistrationPage() {
-  const { contactContent, registrationContent } = useSiteContent();
+  const { contactContent, registrationContent, footerContent } = useSiteContent();
   const chapter = registrationContent.chapters.find((item) => item.href === "/registration");
   const navItems = registrationContent.chapters.filter((item) => visibleRegistrationHrefs.has(item.href));
-  const status = getRegistrationStatus(new Date());
   const isFrench = registrationContent.title === "Inscription";
   const [isLetterOpen, setIsLetterOpen] = useState(false);
-  const registrationCapacity = 92;
+  const registrationCapacity = registrationContent.capacity;
+  const closure = registrationContent.closure;
+  const instagramHref = footerContent.socialLinks.find((link) => link.label.toLowerCase().includes("instagram"))?.href;
   const letterOpeningPreview = registrationContent.letter.body.slice(0, 3);
   const letterClosingPreview = registrationContent.letter.body.slice(-2);
   const chargeeEmail =
@@ -62,43 +39,46 @@ export default function RegistrationPage() {
           </aside>
 
           <div className="min-w-0 space-y-8">
-            <article className="overflow-hidden rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-5 py-7 text-white sm:px-8">
-              <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr] lg:items-end">
+            <article className="overflow-hidden rounded-[8px] border border-[#cbd1db] bg-[#eef0f4] px-5 py-7 text-[#354052] sm:px-8">
+              <div className="grid gap-6 lg:grid-cols-[0.52fr_0.48fr] lg:items-center">
                 <div className="min-w-0">
-                  <div className="mb-5">
-                    <LiquidButton href="/registration/how-to-register" label={isFrench ? "S'inscrire ici" : "Register Here"} variant="inverse" />
-                  </div>
-                  <p className="section-kicker text-[#b4caff]">{isFrench ? "Statut actuel des inscriptions" : "Current registration status"}</p>
-                  <h2 className="mt-3 text-3xl font-semibold leading-tight">{status.label}</h2>
-                  <p className="mt-4 text-sm leading-relaxed text-[#e4eeff]">{status.detail}</p>
-                  <div className="mt-6 max-w-md border-t border-white/14 pt-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.06em] text-[#556176]">SSUNS 2026</p>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight">{closure.label}</h2>
+                  <p className="mt-4 text-sm leading-7">{closure.summary}</p>
+                  <div className="mt-6 max-w-md border-t border-[#cbd1db] pt-5">
                     <div className="flex items-center justify-between gap-3">
-                      <p className="text-sm font-semibold text-white">{isFrench ? "Capacité d'inscription actuelle" : "Live Registration Capacity"}</p>
-                      <p className="text-sm font-semibold text-[#d7e3ff]">{registrationCapacity}%</p>
+                      <p className="text-sm font-semibold" id="registration-capacity-label">{closure.capacityLabel}</p>
+                      <p className="text-sm font-semibold">{registrationCapacity}%</p>
                     </div>
-                    <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/12">
-                      <div
-                        className="h-full rounded-full bg-[linear-gradient(90deg,#8bb1ff_0%,#4f78ef_100%)]"
-                        style={{ width: `${registrationCapacity}%` }}
-                      />
+                    <div
+                      aria-labelledby="registration-capacity-label"
+                      aria-valuemax={100}
+                      aria-valuemin={0}
+                      aria-valuenow={registrationCapacity}
+                      className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#d9dee6]"
+                      role="progressbar"
+                    >
+                      <div className="h-full rounded-full bg-[#7a8699]" style={{ width: `${registrationCapacity}%` }} />
                     </div>
-                    <p className="mt-3 text-xs leading-relaxed text-[#d7e3ff]">
-                      {isFrench ? `${registrationCapacity} % de la capacité actuelle est remplie.` : `${registrationCapacity}% of current capacity is filled.`}
+                    <p className="mt-3 text-xs leading-relaxed text-[#556176]">
+                      {isFrench ? `${registrationCapacity} % de la capacité est remplie.` : `${registrationCapacity}% of capacity is filled.`}
                     </p>
                   </div>
                 </div>
-                <div className="min-w-0 grid gap-3 border-t border-white/14 pt-4 lg:border-t-0 lg:border-l lg:pl-5 lg:pt-0">
-                  {chapter.body.map((paragraph) => (
-                    <p className="text-sm leading-relaxed text-[#eef4ff]" key={paragraph}>
-                      {paragraph}
-                    </p>
-                  ))}
+                <div className="min-w-0 border-t border-[#cbd1db] pt-5 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0">
+                  <p className="text-base leading-7">{closure.followUp}</p>
+                  <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                    {instagramHref ? <a className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent)] underline underline-offset-4" href={instagramHref} rel="noopener noreferrer" target="_blank">{closure.instagramLabel}</a> : null}
+                    <a className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent)] underline underline-offset-4" href="#registration-updates">{closure.signupLabel}</a>
+                  </div>
                 </div>
               </div>
             </article>
 
             <RegistrationTimelineModule
+              closed={registrationContent.isClosed}
               labels={{
+                closed: closure.label,
                 title: registrationContent.pricingTimelineText.title,
                 currentPrefix: isFrench ? "Actuel" : "Current",
                 currentWindow: registrationContent.pricingTimelineText.current,
@@ -182,19 +162,12 @@ export default function RegistrationPage() {
               <article className="theme-panel min-w-0 rounded-[8px] p-5 sm:p-8">
                 <p className="section-kicker">{isFrench ? "Comment s'inscrire" : "How to Register"}</p>
                 <h2 className="font-display mt-4 text-3xl leading-tight text-[var(--accent)]">
-                  {isFrench ? "Complétez l'inscription de votre délégation dans MUNager" : "Complete your delegation registration in MUNager"}
+                  {isFrench ? "Guide d’inscription à SSUNS 2026" : "SSUNS 2026 registration guide"}
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--muted)] sm:text-base">
                   {registrationContent.chapters.find((item) => item.href === "/registration/how-to-register")?.summary}
                 </p>
-                <ol className="mt-5 space-y-3 border-t border-[var(--rule)] pt-5 text-sm leading-relaxed text-[var(--text)] sm:text-base">
-                  {registrationContent.steps.map((step, index) => (
-                    <li className="grid gap-3 sm:grid-cols-[1.75rem_minmax(0,1fr)]" key={step}>
-                      <span className="font-semibold text-[var(--accent)]">{index + 1}.</span>
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ol>
+
                 <div className="mt-6 flex flex-wrap gap-3 border-t border-[var(--rule)] pt-5">
                   <LiquidButton href="/registration/how-to-register" label={isFrench ? "Ouvrir le guide" : "Open the guide"} />
                   <Link className="inline-flex items-center border-b border-[var(--accent-2)] pb-1 text-sm font-semibold text-[var(--accent)]" href="/registration/financial-aid">
@@ -256,7 +229,7 @@ export default function RegistrationPage() {
                 <p className="mt-2 text-xs font-semibold text-[var(--muted)]">{registrationContent.letter.role}</p>
               </div>
 
-              <div className="mt-6 rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-4 py-5 text-white sm:px-6">
+              <div className="mt-6 rounded-[8px] border border-[#23379f] bg-[var(--panel-inverse)] px-4 py-5 text-white sm:px-6" id="registration-updates" tabIndex={-1}>
                 <div className="grid gap-5 lg:grid-cols-[0.42fr_0.58fr] lg:items-start">
                   <div>
                     <p className="section-kicker text-[#b4caff]">{registrationContent.sections.listserv}</p>

@@ -63,8 +63,8 @@ function InteractiveSchedule() {
     return (
       <button
         aria-haspopup="dialog"
-        aria-label={`${eventTitle(item, language)}, ${eventTime(item)}`}
-        className={`${styles.event} ${styles[item.kind]} ${minutes <= 45 && item.kind !== "doors" ? styles.short : ""}`}
+        aria-label={[eventTitle(item, language), eventTime(item), item.location?.[language]].filter(Boolean).join(", ")}
+        className={`${styles.event} ${styles[item.kind]} ${item.featured ? styles.featured : ""} ${minutes <= 45 && item.kind !== "doors" ? styles.short : ""}`}
         key={item.id}
         onClick={(event) => openEvent(item, event.currentTarget)}
         style={{ gridRow: `${(timeToMinutes(item.start) - 480) / 15 + 1} / span ${minutes / 15}`, gridColumn: `${item.lane + 1} / span ${item.span}` }}
@@ -72,6 +72,7 @@ function InteractiveSchedule() {
       >
         <span>{item.kind === "session" ? `${item.session} · BLOC ${item.bloc}` : item.kind === "doors" ? (fr ? "Portes ouvertes" : "Doors open") : eventTitle(item, language)}</span>
         <time>{eventTime(item)}</time>
+        {item.location ? <span className={styles.eventLocation}>{item.location[language]}</span> : null}
       </button>
     );
   }
@@ -126,7 +127,7 @@ function InteractiveSchedule() {
           <div className={`grid items-start gap-5 ${weekend ? "lg:grid-cols-2" : ""}`}>
             {days.map((day) => <section aria-label={scheduleDayLabel(day, language)} className="overflow-hidden rounded-2xl border border-[var(--rule)] bg-white" key={day.id}>
               <h2 className="bg-[#192181] px-5 py-4 text-lg font-bold text-white">{scheduleDayLabel(day, language)}</h2>
-              <ul className="space-y-2 p-3 sm:p-5">{visibleEvents.filter((item) => item.day === day.id).sort((a,b) => timeToMinutes(a.start) - timeToMinutes(b.start)).map((item) => <li key={item.id}><button aria-haspopup="dialog" className={`${styles.agendaEvent} flex min-h-16 w-full items-center justify-between gap-4 rounded-lg bg-[#f2f5fc] px-4 py-3 text-left hover:bg-[#e6edfc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142082]`} data-kind={item.kind} onClick={(event) => openEvent(item, event.currentTarget)} type="button"><span><span className="block text-sm font-semibold text-[var(--accent)]">{eventTitle(item, language)}</span><time className="mt-1 block text-xs tabular-nums text-[var(--muted)]">{eventTime(item)}</time></span><ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-[var(--accent)]" /></button></li>)}</ul>
+              <ul className="space-y-2 p-3 sm:p-5">{visibleEvents.filter((item) => item.day === day.id).sort((a,b) => timeToMinutes(a.start) - timeToMinutes(b.start)).map((item) => <li key={item.id}><button aria-haspopup="dialog" className={`${styles.agendaEvent} flex min-h-16 w-full items-center justify-between gap-4 rounded-lg bg-[#f2f5fc] px-4 py-3 text-left hover:bg-[#e6edfc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142082]`} data-kind={item.kind} data-featured={item.featured || undefined} onClick={(event) => openEvent(item, event.currentTarget)} type="button"><span><span className="block text-sm font-semibold text-[var(--accent)]">{eventTitle(item, language)}</span><time className="mt-1 block text-xs tabular-nums text-[var(--muted)]">{eventTime(item)}</time>{item.location ? <span className="mt-1 block text-sm font-medium text-[var(--accent)]">{item.location[language]}</span> : null}</span><ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-[var(--accent)]" /></button></li>)}</ul>
             </section>)}
           </div>
         ) : (
@@ -155,7 +156,7 @@ function InteractiveSchedule() {
             <button aria-label={fr ? "Fermer les détails" : "Close event details"} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[var(--accent)] hover:bg-[#d5e1fa] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142082]" onClick={() => modal.current?.close()} type="button"><X aria-hidden="true" className="h-5 w-5" /></button>
           </div>
           <div className="space-y-6 p-5 sm:p-7">
-            <dl className="grid grid-cols-2 gap-4 text-sm"><div><dt className="text-xs text-[var(--muted)]">{fr ? "Jour" : "Day"}</dt><dd className="mt-1 font-semibold">{scheduleDayLabel(selectedDay, language)}</dd></div><div><dt className="text-xs text-[var(--muted)]">{fr ? "Heure de Montréal" : "Montréal time"}</dt><dd className="mt-1 font-semibold tabular-nums">{eventTime(selectedEvent)}</dd></div></dl>
+            <dl className="grid grid-cols-2 gap-4 text-sm"><div><dt className="text-xs text-[var(--muted)]">{fr ? "Jour" : "Day"}</dt><dd className="mt-1 font-semibold">{scheduleDayLabel(selectedDay, language)}</dd></div><div><dt className="text-xs text-[var(--muted)]">{fr ? "Heure de Montréal" : "Montréal time"}</dt><dd className="mt-1 font-semibold tabular-nums">{eventTime(selectedEvent)}</dd></div>{selectedEvent.location ? <div className="col-span-2"><dt className="text-xs text-[var(--muted)]">{fr ? "Lieu" : "Location"}</dt><dd className="mt-1 font-semibold">{selectedEvent.location[language]}</dd></div> : null}</dl>
             <p className="text-base leading-7">{eventDescription(selectedEvent, language)}</p>
             {selectedEvent.bloc ? <div className="rounded-lg bg-[#eaf0fb] p-4"><h3 className="mb-3 text-sm font-bold text-[var(--accent)]">{fr ? "Comités du bloc" : "Committees in Bloc"} {selectedEvent.bloc}</h3>{blocCommittees(selectedEvent.bloc)}</div> : null}
             {selectedEvent.related?.length ? <div className="space-y-3 border-t border-[var(--rule)] pt-5"><p className="section-kicker">{fr ? "Pour préparer cet événement" : "Explore related information"}</p>{selectedEvent.related.map((href) => { const page = relatedPages.find((item) => item.href === href); return page ? <Link className="group block rounded-xl border border-[var(--rule)] p-4 transition-colors hover:bg-[#eaf0fb]" href={href} key={href} onClick={() => modal.current?.close()}><span className="flex items-center justify-between gap-3 text-sm font-semibold text-[var(--accent)]">{page.title}<ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" /></span><span className="mt-1 block text-xs leading-5 text-[var(--muted)]">{page.summary}</span></Link> : null; })}</div> : null}

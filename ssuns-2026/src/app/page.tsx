@@ -292,7 +292,7 @@ function RegistrationVideoPanel() {
 }
 
 export default function HomePage() {
-  const { committees, committeesPageContent, contactContent, homeContent, language } = useSiteContent();
+  const { committees, committeesPageContent, contactContent, homeContent, language, registrationContent } = useSiteContent();
   const sectionSpacing = "pt-6 pb-8 md:pt-8 md:pb-10 xl:pt-10 xl:pb-12";
   const [isSecretaryLetterOpen, setIsSecretaryLetterOpen] = useState(false);
   const secretaryGeneralEmail =
@@ -403,14 +403,19 @@ export default function HomePage() {
         <Container>
           <Reveal once>
             <div className="overflow-hidden rounded-[12px] border border-[var(--rule-strong)] shadow-[var(--shadow-strong)] lg:grid lg:grid-cols-[0.48fr_0.52fr]">
-              <article className="rounded-none border-0 bg-[var(--panel-inverse)] p-6 text-white sm:p-8" id="register">
+              <article className={`rounded-none border-0 p-6 sm:p-8 ${registrationContent.isClosed ? "bg-[#eef0f4] text-[#354052]" : "bg-[var(--panel-inverse)] text-white"}`} id="register">
                 <p className="section-kicker text-[#b4caff]">{homeContent.registrationBand.label}</p>
                 <h3 className="mt-3 max-w-xl text-2xl font-semibold leading-tight sm:text-[2rem]">{homeContent.registrationBand.title}</h3>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#dfe8ff] sm:text-base">{homeContent.registrationBand.body}</p>
+                <p className={`mt-4 max-w-xl text-sm leading-relaxed sm:text-base ${registrationContent.isClosed ? "text-[#556176]" : "text-[#dfe8ff]"}`}>{homeContent.registrationBand.body}</p>
                 <LiquidButton className="mt-6" href={homeContent.registrationBand.cta.href} label={homeContent.registrationBand.cta.label} variant="inverse" />
               </article>
 
-              <RegistrationVideoPanel />
+              {registrationContent.isClosed ? (
+                <div className="flex flex-col items-center justify-center gap-3 bg-[#e2e6ed] p-8 text-center text-[#354052]">
+                  <p className="font-display text-6xl tabular-nums">{registrationContent.capacity}%</p>
+                  <p className="text-sm font-semibold">{language === "fr" ? "Capacité atteinte" : "Capacity reached"}</p>
+                </div>
+              ) : <RegistrationVideoPanel />}
             </div>
           </Reveal>
         </Container>

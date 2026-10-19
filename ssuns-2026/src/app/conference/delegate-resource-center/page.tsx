@@ -32,6 +32,7 @@ export default function ConferenceDrcPage() {
           </p>
           {handbook.href ? (
             <a
+              aria-describedby="handbook-password"
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#142082] transition-colors hover:bg-[#e5eeff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               href={handbook.href}
               rel="noopener noreferrer"
@@ -50,6 +51,7 @@ export default function ConferenceDrcPage() {
               {handbook.comingSoonLabel}
             </button>
           )}
+          {handbook.href ? <p className="mt-3 max-w-2xl text-sm leading-6 text-[#e3ebff]" id="handbook-password">{handbook.passwordNote}</p> : null}
         </div>
       </section>
 

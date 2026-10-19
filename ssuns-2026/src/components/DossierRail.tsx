@@ -39,7 +39,7 @@ export function DossierRail({ items, currentHref, variant = "rail", contextTitle
   const title = contextTitle ?? activeItem?.title ?? "";
   const faqHref = aboutContent.chapters.find((chapter) => chapter.href === "/about/faqs")?.href ?? "/about/faqs";
   const quickLinks = [
-    { label: uiText.railRegisterLabel, href: registrationContent.cta.href, external: true },
+    { label: registrationContent.isClosed ? registrationContent.closure.label : uiText.railRegisterLabel, href: registrationContent.cta.href, external: !registrationContent.isClosed },
     { label: uiText.railContactLabel, href: "/contact", external: false },
     { label: uiText.railFaqLabel, href: faqHref, external: false },
   ];

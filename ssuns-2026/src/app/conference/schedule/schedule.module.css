@@ -20,6 +20,9 @@
 .event:hover { filter: brightness(1.12); }
 .event:focus-visible { outline: 3px solid #121940; outline-offset: -4px; box-shadow: inset 0 0 0 6px white; z-index: 3; }
 .event time { font-size: 12px; font-variant-numeric: tabular-nums; }
+.eventLocation { margin-top: 3px; font-size: 12px; font-weight: 500; line-height: 1.5; }
+.event.featured { background: #192181; box-shadow: inset 0 0 0 2px #a9caff; }
+.event.featured > span:first-child { font-weight: 800; }
 .session { background: #2f70c5; }
 .program { background: #3158ac; }
 .event.program { justify-content: flex-start; padding-top: 18px; }
@@ -34,6 +37,7 @@
 .short time { font-size: 10px; }
 .weekend .event { font-size: 11px; padding-inline: 3px; }
 .weekend .event time { font-size: 10px; }
+.weekend .eventLocation { font-size: 11px; }
 .weekend .short { font-size: 9px; }
 .weekend .doors { font-size: 9px; }
 .weekend .dayHeader { flex-direction: column; gap: 7px; }
@@ -44,6 +48,8 @@
 .agendaEvent[data-kind="ceremony"], .agendaEvent[data-kind="doors"] { border-left-color: #192181; }
 .agendaEvent[data-kind="feedback"] { border-left-color: #007c8d; }
 .agendaEvent[data-kind="social"] { border-left-color: #4a148c; }
+.agendaEvent[data-featured] { border-left-color: #192181; background: #e1eaff; }
+.agendaEvent[data-featured]:hover { background: #d5e1fa; }
 @media (max-width: 639px) {
   .board { padding: 14px 8px 18px 2px; border-radius: 16px; }
   .calendar { grid-template-columns: 43px minmax(0,1fr); min-width: 620px; }

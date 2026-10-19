@@ -15,6 +15,7 @@ export type RegistrationTimelinePhase = {
 };
 
 type Labels = {
+  closed: string;
   title: string;
   currentPrefix: string;
   currentWindow: string;
@@ -36,6 +37,7 @@ type Labels = {
 };
 
 type Props = {
+  closed?: boolean;
   phases: RegistrationTimelinePhase[];
   now?: Date;
   labels: Labels;
@@ -60,9 +62,9 @@ function getStatus(phase: RegistrationTimelinePhase, now: Date): PhaseStatus {
   return "upcoming";
 }
 
-export function RegistrationTimelineModule({ phases, now = new Date(), labels }: Props) {
-  const statuses = useMemo(() => phases.map((phase) => getStatus(phase, now)), [phases, now]);
-  const currentIndex = Math.max(statuses.findIndex((status) => status === "active"), 0);
+export function RegistrationTimelineModule({ phases, now = new Date(), labels, closed = false }: Props) {
+  const statuses = useMemo(() => phases.map((phase) => closed ? "completed" as const : getStatus(phase, now)), [phases, now, closed]);
+  const currentIndex = closed ? Math.max(phases.length - 1, 0) : Math.max(statuses.findIndex((status) => status === "active"), 0);
   const [selectedPhaseId, setSelectedPhaseId] = useState(phases[currentIndex]?.id ?? phases[0]?.id ?? "");
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export function RegistrationTimelineModule({ phases, now = new Date(), labels }:
             </p>
           </div>
           <span className="inline-flex max-w-full items-center rounded-full border border-[var(--accent)] bg-[rgba(20,32,130,0.08)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)] sm:text-xs">
-            {labels.currentPrefix}: {phases[currentIndex]?.title}
+            {closed ? labels.closed : `${labels.currentPrefix}: ${phases[currentIndex]?.title}`}
           </span>
         </div>
       </div>

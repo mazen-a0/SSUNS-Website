@@ -54,7 +54,7 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
     ...scheduleEvents.map((item) => ({
       id: `schedule-event-${item.id}`,
       title: eventTitle(item, language),
-      snippet: `${scheduleDayLabel(scheduleDays.find((day) => day.id === item.day)!, language)} ${eventTime(item)} ${eventDescription(item, language)}`,
+      snippet: `${scheduleDayLabel(scheduleDays.find((day) => day.id === item.day)!, language)} ${eventTime(item)} ${item.location?.[language] ?? ""} ${eventDescription(item, language)}`,
       href: `/conference/schedule?event=${item.id}`,
       group: "content" as const,
       breadcrumb: language === "fr" ? "Conférence → Horaire" : "Conference → Schedule",

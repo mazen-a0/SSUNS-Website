@@ -12,6 +12,8 @@ export type ScheduleEvent = {
   end: string;
   kind: ScheduleKind;
   title?: { en: string; fr: string };
+  location?: { en: string; fr: string };
+  featured?: boolean;
   session?: number;
   bloc?: ScheduleBloc;
   // Four visual lanes allow staggered sessions and concurrent advisor events.
@@ -27,14 +29,14 @@ export const scheduleDays: Array<{ id: ScheduleDayId; date: string; en: string; 
   { id: "sunday", date: "2026-11-15", en: "Sunday", fr: "Dimanche" },
 ];
 
-const event = (id: string, day: ScheduleDayId, start: string, end: string, kind: ScheduleKind, en: string, fr: string, lane = 0, span = 4, related?: string[]): ScheduleEvent =>
-  ({ id, day, start, end, kind, title: { en, fr }, lane, span, related });
+const event = (id: string, day: ScheduleDayId, start: string, end: string, kind: ScheduleKind, en: string, fr: string, lane = 0, span = 4, related?: string[], details?: Pick<ScheduleEvent, "location" | "featured">): ScheduleEvent =>
+  ({ id, day, start, end, kind, title: { en, fr }, lane, span, related, ...details });
 const session = (day: ScheduleDayId, number: number, bloc: ScheduleBloc, start: string, end: string, lane: number): ScheduleEvent =>
   ({ id: `${day}-session-${number}-${lane}`, day, start, end, kind: "session", session: number, bloc, lane, span: 1, related: ["/conference/delegate-resource-center", "/committees", "/committees/policies", "/committees/position-papers", "/conference/venue"] });
 
 export const scheduleEvents: ScheduleEvent[] = [
-  event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration/how-to-register", "/conference/venue"]),
-  event("fair", "thursday", "13:00", "16:30", "program", "SSUNS Fair", "Foire SSUNS", 1, 1),
+  event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration", "/registration/how-to-register", "/conference/venue"], { location: { en: "The DRC, 2nd floor foyer", fr: "DRC, foyer du 2e étage" } }),
+  event("fair", "thursday", "13:00", "16:30", "program", "SSUNS Fair", "Foire SSUNS", 1, 1, undefined, { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" }, featured: true }),
   event("workshop-thursday", "thursday", "15:00", "16:30", "workshop", "Workshop I", "Atelier I", 2, 2),
   event("opening-doors", "thursday", "17:00", "17:15", "doors", "Opening Ceremony · Doors open", "Cérémonie d’ouverture · Ouverture des portes"),
   event("opening", "thursday", "17:15", "18:45", "ceremony", "Opening Ceremony", "Cérémonie d’ouverture", 0, 4, ["/conference/venue"]),
@@ -154,16 +156,16 @@ export function scheduleDayHighlights(day: ScheduleDayId, language: ScheduleLoca
 export function eventDescription(item: ScheduleEvent, language: ScheduleLocale): string {
   const fr = language === "fr";
   if (item.kind === "session") return fr
-    ? `Séance de comité ${item.session} pour le bloc ${item.bloc}. Consultez le guide de conférence pour votre salle et votre étage. Le Centre de ressources des délégués indique la disponibilité du guide du délégué; les pages des comités présentent les guides préparatoires et les ressources de préparation.`
-    : `Committee session ${item.session} for Bloc ${item.bloc}. Check the in-conference guide for your room and floor. Visit the Delegate Resource Center for handbook availability, and the committee pages for background guides and preparation resources.`;
+    ? `Séance de comité ${item.session} pour le bloc ${item.bloc}. Consultez le guide de conférence pour votre salle et votre étage. Le guide du délégué est accessible depuis le Centre de ressources des délégués avec le même mot de passe que les guides préparatoires. Les pages des comités présentent les guides préparatoires et les ressources de préparation.`
+    : `Committee session ${item.session} for Bloc ${item.bloc}. Check the in-conference guide for your room and floor. Access the Delegate Handbook through the Delegate Resource Center using the same password as the background guides. Visit the committee pages for background guides and preparation resources.`;
   if (item.id === "opening" || item.id === "closing") {
     const doors = scheduleEvents.find((event) => event.id === `${item.id}-doors`);
     const start = `${eventTitle(item, language)} ${fr ? "à" : "at"} ${item.start}.`;
     return `${start}${doors ? (fr ? ` Les portes ouvrent à ${doors.start}.` : ` Doors open at ${doors.start}.`) : ""}`;
   }
   const copy: Record<string, { en: string; fr: string }> = {
-    registration: { en: "Delegate registration is open during this window on Thursday. Review the registration instructions and venue information before arrival.", fr: "L’inscription des délégués est ouverte pendant cette période le jeudi. Consultez les instructions d’inscription et les renseignements sur le lieu avant votre arrivée." },
-    fair: { en: "Explore the SSUNS Fair during Thursday’s afternoon programme. Exhibitor and room details will follow.", fr: "Découvrez la foire SSUNS pendant le programme du jeudi après-midi. Les exposants et la salle seront précisés ultérieurement." },
+    registration: { en: "Online registration for SSUNS 2026 is closed at capacity. Thursday’s scheduled delegate registration window is 11:00–17:00. Review venue information before arrival.", fr: "Les inscriptions en ligne à SSUNS 2026 sont closes, la capacité maximale ayant été atteinte. La plage d’inscription des délégués prévue le jeudi est de 11 h à 17 h. Consultez les renseignements sur le lieu avant votre arrivée." },
+    fair: { en: "Explore the SSUNS Fair during Thursday’s afternoon programme. Exhibitor details will follow.", fr: "Découvrez la foire SSUNS pendant le programme du jeudi après-midi. Les exposants seront précisés ultérieurement." },
     tours: { en: "McGill campus tours are scheduled for Friday morning. Meeting point and tour arrangements will follow.", fr: "Les visites du campus de McGill sont prévues le vendredi matin. Le point de rencontre et les modalités seront précisés ultérieurement." },
     gala: { en: "The Delegate Gala takes place on Saturday evening, ending at midnight. Further event details will follow.", fr: "Le gala des délégués a lieu le samedi soir et se termine à minuit. D’autres renseignements suivront." },
     "faculty-cocktail": { en: "Saturday evening’s cocktail event for faculty advisors. Further event details will follow.", fr: "Le cocktail du samedi soir est destiné aux conseillers pédagogiques. D’autres renseignements suivront." },

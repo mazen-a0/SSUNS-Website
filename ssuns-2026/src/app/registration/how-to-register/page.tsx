@@ -30,7 +30,7 @@ export default function RegistrationHowToRegisterPage() {
   const labels = {
     phase: isFrench ? "Phase" : "Phase",
     openGuide: guide.openGuideLabel,
-    launchRegistration: isFrench ? "Ouvrir l'inscription" : "Open registration",
+    launchRegistration: registrationContent.cta.label,
     watchOnYoutube: isFrench ? "Voir sur YouTube" : "Watch on YouTube",
     afterGuide: isFrench ? "Après le guide" : "After the guide",
     afterGuideCopy: isFrench
@@ -55,12 +55,11 @@ export default function RegistrationHowToRegisterPage() {
           </div>
           <h1 className="mt-6 font-display text-[2.4rem] leading-[0.96] text-[var(--accent)] sm:text-6xl">{guide.title}</h1>
           <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">{guide.intro}</p>
+          {registrationContent.isClosed ? <p className="mt-5 rounded-lg border border-[#cbd1db] bg-[#eef0f4] px-4 py-3 text-sm leading-6 text-[#354052]">{registrationContent.closure.summary}</p> : null}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
             <Link
               className="inline-flex items-center justify-center rounded-[8px] border border-[var(--accent)] bg-[var(--accent)] px-4 py-2.5 font-semibold text-white transition-colors hover:bg-[#1b2ea3]"
               href={registrationContent.cta.href}
-              rel="noreferrer"
-              target="_blank"
             >
               {labels.launchRegistration}
             </Link>
@@ -158,8 +157,6 @@ export default function RegistrationHowToRegisterPage() {
                   <Link
                     className="rounded-[12px] border border-[var(--rule)] bg-white px-4 py-3 text-sm font-semibold text-[var(--heading)] shadow-[var(--shadow-soft)] transition-colors hover:border-[var(--accent)]"
                     href={registrationContent.cta.href}
-                    rel="noreferrer"
-                    target="_blank"
                   >
                     {labels.launchRegistration}
                   </Link>
