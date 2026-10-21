@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, ChevronRight, MapPin } from "lucide-react";
 import { useContentBundles } from "@/components/providers/SiteContentProvider";
 import { CharityDonateButton } from "@/components/CharityDonateButton";
-import { HotelNavigator } from "./HotelNavigator";
+import { HotelNavigator } from "@/components/venue/HotelNavigator";
 import { venueRooms } from "@/content/venueRooms";
 import { eventDescription, eventTime, eventTitle, scheduleCommitteeBlocs, scheduleDays, scheduleEvents, type ScheduleDayId } from "@/content/schedule";
 import styles from "./live.module.css";

@@ -35,7 +35,7 @@ const session = (day: ScheduleDayId, number: number, bloc: ScheduleBloc, start: 
   ({ id: `${day}-session-${number}-${lane}`, day, start, end, kind: "session", session: number, bloc, lane, span: 1, related: ["/conference/delegate-resource-center", "/committees", "/committees/policies", "/committees/position-papers", "/conference/venue"] });
 
 export const scheduleEvents: ScheduleEvent[] = [
-  event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration", "/registration/how-to-register", "/conference/venue"], { location: { en: "The DRC, 2nd floor foyer", fr: "DRC, foyer du 2e étage" } }),
+  event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration", "/registration/how-to-register", "/conference/venue"], { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" } }),
   event("fair", "thursday", "13:00", "16:30", "program", "SSUNS Fair", "Foire SSUNS", 1, 1, undefined, { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" }, featured: true }),
   event("workshop-thursday", "thursday", "15:00", "16:30", "workshop", "Workshop I", "Atelier I", 2, 2),
   event("opening-doors", "thursday", "17:00", "17:15", "doors", "Opening Ceremony · Doors open", "Cérémonie d’ouverture · Ouverture des portes"),
@@ -152,12 +152,12 @@ export function scheduleDayHighlights(day: ScheduleDayId, language: ScheduleLoca
 
 // Only title-derived descriptions or supplied site facts are used. Programme details
 // (workshop topics, speakers, tours meeting points) need confirmation.
-// Confirmed committee rooms are maintained in venueRooms for the in-conference guide.
+// Confirmed committee rooms are maintained in venueRooms for the public venue map and in-conference guide.
 export function eventDescription(item: ScheduleEvent, language: ScheduleLocale): string {
   const fr = language === "fr";
   if (item.kind === "session") return fr
-    ? `Séance de comité ${item.session} pour le bloc ${item.bloc}. Consultez le guide de conférence pour votre salle et votre étage. Le guide du délégué est accessible depuis le Centre de ressources des délégués avec le même mot de passe que les guides préparatoires. Les pages des comités présentent les guides préparatoires et les ressources de préparation.`
-    : `Committee session ${item.session} for Bloc ${item.bloc}. Check the in-conference guide for your room and floor. Access the Delegate Handbook through the Delegate Resource Center using the same password as the background guides. Visit the committee pages for background guides and preparation resources.`;
+    ? `Séance de comité ${item.session} pour le bloc ${item.bloc}. Consultez le plan interactif sur la page du lieu pour votre salle et votre étage, ou téléchargez les plans annotés en PDF. Le guide du délégué est accessible depuis le Centre de ressources des délégués avec le même mot de passe que les guides préparatoires. Les pages des comités présentent les guides préparatoires et les ressources de préparation.`
+    : `Committee session ${item.session} for Bloc ${item.bloc}. Find your room and floor on the Venue page’s interactive map, or download the annotated floor plans as a PDF. Access the Delegate Handbook through the Delegate Resource Center using the same password as the background guides. Visit the committee pages for background guides and preparation resources.`;
   if (item.id === "opening" || item.id === "closing") {
     const doors = scheduleEvents.find((event) => event.id === `${item.id}-doors`);
     const start = `${eventTitle(item, language)} ${fr ? "à" : "at"} ${item.start}.`;

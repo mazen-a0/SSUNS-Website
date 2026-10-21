@@ -1,5 +1,9 @@
 import type { ScheduleBloc } from "@/content/schedule";
 
+// Annotated floor plans supplied by the organizer:
+// https://drive.google.com/file/d/1v8yTlnvOvKOFHyrnbW1uawRRTl-DmuB5/view
+export const venueFloorPlanPdfUrl = "/maps/sheraton/floor-plans.pdf";
+
 export const hotelLevels = ["B", "A", "2", "3", "4", "7"] as const;
 export type HotelLevel = typeof hotelLevels[number];
 export type VenueRoom = {

@@ -138,40 +138,12 @@
 .donationPanel h3 { font-family: var(--font-market-fresh), sans-serif; font-size: 30px; line-height: 1.1; margin: 18px 0 26px; }
 .donationPanel p { font-size: 12px; }
 .donationPanel a { font-size: 13px; }
-.floorTabs { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); border-block: 1px solid var(--rule); margin: 20px 0; }
-.floorTabs button { min-height: 64px; background: transparent; color: var(--muted); border: 0; font-size: 21px; cursor: pointer; }
-.floorTabs button span { display: block; font-size: 10px; }
-.floorTabs button[aria-pressed=true] { background: var(--accent); color: white; }
-.mapSection { scroll-margin-top: 90px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
-.mapHeading { display: flex; align-items: start; gap: 12px; padding: 18px; background: var(--panel-strong); }
-.mapHeading svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
-.mapHeading h3 { font-size: 16px; font-weight: 600; color: var(--accent); }
-.mapHeading p { margin: 5px 0 0; font-size: 12px; color: var(--muted); }
-.mapViewport { width: 100%; max-height: 520px; aspect-ratio: 1800 / 1391; overflow: auto; background: white; overscroll-behavior: contain; }
-.mapCanvas { position: relative; aspect-ratio: 1800 / 1391; max-width: none; }
-.mapCanvas img { display: block; width: 100%; max-width: none; height: auto; }
-.mapOverlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.mapControls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--border); background: var(--panel-strong); }
-.mapControls p { font-size: 10px; margin: 0; color: var(--muted); }
-.mapControls > div { display: flex; align-items: center; gap: 2px; }
-.mapControls button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--accent); background: transparent; border: 0; cursor: pointer; }
-.mapControls button:disabled { opacity: .3; cursor: default; }
-.mapControls span { font-size: 12px; min-width: 24px; text-align: center; }
-.roomList { margin-block: 20px 12px; border-top: 1px solid var(--border); }
-.roomList button { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 16px 12px; min-height: 64px; width: 100%; border: 0; border-bottom: 1px solid var(--border); text-align: left; color: var(--text); background: transparent; cursor: pointer; }
-.roomList button > span:first-child { min-width: 0; }
-.roomList strong { display: block; font-weight: 600; font-size: 14px; }
-.roomList small { display: block; font-size: 11px; line-height: 1.6; color: var(--muted); margin-top: 5px; }
-.roomList button > span:last-child { white-space: nowrap; color: var(--accent); font-size: 11px; }
-.roomList button[aria-pressed=true] { border-left: 2px solid var(--accent); background: var(--paper-deep); }
 @media (max-width: 740px) {
   .introCopy { padding-block: 24px; }
   .intro h1 { font-size: 38px; margin: 18px 0 14px; }
   .charitySection { grid-template-columns: 1fr; gap: 24px; padding-top: 5px; }
   .charityLogo { width: 135px; margin-bottom: 24px; }
   .donationPanel { padding: 26px 22px; }
-  .mapControls { padding: 8px; }
-  .mapControls p { flex-basis: 100%; }
 }
 .directory { border-top: 1px solid var(--rule); margin-top: 28px; padding-top: 18px; }
 .directory > summary { min-height: 44px; font-size: 13px; color: var(--accent); cursor: pointer; }
@@ -183,20 +155,12 @@
 .nav button[aria-current] { font-weight: 600; }
 .nav button:hover { background: transparent; text-decoration: underline; text-underline-offset: 4px; }
 .sectionNumber { color: var(--muted); font-size: 9px; font-weight: 400; font-variant-numeric: tabular-nums; }
-.mapCanvas { container-type: inline-size; }
-.mapOverlay { pointer-events: none; }
-.mapRoom { position: absolute; pointer-events: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; gap: 3px; overflow: hidden; color: var(--accent); background: #f4f6fbf2; border: 1px solid #14208266; text-align: center; cursor: pointer; font-family: var(--font-chivo),sans-serif; }
-.mapRoom strong { display: block; font-size: clamp(7px, 1.25cqw, 17px); font-weight: 700; line-height: 1.15; }
-.mapRoom > span { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: clamp(7px, 1.05cqw, 15px); line-height: 1.15; overflow-wrap: anywhere; }
-.mapRoom:hover { background: #dceaff; border-color: var(--accent); }
-.mapRoom[aria-pressed=true] { background: #d3e4ff; border: 2px solid var(--accent); }
-.mapRoom:focus-visible { outline-offset: -3px !important; z-index: 2; }
 @media (max-width: 740px) {
   .nav { padding-top: 10px; }
   .nav > div { column-gap: 17px; row-gap: 0; }
   .nav button { min-height: 36px; padding-bottom: 8px; font-size: 12px; gap: 5px; }
   .sectionNumber { font-size: 8px; }
-  .panel, .mapSection { scroll-margin-top: 126px; }
+  .panel { scroll-margin-top: 126px; }
 }
 @media (max-width: 740px) {
   .nav > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 14px; }
@@ -227,7 +191,7 @@
   .welcomeLogo { width: 78px; height: 78px; margin-bottom: 18px; }
   .welcomeContent > p { font-size: 14px; margin-block: 20px 26px; }
   .welcomeChoices button { min-height: 58px; font-size: 15px; }
-  .panel, .mapSection { scroll-margin-top: 20px; }
+  .panel { scroll-margin-top: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) { .welcomeChoices button { transition: none; } }

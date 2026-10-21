@@ -29,10 +29,9 @@ export const conferenceContent = {
     {
       ...en.chapters[1],
       title: "Lieu",
-      summary: "Implantation hôtelière, accès urbain et circulation dans l'environnement de conférence.",
+      summary: "Trouvez la salle de votre comité sur le plan interactif de l’hôtel ou téléchargez les plans annotés.",
       body: [
-        "Le lieu hôte est conçu pour garder les comités, le soutien aux conseillers, les plénières et la circulation informelle dans un même ensemble cohérent.",
-        "Montréal donne à la conférence à la fois un caractère civique et une accessibilité pratique pour les écoles en déplacement.",
+        "Choisissez un étage, recherchez votre comité ou votre salle, puis sélectionnez une salle sur le plan pour voir son comité. Le PDF comprend les six niveaux de la conférence.",
       ],
     },
     {

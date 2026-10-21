@@ -37,14 +37,9 @@ export const conferenceContent = {
     {
       href: "/conference/venue",
       title: "Venue",
-      summary: "Hotel footprint, city access, and movement through the conference environment.",
+      summary: "Find your committee room on the interactive hotel map, or download the annotated floor plans.",
       body: [
-        "Le Centre Sheraton Hotel, one of Montréal’s most prestigious hotels, has long been the venue of SSUNS. Committee sessions, workshops, and socials are all held on-site. Located in the city’s downtown, the hotel is within walking distance of the Bell Centre, Mount Royal, shopping on St. Catherine's, and Old Montréal.",
-        "For many years we have been lucky to host SSUNS at le Centre Sheraton, the hotel providing a spacious and welcoming venue for delegates to debate, socialize, and explore Montréal. With newly renovated rooms and a prime location, your time at the Sheraton is sure to exceed expectations.",
-        "* All independent delegates must be accompanied by an adult chaperone both to the conference and at the hotel. Independent delegates under 18 must have an adult staying in the same hotel room as them.",
-        "SSUNS 2026 Preferential Sheraton Hotel Rates. *All prices are in CAD and include Quebec tax. Please also note that all single and double occupancy rooms have 1 queen or 1 king sized bed.",
-        "Please note that room availability at the SSUNS preferential Sheraton Hotel rate is limited.",
-        "Delegations can still book rooms at the hotel at its normal rate, through the Sheraton's website. Other hotels are located nearby, SSUNS does not have any partnerships or agreements other than with the Centre Sheraton Montréal.",
+        "Select a level, search for your committee or room, and choose a room on the plan to see its committee. The PDF includes all six conference levels.",
       ],
     },
     {
