@@ -25,6 +25,7 @@ const conferencePreviewOrder = [
   "/conference/icao",
   "/conference/charity-partner",
   "/conference/delegate-resource-center",
+  "/conference/excellence-scholarship",
 ] as const;
 const committeesPreviewOrder = ["/committees", "/committees/position-papers", "/committees/awards", "/committees/policies"] as const;
 const registrationPreviewOrder = ["/registration", "/registration/how-to-register", "/registration/financial-aid"] as const;
@@ -82,6 +83,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           "/conference/icao": "Référence du comité ICAO",
           "/conference/charity-partner": "Information sur le partenaire",
           "/conference/delegate-resource-center": "Documents et aide pour les délégués",
+          "/conference/excellence-scholarship": conferenceContent.excellenceScholarship.summary,
           "/committees": "Liste des comités et dossiers",
           "/committees/position-papers": "Instructions et formulaires de soumission",
           "/committees/awards": "Prix et distinctions",
@@ -102,6 +104,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           "/conference/icao": "ICAO committee reference",
           "/conference/charity-partner": "Partner information",
           "/conference/delegate-resource-center": "Delegate documents and help",
+          "/conference/excellence-scholarship": conferenceContent.excellenceScholarship.summary,
           "/committees": "Committee list and dossiers",
           "/committees/position-papers": "Instructions and submission forms",
           "/committees/awards": "Awards and distinctions",

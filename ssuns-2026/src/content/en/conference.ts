@@ -1,6 +1,7 @@
 import { pickImage } from "@/lib/images";
 import { charityPartner } from "@/content/charityPartner";
 import { scheduleDays, scheduleDayHighlights } from "@/content/schedule";
+import { excellenceScholarship } from "@/content/en/excellenceScholarship";
 
 export const delegateHandbook = {
   title: "Delegate Handbook",
@@ -13,6 +14,7 @@ export const delegateHandbook = {
 
 export const conferenceContent = {
   delegateHandbook,
+  excellenceScholarship,
   title: "Conference",
   intro:
     "SSUNS 2026 will take place November 12–15 in Montréal. Explore the interactive delegate schedule for event times, details, and preparation resources.",
@@ -91,6 +93,12 @@ export const conferenceContent = {
       title: "Awards",
       summary: "Recognition, honours, and distinction at the close of conference.",
       body: ["See the Awards section under Committees for the full awards breakdown."],
+    },
+    {
+      href: "/conference/excellence-scholarship",
+      title: excellenceScholarship.navTitle,
+      summary: excellenceScholarship.summary,
+      body: [excellenceScholarship.intro, excellenceScholarship.award, excellenceScholarship.deadline, excellenceScholarship.eligibility.intro, ...excellenceScholarship.eligibility.criteria.map((item) => `${item.title}. ${item.description}`), excellenceScholarship.fairness.lead, ...excellenceScholarship.fairness.paragraphs, ...excellenceScholarship.process.stages.flatMap((stage) => [stage.title, ...stage.paragraphs]), excellenceScholarship.application.intro],
     },
   ],
   tracks: [

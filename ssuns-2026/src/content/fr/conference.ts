@@ -1,9 +1,11 @@
 import { conferenceContent as en } from "@/content/en/conference";
 import { charityPartner } from "@/content/charityPartner";
 import { scheduleDays, scheduleDayHighlights } from "@/content/schedule";
+import { excellenceScholarship } from "@/content/fr/excellenceScholarship";
 
 export const conferenceContent = {
   ...en,
+  excellenceScholarship,
   title: "Conférence",
   intro:
     "SSUNS 2026 réunit des comités traditionnels, des salles de crise dynamiques, une programmation d'allocutions et un soutien opérationnel clair dans une expérience pluriquotidienne soigneusement produite.",
@@ -85,6 +87,12 @@ export const conferenceContent = {
         "Les distinctions reconnaissent l'excellence individuelle et la performance d'ensemble des délégations à la clôture de la conférence.",
         "Ce chapitre présente le cadre général des catégories, des critères et des distinctions remises pendant la cérémonie de clôture.",
       ],
+    },
+    {
+      href: "/conference/excellence-scholarship",
+      title: excellenceScholarship.navTitle,
+      summary: excellenceScholarship.summary,
+      body: [excellenceScholarship.intro, excellenceScholarship.award, excellenceScholarship.deadline, excellenceScholarship.eligibility.intro, ...excellenceScholarship.eligibility.criteria.map((item) => `${item.title}. ${item.description}`), excellenceScholarship.fairness.lead, ...excellenceScholarship.fairness.paragraphs, ...excellenceScholarship.process.stages.flatMap((stage) => [stage.title, ...stage.paragraphs]), excellenceScholarship.application.intro],
     },
   ],
   tracks: [
