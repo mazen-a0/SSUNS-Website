@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { ReactNode, useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -12,7 +12,7 @@ type BioLetterModalProps = {
   title: string;
   name: string;
   email?: string | null;
-  headshotSrc: string;
+  headshotSrc?: string;
   headshotAlt: string;
   signatureName: string;
   signatureRole?: string;
@@ -36,6 +36,7 @@ export function BioLetterModal({
   children,
 }: BioLetterModalProps) {
   const { language } = useSiteContent();
+  const reducedMotion = useReducedMotion();
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
@@ -136,7 +137,8 @@ export function BioLetterModal({
         animate={{ opacity: 1 }}
         className="fixed inset-0 z-[140] bg-[rgba(5,11,37,0.72)] p-3 backdrop-blur-[2px] md:p-6"
         exit={{ opacity: 0 }}
-        initial={{ opacity: 0 }}
+        initial={reducedMotion ? false : { opacity: 0 }}
+        transition={{ duration: reducedMotion ? 0 : 0.2 }}
         onClick={(event) => {
           if (event.target === event.currentTarget) {
             onClose();
@@ -147,20 +149,20 @@ export function BioLetterModal({
           animate={{ opacity: 1, y: 0 }}
           className="mx-auto flex h-full max-h-[calc(100dvh-1.5rem)] w-full max-w-4xl overflow-hidden rounded-[10px] border border-[var(--rule)] bg-[var(--panel)] shadow-[0_28px_70px_-42px_rgba(5,11,37,0.75)] md:max-h-[85vh]"
           exit={{ opacity: 0, y: 8 }}
-          initial={{ opacity: 0, y: 8 }}
-          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          initial={reducedMotion ? false : { opacity: 0, y: 8 }}
+          transition={{ duration: reducedMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
             ref={dialogRef}
             aria-labelledby={titleId}
             aria-modal="true"
-            className="flex h-full min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain md:grid md:grid-cols-[11.25rem_minmax(0,1fr)] md:overflow-hidden"
+            className={`flex h-full min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain md:grid md:overflow-hidden ${headshotSrc ? "md:grid-cols-[11.25rem_minmax(0,1fr)]" : "md:grid-cols-1"}`}
             role="dialog"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            <aside className="border-b border-[var(--rule)] px-4 pb-5 pt-4 text-center md:flex md:h-full md:flex-col md:items-start md:border-b-0 md:border-r md:px-5 md:py-6 md:text-left">
+            {headshotSrc ? <aside className="border-b border-[var(--rule)] px-4 pb-5 pt-4 text-center md:flex md:h-full md:flex-col md:items-start md:border-b-0 md:border-r md:px-5 md:py-6 md:text-left">
               <div className="mx-auto w-24 overflow-hidden rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] md:mx-0 md:w-full">
-                <Image alt={headshotAlt} className="aspect-[4/5] h-auto w-full object-cover object-top" height={1000} src={headshotSrc} width={800} />
+                <Image alt={headshotAlt} className="aspect-[4/5] h-auto w-full object-cover object-top" height={1000} sizes="(min-width: 768px) 140px, 96px" src={headshotSrc} width={800} />
               </div>
               <div className="mt-4 w-full">
                 <p className="text-sm font-semibold leading-tight text-[var(--accent)]">{name}</p>
@@ -173,7 +175,7 @@ export function BioLetterModal({
                   </a>
                 ) : null}
               </div>
-            </aside>
+            </aside> : null}
 
             <section className="flex min-h-0 flex-1 flex-col px-4 pb-4 pt-4 md:px-6 md:pb-6 md:pt-6">
               <div className="flex items-start justify-between gap-4 border-b border-[var(--rule)] pb-4">

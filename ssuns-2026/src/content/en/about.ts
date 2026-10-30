@@ -1,4 +1,5 @@
 import { pickImage } from "@/lib/images";
+import { coordinatorProfiles } from "@/content/en/staff";
 
 export type SecretariatMember = {
   name: string;
@@ -102,6 +103,7 @@ const secretariatMembers: SecretariatMember[] = [
 ];
 
 export const aboutContent = {
+  coordinatorProfiles,
   title: "About SSUNS",
   intro:
     "Founded in 1992 by a group of McGill students, the Secondary Schools’ United Nations Symposium (SSUNS) was created to provide secondary-school students with a space to explore global issues through diplomacy and debate.",
@@ -147,7 +149,6 @@ export const aboutContent = {
       summary: "Operational portfolios that translate planning into conference delivery.",
       body: [
         "Our coordinator team makes the SSUNS experience, and the conference would not be possible without their dedication and support.",
-        "Stay tuned for coordinator profiles as we get closer to SSUNS 2026!",
       ],
     },
     {

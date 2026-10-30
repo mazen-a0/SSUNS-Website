@@ -154,6 +154,18 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       group: "content" as const,
       breadcrumb: `${content.contactContent.title} → ${item.name}`,
     })),
+    ...content.sponsorContent.sponsors.map((sponsor) => ({
+      id: `sponsor-partner-${sponsor.id}`,
+      title: sponsor.name,
+      snippet: [
+        sponsor.tier === "Platinum" ? content.sponsorContent.ui.platinum : content.sponsorContent.ui.bronze,
+        sponsor.description,
+        sponsor.offer ? `${sponsor.offer.percentOff}${content.sponsorContent.ui.discountSuffix} — ${content.sponsorContent.ui.codeLabel} ${sponsor.offer.code}` : "",
+      ].filter(Boolean).join(". "),
+      href: "/sponsor-us",
+      group: "content" as const,
+      breadcrumb: content.sponsorContent.title,
+    })),
     ...content.sponsorContent.reasons.map((reason, index) => ({
       id: `sponsor-${index}`,
       title: reason.title,

@@ -1,4 +1,5 @@
 import { aboutContent as en, type SecretariatMember } from "@/content/en/about";
+import { coordinatorProfiles } from "@/content/fr/staff";
 
 const secretariatRoleByName: Record<string, string> = {
   "Marcus Kelly": "Secrétaire général",
@@ -59,6 +60,7 @@ const secretariatMembers: SecretariatMember[] = en.secretariatMembers.map((membe
 
 export const aboutContent = {
   ...en,
+  coordinatorProfiles,
   title: "À propos de SSUNS",
   intro:
     "Fondé en 1992 par un groupe d’étudiants de l’Université McGill, le Symposium des Nations Unies des écoles secondaires (SSUNS) a été créé afin d’offrir aux élèves du secondaire un espace pour explorer les enjeux mondiaux à travers la diplomatie et le débat.",
@@ -108,7 +110,6 @@ export const aboutContent = {
       summary: "Les équipes opérationnelles qui rendent l’expérience SSUNS possible.",
       body: [
         "Notre équipe de coordination fait vivre l’expérience SSUNS, et la conférence ne serait pas possible sans son dévouement et son soutien.",
-        "Restez à l’affût : les profils des coordinateurs seront ajoutés à mesure que nous approchons de SSUNS 2026 !",
       ],
     },
     {

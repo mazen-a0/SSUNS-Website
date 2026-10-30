@@ -1,247 +1,194 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { PageHero } from "@/components/PageHero";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { DossierCarousel } from "@/components/media/DossierCarousel";
+import { Reveal } from "@/components/motion/Reveal";
+import type { Sponsor } from "@/content/en/sponsor";
 import { useSiteContent } from "@/lib/useSiteContent";
 
-const tierStyles: Record<string, { accent: string; accentSoft: string; sheen: string }> = {
-  Bronze: {
-    accent: "#a96634",
-    accentSoft: "rgba(169, 102, 52, 0.14)",
-    sheen: "radial-gradient(circle at 20% 20%, rgba(169, 102, 52, 0.22), transparent 34%)",
-  },
-  Platinum: {
-    accent: "#64748b",
-    accentSoft: "rgba(100, 116, 139, 0.16)",
-    sheen: "radial-gradient(circle at 18% 18%, rgba(148, 163, 184, 0.28), transparent 36%)",
-  },
-  Sapphire: {
-    accent: "#1d64c8",
-    accentSoft: "rgba(29, 100, 200, 0.14)",
-    sheen: "radial-gradient(circle at 18% 18%, rgba(29, 100, 200, 0.24), transparent 36%)",
-  },
-  "Headline Sponsor": {
-    accent: "#142082",
-    accentSoft: "rgba(20, 32, 130, 0.16)",
-    sheen: "radial-gradient(circle at 18% 18%, rgba(20, 32, 130, 0.26), transparent 38%)",
-  },
-};
+const focusStyle = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
+const textLink = `inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent)] underline underline-offset-4 decoration-[var(--accent-2)] hover:decoration-current ${focusStyle}`;
+const sectionHeading = "font-display text-3xl leading-tight text-[var(--accent)] sm:text-4xl";
 
-function getTierStyle(name: string) {
-  return tierStyles[name] ?? tierStyles.Bronze;
+function SponsorLogo({ sponsor, featured = false }: { sponsor: Sponsor; featured?: boolean }) {
+  return <Image
+    alt={sponsor.logoAlt}
+    className={featured ? "h-auto max-h-36 w-full max-w-md object-contain" : "h-auto max-h-32 w-full max-w-64 object-contain"}
+    height={sponsor.logoHeight}
+    priority={featured}
+    sizes={featured ? "(min-width: 768px) 448px, 80vw" : "(min-width: 640px) 256px, 80vw"}
+    src={sponsor.logoSrc}
+    width={sponsor.logoWidth}
+  />;
 }
 
 export default function SponsorUsPage() {
-  const { homeContent, sponsorContent } = useSiteContent();
-  const [activeTierName, setActiveTierName] = useState(sponsorContent.tiers[0]?.name ?? "");
-  const activeTier = sponsorContent.tiers.find((tier) => tier.name === activeTierName) ?? sponsorContent.tiers[0];
-  const activeTierStyle = getTierStyle(activeTier.name);
+  const { homeContent, sponsorContent, language } = useSiteContent();
+  const { ui } = sponsorContent;
+  const [activeTierIndex, setActiveTierIndex] = useState(0);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const platinumSponsors = sponsorContent.sponsors.filter((sponsor) => sponsor.tier === "Platinum");
+  const bronzeSponsors = sponsorContent.sponsors.filter((sponsor) => sponsor.tier === "Bronze");
   const sponsorSlides = homeContent.gallery.items.slice(1, 4).map((item) => ({
-    id: item.id,
-    alt: item.alt,
-    caption: item.caption,
-    eyebrow: item.title,
-    src: item.src,
+    id: item.id, alt: item.alt, caption: item.caption, eyebrow: item.title, src: item.src,
   }));
 
+  async function copyCode(code: string) {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopyState("copied");
+    } catch {
+      setCopyState("failed");
+    }
+  }
+
+  function onTierKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next: number;
+    const count = sponsorContent.tiers.length;
+    if (event.key === "ArrowRight") next = (index + 1) % count;
+    else if (event.key === "ArrowLeft") next = (index + count - 1) % count;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = count - 1;
+    else return;
+    event.preventDefault();
+    setActiveTierIndex(next);
+    tabRefs.current[next]?.focus();
+  }
+
   return (
-    <>
-      <PageHero intro={sponsorContent.intro} title={sponsorContent.title} />
-      <section className="page-shell">
-        <div className="paper-grain mb-6 overflow-hidden rounded-[12px] border border-[var(--rule-strong)] bg-[var(--panel-inverse)] text-white shadow-[var(--shadow-soft)]">
-          <div className="grid gap-5 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-            <div>
-              <p className="section-kicker text-[#b4caff]">Sponsorship package</p>
-              <h2 className="mt-3 max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl">Partner with a conference built for visibility and student leadership.</h2>
-              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#e6edff] sm:text-base">{sponsorContent.packageUnavailableLabel}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {sponsorContent.stats.slice(0, 2).map((stat) => (
-                  <span className="rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white" key={stat.label}>
-                    {stat.value} {stat.label === "McGill staff" ? stat.label : stat.label.toLowerCase()}
-                  </span>
-                ))}
+    <div className="page-shell pt-6 sm:pt-8" lang={language}>
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4">
+        <p className="section-kicker">SSUNS 2026 / {sponsorContent.title}</p>
+        <a className={textLink} href="#partner-with-ssuns">{ui.becomeSponsor} <span aria-hidden="true" className="ml-2">↓</span></a>
+      </header>
+
+      <section aria-labelledby="sponsors-title" className="grid gap-5 py-8 sm:py-10 lg:grid-cols-2 lg:items-start lg:gap-x-14">
+        <h1 className="font-display text-[clamp(2.45rem,12vw,6.5rem)] leading-none tracking-tight text-[var(--accent)] lg:col-span-2" id="sponsors-title">{sponsorContent.title}</h1>
+        <h2 className="max-w-lg text-xl leading-8 text-[var(--accent)] sm:text-2xl">{sponsorContent.sponsorsHeading}</h2>
+        <p className="max-w-xl text-base leading-7 text-[var(--muted)] lg:pb-1">{sponsorContent.sponsorsIntro}</p>
+      </section>
+
+      <section aria-labelledby="platinum-title">
+        <h2 className="section-kicker mb-4" id="platinum-title">{ui.platinum}</h2>
+        {platinumSponsors.map((sponsor) => <article className="grid overflow-hidden rounded-lg border border-[var(--rule)] md:grid-cols-[1.15fr_0.85fr]" id={`sponsor-${sponsor.id}`} key={sponsor.id} style={{ scrollMarginTop: "calc(var(--site-sticky-top) + 2rem)" }}>
+          <a aria-label={`${sponsor.name} — ${sponsorContent.sponsorVisitLabel}`} className={`flex min-h-56 items-center justify-center bg-white px-7 py-12 sm:px-12 md:min-h-72 ${focusStyle} focus-visible:-outline-offset-4`} href={sponsor.href} rel="noopener noreferrer" target="_blank"><SponsorLogo featured sponsor={sponsor} /></a>
+          <div className="flex flex-col items-start justify-center bg-[var(--accent)] px-6 py-7 text-white sm:px-9 sm:py-9">
+            <h3 className="text-base font-semibold text-white/80">{sponsor.name}</h3>
+            {sponsor.offer ? <>
+              <p className="font-display mt-2 text-[clamp(2.5rem,5vw,4rem)] leading-tight">{sponsor.offer.percentOff}{ui.discountSuffix}</p>
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/25 pt-4">
+                <p className="text-sm text-white/80">{ui.codeLabel} <strong className="ml-2 select-all text-lg tracking-wide text-white">{sponsor.offer.code}</strong></p>
+                <button className="min-h-11 text-xs font-semibold underline underline-offset-4 hover:text-white/75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" onClick={() => copyCode(sponsor.offer!.code)} type="button">{copyState === "copied" ? ui.copied : ui.copyCode}</button>
               </div>
-            </div>
-            <Link
-              className="inline-flex items-center justify-center rounded-[10px] border border-white bg-white px-5 py-4 text-center text-sm font-semibold text-[var(--accent)] shadow-[0_16px_40px_rgba(0,0,0,0.22)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#eef3ff]"
-              href={sponsorContent.packagePath}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {sponsorContent.packageLabel}
-            </Link>
+              <p aria-live="polite" className={copyState === "failed" ? "text-xs leading-5 text-white/85" : "sr-only"}>{copyState === "failed" ? ui.copyFailed : copyState === "copied" ? `${ui.copied}: ${sponsor.offer.code}` : ""}</p>
+            </> : null}
+            <a className="mt-5 inline-flex min-h-11 items-center gap-3 text-sm font-semibold underline underline-offset-4 hover:text-white/75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" href={sponsor.href} rel="noopener noreferrer" target="_blank">{sponsorContent.sponsorVisitLabel}<span aria-hidden="true">↗</span></a>
           </div>
-        </div>
+        </article>)}
+      </section>
 
-        <article className="theme-panel-strong paper-grain mb-6 overflow-hidden rounded-[12px] p-6 shadow-[var(--shadow-soft)] sm:p-8">
-          <div className="grid gap-6 lg:grid-cols-[0.38fr_minmax(0,1fr)] lg:items-center">
-            <div>
-              <p className="section-kicker">{sponsorContent.sponsorsTitle}</p>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight text-[var(--accent)]">{sponsorContent.sponsorsHeading}</h2>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{sponsorContent.sponsorsIntro}</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {sponsorContent.sponsors.map((sponsor) => (
-                <Link
-                  className="group relative overflow-hidden rounded-[12px] border border-[var(--rule-strong)] bg-[var(--panel)] p-4 shadow-[0_18px_45px_rgba(20,32,130,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-[0_24px_55px_rgba(20,32,130,0.14)]"
-                  href={sponsor.href}
-                  key={sponsor.name}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <span className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#142082,#789cf4,#142082)] opacity-85" />
-                  <div className="relative flex min-h-[11rem] items-center justify-center rounded-[10px] border border-[var(--rule)] bg-white p-5">
-                    <Image
-                      alt={sponsor.logoAlt}
-                      className="object-contain"
-                      fill
-                      sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 100vw"
-                      src={sponsor.logoSrc}
-                    />
-                  </div>
-                  <div className="mt-4">
-                    <p className="text-lg font-semibold text-[var(--accent)]">{sponsor.name}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{sponsor.description}</p>
-                    <p className="mt-4 text-sm font-semibold text-[var(--accent)] transition-colors group-hover:text-[var(--accent-2)]">
-                      {sponsorContent.sponsorVisitLabel}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </article>
-
-        <div className="grid gap-6 lg:grid-cols-[0.44fr_0.56fr]">
-          <DossierCarousel items={sponsorSlides} />
-
-          <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {sponsorContent.stats.map((stat) => (
-                <article className="rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] px-4 py-4" key={stat.label}>
-                  <p className="section-kicker">{stat.label}</p>
-                  <p className="mt-3 text-lg font-semibold text-[var(--text)]">{stat.value}</p>
-                </article>
-              ))}
-            </div>
-            <div className="mt-6 border-t border-[var(--rule)] pt-5">
-              <p className="section-kicker">Sponsorship tiers</p>
-              <h2 className="mt-3 text-2xl font-semibold leading-tight text-[var(--accent)]">Choose the level of presence that fits your organization</h2>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {sponsorContent.tiers.map((tier) => {
-                  const isActive = tier.name === activeTier.name;
-                  const tierStyle = getTierStyle(tier.name);
-                  return (
-                    <button
-                      className="group relative overflow-hidden rounded-[10px] border px-4 py-3 text-left transition-all duration-200 hover:-translate-y-0.5"
-                      key={tier.name}
-                      onClick={() => setActiveTierName(tier.name)}
-                      style={{
-                        background: isActive ? `linear-gradient(135deg, ${tierStyle.accent}, #142082)` : `linear-gradient(135deg, ${tierStyle.accentSoft}, rgba(255,255,255,0.42))`,
-                        borderColor: isActive ? tierStyle.accent : "var(--rule)",
-                        boxShadow: isActive ? `0 18px 40px ${tierStyle.accentSoft}` : undefined,
-                        color: isActive ? "#ffffff" : "var(--accent)",
-                      }}
-                      type="button"
-                    >
-                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100" style={{ background: tierStyle.sheen }} />
-                      <span className="relative flex items-start justify-between gap-3">
-                        <span>
-                          <span className="block text-sm font-semibold">{tier.name}</span>
-                          <span className={isActive ? "mt-1 block text-xs font-semibold text-white/75" : "mt-1 block text-xs font-semibold text-[var(--muted)]"}>
-                            Sponsorship tier
-                          </span>
-                        </span>
-                        <span className="text-sm font-semibold">{tier.price}</span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-              <div
-                className="relative mt-5 overflow-hidden rounded-[12px] border bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)]"
-                style={{ borderColor: activeTierStyle.accent, boxShadow: `0 18px 45px ${activeTierStyle.accentSoft}` }}
-              >
-                <div className="pointer-events-none absolute inset-0 opacity-80" style={{ background: activeTierStyle.sheen }} />
-                <div className="relative">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <p className="text-2xl font-semibold leading-tight text-[var(--accent)]">{activeTier.name}</p>
-                      <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{activeTier.summary}</p>
-                    </div>
-                    <p className="rounded-full px-3 py-1.5 text-lg font-semibold text-white" style={{ backgroundColor: activeTierStyle.accent }}>
-                      {activeTier.price}
-                    </p>
-                  </div>
-                  {activeTier.benefits?.length ? (
-                    <ul className="mt-4 space-y-2 border-t border-[var(--rule)] pt-4 text-sm leading-relaxed text-[var(--text)]">
-                      {activeTier.benefits.map((benefit) => (
-                        <li className="flex gap-2" key={benefit}>
-                          <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: activeTierStyle.accent }} />
-                          <span>{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div className="mt-6 grid gap-6 lg:grid-cols-[0.64fr_0.36fr]">
-          <div className="space-y-6">
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">Visibility opportunities</p>
-              <h2 className="mt-4 text-2xl font-semibold leading-tight text-[var(--accent)]">Ways sponsors can appear across SSUNS</h2>
-              <div className="mt-5 grid gap-2 sm:grid-cols-2">
-                {sponsorContent.visibilityOptions.map((option) => (
-                  <p className="rounded-[8px] border border-[var(--rule)] bg-[var(--panel)] px-3 py-2 text-sm font-semibold leading-relaxed text-[var(--text)]" key={option}>
-                    {option}
-                  </p>
-                ))}
-              </div>
-            </article>
-
-            {sponsorContent.reasons.map((reason) => (
-              <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8" key={reason.title}>
-                <p className="section-kicker">{sponsorContent.title}</p>
-                <h2 className="mt-4 text-2xl font-semibold leading-tight text-[var(--accent)]">{reason.title}</h2>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--text)] sm:text-base">{reason.body}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="space-y-6">
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">Custom sponsorships</p>
-              <div className="mt-4 space-y-4">
-                {sponsorContent.customOptions.map((option) => (
-                  <div className="border-t border-[var(--rule)] pt-4 first:border-t-0 first:pt-0" key={option.title}>
-                    <p className="text-base font-semibold text-[var(--accent)]">{option.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{option.body}</p>
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            <article className="theme-panel-strong paper-grain rounded-[8px] p-6 sm:p-8">
-              <p className="section-kicker">{sponsorContent.supportersTitle}</p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{sponsorContent.supportersNote}</p>
-            </article>
-
-            <article className="bg-[var(--panel-inverse)] p-6 text-white sm:p-8">
-              <p className="section-kicker text-[#b4caff]">{sponsorContent.contactTitle}</p>
-              <a className="mt-4 block text-lg font-semibold text-white" href={`mailto:${sponsorContent.contactEmail}`}>
-                {sponsorContent.contactEmail}
-              </a>
-            </article>
-          </div>
+      <section aria-labelledby="bronze-title" className="py-8 sm:py-10">
+        <h2 className="section-kicker mb-4" id="bronze-title">{ui.bronze}</h2>
+        <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2 xl:grid-cols-4">
+          {bronzeSponsors.map((sponsor) => <article className="flex min-w-0 flex-col" id={`sponsor-${sponsor.id}`} key={sponsor.id} style={{ scrollMarginTop: "calc(var(--site-sticky-top) + 2rem)" }}>
+            <a aria-label={`${sponsor.name} — ${sponsorContent.sponsorVisitLabel}`} className={`flex h-44 items-center justify-center rounded-md border border-[var(--rule)] bg-white p-5 transition-colors hover:border-[var(--accent)] motion-reduce:transition-none ${focusStyle}`} href={sponsor.href} rel="noopener noreferrer" target="_blank"><SponsorLogo sponsor={sponsor} /></a>
+            <h3 className="mt-4 text-base font-semibold leading-6 text-[var(--accent)]">{sponsor.name}</h3>
+            {sponsor.description ? <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{sponsor.description}</p> : null}
+            <a className={`${textLink} mt-2 self-start`} href={sponsor.href} rel="noopener noreferrer" target="_blank">{sponsorContent.sponsorVisitLabel}<span aria-hidden="true" className="ml-2">↗</span></a>
+          </article>)}
         </div>
       </section>
-    </>
+
+      <section aria-labelledby="partner-title" className="border-t border-[var(--rule)] py-8 sm:py-10" id="partner-with-ssuns" style={{ scrollMarginTop: "calc(var(--site-sticky-top) + 2rem)" }}>
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-14">
+          <h2 className={sectionHeading} id="partner-title">{ui.partnerHeading}</h2>
+          <p className="max-w-xl text-base leading-7 text-[var(--text)]">{sponsorContent.intro}</p>
+        </div>
+        <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-[var(--rule)] py-6 md:grid-cols-3 xl:grid-cols-5">
+          {sponsorContent.stats.map((stat) => <div key={stat.label}>
+            <dt className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">{stat.label}</dt>
+            <dd className="mt-2 text-lg font-semibold leading-7 text-[var(--accent)]">{stat.value}</dd>
+          </div>)}
+        </dl>
+        <div className="mt-7 grid gap-7 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12">
+          <div className="space-y-5">
+            {sponsorContent.reasons.map((reason) => <Reveal key={reason.title}>
+              <h3 className="text-lg font-semibold text-[var(--accent)]">{reason.title}</h3>
+              <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--muted)] sm:text-base">{reason.body}</p>
+            </Reveal>)}
+          </div>
+          <DossierCarousel className="self-start" items={sponsorSlides} />
+        </div>
+      </section>
+
+      <section aria-labelledby="tiers-title" className="border-t border-[var(--rule)] py-8 sm:py-10">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <h2 className={sectionHeading} id="tiers-title">{ui.tiersHeading}</h2>
+          <p className="max-w-md text-sm leading-6 text-[var(--muted)]">{ui.tiersIntro}</p>
+        </div>
+        <div aria-labelledby="tiers-title" className="grid grid-cols-2 border-b border-[var(--rule)] sm:grid-cols-4" role="tablist">
+          {sponsorContent.tiers.map((tier, index) => <button
+            aria-controls={`sponsorship-panel-${index}`}
+            aria-selected={activeTierIndex === index}
+            className={`min-h-24 border-b-2 px-3 py-4 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-5 ${activeTierIndex === index ? "border-[var(--accent)] bg-[var(--panel)] text-[var(--accent)]" : "border-transparent text-[var(--muted)] hover:text-[var(--accent)]"}`}
+            id={`sponsorship-tab-${index}`}
+            key={index}
+            onClick={() => setActiveTierIndex(index)}
+            onKeyDown={(event) => onTierKeyDown(event, index)}
+            ref={(node) => { tabRefs.current[index] = node; }}
+            role="tab"
+            tabIndex={activeTierIndex === index ? 0 : -1}
+            type="button"
+          ><span className="block text-sm font-semibold">{tier.name}</span><span className="font-display mt-1 block text-2xl">{tier.price}</span></button>)}
+        </div>
+        {sponsorContent.tiers.map((tier, index) => <div aria-labelledby={`sponsorship-tab-${index}`} className={activeTierIndex === index ? `grid gap-5 py-6 lg:grid-cols-[0.4fr_0.6fr] lg:gap-12 ${focusStyle}` : "hidden"} hidden={activeTierIndex !== index} id={`sponsorship-panel-${index}`} key={index} role="tabpanel" tabIndex={0}>
+          <h3 className="font-display text-2xl leading-tight text-[var(--accent)] sm:text-3xl">{tier.name}</h3>
+          <div>
+            <p className="max-w-2xl text-base leading-7 text-[var(--text)]">{tier.summary}</p>
+            {tier.benefits?.length ? <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-7 text-[var(--muted)] marker:text-[var(--accent)]">{tier.benefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul> : null}
+          </div>
+        </div>)}
+        <aside className="mt-2 grid gap-5 rounded-lg bg-[var(--accent)] p-6 text-white sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-10">
+          <div>
+            <h3 className="font-display text-2xl sm:text-3xl">{ui.packageHeading}</h3>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-white/85">{sponsorContent.packageUnavailableLabel}</p>
+          </div>
+          <a className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 text-center text-sm font-semibold text-[var(--accent)] transition-colors hover:bg-[#e4eeff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transition-none" href={sponsorContent.packagePath} rel="noopener noreferrer" target="_blank">{sponsorContent.packageLabel}</a>
+        </aside>
+      </section>
+
+      <section aria-labelledby="visibility-title" className="grid gap-7 border-t border-[var(--rule)] py-8 sm:py-10 lg:grid-cols-[0.4fr_0.6fr] lg:gap-12">
+        <div>
+          <p className="section-kicker">{ui.visibilityHeading}</p>
+          <h2 className={`${sectionHeading} mt-3 max-w-md`} id="visibility-title">{ui.visibilityIntro}</h2>
+        </div>
+        <ul className="grid gap-x-8 self-start sm:grid-cols-2">
+          {sponsorContent.visibilityOptions.map((option) => <li className="border-b border-[var(--rule)] py-3 text-sm leading-6 text-[var(--text)]" key={option}>{option}</li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="custom-title" className="border-t border-[var(--rule)] py-8 sm:py-10">
+        <h2 className={sectionHeading} id="custom-title">{ui.customHeading}</h2>
+        <div className="mt-6 grid gap-6 lg:grid-cols-3 lg:gap-9">
+          {sponsorContent.customOptions.map((option) => <article className="border-t border-[var(--rule)] pt-4" key={option.title}>
+            <h3 className="text-base font-semibold text-[var(--accent)]">{option.title}</h3>
+            <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{option.body}</p>
+          </article>)}
+        </div>
+      </section>
+
+      <footer className="grid gap-6 border-t border-[var(--rule)] pt-7 lg:grid-cols-2 lg:gap-14">
+        <div>
+          <h2 className="section-kicker">{sponsorContent.supportersTitle}</h2>
+          <p className="mt-3 max-w-lg text-sm leading-7 text-[var(--muted)]">{sponsorContent.supportersNote}</p>
+        </div>
+        <div className="lg:justify-self-end">
+          <h2 className="section-kicker">{sponsorContent.contactTitle}</h2>
+          <a className={`${textLink} mt-2 text-lg`} href={`mailto:${sponsorContent.contactEmail}`}>{sponsorContent.contactEmail}<span aria-hidden="true" className="ml-3">↗</span></a>
+        </div>
+      </footer>
+    </div>
   );
 }

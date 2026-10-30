@@ -1,5 +1,74 @@
 import { pickImage } from "@/lib/images";
 
+export type Sponsor = {
+  id: string;
+  name: string;
+  tier: "Platinum" | "Bronze";
+  href: string;
+  logoSrc: string;
+  logoAlt: string;
+  logoWidth: number;
+  logoHeight: number;
+  description?: string;
+  offer?: { percentOff: number; code: string };
+};
+
+const sponsors: Sponsor[] = [
+  {
+    id: "buylanyard",
+    name: "BuyLanyard",
+    tier: "Platinum",
+    href: "https://buylanyard.ca/",
+    logoSrc: "/sponsors/buylanyard.jpeg",
+    logoAlt: "Buy Lanyard — Lanyards Designed for You",
+    logoWidth: 584,
+    logoHeight: 186,
+    offer: { percentOff: 10, code: "SSUNS10" },
+  },
+  {
+    id: "mcmaster",
+    name: "McMaster University",
+    tier: "Bronze",
+    href: "https://www.mcmaster.ca/",
+    logoSrc: "/sponsors/mcmaster.jpeg",
+    logoAlt: "McMaster University — Wilson College of Leadership & Civic Engagement",
+    logoWidth: 1016,
+    logoHeight: 192,
+    description: "Wilson College of Leadership & Civic Engagement",
+  },
+  {
+    id: "waterloo",
+    name: "University of Waterloo",
+    tier: "Bronze",
+    href: "https://uwaterloo.ca/",
+    logoSrc: "/sponsors/waterloo.jpeg",
+    logoAlt: "University of Waterloo crest",
+    logoWidth: 1280,
+    logoHeight: 1280,
+  },
+  {
+    id: "gs-jj",
+    name: "GS-JJ",
+    tier: "Bronze",
+    href: "https://www.gs-jj.com",
+    logoSrc: "/sponsors/gsjj2.jpeg",
+    logoAlt: "GS-JJ sponsor logo",
+    logoWidth: 795,
+    logoHeight: 267,
+    description: "GS-JJ supports SSUNS 2026 as part of the community of sponsors helping make the conference possible.",
+  },
+  {
+    id: "wizeprep",
+    name: "Wizeprep",
+    tier: "Bronze",
+    href: "https://www.wizeprep.com/",
+    logoSrc: "/sponsors/wizeprep.jpeg",
+    logoAlt: "Wizeprep logo",
+    logoWidth: 1000,
+    logoHeight: 612,
+  },
+];
+
 export const sponsorContent = {
   title: "Sponsorships",
   intro:
@@ -41,16 +110,24 @@ export const sponsorContent = {
   sponsorsIntro:
     "We appreciate all of our sponsors for making this conference possible. Their support helps SSUNS welcome delegates, advisors, and staff into a polished and accessible conference weekend.",
   sponsorVisitLabel: "Visit sponsor site",
-  sponsors: [
-    {
-      name: "GS-JJ",
-      href: "https://www.gs-jj.com",
-      logoSrc: "/sponsors/gsjj.jpg",
-      logoAlt: "GS-JJ sponsor logo",
-      description:
-        "GS-JJ supports SSUNS 2026 as part of the community of sponsors helping make the conference possible.",
-    },
-  ],
+  sponsors,
+  ui: {
+    becomeSponsor: "Partner with SSUNS",
+    platinum: "Platinum sponsor",
+    bronze: "Bronze sponsors",
+    discountSuffix: "% off",
+    codeLabel: "Use code",
+    copyCode: "Copy code",
+    copied: "Copied",
+    copyFailed: "Please select and copy the code above.",
+    partnerHeading: "Partner with SSUNS",
+    packageHeading: "Sponsorship package",
+    tiersHeading: "Sponsorship levels",
+    tiersIntro: "Choose the level of presence that fits your organization.",
+    visibilityHeading: "Visibility opportunities",
+    visibilityIntro: "Ways sponsors can appear across SSUNS",
+    customHeading: "Custom sponsorships",
+  },
   contactTitle: "Sponsorship contact",
   contactEmail: "pr@ssuns.org",
   packageLabel: "Find our full sponsorship package here.",
