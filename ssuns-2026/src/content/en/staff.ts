@@ -168,9 +168,9 @@ export const coordinatorProfiles: StaffProfile[] = [
 export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
   "who-2026": [
     {
-      "name": "Brianne Bower",
+      "name": "India Bejaoui",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/BrianneBower_WTO.png"
+      "imageSrc": "/dais_headshots/ IndiaBejaoui_SDG12.png"
     },
     {
       "name": "Lucie Quief",
@@ -183,9 +183,14 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/JulietteCherifi_WHO.jpg"
     },
     {
-      "name": "Layla Yamashiro",
+      "name": "Anne-Gaelle Thelliez",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/LaylaYamashiro_WHO.png"
+      "imageSrc": "/dais_headshots/AnneGaelleThelliez_SDG12.jpg"
+    },
+    {
+      "name": "Camille Causse Culpan",
+      "role": "Vice Chair",
+      "imageSrc": "/dais_headshots/CamilleCausseCulpan_SDG12.jpg"
     }
   ],
   "ccpcj-2026": [
@@ -205,14 +210,18 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/ChloeNairne_CCPCJ.jpg"
     },
     {
+      "name": "Gaïa Irrmann",
+      "role": "Vice Chair",
+      "imageSrc": "/dais_headshots/websafe/GaiaIrrmann_CCPCJ.jpg"
+    },
+    {
       "name": "Sia Bhimani",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/SiaBhimani_CCPCJ.jpg"
     },
     {
-      "name": "Gaïa Irrmann",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/websafe/GaiaIrrmann_CCPCJ.jpg"
+      "name": "Michaela Navarette",
+      "role": "Vice Chair"
     }
   ],
   "wto-2026": [
@@ -232,14 +241,14 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/websafe/ReesStafford_WTO.jpg"
     },
     {
-      "name": "Aditi Shringarpure",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/AditiShringarpure_WTO.jpg"
-    },
-    {
       "name": "Suha Islam",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/SuhaIslam_WTO.jpg"
+    },
+    {
+      "name": "Aditi Shringarpure",
+      "role": "Vice Chair",
+      "imageSrc": "/dais_headshots/AditiShringarpure_WTO.jpg"
     }
   ],
   "ifad-2026": [
@@ -262,13 +271,17 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Sarra Khaireddine",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/SarraKhaireddine_IFAD.jpg"
+    },
+    {
+      "name": "Brandon Woo",
+      "role": "Vice Chair"
     }
   ],
   "fespaco-2026": [
     {
-      "name": "Maggie Winsor",
+      "name": "Gopika Wright",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/websafe/MaggieWinsor_FESPACO.jpg"
+      "imageSrc": "/dais_headshots/websafe/GopikaWright_Penguin.jpg"
     },
     {
       "name": "Andrea Iskandar",
@@ -284,23 +297,16 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Trish Twijuke",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/TrishTwijuke_FESPACO.jpg"
+    },
+    {
+      "name": "Zachary Serdouk",
+      "role": "Vice Chair"
     }
   ],
   "sdg-12-2026": [
     {
-      "name": "India Bejaoui",
-      "role": "Chair",
-      "imageSrc": "/dais_headshots/ IndiaBejaoui_SDG12.png"
-    },
-    {
-      "name": "Capucine Parvery",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/CapucineParvery_SDG12.JPG"
-    },
-    {
-      "name": "Anne-Gaelle Thelliez",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/AnneGaelleThelliez_SDG12.jpg"
+      "name": "Thomas Villarreal Avila",
+      "role": "Chair"
     },
     {
       "name": "Parmis Mortazavi",
@@ -308,15 +314,25 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/ParmisMortazavi_SDG12.jpg"
     },
     {
-      "name": "Camille Causse Culpan",
+      "name": "Layla Yamashiro",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/CamilleCausseCulpan_SDG12.jpg"
+      "imageSrc": "/dais_headshots/LaylaYamashiro_WHO.png"
+    },
+    {
+      "name": "Capucine Parvery",
+      "role": "Vice Chair",
+      "imageSrc": "/dais_headshots/CapucineParvery_SDG12.JPG"
+    },
+    {
+      "name": "Saphira Noppe",
+      "role": "Vice Chair"
     }
   ],
   "unhrc-2026": [
     {
       "name": "Vivienne Gavillet",
-      "role": "Chair"
+      "role": "Chair",
+      "imageSrc": "/dais_headshots/websafe/VivienneGavillet_UNHRC.jpg"
     },
     {
       "name": "Norah Nehme",
@@ -332,6 +348,10 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Juliette Balagny",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/JulietteBalagny_UNHCR.jpg"
+    },
+    {
+      "name": "Sara Mazilu",
+      "role": "Vice Chair"
     }
   ],
   "icao-2026": [
@@ -354,23 +374,21 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Sanjana Deb",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/SanjanaDeb_ICAO.jpg"
+    },
+    {
+      "name": "Louis-Philippe Dallaire",
+      "role": "Vice Chair"
     }
   ],
   "penguins-2026": [
     {
-      "name": "Isabella Richards",
-      "role": "Co-Chair",
-      "imageSrc": "/dais_headshots/Isabella Richards_Penguin.jpg"
-    },
-    {
-      "name": "Gopika Wright",
-      "role": "Co-Chair",
-      "imageSrc": "/dais_headshots/websafe/GopikaWright_Penguin.jpg"
-    },
-    {
       "name": "Sienna Ural",
-      "role": "Vice Chair",
+      "role": "Chair",
       "imageSrc": "/dais_headshots/websafe/SiennaUral_Penguin.jpg"
+    },
+    {
+      "name": "Pearl Naik",
+      "role": "Vice Chair"
     },
     {
       "name": "Layla Viel",
@@ -378,9 +396,8 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/Layla Viel_Penguin.png"
     },
     {
-      "name": "Eva Bevan",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Eva Bevan_Penguin.jpg"
+      "name": "Rebecca Zhang",
+      "role": "Vice Chair"
     }
   ],
   "nhl-2026": [
@@ -388,6 +405,10 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Samuel Stead",
       "role": "Chair",
       "imageSrc": "/dais_headshots/Samuel Stead_NHL.PNG"
+    },
+    {
+      "name": "Myriam Navert",
+      "role": "Vice Chair"
     },
     {
       "name": "Cassidie Regent",
@@ -414,12 +435,20 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
     {
       "name": "Anaë Gregori",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Anaë Gregori_ICJ.jpg"
+      "imageSrc": "/dais_headshots/Anaë Gregori_ICJ.jpg"
     },
     {
       "name": "Eliza Kishan",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/Eliza Kishan_ICJ.png"
+    },
+    {
+      "name": "Ema Zhu",
+      "role": "Vice Chair"
+    },
+    {
+      "name": "Avery Rutledge",
+      "role": "Vice Chair"
     }
   ],
   "praguematic-2026": [
@@ -442,17 +471,21 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Martin Grange",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/Martin Grange_Slavic.jpg"
+    },
+    {
+      "name": "Merle Frank",
+      "role": "Vice Chair"
     }
   ],
   "mof-2026": [
     {
-      "name": "Hector Giraud",
-      "role": "Chair"
+      "name": "Achille Croquelois Palluel",
+      "role": "Chair",
+      "imageSrc": "/dais_headshots/Achille Croquelois Palluel_French.jpg"
     },
     {
-      "name": "Achille Croquelois Palluel",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Achille Croquelois Palluel_French.jpg"
+      "name": "Julian Haldane-Ainsworth",
+      "role": "Vice Chair"
     },
     {
       "name": "Elizabeth de Lamberterie",
@@ -475,9 +508,8 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/Chiara Corradi_Dam.png"
     },
     {
-      "name": "Lucy Crowther",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Lucy Crowther_Dam.jpg"
+      "name": "Paula Christabelle Sinaga",
+      "role": "Vice Chair"
     },
     {
       "name": "Abigael Rondeau",
@@ -505,13 +537,17 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Thibault Nicolas",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/Thibault Nicolas_Alexander.JPG"
+    },
+    {
+      "name": "Harper Candler",
+      "role": "Vice Chair"
     }
   ],
   "ad-hoc-2026": [
     {
-      "name": "Krupa Patel",
+      "name": "Magnolia Winsor",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/Krupa Patel_Spadhoc.JPG"
+      "imageSrc": "/dais_headshots/websafe/MaggieWinsor_FESPACO.jpg"
     },
     {
       "name": "Sara Di Sabatino Garbati",
@@ -548,12 +584,6 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "daisGroup": "Russia"
     },
     {
-      "name": "Dahlia Harrison-Irwin",
-      "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Dahlia Harrison-Irwin_Russia.JPG",
-      "daisGroup": "Russia"
-    },
-    {
       "name": "Philippe Valtat",
       "role": "Crisis Director",
       "daisGroup": "Russia"
@@ -565,13 +595,17 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "daisGroup": "Russia"
     },
     {
-      "name": "Hannah Kassam",
+      "name": "Geoffrey Nelson",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/Hannah Kassam_Britain.jpeg",
       "daisGroup": "Britain"
     },
     {
       "name": "Matheo Negreanu Stribley",
+      "role": "Vice Chair",
+      "daisGroup": "Britain"
+    },
+    {
+      "name": "Michelle Canizales Gutierrez",
       "role": "Vice Chair",
       "daisGroup": "Britain"
     },
@@ -585,6 +619,11 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "name": "Noah Deschenes",
       "role": "Assistant Crisis Director",
       "imageSrc": "/dais_headshots/Noah Deschenes_Russia.jpg",
+      "daisGroup": "Britain"
+    },
+    {
+      "name": "Gabriel Lorenzo",
+      "role": "Assistant Crisis Director",
       "daisGroup": "Britain"
     }
   ],
@@ -608,15 +647,25 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "daisGroup": "Osheaga"
     },
     {
-      "name": "Genevieve Hart",
+      "name": "Penelope Cramer",
+      "role": "Vice Chair",
+      "imageSrc": "/dais_headshots/Penelope_Lollapalooza.png",
+      "daisGroup": "Osheaga"
+    },
+    {
+      "name": "Giovanna Catalina Silva",
       "role": "Crisis Director",
-      "imageSrc": "/dais_headshots/Genevieve Hart_Osheaga.jpg",
       "daisGroup": "Osheaga"
     },
     {
       "name": "Nicole McAdoo",
       "role": "Assistant Crisis Director",
       "imageSrc": "/dais_headshots/Nicole McAdoo_Osheaga.JPG",
+      "daisGroup": "Osheaga"
+    },
+    {
+      "name": "Aaschir Sheikh",
+      "role": "Assistant Crisis Director",
       "daisGroup": "Osheaga"
     },
     {
@@ -631,9 +680,8 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "daisGroup": "Lollapalooza"
     },
     {
-      "name": "Penelope Cramer",
+      "name": "Annabella Handler",
       "role": "Vice Chair",
-      "imageSrc": "/dais_headshots/Penelope_Lollapalooza.png",
       "daisGroup": "Lollapalooza"
     },
     {
@@ -647,6 +695,11 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "role": "Assistant Crisis Director",
       "imageSrc": "/dais_headshots/OliveChiu_Lollapalooza.JPG",
       "daisGroup": "Lollapalooza"
+    },
+    {
+      "name": "Saanvi Terala",
+      "role": "Assistant Crisis Director",
+      "daisGroup": "Lollapalooza"
     }
   ],
   "versace-2026": [
@@ -655,11 +708,11 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "role": "Chair"
     },
     {
-      "name": "Lily Dodson",
+      "name": "Boris Mihaylov",
       "role": "Vice Chair"
     },
     {
-      "name": "Luke Smith",
+      "name": "Victoria Richardson",
       "role": "Vice Chair"
     },
     {
@@ -667,49 +720,48 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "role": "Crisis Director"
     },
     {
-      "name": "Juliette Bussi",
+      "name": "Suran Yang",
       "role": "Assistant Crisis Director"
     }
   ],
   "newsboys-2026": [
     {
-      "name": "Gillian Butler",
+      "name": "Zoë Ley",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/Gillian Butler_Newsboy.JPG"
+      "imageSrc": "/dais_headshots/Zoë Ley_Newsboy.jpeg"
     },
     {
-      "name": "Daniella Mara Dunn",
+      "name": "Danielle Mara Dunn",
       "role": "Vice Chair",
       "imageSrc": "/dais_headshots/Daniella Mara Dunn_Newsboy.jpeg"
     },
     {
-      "name": "Zoë Ley",
+      "name": "Genevieve Hart",
       "role": "Crisis Director",
-      "imageSrc": "/dais_headshots/Zoë Ley_Newsboy.jpeg"
+      "imageSrc": "/dais_headshots/Genevieve Hart_Osheaga.jpg"
     },
     {
       "name": "Eva Moore",
+      "role": "Assistant Crisis Director"
+    },
+    {
+      "name": "Steven Gialamboukis",
       "role": "Assistant Crisis Director"
     }
   ],
   "unsc-2026": [
     {
-      "name": "Ines Wolff",
+      "name": "Brianne Bower",
       "role": "Chair",
-      "imageSrc": "/dais_headshots/Ines Wolff_UNSC .jpg"
+      "imageSrc": "/dais_headshots/BrianneBower_WTO.png"
     },
     {
-      "name": "Simon Michell",
+      "name": "Nicolas Bower",
       "role": "Vice Chair"
     },
     {
       "name": "Collin Schlosser",
       "role": "Crisis Director"
-    },
-    {
-      "name": "Jafar Khasawneh",
-      "role": "Assistant Crisis Director",
-      "imageSrc": "/dais_headshots/Jafar Khasawneh_UNSC.jpg"
     }
   ],
   "khanflict-2026": [
@@ -723,10 +775,6 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "role": "Vice Chair"
     },
     {
-      "name": "Annabella Handler",
-      "role": "Vice Chair"
-    },
-    {
       "name": "Ethan Ozan Vandivier",
       "role": "Crisis Director",
       "imageSrc": "/dais_headshots/Ethan_Khanflict.jpg"
@@ -737,9 +785,8 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
       "imageSrc": "/dais_headshots/Laurie Ruel_khanflict.jpeg"
     },
     {
-      "name": "Yevgeny Podolyanskiy",
-      "role": "Assistant Crisis Director",
-      "imageSrc": "/dais_headshots/websafe/YevgenyPodolyanskiy_Khanflict.jpg"
+      "name": "Oscar Brown",
+      "role": "Assistant Crisis Director"
     }
   ],
   "pour-decisions-2026": [
@@ -771,7 +818,8 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
     },
     {
       "name": "Sarah Harley",
-      "role": "Vice Chair"
+      "role": "Vice Chair",
+      "imageSrc": "/dais_headshots/websafe/SarahHarley_CRADHOC.jpg"
     },
     {
       "name": "Helena Kennedy",
@@ -780,10 +828,6 @@ export const committeeDaisBySlug: Record<string, StaffProfile[]> = {
     {
       "name": "Sienna Loo",
       "role": "Assistant Crisis Director"
-    },
-    {
-      "name": "Doria Rafolisisoa",
-      "role": "Assistant Crisis Director"
     }
-  ],
+  ]
 };

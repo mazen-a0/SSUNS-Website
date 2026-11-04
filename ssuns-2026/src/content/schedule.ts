@@ -58,7 +58,7 @@ export const scheduleEvents: ScheduleEvent[] = [
   session("friday", 4, "A", "19:30", "21:00", 0),
   session("friday", 4, "B", "19:45", "21:15", 1),
   session("friday", 4, "C", "20:00", "21:30", 2),
-  event("faculty-feedback-friday", "friday", "20:15", "20:45", "feedback", "Faculty advisor feedback", "Retour des conseillers pédagogiques", 3, 1),
+  event("faculty-feedback-friday", "friday", "20:00", "20:45", "feedback", "Faculty advisor feedback 1", "Retour des conseillers pédagogiques 1", 3, 1, undefined, { location: { en: "Faculty advisor lounge", fr: "Salon des conseillers pédagogiques" } }),
 
   session("saturday", 5, "A", "09:45", "12:00", 0),
   session("saturday", 5, "B", "10:00", "12:15", 1),
@@ -70,7 +70,7 @@ export const scheduleEvents: ScheduleEvent[] = [
   session("saturday", 7, "A", "16:45", "19:00", 0),
   session("saturday", 7, "B", "17:00", "19:15", 1),
   session("saturday", 7, "C", "17:15", "19:30", 2),
-  event("faculty-feedback-saturday", "saturday", "17:30", "18:15", "feedback", "Faculty advisor feedback", "Retour des conseillers pédagogiques", 3, 1),
+  event("faculty-feedback-saturday", "saturday", "17:45", "18:15", "feedback", "Faculty advisor feedback 2", "Retour des conseillers pédagogiques 2", 3, 1, undefined, { location: { en: "Faculty advisor lounge", fr: "Salon des conseillers pédagogiques" } }),
   event("gala", "saturday", "21:00", "24:00", "social", "Delegate Gala", "Gala des délégués", 0, 3),
   event("faculty-cocktail", "saturday", "21:00", "22:30", "social", "Faculty advisor cocktail", "Cocktail des conseillers pédagogiques", 3, 1),
 
