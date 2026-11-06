@@ -44,7 +44,7 @@ type GlassNavProps = {
 };
 
 const coreHrefs = new Set(["/", "/about", "/conference", "/committees", "/registration"]);
-const utilityHrefs = new Set(["/sponsor-us", "/contact"]);
+const utilityHrefs = new Set(["/sponsor-us", "/shop", "/contact"]);
 
 function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -152,7 +152,7 @@ export function GlassNav({
           <div
             className={cn(
               "overflow-hidden border-b border-white/12 transition-all duration-300",
-              isScrolled ? "max-h-0 opacity-0" : "max-h-12 opacity-100",
+              isScrolled ? "max-h-0 opacity-0 focus-within:max-h-12 focus-within:opacity-100" : "max-h-12 opacity-100",
             )}
           >
             <div className="flex min-h-5 items-center justify-between gap-3 text-[11px] text-[#d6e2ff]">
@@ -202,14 +202,14 @@ export function GlassNav({
           >
             <Link
               aria-label={homeAriaLabel}
-              className="inline-flex items-center"
+              className={cn("inline-flex w-20 shrink-0 items-center justify-center overflow-hidden", isScrolled ? "h-10" : "h-11")}
               href="/"
               onClick={() => {
                 setMobileOpen(false);
                 setOpenPreview(null);
               }}
             >
-              <Image alt="SSUNS logo" height={isScrolled ? 20 : 24} priority src="/logos/ssuns2026-woodmark-white.png" width={isScrolled ? 104 : 118} />
+              <Image alt="SSUNS logo" className="shrink-0" height={isScrolled ? 104 : 118} priority src="/logos/ssuns2026-woodmark-white.png" style={{ maxWidth: "none" }} width={isScrolled ? 104 : 118} />
             </Link>
 
             <nav aria-label="Primary" className="min-w-0">
@@ -267,6 +267,7 @@ export function GlassNav({
                 const isActive = isActivePath(pathname, item.href);
                 return (
                   <Link
+                    aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "nav-link inline-flex items-center whitespace-nowrap font-semibold text-[#d6e2ff] transition-all duration-300 hover:text-white",
                       isScrolled ? "py-1 text-[0.875rem]" : "py-1.5 text-[0.9375rem]",
@@ -302,7 +303,7 @@ export function GlassNav({
       <div className={cn("page-shell flex items-center justify-between gap-2 transition-all duration-300 xl:hidden", isScrolled ? "min-h-[1.85rem]" : "min-h-[2.2rem]")}>
         <Link
           aria-label={homeAriaLabel}
-          className="inline-flex min-w-0 items-center"
+          className={cn("inline-flex w-[3.75rem] shrink-0 items-center justify-center overflow-hidden sm:w-20", isScrolled ? "h-9" : "h-10")}
           href="/"
           onClick={() => {
             setMobileOpen(false);
@@ -311,11 +312,12 @@ export function GlassNav({
         >
           <Image
             alt="SSUNS logo"
-            className="h-auto w-auto max-w-[6rem] sm:max-w-none"
-            height={isScrolled ? 20 : 24}
+            className="h-auto w-[86px] shrink-0 sm:w-[108px]"
+            height={108}
             priority
             src="/logos/ssuns2026-woodmark-white.png"
-            width={isScrolled ? 104 : 118}
+            style={{ maxWidth: "none" }}
+            width={108}
           />
         </Link>
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
@@ -353,7 +355,7 @@ export function GlassNav({
             onClick={() => setMobileOpen((prev) => !prev)}
             type="button"
           >
-            {mobileOpen ? closeMenuLabel : openMenuLabel}
+            {mobileOpen ? (language === "fr" ? "Fermer" : "Close") : "Menu"}
           </button>
         </div>
       </div>
@@ -374,6 +376,7 @@ export function GlassNav({
                   <div className="border-b border-white/12 py-3" key={item.href}>
                     <div className="flex items-center gap-3">
                       <Link
+                        aria-current={isActive ? "page" : undefined}
                         className={cn(
                           "block flex-1 text-base font-semibold text-white transition-colors duration-200 hover:text-[#dce8ff]",
                           isActive && "text-[#dce8ff]",

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 import { chivo, marketFresh, petitFormal } from "@/app/fonts";
 import { SiteContentProvider } from "@/components/providers/SiteContentProvider";
 import { AppPreferencesProvider } from "@/components/providers/AppPreferencesProvider";
@@ -54,7 +54,7 @@ export default async function RootLayout({
         <SiteContentProvider bundles={bundles}>
           <AppPreferencesProvider>
             <SiteChrome>{children}</SiteChrome>
-            <Analytics />
+            <SiteAnalytics />
           </AppPreferencesProvider>
         </SiteContentProvider>
       </body>
