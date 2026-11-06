@@ -69,19 +69,25 @@ export function OrderSummary({ lines, total, language, payable = true }: { lines
           </li>;
         })}
       </ul>
-      <OrderTotal language={language} payable={payable} total={total} />
+      <OrderTotal language={language} payable={payable} total={total} subtotal={lines.reduce((sum, line) => sum + line.lineTotal, 0)} />
     </>
   );
 }
 
-export function OrderTotal({ total, language, payable = true }: { total: number; language: ShopLocale; payable?: boolean }) {
+export function OrderTotal({ total, subtotal, language, payable = true, checkout = false }: {
+  total: number; subtotal: number; language: ShopLocale; payable?: boolean; checkout?: boolean;
+}) {
   const fr = language === "fr";
+  const tax = total - subtotal;
   return <div className="border-t border-[var(--rule)] pt-3">
+    {(checkout || tax > 0) && <dl className="mb-3 space-y-1 text-sm tabular-nums">
+      <div className="flex justify-between gap-2"><dt>{fr ? "Sous-total" : "Subtotal"}</dt><dd>{formatPrice(subtotal, language)}</dd></div>
+      <div className="flex justify-between gap-2"><dt>{fr ? "TPS et TVQ" : "GST and QST"}{checkout ? (fr ? " (14,975 %)" : " (14.975%)") : ""}</dt><dd>{formatPrice(tax, language)}</dd></div>
+    </dl>}
     <div className="flex flex-wrap items-baseline justify-between gap-2 font-semibold">
       <span>{payable ? (fr ? "Total à payer au retrait" : "Total payable at pickup") : (fr ? "Total de la réservation" : "Reservation total")}</span>
       <span className="text-xl tabular-nums text-[var(--accent)]">{formatPrice(total, language)}</span>
     </div>
-    <p className="mt-1 text-xs text-[var(--muted)]">{shopText.taxes[language]}</p>
   </div>;
 }
 
@@ -89,6 +95,7 @@ export function shopError(code: string, language: ShopLocale) {
   const errors: Record<string, [string, string]> = {
     invalid: ["Check your details and selections, then try again.", "Vérifiez vos coordonnées et vos choix, puis réessayez."],
     limit: [shopText.policy.en, shopText.policy.fr],
+    stock: ["There isn’t enough stock for this selection. Reduce the quantity, choose another size, or remove it from your cart.", "Il ne reste pas assez d’articles pour ce choix. Réduisez la quantité, choisissez une autre taille ou retirez l’article du panier."],
     "price-changed": ["Prices have changed. Refresh the shop and review your cart before trying again.", "Les prix ont changé. Actualisez la boutique et vérifiez votre panier avant de réessayer."],
     closed: ["Online preorders have closed. Shop in person at the conference, subject to availability.", "Les précommandes en ligne sont terminées. Achetez sur place à la conférence, selon les disponibilités."],
     busy: ["The shop is busy. Please wait a minute and try again.", "La boutique est occupée. Attendez une minute et réessayez."],

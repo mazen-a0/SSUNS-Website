@@ -49,25 +49,25 @@ function bundle(id: string, en: string, fr: string, price: number, description: 
 }
 export const shopProducts: ShopProduct[] = [
   {
-    id: "white-tee", name: words("White T-shirt", "T-shirt blanc"), price: 2499, group: "apparel",
+    id: "white-tee", name: words("White T-shirt", "T-shirt blanc"), price: 2199, group: "apparel",
     description: words("The 2026 SSUNS tee, with a printed design on the front and back.", "Le t-shirt SSUNS 2026, avec un motif imprimé à l’avant et au dos."),
     photos: [photo("tee-front", "Front of the white SSUNS T-shirt", "Devant du t-shirt blanc SSUNS"), photo("tee-fit", "White T-shirt on a second model", "T-shirt blanc porté par une deuxième personne"), photo("tee-back", "Back print on the white T-shirts", "Motif au dos des t-shirts blancs"), collectionPhoto],
     options: [size],
   },
   {
-    id: "navy-hoodie", name: words("Navy hoodie", "Chandail à capuchon bleu marine"), price: 4999, group: "apparel",
+    id: "navy-hoodie", name: words("Navy hoodie", "Chandail à capuchon bleu marine"), price: 4299, group: "apparel",
     description: words("The SSUNS 2026 hoodie in navy, with artwork on both sides.", "Le chandail à capuchon SSUNS 2026 bleu marine, avec un motif à l’avant et au dos."),
     photos: [photo("hoodie-front", "Front of the navy SSUNS hoodie", "Devant du chandail à capuchon bleu marine SSUNS"), photo("hoodie-back", "Back print on the navy hoodie", "Motif au dos du chandail bleu marine"), photo("hoodie-fit", "Navy hoodie on two models", "Chandail bleu marine porté par deux personnes")],
     options: [size],
   },
   {
-    id: "sweatpants", name: words("Navy sweatpants", "Pantalon molletonné bleu marine"), price: 3999, group: "apparel",
+    id: "sweatpants", name: words("Navy sweatpants", "Pantalon molletonné bleu marine"), price: 3499, group: "apparel",
     description: words("Navy sweatpants with the SSUNS mark on the leg.", "Pantalon molletonné bleu marine avec l’emblème de SSUNS sur la jambe."),
     photos: [photo("sweatpants-detail", "SSUNS mark on the navy sweatpants", "Emblème de SSUNS sur le pantalon bleu marine"), photo("sweatpants-fit", "Full-length view of the navy sweatpants", "Vue de la coupe du pantalon molletonné bleu marine"), collectionPhoto],
     options: [size],
   },
   {
-    id: "water-bottle", name: words("Water bottle", "Bouteille d’eau"), price: 1999, group: "accessories",
+    id: "water-bottle", name: words("Water bottle", "Bouteille d’eau"), price: 1799, group: "accessories",
     description: words("The SSUNS water bottle, photographed with the 2026 collection.", "La bouteille d’eau SSUNS, photographiée avec la collection 2026."),
     photos: [photo("bottle", "SSUNS water bottle", "Bouteille d’eau SSUNS")], options: [],
   },
@@ -76,19 +76,19 @@ export const shopProducts: ShopProduct[] = [
     description: words("A pin with the SSUNS emblem.", "Une épinglette à l’effigie de SSUNS."),
     photos: [photo("pin", "Round SSUNS pin against navy fabric", "Épinglette ronde SSUNS sur un tissu bleu marine")], options: [],
   },
-  extra("bear", "SSUNS teddy bear", "Ourson SSUNS", 1899, words("A teddy bear in SSUNS navy.", "Un ourson vêtu de bleu marine aux couleurs de SSUNS."), [
+  extra("bear", "SSUNS teddy bear", "Ourson SSUNS", 1699, words("A teddy bear in SSUNS navy.", "Un ourson vêtu de bleu marine aux couleurs de SSUNS."), [
     photo("bear", "Teddy bear wearing a navy SSUNS shirt", "Ourson portant un chandail bleu marine SSUNS"), keychainPhotos[0],
   ]),
   extra("keychain", "SSUNS keychain", "Porte-clés SSUNS", 499, words("The blue SSUNS letter keychain.", "Le porte-clés bleu avec les lettres SSUNS."), keychainPhotos),
-  extra("small-sticker", "Small sticker", "Petit autocollant", 250, designAtPickup, stickerPhotos),
-  extra("large-sticker", "Large sticker", "Grand autocollant", 499, designAtPickup, stickerPhotos),
-  extra("cap", "Cap", "Casquette", 1999, words("SSUNS cap.", "Casquette SSUNS.")),
-  extra("tote", "Tote bag", "Sac fourre-tout", 799, words("SSUNS tote bag.", "Sac fourre-tout SSUNS.")),
+  extra("small-sticker", "Small sticker", "Petit autocollant", 249, designAtPickup, stickerPhotos),
+  extra("large-sticker", "Large sticker", "Grand autocollant", 349, designAtPickup, stickerPhotos),
+  extra("cap", "Cap", "Casquette", 1699, words("SSUNS cap.", "Casquette SSUNS.")),
+  extra("tote", "Tote bag", "Sac fourre-tout", 699, words("SSUNS tote bag.", "Sac fourre-tout SSUNS.")),
   extra("poster", "Poster", "Affiche", 399, designAtPickup, posterPhotos),
   extra("postcard", "Postcard", "Carte postale", 199, designAtPickup, postcardPhotos),
   extra("bookmark", "Bookmark", "Signet", 115, words("SSUNS bookmark.", "Signet SSUNS.")),
   {
-    id: "ssuns-outfit", name: words("SSUNS Outfit", "Tenue SSUNS"), price: 7999, group: "bundle",
+    id: "ssuns-outfit", name: words("SSUNS Outfit", "Tenue SSUNS"), price: 7299, group: "bundle",
     description: words("Pair the navy hoodie with the matching sweatpants. Choose a size for each.", "Agencez le chandail bleu marine au pantalon assorti. Choisissez la taille de chaque vêtement."),
     photos: [photo("sweatpants-fit", "The navy hoodie and sweatpants worn together", "Le chandail et le pantalon bleu marine portés ensemble"), photo("hoodie-front", "Navy hoodie included in the bundle", "Chandail bleu marine compris dans l’ensemble"), photo("sweatpants-detail", "Navy sweatpants included in the bundle", "Pantalon bleu marine compris dans l’ensemble")],
     options: [
@@ -97,21 +97,21 @@ export const shopProducts: ShopProduct[] = [
     ],
     includes: [{ id: "navy-hoodie", quantity: 1 }, { id: "sweatpants", quantity: 1 }],
   },
-  bundle("conference-souvenirs", "Conference Souvenirs", "Souvenirs de la conférence", 699, designAtPickup,
+  bundle("conference-souvenirs", "Conference Souvenirs", "Souvenirs de la conférence", 799, designAtPickup,
     [{ id: "poster", quantity: 1 }, { id: "keychain", quantity: 1 }], [posterPhotos[0], keychainPhotos[1], posterPhotos[1]]),
-  bundle("accessories-bundle", "Accessories Bundle", "Ensemble d’accessoires", 2699, designAtPickup,
+  bundle("accessories-bundle", "Accessories Bundle", "Ensemble d’accessoires", 2499, designAtPickup,
     [{ id: "cap", quantity: 1 }, { id: "tote", quantity: 1 }, { id: "large-sticker", quantity: 1 }], stickerPhotos),
-  bundle("three-small-stickers", "Sticker Bar: Three small", "Bar à autocollants : trois petits", 599, designAtPickup,
+  bundle("three-small-stickers", "Sticker Bar: Three small", "Bar à autocollants : trois petits", 649, designAtPickup,
     [{ id: "small-sticker", quantity: 3 }], stickerPhotos),
-  bundle("mixed-stickers", "Sticker Bar: Large + two small", "Bar à autocollants : un grand et deux petits", 699, designAtPickup,
+  bundle("mixed-stickers", "Sticker Bar: Large + two small", "Bar à autocollants : un grand et deux petits", 749, designAtPickup,
     [{ id: "large-sticker", quantity: 1 }, { id: "small-sticker", quantity: 2 }], stickerPhotos),
   bundle("souvenir-pack", "Souvenir Pack", "Ensemble souvenir", 599, designAtPickup,
     [{ id: "poster", quantity: 1 }, { id: "postcard", quantity: 1 }, { id: "bookmark", quantity: 1 }], [posterPhotos[0], ...postcardPhotos]),
-  bundle("rose-bundle", "Rose Bundle", "Ensemble de roses", 1099, words("Three roses.", "Trois roses."),
+  bundle("rose-bundle", "Rose Bundle", "Ensemble de roses", 999, words("Three roses.", "Trois roses."),
     [{ id: "rose", quantity: 3 }]),
-  bundle("large-rose-bundle", "Large Rose Bundle", "Grand ensemble de roses", 3499, words("Ten roses.", "Dix roses."),
+  bundle("large-rose-bundle", "Large Rose Bundle", "Grand ensemble de roses", 2999, words("Ten roses.", "Dix roses."),
     [{ id: "rose", quantity: 10 }]),
-  bundle("rose-postcard", "Rose & Postcard", "Rose et carte postale", 599, designAtPickup,
+  bundle("rose-postcard", "Rose & Postcard", "Rose et carte postale", 549, designAtPickup,
     [{ id: "rose", quantity: 1 }, { id: "postcard", quantity: 1 }], postcardPhotos),
 ];
 
@@ -124,7 +124,7 @@ export const shopText = {
   hold: words("Collect your reservation by Friday, November 13 at noon (Montréal time). Unclaimed items may be released for general sale after that time.", "Récupérez votre réservation au plus tard le vendredi 13 novembre à midi (heure de Montréal). Les articles non réclamés pourront ensuite être remis en vente."),
   payment: words("Pay in person when you collect your items. No payment is collected online.", "Payez sur place au moment du retrait. Aucun paiement n’est perçu en ligne."),
   policy: words("To ensure merchandise is available to as many delegates as possible, preorders are limited to three items per delegate. Additional merchandise will be available for purchase at the conference, subject to availability.", "Pour que le plus grand nombre de délégués puisse en profiter, les précommandes sont limitées à trois articles par personne. D’autres articles seront en vente à la conférence, selon les disponibilités."),
-  taxes: words("Prices in CAD, taxes included.", "Prix en dollars canadiens, taxes comprises."),
+  taxes: words("Prices in CAD. Québec taxes (14.975%) added at checkout.", "Prix en dollars canadiens. Taxes du Québec (14,975 %) ajoutées à la commande."),
 };
 
 export type ShopSelection = { productId: string; options: Record<string, string>; quantity: number };
@@ -146,10 +146,16 @@ export type ShopReceipt = {
   email?: "sent" | "unavailable";
 };
 
+// 14.975% combined GST/QST, applied once to the order subtotal in cents.
+export function shopTotals(subtotal: number) {
+  const tax = Math.floor((subtotal * 599 + 2000) / 4000);
+  return { subtotal, tax, total: subtotal + tax };
+}
+
 export const findProduct = (id: string) => shopProducts.find((product) => product.id === id);
 export const componentName = (id: string, locale: ShopLocale) => id === "rose" ? words("Rose", "Rose")[locale] : findProduct(id)?.name[locale];
 export const regularPrice = (product: ShopProduct) => product.includes?.reduce(
-  (total, item) => total + (item.id === "rose" ? 460 : findProduct(item.id)!.price) * item.quantity, 0,
+  (total, item) => total + (item.id === "rose" ? 399 : findProduct(item.id)!.price) * item.quantity, 0,
 ) ?? product.price;
 export const formatPrice = (cents: number, locale: ShopLocale) => new Intl.NumberFormat(locale === "fr" ? "fr-CA" : "en-CA", { style: "currency", currency: "CAD" }).format(cents / 100);
 export const selectionKey = (line: ShopSelection) => JSON.stringify([line.productId, Object.entries(line.options).sort(([a], [b]) => a.localeCompare(b))]);

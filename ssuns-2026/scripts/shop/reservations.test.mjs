@@ -88,7 +88,7 @@ function checkout(items = [line()], extra = {}) {
   return {
     action: "create", name: "Sample Delegate", email: "delegate@example.test", school: "Example School",
     requestId: randomUUID(), locale: "en", items, website: "",
-    shownTotal: items.reduce((sum, item) => sum + catalog.priceLine(item, "en").lineTotal, 0), ...extra,
+    shownTotal: catalog.shopTotals(items.reduce((sum, item) => sum + catalog.priceLine(item, "en").lineTotal, 0)).total, ...extra,
   };
 }
 const request = (body, headers = {}) => new Request(origin + "/api/shop/reservations", {
@@ -117,16 +117,22 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
 
   await t.test("approved prices and all nine bundle savings", () => {
     const savings = {
-      "ssuns-outfit": 999, "conference-souvenirs": 199, "accessories-bundle": 598, "three-small-stickers": 151,
-      "mixed-stickers": 300, "souvenir-pack": 114, "rose-bundle": 281, "large-rose-bundle": 1101, "rose-postcard": 60,
+      "ssuns-outfit": 499, "conference-souvenirs": 99, "accessories-bundle": 248, "three-small-stickers": 98,
+      "mixed-stickers": 98, "souvenir-pack": 114, "rose-bundle": 198, "large-rose-bundle": 991, "rose-postcard": 49,
     };
-    assert.equal(catalog.findProduct("large-sticker").price, 499);
-    assert.equal(catalog.findProduct("bear").price, 1899);
+    assert.equal(catalog.findProduct("large-sticker").price, 349);
+    assert.equal(catalog.findProduct("bear").price, 1699);
     assert.equal(catalog.findProduct("keychain").price, 499);
     for (const product of catalog.shopProducts.filter((p) => p.group === "bundle")) {
       assert.equal(catalog.regularPrice(product) - product.price, savings[product.id], product.id);
     }
     assert.equal(catalog.shopProducts.filter((p) => p.group === "bundle").length, Object.keys(savings).length);
+  });
+
+  await t.test("applies combined Québec tax once per subtotal, rounding half cents up", () => {
+    assert.deepEqual(catalog.shopTotals(2199), { subtotal: 2199, tax: 329, total: 2528 });
+    assert.deepEqual(catalog.shopTotals(2000), { subtotal: 2000, tax: 300, total: 2300 });
+    assert.deepEqual(catalog.shopTotals(8297), { subtotal: 8297, tax: 1242, total: 9539 });
   });
 
   await t.test("validates IDs, sizes, prices, quantity, email, spam field, and same-origin requests", async () => {
@@ -148,16 +154,17 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
     const a = await call(body);
     assert.equal(a.ok, true);
     assert.match(a.receipt.id, /^SSUNS-M-[A-F0-9]{12}$/);
-    assert.equal(a.receipt.total, 8997);
+    assert.equal(a.receipt.total, 9539);
     assert.equal(a.receipt.lines.find((i) => i.productId === "ssuns-outfit").variant, "Hoodie size: S · Sweatpants size: XL");
     assert.equal(ws.rows[0][1][4], "=NotAFormula");
-    assert.equal(ws.rows[0][1][5], 89.97);
+    assert.equal(ws.rows[0][1][5], 95.39);
     const token = new URL(a.managementUrl).hash.slice(1);
     assert.match(token, /^[a-f0-9]{64}$/);
     assert.equal(ws.rows[0][1][11], sha(token));
     assert.ok(!JSON.stringify(ws.rows).includes(token));
     assert.equal(a.receipt.email, "sent");
     assert.ok(ws.mail[0].body.includes(a.managementUrl));
+    assert.match(ws.mail[0].body, /GST and QST: \$12\.42 CAD/);
     assert.equal((await call(body)).receipt.id, a.receipt.id);
     assert.equal((await call({ ...body, school: "Different School" })).error, "duplicate");
     assert.equal((await call(checkout())).error, "limit");
@@ -166,6 +173,34 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
     const b = await call(checkout([line()], { email: "different@example.test" }));
     assert.notEqual(b.managementUrl, a.managementUrl);
     assert.notEqual(b.receipt.id, a.receipt.id);
+  });
+
+  await t.test("caps sizes across orders and bundles and releases cancelled stock", async () => {
+    reset();
+    const outfit = line("ssuns-outfit", { hoodie: "S", sweatpants: "XL" });
+    const a = await call(checkout([outfit]));
+    assert.equal(a.ok, true);
+    const standalone = checkout([line("sweatpants", { size: "XL" })], { email: "another@example.test" });
+    const denied = await call(standalone);
+    assert.equal(denied.error, "stock");
+    assert.equal(denied.stockKey, "sweatpants:XL");
+    assert.deepEqual(ws.rows.map((r) => r.length), [2, 2]);
+    assert.equal((await call({ action: "cancel", token: new URL(a.managementUrl).hash.slice(1) })).receipt.status, "Cancelled");
+    assert.equal((await call(standalone)).ok, true);
+    ws.rows[0][2][6] = "Collected";
+    assert.equal((await call(checkout([outfit], { email: "third@example.test" }))).error, "stock");
+    assert.equal((await call(checkout([line("white-tee", { size: "XL" }, 2)]))).stockKey, "white-tee:XL");
+  });
+
+  await t.test("keeps existing reservations at their original tax-inclusive total", async () => {
+    reset();
+    const a = await call(checkout());
+    const token = new URL(a.managementUrl).hash.slice(1);
+    // Represent an order recorded by the original tax-inclusive shop.
+    ws.rows[0][1][5] = 24.99;
+    ws.rows[1][1][4] = 24.99;
+    ws.rows[1][1][5] = 24.99;
+    assert.equal((await call({ action: "view", token })).receipt.total, 2499);
   });
 
   await t.test("views never cancel; invalid, expired, and finalized links cannot cancel", async () => {

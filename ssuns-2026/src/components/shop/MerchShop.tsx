@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowDown, ArrowRight, ArrowUpRight, ShoppingBag } from "lucide-react";
-import { useRef, useState, type FormEvent } from "react";
+import { ArrowDown, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Images, ShoppingBag } from "lucide-react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   collectionPhoto, componentName, findProduct, formatPrice, preorderClosesAt, preorderLimit, priceLine, regularPrice,
-  selectionKey, shopProducts, shopText, shopTimeZone, type ShopLocale, type ShopProduct,
+  selectionKey, shopProducts, shopText, shopTimeZone, shopTotals, type ShopLocale, type ShopProduct,
   type ShopReceipt, type ShopSelection,
 } from "@/content/shop";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -57,12 +57,36 @@ function ProductDetail({ product, language, add, close }: {
   const [options, setOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
   const [limit, setLimit] = useState(false);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const photoCount = product.photos.length;
+  const stepPhoto = (delta: number) => setPhotoIndex((index) => (index + delta + photoCount) % photoCount);
+  const arrowClass = "absolute top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[var(--accent)] shadow-sm hover:bg-[#e8eefb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
   return (
     <ShopDialog language={language} onClose={close} title={product.name[language]} wide>
       <div className="grid gap-5 p-4 sm:p-6 md:grid-cols-[1.1fr_1fr] md:gap-7">
-        <div className="min-w-0">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[#eff1f7] sm:aspect-[5/4]">
+        <div aria-label={fr ? "Galerie du produit" : "Product gallery"} className="min-w-0" role="group" onKeyDown={(event) => {
+          if (photoCount < 2 || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+          event.preventDefault();
+          stepPhoto(event.key === "ArrowLeft" ? -1 : 1);
+        }}>
+          <div className="relative aspect-[4/3] touch-pan-y overflow-hidden rounded-lg bg-[#eff1f7] sm:aspect-[5/4]"
+            onTouchStart={(event) => { const touch = event.touches[0]; touchStart.current = touch ? { x: touch.clientX, y: touch.clientY } : null; }}
+            onTouchEnd={(event) => {
+              const start = touchStart.current;
+              touchStart.current = null;
+              const end = event.changedTouches[0];
+              if (photoCount < 2 || !start || !end) return;
+              const dx = end.clientX - start.x;
+              if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(end.clientY - start.y)) stepPhoto(dx < 0 ? 1 : -1);
+            }}>
             <ProductVisual detail index={photoIndex} language={language} product={product} sizes="(min-width: 1024px) 490px, (min-width: 768px) 49vw, 94vw" />
+            {photoCount > 1 && <>
+              <button aria-label={fr ? "Photo précédente" : "Previous photo"} className={`${arrowClass} left-2`} onClick={() => stepPhoto(-1)} type="button"><ChevronLeft aria-hidden="true" size={22} /></button>
+              <button aria-label={fr ? "Photo suivante" : "Next photo"} className={`${arrowClass} right-2`} onClick={() => stepPhoto(1)} type="button"><ChevronRight aria-hidden="true" size={22} /></button>
+              <p className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-[var(--accent)]" role="status">
+                Photo {photoIndex + 1} / {photoCount}
+              </p>
+            </>}
           </div>
           {product.photos.length > 1 && <div aria-label={fr ? "Photos du produit" : "Product photos"} className="mt-3 flex flex-wrap gap-2" role="group">
             {product.photos.map((photo, i) => (
@@ -96,7 +120,7 @@ function ProductDetail({ product, language, add, close }: {
           </label>
           {limit && <p className="rounded-md bg-[#f8edf0] p-3 text-sm text-[#6d243e]" role="alert">{shopText.policy[language]}</p>}
           <button className={`${primaryButton} w-full sm:w-auto`} type="submit">
-            {fr ? "Ajouter au panier" : "Add to reservation"} <ShoppingBag aria-hidden="true" size={16} />
+            {fr ? "Ajouter au panier" : "Add to cart"} <ShoppingBag aria-hidden="true" size={16} />
           </button>
         </form>
       </div>
@@ -122,16 +146,21 @@ export function MerchShop({ availability }: { availability: Availability }) {
   const [active, setActive] = useState<ShopProduct | null>(null);
   const [cart, setCart] = useState<ShopSelection[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
+  const [stockKey, setStockKey] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const [copied, setCopied] = useState(false);
   const pending = useRef(false);
+  const checkoutHeading = useRef<HTMLLegendElement>(null);
   const prior = useRef<{ fingerprint: string; id: string } | null>(null);
   const count = units(cart);
   const lines = cart.map((line) => priceLine(line, language));
-  const total = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+  const { total, subtotal } = shopTotals(lines.reduce((sum, line) => sum + line.lineTotal, 0));
+  const [stockId, stockSize] = stockKey.split(":");
+  const stockProduct = findProduct(stockId);
   const closing = availability.closesAt && (Date.parse(availability.closesAt) === Date.parse(preorderClosesAt)
     ? (fr ? "mercredi 11 novembre à minuit" : "midnight on Wednesday, November 11")
     : new Intl.DateTimeFormat(fr ? "fr-CA" : "en-CA", {
@@ -143,8 +172,13 @@ export function MerchShop({ availability }: { availability: Availability }) {
     { id: "bundle", title: fr ? "Les ensembles" : "Better together", label: fr ? "Ensembles" : "Bundles" },
   ] as const;
 
+  useEffect(() => {
+    if (cartOpen && checkoutOpen) checkoutHeading.current?.focus();
+  }, [cartOpen, checkoutOpen]);
+
   function openCart() {
     setError("");
+    setCheckoutOpen(false);
     setCopied(false);
     setCartOpen(true);
   }
@@ -155,9 +189,8 @@ export function MerchShop({ availability }: { availability: Availability }) {
     setCart((current) => current.some((line) => selectionKey(line) === key)
       ? current.map((line) => selectionKey(line) === key ? { ...line, quantity: line.quantity + item.quantity } : line)
       : [...current, item]);
-    setNotice(fr ? `${item.quantity} × ${findProduct(item.productId)?.name.fr} ajouté au panier.` : `${item.quantity} × ${findProduct(item.productId)?.name.en} added to your reservation.`);
+    setNotice(fr ? `${item.quantity} × ${findProduct(item.productId)?.name.fr} — ajouté au panier` : `${item.quantity} × ${findProduct(item.productId)?.name.en} added to cart`);
     setActive(null);
-    openCart();
     return true;
   }
 
@@ -181,7 +214,11 @@ export function MerchShop({ availability }: { availability: Availability }) {
         body: JSON.stringify({ action: "create", ...data, requestId, locale: language, shownTotal: total, website: fields.get("website") ?? "" }),
       });
       const result = await response.json();
-      if (!response.ok || !result.ok) { setError(result.error ?? "unavailable"); return; }
+      if (!response.ok || !result.ok) {
+        setError(result.error ?? "unavailable");
+        setStockKey(typeof result.stockKey === "string" ? result.stockKey : "");
+        return;
+      }
       setConfirmation({ receipt: result.receipt, managementUrl: result.managementUrl });
       setCart([]);
       prior.current = null;
@@ -227,7 +264,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
         <nav aria-label={fr ? "Catégories de la boutique" : "Shop categories"} className="flex flex-wrap gap-x-5 gap-y-2">
           {sections.map((section) => <a className="py-2 text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href={`#${section.id}`} key={section.id}>{section.label}</a>)}
         </nav>
-        <button className={secondaryButton} onClick={openCart} type="button"><ShoppingBag aria-hidden="true" size={17} /> {fr ? "Panier" : "Reservation cart"} <span className="rounded-full bg-[#e8eefb] px-2 py-0.5 tabular-nums">{count}</span></button>
+        <button className={secondaryButton} onClick={openCart} type="button"><ShoppingBag aria-hidden="true" size={17} /> {fr ? "Panier" : "Cart"} <span className="rounded-full bg-[#e8eefb] px-2 py-0.5 tabular-nums">{count}</span></button>
       </div>
 
       {sections.map((section) => (
@@ -246,6 +283,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
                   <div className="absolute inset-0 transition-transform duration-300 motion-safe:group-hover:scale-[1.025]">
                     <ProductVisual language={language} product={product} sizes={section.id === "accessories" ? "(min-width: 1280px) 24vw, (min-width: 768px) 31vw, 48vw" : "(min-width: 768px) 32vw, 48vw"} />
                   </div>
+                  {product.photos.length > 1 && <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-white/95 px-2 py-1 text-xs font-semibold text-[var(--accent)]"><Images aria-hidden="true" size={14} /> {product.photos.length} photos</span>}
                 </div>
                 <div className={`space-y-2 pt-2.5 sm:pt-4 ${section.id === "bundle" ? "px-2.5 sm:px-4" : ""}`}>
                   <h3 className="font-display text-lg leading-tight text-[var(--accent)] sm:text-2xl">
@@ -266,15 +304,18 @@ export function MerchShop({ availability }: { availability: Availability }) {
         <p>{fr ? "Vous avez déjà réservé? Ouvrez le lien privé que vous avez sauvegardé ou reçu par courriel." : "Already reserved? Use the private link you saved or received by email."}</p>
         <ShopSupport language={language} />
       </div>
-      {count > 0 && <div className="pointer-events-none sticky bottom-4 z-30 flex justify-end pt-4">
-        <button className={`${primaryButton} pointer-events-auto shadow-lg ring-2 ring-white`} onClick={openCart} type="button">
-          <ShoppingBag aria-hidden="true" size={17} /> {fr ? "Voir le panier" : "View reservation"} · {count}
-        </button>
+      {count > 0 && <div className="pointer-events-none fixed inset-x-3 bottom-3 z-30 flex justify-end sm:left-auto sm:right-5 sm:bottom-5">
+        <div className="pointer-events-auto flex max-w-full flex-wrap items-center justify-end gap-2 rounded-xl border border-[var(--rule)] bg-white px-3 py-2 shadow-lg">
+          {notice && <p className="max-w-[15rem] text-xs font-semibold text-[var(--accent)]" role="status">{notice}</p>}
+          <button className={primaryButton} onClick={openCart} type="button">
+            <ShoppingBag aria-hidden="true" size={17} /> {fr ? "Voir le panier" : "View cart"} · {count}
+          </button>
+        </div>
       </div>}
 
       {active && <ProductDetail add={add} close={() => setActive(null)} key={active.id} language={language} product={active} />}
 
-      {cartOpen && <ShopDialog busy={submitting} language={language} onClose={() => { setCartOpen(false); setNotice(""); }} title={confirmation && !count ? (fr ? "Votre réservation" : "Your reservation") : (fr ? "Votre panier" : "Your reservation cart")}>
+      {cartOpen && <ShopDialog busy={submitting} language={language} onClose={() => { setCartOpen(false); setNotice(""); }} title={confirmation && !count ? (fr ? "Votre réservation" : "Your reservation") : checkoutOpen ? (fr ? "Confirmer la commande" : "Checkout") : (fr ? "Votre panier" : "Your cart")}>
         <div className="space-y-5 p-4 sm:p-6">
           {confirmation && !count ? <>
             <p className="font-semibold text-[var(--accent)]" role="status">
@@ -300,7 +341,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
             </div>
           </> : count === 0 ? <p>{fr ? "Votre panier est vide. Choisissez un article dans la collection." : "Your cart is empty. Choose something from the collection."}</p> :
             <>
-              {notice && <p className="text-sm font-semibold text-[var(--accent)]" role="status">{notice}</p>}
+              <p className="text-sm font-semibold text-[var(--accent)]">{fr ? "Ajoutez vos articles, puis faites une seule réservation pour tout le panier." : "Add everything you want, then reserve your whole cart at once."}</p>
               <p className="text-sm text-[var(--muted)]">{fr ? `${count} article(s) sur ${preorderLimit}` : `${count} of ${preorderLimit} preorder selections`}</p>
               <ul className="divide-y divide-[var(--rule)] border-y border-[var(--rule)]">
                 {lines.map((line) => {
@@ -327,19 +368,25 @@ export function MerchShop({ availability }: { availability: Availability }) {
                   </li>;
                 })}
               </ul>
-              <OrderTotal language={language} total={total} />
+              <OrderTotal checkout language={language} subtotal={subtotal} total={total} />
+              {error && <p className="rounded-md bg-[#f8edf0] p-3 text-sm text-[#6d243e]" role="alert">
+                {error === "stock" && stockProduct && <strong>{stockProduct.name[language]}{stockSize && ` · ${stockSize}`}: </strong>}{shopError(error, language)}
+              </p>}
+              {!checkoutOpen ? <div className="flex flex-wrap gap-2">
+                <button className={primaryButton} onClick={() => setCheckoutOpen(true)} type="button">{fr ? "Passer à la commande" : "Continue to checkout"} <ArrowRight aria-hidden="true" size={16} /></button>
+                <button className={secondaryButton} onClick={() => { setCartOpen(false); setNotice(""); }} type="button">{fr ? "Continuer à magasiner" : "Keep shopping"}</button>
+              </div> : <>
               <PickupDetails language={language} />
               <p className="text-xs leading-relaxed text-[var(--muted)]">{shopText.policy[language]}</p>
               <form className="space-y-3" onSubmit={submit}>
                 <fieldset className="grid gap-3 sm:grid-cols-2" disabled={submitting || availability.state !== "open"}>
-                  <legend className="mb-3 font-display text-xl text-[var(--accent)]">{fr ? "Coordonnées pour le retrait" : "Pickup details"}</legend>
+                  <legend className="mb-3 font-display text-xl text-[var(--accent)]" ref={checkoutHeading} tabIndex={-1}>{fr ? "Coordonnées pour le retrait" : "Pickup details"}</legend>
                   <label className="block text-sm font-semibold">{fr ? "Nom complet" : "Full name"}<input autoComplete="name" className={fieldClass} maxLength={120} name="name" required /></label>
                   <label className="block text-sm font-semibold">{fr ? "Courriel" : "Email"}<input autoComplete="email" className={fieldClass} maxLength={254} name="email" required type="email" /></label>
                   <label className="block text-sm font-semibold sm:col-span-2">{fr ? "École ou délégation" : "School or delegation"}<input autoComplete="organization" className={fieldClass} maxLength={140} name="school" required /></label>
                   <label aria-hidden="true" className="absolute left-[-9999px]">Website<input autoComplete="off" name="website" tabIndex={-1} /></label>
                 </fieldset>
                 <p className="text-xs text-[var(--muted)]">{fr ? "Vos renseignements servent à préparer votre retrait et à vous envoyer les mises à jour de votre réservation." : "We use your details to prepare your pickup and send reservation updates."}</p>
-                {error && <p className="rounded-md bg-[#f8edf0] p-3 text-sm text-[#6d243e]" role="alert">{shopError(error, language)}</p>}
                 {availability.state !== "open" && <p className="text-sm font-semibold text-[var(--accent)]">
                   {availability.state === "closed" ? shopError("closed", language) : (fr ? "Les précommandes en ligne ne sont pas disponibles pour le moment." : "Online preorders are currently unavailable.")}
                 </p>}
@@ -348,6 +395,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
                 </button>
                 {error === "unavailable" && <p className="text-sm"><ShopSupport language={language} /></p>}
               </form>
+              </>}
             </>}
         </div>
       </ShopDialog>}

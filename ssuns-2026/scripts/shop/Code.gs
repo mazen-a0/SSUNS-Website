@@ -13,6 +13,23 @@ const ITEM_HEADERS = [
 ];
 const COL = { id: 0, name: 2, email: 3, total: 5, status: 6, count: 7, cancelled: 8, request: 9, fingerprint: 10, token: 11, expiry: 12, language: 13 };
 const DAY = 86400000;
+const STOCK = {
+  'white-tee': { S: 17, M: 22, L: 10, XL: 1 },
+  'navy-hoodie': { S: 22, M: 24, L: 11, XL: 3 },
+  sweatpants: { S: 7, M: 8, L: 4, XL: 1 },
+  tote: 22, pin: 200, poster: 30, postcard: 230, bookmark: 340, cap: 17,
+  'large-sticker': 120, 'small-sticker': 180,
+};
+// Only stock-controlled components are listed. Unspecified stock is not capped.
+const STOCK_BUNDLES = {
+  'ssuns-outfit': [['navy-hoodie', 1, 'hoodie'], ['sweatpants', 1, 'sweatpants']],
+  'conference-souvenirs': [['poster', 1]],
+  'accessories-bundle': [['cap', 1], ['tote', 1], ['large-sticker', 1]],
+  'three-small-stickers': [['small-sticker', 3]],
+  'mixed-stickers': [['large-sticker', 1], ['small-sticker', 2]],
+  'souvenir-pack': [['poster', 1], ['postcard', 1], ['bookmark', 1]],
+  'rose-postcard': [['postcard', 1]],
+};
 
 function setupShop() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -110,16 +127,32 @@ function transact_(ss, orders, items, d, now) {
     }
     const close = Date.parse(d.closesAt);
     if (!Number.isFinite(close) || close > pickup || now >= close) return fail('closed');
-    if (!Array.isArray(d.lines) || !d.lines.length || d.lines.length > 3 ||
+    // Older deployments sent a tax-inclusive total without a separate tax field.
+    const subtotal = d.subtotal === undefined && d.tax === undefined ? d.total : d.subtotal;
+    const tax = d.subtotal === undefined && d.tax === undefined ? 0 : d.tax;
+    if (!Number.isSafeInteger(subtotal) || subtotal < 0 || !Number.isSafeInteger(d.total) ||
+        tax !== (d.subtotal === undefined ? 0 : taxCents_(subtotal)) || d.total !== subtotal + tax ||
+        !Array.isArray(d.lines) || !d.lines.length || d.lines.length > 3 ||
         d.lines.some((l) => !Number.isSafeInteger(l.quantity) || l.quantity < 1 || !Number.isSafeInteger(l.unitPrice) ||
           l.unitPrice < 0 || l.lineTotal !== l.unitPrice * l.quantity) ||
         d.lines.reduce((n, l) => n + l.quantity, 0) !== d.count ||
-        d.lines.reduce((n, l) => n + l.lineTotal, 0) !== d.total || d.count > 3) return fail('invalid');
+        d.lines.reduce((n, l) => n + l.lineTotal, 0) !== subtotal || d.count > 3) return fail('invalid');
     const activeCount = data.filter((row) => String(row[COL.email]).trim().toLowerCase() === d.email &&
       (row[COL.status] === 'Reserved' || row[COL.status] === 'Collected'))
       .reduce((sum, row) => sum + Number(row[COL.count]), 0);
     if (!Number.isSafeInteger(activeCount) || activeCount + d.count > 3) return fail('limit');
     if (data.some((row) => row[COL.id] === d.id)) return fail('unavailable');
+    const requested = stockCounts_(d.lines);
+    if (requested.size) {
+      const activeIds = new Set(data.filter((row) => row[COL.status] === 'Reserved' || row[COL.status] === 'Collected').map((row) => row[COL.id]));
+      const held = stockCounts_(readRows_(items, ITEM_HEADERS.length).filter((line) => activeIds.has(line[0]))
+        .map((line) => ({ productId: line[7], options: JSON.parse(line[8]), quantity: line[3] })));
+      for (const [key, quantity] of requested) {
+        const [id, size] = key.split(':');
+        const capacity = size ? STOCK[id][size] : STOCK[id];
+        if ((held.get(key) || 0) + quantity > capacity) return { ok: false, error: 'stock', stockKey: key };
+      }
+    }
     const row = [
       d.id, localTime_(now), d.name, d.email, d.school, d.total / 100, 'Reserved', d.count, '',
       d.requestId, d.fingerprint, d.tokenHash, now + 30 * DAY, d.locale,
@@ -156,6 +189,24 @@ function transact_(ss, orders, items, d, now) {
   };
 }
 
+function stockCounts_(lines) {
+  const counts = new Map();
+  const has = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+  for (const line of lines) {
+    const parts = has(STOCK_BUNDLES, line.productId) ? STOCK_BUNDLES[line.productId] : [[line.productId, 1, 'size']];
+    for (const [id, units, option] of parts) {
+      if (!has(STOCK, id)) continue;
+      const capacity = STOCK[id];
+      const size = typeof capacity === 'number' ? '' : line.options?.[option];
+      if ((typeof capacity !== 'number' && !has(capacity, size)) ||
+          !Number.isSafeInteger(line.quantity) || line.quantity < 1) throw new Error('Invalid stock allocation');
+      const key = size ? id + ':' + size : id;
+      counts.set(key, (counts.get(key) || 0) + line.quantity * units);
+    }
+  }
+  return counts;
+}
+
 function receipt_(row, sheet, now, pickup) {
   const lines = readRows_(sheet, ITEM_HEADERS.length).filter((line) => line[0] === row[COL.id])
     .map((line) => ({
@@ -163,7 +214,8 @@ function receipt_(row, sheet, now, pickup) {
       regularPrice: cents_(line[6]), productId: line[7], options: JSON.parse(line[8]),
     }));
   const total = cents_(row[COL.total]);
-  if (!lines.length || lines.reduce((sum, line) => sum + line.lineTotal, 0) !== total ||
+  const subtotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+  if (!lines.length || (subtotal !== total && subtotal + taxCents_(subtotal) !== total) ||
       lines.reduce((sum, line) => sum + line.quantity, 0) !== row[COL.count] ||
       !STATUS.includes(row[COL.status])) throw new Error('Reservation data incomplete');
   return { id: row[COL.id], name: row[COL.name], status: row[COL.status], lines, total,
@@ -182,6 +234,7 @@ function cells_(row) {
   return { values: row.map((value) => ({ userEnteredValue: typeof value === 'number' ? { numberValue: value } : { stringValue: String(value) } })) };
 }
 function cents_(dollars) { return Math.round(dollars * 100); }
+function taxCents_(subtotal) { return Math.floor((subtotal * 599 + 2000) / 4000); }
 function localTime_(ms) { return Utilities.formatDate(new Date(ms), 'America/Toronto', 'yyyy-MM-dd HH:mm:ss z'); }
 function json_(obj) { return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON); }
 
@@ -195,7 +248,11 @@ function sendMail_(mail, receipt, props) {
       : (fr ? 'Réservation SSUNS enregistrée' : 'SSUNS reservation recorded');
     const lines = receipt.lines.map((l) => l.quantity + ' × ' + l.productName +
       (l.variant ? ' (' + l.variant + ')' : '') + ' — ' + money(l.lineTotal));
+    const subtotal = receipt.lines.reduce((sum, line) => sum + line.lineTotal, 0);
+    const tax = receipt.total - subtotal;
     const body = [subject + ' · ' + receipt.id, '', receipt.name, '', ...lines, '',
+      ...(tax > 0 ? [(fr ? 'Sous-total : ' : 'Subtotal: ') + money(subtotal),
+        (fr ? 'TPS et TVQ : ' : 'GST and QST: ') + money(tax)] : []),
       (mail.cancelled ? (fr ? 'Total annulé : ' : 'Cancelled total: ') : (fr ? 'Total à payer au retrait : ' : 'Total payable at pickup: ')) + money(receipt.total),
       ...(mail.cancelled ? [] : ['', mail.pickup, mail.hold, mail.payment, '', (fr ? 'Gérer votre réservation : ' : 'Manage your reservation: ') + mail.url,
         fr ? 'Gardez ce lien privé.' : 'Keep this link private.']),

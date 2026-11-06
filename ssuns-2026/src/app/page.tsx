@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AtAGlancePlate } from "@/components/home/AtAGlancePlate";
-import { BackgroundGuideAnnouncement } from "@/components/home/BackgroundGuideAnnouncement";
+import { HomeConferenceLinks } from "@/components/home/HomeConferenceLinks";
 import { SecretaryLetterModal } from "@/components/home/SecretaryLetterModal";
 import { Container, Section } from "@/components/layout";
 import { Reveal } from "@/components/motion/Reveal";
@@ -322,7 +322,7 @@ export default function HomePage() {
 
   return (
     <>
-      <BackgroundGuideAnnouncement />
+      <HomeConferenceLinks />
 
       <Section className="pt-6 md:pt-8 xl:pt-10" id="hero" spacing="none">
         <Container>

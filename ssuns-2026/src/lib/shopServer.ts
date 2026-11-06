@@ -1,11 +1,11 @@
 import { createHash, createHmac, randomBytes } from "node:crypto";
 import { isIP } from "node:net";
-import { findProduct, pickupDeadline, preorderClosesAt, preorderLimit, priceLine, selectionKey, shopText, type ShopLocale, type ShopSelection } from "@/content/shop";
+import { findProduct, pickupDeadline, preorderClosesAt, preorderLimit, priceLine, selectionKey, shopText, shopTotals, type ShopLocale, type ShopSelection } from "@/content/shop";
 
-type ErrorCode = "invalid" | "limit" | "price-changed" | "closed" | "unavailable" | "busy" | "invalid-link" | "not-cancellable" | "duplicate";
+type ErrorCode = "invalid" | "limit" | "stock" | "price-changed" | "closed" | "unavailable" | "busy" | "invalid-link" | "not-cancellable" | "duplicate";
 const status: Record<ErrorCode, number> = {
   invalid: 400, limit: 409, "price-changed": 409, closed: 409, unavailable: 503, busy: 429,
-  "invalid-link": 404, "not-cancellable": 409, duplicate: 409,
+  "invalid-link": 404, "not-cancellable": 409, duplicate: 409, stock: 409,
 };
 type Json = Record<string, unknown>;
 const object = (value: unknown): value is Json => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -13,7 +13,7 @@ const field = (value: unknown, max: number) => typeof value === "string" && valu
   value.length <= max && !/[\u0000-\u001f\u007f]/u.test(value) ? value.trim() : null;
 const headers = { "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" };
 const reply = (body: unknown, status = 200) => Response.json(body, { status, headers });
-const failure = (error: ErrorCode) => reply({ ok: false, error }, status[error]);
+const failure = (error: ErrorCode, stockKey?: string) => reply({ ok: false, error, stockKey }, status[error]);
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
 const sign = (value: string, secret: string) => createHmac("sha256", secret).update(value).digest("hex");
 
@@ -66,9 +66,9 @@ export function validateCheckout(body: Json) {
   }
   items.sort((a, b) => selectionKey(a).localeCompare(selectionKey(b)));
   const lines = items.map((item) => priceLine(item, locale));
-  const total = lines.reduce((sum, item) => sum + item.lineTotal, 0);
-  if (body.shownTotal !== total) return { error: "price-changed" as const };
-  return { name, email, school, requestId, locale, items, lines, total, count };
+  const totals = shopTotals(lines.reduce((sum, item) => sum + item.lineTotal, 0));
+  if (body.shownTotal !== totals.total) return { error: "price-changed" as const };
+  return { name, email, school, requestId, locale, items, lines, ...totals, count };
 }
 
 async function readBody(request: Request): Promise<Json | null> {
@@ -111,7 +111,8 @@ async function workspaceCall(config: NonNullable<ReturnType<typeof configuration
   if (!object(result)) throw new Error("Invalid workspace response");
   if (result.ok === true && object(result.receipt)) return result;
   const error = typeof result.error === "string" && Object.hasOwn(status, result.error) ? result.error as ErrorCode : "unavailable";
-  return { ok: false, error };
+  const stockKey = error === "stock" && typeof result.stockKey === "string" && /^[a-z-]+(?::(?:S|M|L|XL))?$/.test(result.stockKey) ? result.stockKey : undefined;
+  return { ok: false as const, error, stockKey };
 }
 
 export async function handleShopRequest(request: Request) {
@@ -128,7 +129,7 @@ export async function handleShopRequest(request: Request) {
       if (order.error) return failure(order.error);
       const availability = shopAvailability();
       if (!availability.closesAt || availability.state === "unavailable") return failure("unavailable");
-      const { name, email, school, requestId, locale, items, lines, total, count } = order;
+      const { name, email, school, requestId, locale, items, lines, subtotal, tax, total, count } = order;
       const fingerprint = hash(JSON.stringify({ name, email, school, items }));
       // A random per-attempt client UUID and a secret PRF give the same unguessable
       // token on retries without storing the raw token in Sheets.
@@ -136,11 +137,11 @@ export async function handleShopRequest(request: Request) {
       const managementUrl = `${config.origin}/shop/reservation/manage#${token}`;
       const result = await workspaceCall(config, {
         action: "create", rateKey, requestId, fingerprint, tokenHash: hash(token), managementUrl,
-        id: `SSUNS-M-${randomBytes(6).toString("hex").toUpperCase()}`, name, email, school, locale, lines, total, count,
+        id: `SSUNS-M-${randomBytes(6).toString("hex").toUpperCase()}`, name, email, school, locale, lines, subtotal, tax, total, count,
         closesAt: availability.closesAt, pickupDeadline,
         pickup: shopText.pickup[locale], hold: shopText.hold[locale], payment: shopText.payment[locale],
       });
-      return result.ok ? reply({ ok: true, receipt: result.receipt, managementUrl }) : failure(result.error as ErrorCode);
+      return result.ok ? reply({ ok: true, receipt: result.receipt, managementUrl }) : failure(result.error as ErrorCode, typeof result.stockKey === "string" ? result.stockKey : undefined);
     }
     if ((body.action === "view" || body.action === "cancel") && typeof body.token === "string" && /^[a-f0-9]{64}$/.test(body.token)) {
       const result = await workspaceCall(config, { action: body.action, rateKey, tokenHash: hash(body.token), pickupDeadline });
