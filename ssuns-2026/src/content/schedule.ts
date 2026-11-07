@@ -34,19 +34,22 @@ const event = (id: string, day: ScheduleDayId, start: string, end: string, kind:
 const session = (day: ScheduleDayId, number: number, bloc: ScheduleBloc, start: string, end: string, lane: number): ScheduleEvent =>
   ({ id: `${day}-session-${number}-${lane}`, day, start, end, kind: "session", session: number, bloc, lane, span: 1, related: ["/conference/delegate-resource-center", "/committees", "/committees/policies", "/committees/position-papers", "/conference/venue"] });
 
+const ceremonyLocation = { en: "4th floor ballrooms", fr: "Salles de bal, 4e étage" };
+const workshopLocation = { en: "Drummond East, 3rd floor", fr: "Drummond East, 3e étage" };
+
 export const scheduleEvents: ScheduleEvent[] = [
   event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration", "/registration/how-to-register", "/conference/venue"], { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" } }),
-  event("fair", "thursday", "13:00", "16:30", "program", "SSUNS Fair", "Foire SSUNS", 1, 1, undefined, { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" }, featured: true }),
-  event("workshop-thursday", "thursday", "15:00", "16:30", "workshop", "Workshop I", "Atelier I", 2, 2),
-  event("opening-doors", "thursday", "17:00", "17:15", "doors", "Opening Ceremony · Doors open", "Cérémonie d’ouverture · Ouverture des portes"),
-  event("opening", "thursday", "17:15", "18:45", "ceremony", "Opening Ceremony", "Cérémonie d’ouverture", 0, 4, ["/conference/venue"]),
+  event("fair", "thursday", "13:00", "16:30", "program", "SSUNS Fair", "Foire SSUNS", 1, 1, ["/conference/venue"], { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" }, featured: true }),
+  event("workshop-thursday", "thursday", "15:00", "16:30", "workshop", "Workshop I", "Atelier I", 2, 2, ["/conference/venue"], { location: workshopLocation }),
+  event("opening-doors", "thursday", "17:00", "17:15", "doors", "Opening Ceremony · Doors open", "Cérémonie d’ouverture · Ouverture des portes", 0, 4, ["/conference/venue"], { location: ceremonyLocation }),
+  event("opening", "thursday", "17:15", "18:45", "ceremony", "Opening Ceremony", "Cérémonie d’ouverture", 0, 4, ["/conference/venue"], { location: ceremonyLocation }),
   session("thursday", 1, "A", "20:00", "21:30", 0),
   session("thursday", 1, "B", "20:15", "21:45", 1),
   session("thursday", 1, "C", "20:30", "22:00", 2),
 
   event("tours", "friday", "08:30", "11:00", "program", "McGill campus tours", "Visites du campus de McGill", 1, 1),
   // Friday Workshop II confirmed by the organizer.
-  event("workshop-friday", "friday", "10:00", "11:00", "workshop", "Workshop II", "Atelier II", 2, 2),
+  event("workshop-friday", "friday", "10:00", "11:00", "workshop", "Workshop II", "Atelier II", 2, 2, ["/conference/venue"], { location: workshopLocation }),
   session("friday", 2, "A", "12:30", "14:45", 0),
   session("friday", 2, "B", "12:45", "15:00", 1),
   // Third lane corrected to Bloc C by the organizer.
@@ -77,8 +80,8 @@ export const scheduleEvents: ScheduleEvent[] = [
   session("sunday", 8, "A", "09:30", "11:00", 0),
   session("sunday", 8, "B", "09:45", "11:15", 1),
   session("sunday", 8, "C", "10:00", "11:30", 2),
-  event("closing-doors", "sunday", "13:00", "13:15", "doors", "Closing Ceremony · Doors open", "Cérémonie de clôture · Ouverture des portes"),
-  event("closing", "sunday", "13:15", "15:00", "ceremony", "Closing Ceremony", "Cérémonie de clôture", 0, 4, ["/committees/awards", "/conference/venue"]),
+  event("closing-doors", "sunday", "13:00", "13:15", "doors", "Closing Ceremony · Doors open", "Cérémonie de clôture · Ouverture des portes", 0, 4, ["/conference/venue"], { location: ceremonyLocation }),
+  event("closing", "sunday", "13:15", "15:00", "ceremony", "Closing Ceremony", "Cérémonie de clôture", 0, 4, ["/committees/awards", "/conference/venue"], { location: ceremonyLocation }),
 ];
 
 // Organizer-supplied bloc assignments. Labels normally come from current committee
@@ -172,7 +175,7 @@ export function eventDescription(item: ScheduleEvent, language: ScheduleLocale):
   };
   if (copy[item.id]) return copy[item.id][language];
   if (item.kind === "doors") return fr ? "Ouverture des portes avant le début de la cérémonie." : "Doors open ahead of the ceremony’s scheduled start.";
-  if (item.kind === "workshop") return fr ? "Atelier prévu au programme de la conférence. Le sujet, les intervenants et la salle seront précisés ultérieurement." : "A workshop in the conference programme. Topic, speakers and room details will follow.";
+  if (item.kind === "workshop") return fr ? "Le sujet de l’atelier et les intervenants seront précisés ultérieurement." : "Workshop topic and speakers will be announced later.";
   return item.id.startsWith("head-")
     ? (fr ? "Séance de retour destinée aux délégués en chef." : "A feedback session for head delegates.")
     : (fr ? "Séance de retour destinée aux conseillers pédagogiques." : "A feedback session for faculty advisors.");

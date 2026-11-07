@@ -40,6 +40,7 @@
 .weekend .eventLocation { font-size: 11px; }
 .weekend .short { font-size: 9px; }
 .weekend .doors { font-size: 9px; }
+.doors .eventLocation { margin-top: 0; font-size: 10px; line-height: inherit; }
 .weekend .dayHeader { flex-direction: column; gap: 7px; }
 .weekend .dayHeader h2 { font-size: 17px; }
 .agendaEvent { border-left: 4px solid #2f70c5; }

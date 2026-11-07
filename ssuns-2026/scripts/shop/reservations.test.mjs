@@ -121,7 +121,11 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
       "mixed-stickers": 98, "souvenir-pack": 114, "rose-bundle": 198, "large-rose-bundle": 991, "rose-postcard": 49,
     };
     assert.equal(catalog.findProduct("large-sticker").price, 349);
-    assert.equal(catalog.findProduct("bear").price, 1699);
+    assert.equal(catalog.findProduct("white-tee").price, 2499);
+    assert.equal(catalog.findProduct("navy-hoodie").price, 4999);
+    assert.equal(catalog.findProduct("sweatpants").price, 3999);
+    assert.equal(catalog.findProduct("bear").price, 1899);
+    assert.equal(catalog.findProduct("ssuns-outfit").price, 8499);
     assert.equal(catalog.findProduct("keychain").price, 499);
     for (const product of catalog.shopProducts.filter((p) => p.group === "bundle")) {
       assert.equal(catalog.regularPrice(product) - product.price, savings[product.id], product.id);
@@ -130,9 +134,9 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
   });
 
   await t.test("applies combined Québec tax once per subtotal, rounding half cents up", () => {
-    assert.deepEqual(catalog.shopTotals(2199), { subtotal: 2199, tax: 329, total: 2528 });
+    assert.deepEqual(catalog.shopTotals(2499), { subtotal: 2499, tax: 374, total: 2873 });
     assert.deepEqual(catalog.shopTotals(2000), { subtotal: 2000, tax: 300, total: 2300 });
-    assert.deepEqual(catalog.shopTotals(8297), { subtotal: 8297, tax: 1242, total: 9539 });
+    assert.deepEqual(catalog.shopTotals(9497), { subtotal: 9497, tax: 1422, total: 10919 });
   });
 
   await t.test("validates IDs, sizes, prices, quantity, email, spam field, and same-origin requests", async () => {
@@ -154,17 +158,17 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
     const a = await call(body);
     assert.equal(a.ok, true);
     assert.match(a.receipt.id, /^SSUNS-M-[A-F0-9]{12}$/);
-    assert.equal(a.receipt.total, 9539);
+    assert.equal(a.receipt.total, 10919);
     assert.equal(a.receipt.lines.find((i) => i.productId === "ssuns-outfit").variant, "Hoodie size: S · Sweatpants size: XL");
     assert.equal(ws.rows[0][1][4], "=NotAFormula");
-    assert.equal(ws.rows[0][1][5], 95.39);
+    assert.equal(ws.rows[0][1][5], 109.19);
     const token = new URL(a.managementUrl).hash.slice(1);
     assert.match(token, /^[a-f0-9]{64}$/);
     assert.equal(ws.rows[0][1][11], sha(token));
     assert.ok(!JSON.stringify(ws.rows).includes(token));
     assert.equal(a.receipt.email, "sent");
     assert.ok(ws.mail[0].body.includes(a.managementUrl));
-    assert.match(ws.mail[0].body, /GST and QST: \$12\.42 CAD/);
+    assert.match(ws.mail[0].body, /GST and QST: \$14\.22 CAD/);
     assert.equal((await call(body)).receipt.id, a.receipt.id);
     assert.equal((await call({ ...body, school: "Different School" })).error, "duplicate");
     assert.equal((await call(checkout())).error, "limit");

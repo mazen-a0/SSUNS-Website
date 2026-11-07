@@ -49,19 +49,19 @@ function bundle(id: string, en: string, fr: string, price: number, description: 
 }
 export const shopProducts: ShopProduct[] = [
   {
-    id: "white-tee", name: words("White T-shirt", "T-shirt blanc"), price: 2199, group: "apparel",
+    id: "white-tee", name: words("White T-shirt", "T-shirt blanc"), price: 2499, group: "apparel",
     description: words("The 2026 SSUNS tee, with a printed design on the front and back.", "Le t-shirt SSUNS 2026, avec un motif imprimé à l’avant et au dos."),
     photos: [photo("tee-front", "Front of the white SSUNS T-shirt", "Devant du t-shirt blanc SSUNS"), photo("tee-fit", "White T-shirt on a second model", "T-shirt blanc porté par une deuxième personne"), photo("tee-back", "Back print on the white T-shirts", "Motif au dos des t-shirts blancs"), collectionPhoto],
     options: [size],
   },
   {
-    id: "navy-hoodie", name: words("Navy hoodie", "Chandail à capuchon bleu marine"), price: 4299, group: "apparel",
+    id: "navy-hoodie", name: words("Navy hoodie", "Chandail à capuchon bleu marine"), price: 4999, group: "apparel",
     description: words("The SSUNS 2026 hoodie in navy, with artwork on both sides.", "Le chandail à capuchon SSUNS 2026 bleu marine, avec un motif à l’avant et au dos."),
     photos: [photo("hoodie-front", "Front of the navy SSUNS hoodie", "Devant du chandail à capuchon bleu marine SSUNS"), photo("hoodie-back", "Back print on the navy hoodie", "Motif au dos du chandail bleu marine"), photo("hoodie-fit", "Navy hoodie on two models", "Chandail bleu marine porté par deux personnes")],
     options: [size],
   },
   {
-    id: "sweatpants", name: words("Navy sweatpants", "Pantalon molletonné bleu marine"), price: 3499, group: "apparel",
+    id: "sweatpants", name: words("Navy sweatpants", "Pantalon molletonné bleu marine"), price: 3999, group: "apparel",
     description: words("Navy sweatpants with the SSUNS mark on the leg.", "Pantalon molletonné bleu marine avec l’emblème de SSUNS sur la jambe."),
     photos: [photo("sweatpants-detail", "SSUNS mark on the navy sweatpants", "Emblème de SSUNS sur le pantalon bleu marine"), photo("sweatpants-fit", "Full-length view of the navy sweatpants", "Vue de la coupe du pantalon molletonné bleu marine"), collectionPhoto],
     options: [size],
@@ -76,7 +76,7 @@ export const shopProducts: ShopProduct[] = [
     description: words("A pin with the SSUNS emblem.", "Une épinglette à l’effigie de SSUNS."),
     photos: [photo("pin", "Round SSUNS pin against navy fabric", "Épinglette ronde SSUNS sur un tissu bleu marine")], options: [],
   },
-  extra("bear", "SSUNS teddy bear", "Ourson SSUNS", 1699, words("A teddy bear in SSUNS navy.", "Un ourson vêtu de bleu marine aux couleurs de SSUNS."), [
+  extra("bear", "SSUNS teddy bear", "Ourson SSUNS", 1899, words("A teddy bear in SSUNS navy.", "Un ourson vêtu de bleu marine aux couleurs de SSUNS."), [
     photo("bear", "Teddy bear wearing a navy SSUNS shirt", "Ourson portant un chandail bleu marine SSUNS"), keychainPhotos[0],
   ]),
   extra("keychain", "SSUNS keychain", "Porte-clés SSUNS", 499, words("The blue SSUNS letter keychain.", "Le porte-clés bleu avec les lettres SSUNS."), keychainPhotos),
@@ -88,7 +88,7 @@ export const shopProducts: ShopProduct[] = [
   extra("postcard", "Postcard", "Carte postale", 199, designAtPickup, postcardPhotos),
   extra("bookmark", "Bookmark", "Signet", 115, words("SSUNS bookmark.", "Signet SSUNS.")),
   {
-    id: "ssuns-outfit", name: words("SSUNS Outfit", "Tenue SSUNS"), price: 7299, group: "bundle",
+    id: "ssuns-outfit", name: words("SSUNS Outfit", "Tenue SSUNS"), price: 8499, group: "bundle",
     description: words("Pair the navy hoodie with the matching sweatpants. Choose a size for each.", "Agencez le chandail bleu marine au pantalon assorti. Choisissez la taille de chaque vêtement."),
     photos: [photo("sweatpants-fit", "The navy hoodie and sweatpants worn together", "Le chandail et le pantalon bleu marine portés ensemble"), photo("hoodie-front", "Navy hoodie included in the bundle", "Chandail bleu marine compris dans l’ensemble"), photo("sweatpants-detail", "Navy sweatpants included in the bundle", "Pantalon bleu marine compris dans l’ensemble")],
     options: [
