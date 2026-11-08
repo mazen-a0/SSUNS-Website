@@ -36,6 +36,7 @@ const session = (day: ScheduleDayId, number: number, bloc: ScheduleBloc, start: 
 
 const ceremonyLocation = { en: "4th floor ballrooms", fr: "Salles de bal, 4e étage" };
 const workshopLocation = { en: "Drummond East, 3rd floor", fr: "Drummond East, 3e étage" };
+const headDelegateFeedbackLocation = { en: "Salon Jarry", fr: "Salon Jarry" };
 
 export const scheduleEvents: ScheduleEvent[] = [
   event("registration", "thursday", "11:00", "17:00", "program", "Delegate registration", "Inscription des délégués", 0, 1, ["/registration", "/registration/how-to-register", "/conference/venue"], { location: { en: "3rd floor foyer", fr: "Foyer du 3e étage" } }),
@@ -57,7 +58,7 @@ export const scheduleEvents: ScheduleEvent[] = [
   session("friday", 3, "A", "15:15", "17:30", 0),
   session("friday", 3, "B", "15:30", "17:45", 1),
   session("friday", 3, "C", "15:45", "18:00", 2),
-  event("head-feedback-1", "friday", "18:00", "19:00", "feedback", "Head delegate feedback 1", "Retour des délégués en chef 1", 3, 1),
+  event("head-feedback-1", "friday", "18:00", "19:00", "feedback", "Head delegate feedback 1", "Retour des délégués en chef 1", 3, 1, undefined, { location: headDelegateFeedbackLocation }),
   session("friday", 4, "A", "19:30", "21:00", 0),
   session("friday", 4, "B", "19:45", "21:15", 1),
   session("friday", 4, "C", "20:00", "21:30", 2),
@@ -66,7 +67,7 @@ export const scheduleEvents: ScheduleEvent[] = [
   session("saturday", 5, "A", "09:45", "12:00", 0),
   session("saturday", 5, "B", "10:00", "12:15", 1),
   session("saturday", 5, "C", "10:15", "12:30", 2),
-  event("head-feedback-2", "saturday", "12:30", "13:30", "feedback", "Head delegate feedback 2", "Retour des délégués en chef 2", 3, 1),
+  event("head-feedback-2", "saturday", "12:30", "13:30", "feedback", "Head delegate feedback 2", "Retour des délégués en chef 2", 3, 1, undefined, { location: headDelegateFeedbackLocation }),
   session("saturday", 6, "A", "14:00", "16:15", 0),
   session("saturday", 6, "B", "14:15", "16:30", 1),
   session("saturday", 6, "C", "14:30", "16:45", 2),
@@ -74,8 +75,8 @@ export const scheduleEvents: ScheduleEvent[] = [
   session("saturday", 7, "B", "17:00", "19:15", 1),
   session("saturday", 7, "C", "17:15", "19:30", 2),
   event("faculty-feedback-saturday", "saturday", "17:45", "18:15", "feedback", "Faculty advisor feedback 2", "Retour des conseillers pédagogiques 2", 3, 1, undefined, { location: { en: "Faculty advisor lounge", fr: "Salon des conseillers pédagogiques" } }),
-  event("gala", "saturday", "21:00", "24:00", "social", "Delegate Gala", "Gala des délégués", 0, 3),
-  event("faculty-cocktail", "saturday", "21:00", "22:30", "social", "Faculty advisor cocktail", "Cocktail des conseillers pédagogiques", 3, 1),
+  event("gala", "saturday", "21:00", "24:00", "social", "Delegate Gala", "Gala des délégués", 0, 3, undefined, { location: { en: "Ballroom Center", fr: "Salle de bal centrale" } }),
+  event("faculty-cocktail", "saturday", "21:00", "22:30", "social", "Faculty advisor cocktail", "Cocktail des conseillers pédagogiques", 3, 1, undefined, { location: { en: "Sheraton Club Lounge", fr: "Salon Sheraton Club" } }),
 
   session("sunday", 8, "A", "09:30", "11:00", 0),
   session("sunday", 8, "B", "09:45", "11:15", 1),

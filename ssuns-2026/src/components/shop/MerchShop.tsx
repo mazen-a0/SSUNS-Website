@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowDown, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Images, ShoppingBag } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
@@ -46,6 +47,13 @@ function ProductIncludes({ product, language }: { product: ShopProduct; language
   if (!product.includes) return null;
   return <p className="text-sm leading-relaxed text-[var(--muted)]">
     {product.includes.map(({ id, quantity }) => `${quantity} × ${componentName(id, language)}`).join(" · ")}
+  </p>;
+}
+
+function RoseCharityNote({ product, language }: { product: ShopProduct; language: ShopLocale }) {
+  if (!product.includes?.some(({ id }) => id === "rose")) return null;
+  return <p className="text-sm leading-relaxed text-[var(--accent)]">
+    <Link className="relative z-10 underline decoration-[var(--accent)]/35 underline-offset-4 hover:decoration-[var(--accent)]" href="/conference/charity-partner">{shopText.roseCharity[language]}</Link>
   </p>;
 }
 
@@ -102,6 +110,7 @@ function ProductDetail({ product, language, add, close }: {
         }}>
           <ProductPrice language={language} product={product} />
           <ProductIncludes language={language} product={product} />
+          <RoseCharityNote language={language} product={product} />
           <p className="text-sm leading-relaxed">{product.description[language]}</p>
           {product.group === "bundle" && <p className="text-xs text-[var(--muted)]">{fr ? "Compte comme un article précommandé." : "Counts as one preorder selection."}</p>}
           {product.options.map((option) => (
@@ -293,6 +302,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
                   </h3>
                   <ProductPrice language={language} product={product} />
                   <ProductIncludes language={language} product={product} />
+                  <RoseCharityNote language={language} product={product} />
                 </div>
               </article>
             ))}

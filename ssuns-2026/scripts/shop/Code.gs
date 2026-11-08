@@ -26,7 +26,7 @@ const STOCK_BUNDLES = {
   'conference-souvenirs': [['poster', 1]],
   'accessories-bundle': [['cap', 1], ['tote', 1], ['large-sticker', 1]],
   'three-small-stickers': [['small-sticker', 3]],
-  'mixed-stickers': [['large-sticker', 1], ['small-sticker', 2]],
+  'mixed-stickers': [['large-sticker', 2], ['small-sticker', 1]],
   'souvenir-pack': [['poster', 1], ['postcard', 1], ['bookmark', 1]],
   'rose-postcard': [['postcard', 1]],
 };
@@ -146,7 +146,7 @@ function transact_(ss, orders, items, d, now) {
     if (requested.size) {
       const activeIds = new Set(data.filter((row) => row[COL.status] === 'Reserved' || row[COL.status] === 'Collected').map((row) => row[COL.id]));
       const held = stockCounts_(readRows_(items, ITEM_HEADERS.length).filter((line) => activeIds.has(line[0]))
-        .map((line) => ({ productId: line[7], options: JSON.parse(line[8]), quantity: line[3] })));
+        .map((line) => ({ productId: line[7], productName: line[1], options: JSON.parse(line[8]), quantity: line[3] })));
       for (const [key, quantity] of requested) {
         const [id, size] = key.split(':');
         const capacity = size ? STOCK[id][size] : STOCK[id];
@@ -193,7 +193,10 @@ function stockCounts_(lines) {
   const counts = new Map();
   const has = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
   for (const line of lines) {
-    const parts = has(STOCK_BUNDLES, line.productId) ? STOCK_BUNDLES[line.productId] : [[line.productId, 1, 'size']];
+    const legacyMixed = line.productId === 'mixed-stickers' &&
+      ['Sticker Bar: Large + two small', 'Bar à autocollants : un grand et deux petits'].includes(line.productName);
+    const parts = legacyMixed ? [['large-sticker', 1], ['small-sticker', 2]]
+      : has(STOCK_BUNDLES, line.productId) ? STOCK_BUNDLES[line.productId] : [[line.productId, 1, 'size']];
     for (const [id, units, option] of parts) {
       if (!has(STOCK, id)) continue;
       const capacity = STOCK[id];

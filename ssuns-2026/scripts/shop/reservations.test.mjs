@@ -118,7 +118,7 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
   await t.test("approved prices and all nine bundle savings", () => {
     const savings = {
       "ssuns-outfit": 499, "conference-souvenirs": 99, "accessories-bundle": 248, "three-small-stickers": 98,
-      "mixed-stickers": 98, "souvenir-pack": 114, "rose-bundle": 198, "large-rose-bundle": 991, "rose-postcard": 49,
+      "mixed-stickers": 198, "souvenir-pack": 114, "rose-bundle": 198, "large-rose-bundle": 991, "rose-postcard": 49,
     };
     assert.equal(catalog.findProduct("large-sticker").price, 349);
     assert.equal(catalog.findProduct("white-tee").price, 2499);
@@ -131,6 +131,26 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
       assert.equal(catalog.regularPrice(product) - product.price, savings[product.id], product.id);
     }
     assert.equal(catalog.shopProducts.filter((p) => p.group === "bundle").length, Object.keys(savings).length);
+  });
+
+  await t.test("mixed bundle counts two large and one small and respects older saved orders", async () => {
+    reset();
+    const counts = runInNewContext(script + "\nstockCounts_", {});
+    const bundle = catalog.findProduct("mixed-stickers");
+    assert.deepEqual(bundle.includes, [{ id: "large-sticker", quantity: 2 }, { id: "small-sticker", quantity: 1 }]);
+    assert.equal(bundle.price, 749);
+    assert.equal(catalog.regularPrice(bundle), 947);
+    assert.deepEqual(Object.fromEntries(counts([catalog.priceLine(line("mixed-stickers", {}, 3), "en")])), {
+      "large-sticker": 6, "small-sticker": 3,
+    });
+    const older = { ...catalog.priceLine(line("mixed-stickers", {}, 2), "en"), productName: "Sticker Bar: Large + two small" };
+    assert.equal(catalog.isLegacyMixedStickerLine(older), true);
+    assert.deepEqual(Object.fromEntries(counts([older])), { "large-sticker": 2, "small-sticker": 4 });
+    const order = await call(checkout([line("mixed-stickers", {})]));
+    assert.equal(order.ok, true);
+    assert.equal(order.receipt.lines[0].productName, "Sticker Bar: Two large + one small");
+    assert.equal(order.receipt.total, 861);
+    assert.match(ws.mail[0].body, /Two large \+ one small/);
   });
 
   await t.test("applies combined Québec tax once per subtotal, rounding half cents up", () => {

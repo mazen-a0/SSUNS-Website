@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
-import { findProduct, formatPrice, priceLine, shopText, type ShopLine, type ShopLocale, type ShopPhoto, type ShopReceipt } from "@/content/shop";
+import { findProduct, formatPrice, isLegacyMixedStickerLine, priceLine, shopText, type ShopLine, type ShopLocale, type ShopPhoto, type ShopReceipt } from "@/content/shop";
 
 export const primaryButton = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#2438a0] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-45";
 export const secondaryButton = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[var(--rule)] bg-white px-4 py-2 text-sm font-semibold text-[var(--accent)] transition-colors hover:border-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
@@ -55,7 +55,7 @@ export function OrderSummary({ lines, total, language, payable = true }: { lines
     <>
       <ul className="divide-y divide-[var(--rule)]">
         {lines.map((line, index) => {
-          const localized = findProduct(line.productId) ? priceLine(line, language) : line;
+          const localized = findProduct(line.productId) && !isLegacyMixedStickerLine(line) ? priceLine(line, language) : line;
           return <li className="flex items-start justify-between gap-3 py-3 text-sm" key={`${line.productId}-${index}`}>
             <div className="min-w-0">
               <p className="font-semibold">{line.quantity} × {localized.productName}</p>

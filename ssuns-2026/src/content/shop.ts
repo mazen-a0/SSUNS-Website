@@ -103,8 +103,8 @@ export const shopProducts: ShopProduct[] = [
     [{ id: "cap", quantity: 1 }, { id: "tote", quantity: 1 }, { id: "large-sticker", quantity: 1 }], stickerPhotos),
   bundle("three-small-stickers", "Sticker Bar: Three small", "Bar à autocollants : trois petits", 649, designAtPickup,
     [{ id: "small-sticker", quantity: 3 }], stickerPhotos),
-  bundle("mixed-stickers", "Sticker Bar: Large + two small", "Bar à autocollants : un grand et deux petits", 749, designAtPickup,
-    [{ id: "large-sticker", quantity: 1 }, { id: "small-sticker", quantity: 2 }], stickerPhotos),
+  bundle("mixed-stickers", "Sticker Bar: Two large + one small", "Bar à autocollants : deux grands et un petit", 749, designAtPickup,
+    [{ id: "large-sticker", quantity: 2 }, { id: "small-sticker", quantity: 1 }], stickerPhotos),
   bundle("souvenir-pack", "Souvenir Pack", "Ensemble souvenir", 599, designAtPickup,
     [{ id: "poster", quantity: 1 }, { id: "postcard", quantity: 1 }, { id: "bookmark", quantity: 1 }], [posterPhotos[0], ...postcardPhotos]),
   bundle("rose-bundle", "Rose Bundle", "Ensemble de roses", 999, words("Three roses.", "Trois roses."),
@@ -120,6 +120,7 @@ export const preorderClosesAt = "2026-11-12T00:00:00-05:00";
 export const pickupDeadline = "2026-11-13T12:00:00-05:00";
 export const shopTimeZone = "America/Toronto";
 export const shopText = {
+  roseCharity: words("10% of rose sales goes to War Child, our conference charity.", "10 % des ventes de roses sont remis à War Child, le partenaire caritatif de notre conférence."),
   pickup: words("SSUNS DRC, second floor of Le Centre Sheraton Montréal", "Centre de ressources des délégués (DRC), 2e étage du Centre Sheraton Montréal"),
   hold: words("Collect your reservation by Friday, November 13 at noon (Montréal time). Unclaimed items may be released for general sale after that time.", "Récupérez votre réservation au plus tard le vendredi 13 novembre à midi (heure de Montréal). Les articles non réclamés pourront ensuite être remis en vente."),
   payment: words("Pay in person when you collect your items. No payment is collected online.", "Payez sur place au moment du retrait. Aucun paiement n’est perçu en ligne."),
@@ -135,6 +136,9 @@ export type ShopLine = ShopSelection & {
   regularPrice: number;
   lineTotal: number;
 };
+// Keep already-recorded orders showing the composition they were reserved with.
+export const isLegacyMixedStickerLine = (line: ShopLine) => line.productId === "mixed-stickers" &&
+  ["Sticker Bar: Large + two small", "Bar à autocollants : un grand et deux petits"].includes(line.productName);
 export const shopStatuses = ["Reserved", "Collected", "Cancelled", "Unclaimed"] as const;
 export type ShopReceipt = {
   id: string;
