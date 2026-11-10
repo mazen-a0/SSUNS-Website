@@ -1,3 +1,25 @@
+export const positionPaperPageLimit = {
+  en: "One page maximum, including all subtopics and footnotes. Only the bibliography or works cited may extend onto a second page.",
+  fr: "Une page maximum, sous-thèmes et notes de bas de page compris. Seule la bibliographie ou la liste des œuvres citées peut se poursuivre sur une deuxième page.",
+};
+
+export const positionPaperPairRule = {
+  en: "Submit one position paper per pair of delegates.",
+  fr: "Soumettez un seul exposé de position par binôme de délégués.",
+};
+
+export const sharedPositionPaperCommittees = new Set(["who-2026", "ccpcj-2026"]);
+
+export const positionPaperPairSummary = {
+  en: "For WHO and CCPCJ only, each pair of delegates submits one paper.",
+  fr: "À l’OMS (WHO) et à la CCPCJ seulement, chaque binôme de délégués soumet un seul exposé.",
+};
+
+export const positionPaperSummary = {
+  en: `${positionPaperPageLimit.en} ${positionPaperPairSummary.en}`,
+  fr: `${positionPaperPageLimit.fr} ${positionPaperPairSummary.fr}`,
+};
+
 export const positionPaperGroups = [
   {
     title: "General Assemblies and Economic and Social Councils",

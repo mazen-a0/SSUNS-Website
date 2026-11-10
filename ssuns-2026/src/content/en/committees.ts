@@ -1,4 +1,5 @@
 import { committeeDaisBySlug, type StaffProfile } from "@/content/en/staff";
+import { positionPaperPageLimit, positionPaperPairSummary, positionPaperSummary } from "@/content/positionPapers";
 
 export type Committee = {
   id: string;
@@ -67,10 +68,12 @@ export const committeesPageContent = {
     {
       href: "/committees/position-papers",
       title: "Position Papers",
-      summary: "Submission instructions, formatting expectations, and committee-specific forms.",
+      summary: positionPaperSummary.en,
       body: [
         "Delegates participating in a General Assembly, Economic and Social Council, or Specialized Agency committee at SSUNS 2026 are required to submit a position paper before the start of the conference.",
         "Crisis committee position papers are not required and will not be accepted.",
+        positionPaperPageLimit.en,
+        positionPaperPairSummary.en,
       ],
     },
     {

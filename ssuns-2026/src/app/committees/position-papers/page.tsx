@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { DossierNav } from "@/components/DossierNav";
 import { PageHero } from "@/components/PageHero";
-import { positionPaperGroups } from "@/content/positionPapers";
+import { positionPaperGroups, positionPaperPageLimit, positionPaperPairRule, sharedPositionPaperCommittees } from "@/content/positionPapers";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 export default function PositionPapersPage() {
@@ -63,7 +63,9 @@ export default function PositionPapersPage() {
     },
     {
       title: labels.format,
-      body: "All position papers should use Times New Roman, 12-point font, be single-spaced, and be a maximum of one page in length, including all subtopics.",
+      body: isFrench
+        ? `Utilisez la police Times New Roman, en 12 points, à interligne simple. ${positionPaperPageLimit.fr}`
+        : `Use 12-point Times New Roman and single spacing. ${positionPaperPageLimit.en}`,
     },
     {
       title: "Citations",
@@ -149,6 +151,9 @@ export default function PositionPapersPage() {
                           <Link className="text-base font-semibold leading-snug text-[var(--accent)] hover:underline" href={committee.href}>
                             {committee.label}
                           </Link>
+                          {sharedPositionPaperCommittees.has(committee.slug) ? (
+                            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{positionPaperPairRule[language]}</p>
+                          ) : null}
                           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                             <Link
                               className="inline-flex items-center justify-center rounded-full border border-[var(--accent)] bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[color-mix(in_srgb,var(--accent)_88%,black)]"

@@ -6,6 +6,7 @@ import { CommandPalette } from "@/components/CommandPalette";
 import { GlassNav } from "@/components/GlassNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useAppPreferences } from "@/components/providers/AppPreferencesProvider";
+import { positionPaperSummary } from "@/content/positionPapers";
 import { useSiteContent } from "@/lib/useSiteContent";
 
 type SiteChromeProps = {
@@ -85,7 +86,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           "/conference/delegate-resource-center": "Documents et aide pour les délégués",
           "/conference/excellence-scholarship": conferenceContent.excellenceScholarship.summary,
           "/committees": "Liste des comités et dossiers",
-          "/committees/position-papers": "Instructions et formulaires de soumission",
+          "/committees/position-papers": positionPaperSummary.fr,
           "/committees/awards": "Prix et distinctions",
           "/committees/policies": "Politiques et ressources",
           "/registration": "Information sur l'inscription",
@@ -106,7 +107,7 @@ export function SiteChrome({ children }: SiteChromeProps) {
           "/conference/delegate-resource-center": "Delegate documents and help",
           "/conference/excellence-scholarship": conferenceContent.excellenceScholarship.summary,
           "/committees": "Committee list and dossiers",
-          "/committees/position-papers": "Instructions and submission forms",
+          "/committees/position-papers": positionPaperSummary.en,
           "/committees/awards": "Awards and distinctions",
           "/committees/policies": "Policies and resources",
           "/registration": "Registration information",

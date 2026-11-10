@@ -1,4 +1,5 @@
 import { committees as enCommittees, committeesPageContent as en } from "@/content/en/committees";
+import { positionPaperPageLimit, positionPaperPairSummary, positionPaperSummary } from "@/content/positionPapers";
 
 export const committeesPageContent = {
   ...en,
@@ -29,10 +30,12 @@ export const committeesPageContent = {
     {
       href: "/committees/position-papers",
       title: "Exposés de position",
-      summary: "Instructions de soumission, attentes de mise en forme et formulaires par comité.",
+      summary: positionPaperSummary.fr,
       body: [
         "Les délégués participant à une Assemblée générale, un Conseil économique et social ou une Agence spécialisée à SSUNS 2026 doivent soumettre un exposé de position avant le début de la conférence.",
         "Les exposés de position ne sont pas requis pour les comités de crise et ne seront pas acceptés.",
+        positionPaperPageLimit.fr,
+        positionPaperPairSummary.fr,
       ],
     },
     {

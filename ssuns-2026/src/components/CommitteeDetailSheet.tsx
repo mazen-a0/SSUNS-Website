@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
 import { additionalCommitteeDocumentsBySlug, backgroundGuideLinksBySlug } from "@/content/backgroundGuides";
-import { positionPaperFormsBySlug } from "@/content/positionPapers";
+import { positionPaperFormsBySlug, positionPaperPageLimit, positionPaperPairRule, sharedPositionPaperCommittees } from "@/content/positionPapers";
 import { getCommitteeLevelLabel } from "@/lib/committeeBadges";
 import { useSiteContent } from "@/lib/useSiteContent";
 
@@ -123,10 +123,6 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
     profileNote: isFrench ? "Détails clés pour les délégués." : "Key room details for delegates.",
     documents: isFrench ? "Documents délégués" : "Delegate documents",
     documentsNote: isFrench ? "Liens essentiels pour préparer ce comité." : "Essential links for preparing this committee.",
-    positionPaper: isFrench ? "Exposé de position" : "Position Paper",
-    positionPaperNote: isFrench
-      ? "Utilisez le formulaire de ce comité pour soumettre votre exposé de position."
-      : "Use this committee's form to submit your position paper.",
     submitPositionPaper: isFrench ? "Soumettre l'exposé de position" : "Submit position paper",
     guideAvailableNote: isFrench
       ? "Le guide préparatoire de ce comité est maintenant disponible. Utilisez le mot de passe fourni par votre conseiller pédagogique si demandé."
@@ -263,6 +259,12 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                       </Link>
                     ))}
                   </div>
+                  {positionPaperFormHref ? (
+                    <div className="space-y-1 text-sm leading-6 text-[var(--text)] lg:col-start-2">
+                      <p>{positionPaperPageLimit[language]}</p>
+                      {sharedPositionPaperCommittees.has(committee.slug) ? <p className="font-semibold">{positionPaperPairRule[language]}</p> : null}
+                    </div>
+                  ) : null}
                   {additionalDocuments.some((document) => document.note) ? (
                     <div className="lg:col-start-2">
                       {additionalDocuments.map((document) =>
@@ -291,7 +293,6 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                 ) : (
                   <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{sectionLabels.resourcesNote}</p>
                 )}
-                {positionPaperFormHref ? <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{sectionLabels.positionPaperNote}</p> : null}
               </div>
               <div className="border-t border-[var(--rule)] pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
                 <p className="section-kicker">{sectionLabels.guide}</p>
