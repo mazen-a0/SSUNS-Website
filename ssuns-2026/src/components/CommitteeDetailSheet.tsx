@@ -255,7 +255,7 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
                         rel="noreferrer"
                         target="_blank"
                       >
-                        {document.label}
+                        {isFrench ? document.labelFr ?? document.label : document.label}
                       </Link>
                     ))}
                   </div>

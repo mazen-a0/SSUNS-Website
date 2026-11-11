@@ -6,7 +6,7 @@ import { excellenceScholarship } from "@/content/en/excellenceScholarship";
 export const delegateHandbook = {
   title: "Delegate Handbook",
   description: "Conference policies, preparation, and procedures for SSUNS 2026.",
-  href: "https://drive.google.com/file/d/1CGBfzNDG4Nb6WbFk63gTYCAuyZ7Hgy9D/view?usp=sharing" as string | null,
+  href: "https://drive.google.com/file/d/16dKwcBSPHtq8awLREcC2PDArws9wQdsl/view?usp=sharing" as string | null,
   accessLabel: "Access handbook",
   passwordNote: "The password is the same as the background guide passwords.",
   comingSoonLabel: "Coming soon",

@@ -25,10 +25,25 @@ export const additionalCommitteeDocumentsBySlug: Record<
   string,
   Array<{
     label: string;
+    labelFr?: string;
     href: string;
     note?: string;
   }>
 > = {
+  "ad-hoc-sg-2026": [
+    {
+      label: "Hint 1",
+      labelFr: "Indice 1",
+      href: "https://scratch.mit.edu/projects/1396862556",
+    },
+  ],
+  "ad-hoc-2026": [
+    {
+      label: "Hint 1",
+      labelFr: "Indice 1",
+      href: "https://m.youtube.com/watch?v=cO8G_zCkZTY",
+    },
+  ],
   "festival-rivalry-2026": [
     {
       label: "Access Lollapalooza background guide",
