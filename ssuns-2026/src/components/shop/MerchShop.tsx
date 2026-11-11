@@ -178,7 +178,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
   const sections = [
     { id: "apparel", title: fr ? "Les vêtements" : "The apparel", label: fr ? "Vêtements" : "Apparel" },
     { id: "accessories", title: fr ? "Les accessoires" : "The extras", label: fr ? "Accessoires" : "Accessories" },
-    { id: "bundle", title: fr ? "Les ensembles" : "Better together", label: fr ? "Ensembles" : "Bundles" },
+    { id: "bundle", title: "Roses", label: "Roses" },
   ] as const;
 
   useEffect(() => {
@@ -280,7 +280,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
         <section aria-labelledby={`${section.id}-title`} className="border-b border-[var(--rule)] py-9 sm:py-13" id={section.id} key={section.id}>
           <header className="mb-5 flex flex-wrap items-end justify-between gap-3 sm:mb-7">
             <div>
-              <p className="section-kicker">{section.label}</p>
+              {section.label !== section.title && <p className="section-kicker">{section.label}</p>}
               <h2 className="font-display mt-2 text-3xl leading-tight text-[var(--accent)] sm:text-5xl" id={`${section.id}-title`}>{section.title}</h2>
             </div>
             <p className="text-xs text-[var(--muted)] sm:text-sm">{shopText.taxes[language]}</p>
@@ -293,14 +293,19 @@ export function MerchShop({ availability }: { availability: Availability }) {
                     <ProductVisual language={language} product={product} sizes={section.id === "accessories" ? "(min-width: 1280px) 24vw, (min-width: 768px) 31vw, 48vw" : "(min-width: 768px) 32vw, 48vw"} />
                   </div>
                   {product.photos.length > 1 && <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-white/95 px-2 py-1 text-xs font-semibold text-[var(--accent)]"><Images aria-hidden="true" size={14} /> {product.photos.length} photos</span>}
+                  {product.soldOut && (
+                    <p className="absolute inset-x-0 top-1/2 -translate-y-1/2 bg-[#743548] px-2 py-2.5 text-center text-xs font-semibold tracking-[0.16em] text-white uppercase sm:text-sm">
+                      {fr ? "Épuisé" : "Sold out"}
+                    </p>
+                  )}
                 </div>
                 <div className={`space-y-2 pt-2.5 sm:pt-4 ${section.id === "bundle" ? "px-2.5 sm:px-4" : ""}`}>
                   <h3 className="font-display text-lg leading-tight text-[var(--accent)] sm:text-2xl">
-                    <button className="text-left after:absolute after:inset-0 after:rounded-sm focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-[var(--accent)]" onClick={() => setActive(product)} type="button">
+                    {product.soldOut ? product.name[language] : <button className="text-left after:absolute after:inset-0 after:rounded-sm focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-[var(--accent)]" onClick={() => setActive(product)} type="button">
                       {product.name[language]} <ArrowUpRight aria-hidden="true" className="inline size-4 align-baseline sm:size-5" />
-                    </button>
+                    </button>}
                   </h3>
-                  <ProductPrice language={language} product={product} />
+                  {!product.soldOut && <ProductPrice language={language} product={product} />}
                   <ProductIncludes language={language} product={product} />
                   <RoseCharityNote language={language} product={product} />
                 </div>
@@ -380,7 +385,7 @@ export function MerchShop({ availability }: { availability: Availability }) {
               </ul>
               <OrderTotal checkout language={language} subtotal={subtotal} total={total} />
               {error && <p className="rounded-md bg-[#f8edf0] p-3 text-sm text-[#6d243e]" role="alert">
-                {error === "stock" && stockProduct && <strong>{stockProduct.name[language]}{stockSize && ` · ${stockSize}`}: </strong>}{shopError(error, language)}
+                {(error === "stock" || error === "selection-unavailable") && stockProduct && <strong>{stockProduct.name[language]}{stockSize && ` · ${stockSize}`}: </strong>}{shopError(error, language)}
               </p>}
               {!checkoutOpen ? <div className="flex flex-wrap gap-2">
                 <button className={primaryButton} onClick={() => setCheckoutOpen(true)} type="button">{fr ? "Passer à la commande" : "Continue to checkout"} <ArrowRight aria-hidden="true" size={16} /></button>

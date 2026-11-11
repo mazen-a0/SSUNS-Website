@@ -11,6 +11,7 @@ export type ShopProduct = {
   photos: ShopPhoto[];
   options: ShopOption[];
   includes?: { id: string; quantity: number }[];
+  soldOut?: boolean;
 };
 
 const words = (en: string, fr: string): Localized => ({ en, fr });
@@ -47,7 +48,8 @@ function extra(id: string, en: string, fr: string, price: number, description: L
 function bundle(id: string, en: string, fr: string, price: number, description: Localized, includes: ShopProduct["includes"], photos: ShopPhoto[] = []): ShopProduct {
   return { id, name: words(en, fr), price, group: "bundle", description, includes, photos, options: [] };
 }
-export const shopProducts: ShopProduct[] = [
+// Keep retired products available for pricing and translating existing reservations.
+const products: ShopProduct[] = [
   {
     id: "white-tee", name: words("White T-shirt", "T-shirt blanc"), price: 2499, group: "apparel",
     description: words("The 2026 SSUNS tee, with a printed design on the front and back.", "Le t-shirt SSUNS 2026, avec un motif imprimé à l’avant et au dos."),
@@ -82,8 +84,8 @@ export const shopProducts: ShopProduct[] = [
   extra("keychain", "SSUNS keychain", "Porte-clés SSUNS", 499, words("The blue SSUNS letter keychain.", "Le porte-clés bleu avec les lettres SSUNS."), keychainPhotos),
   extra("small-sticker", "Small sticker", "Petit autocollant", 249, designAtPickup, stickerPhotos),
   extra("large-sticker", "Large sticker", "Grand autocollant", 349, designAtPickup, stickerPhotos),
-  extra("cap", "Cap", "Casquette", 1699, words("SSUNS cap.", "Casquette SSUNS.")),
-  extra("tote", "Tote bag", "Sac fourre-tout", 699, words("SSUNS tote bag.", "Sac fourre-tout SSUNS.")),
+  { ...extra("cap", "Cap", "Casquette", 1699, words("SSUNS cap.", "Casquette SSUNS.")), soldOut: true },
+  { ...extra("tote", "Tote bag", "Sac fourre-tout", 699, words("SSUNS tote bag.", "Sac fourre-tout SSUNS.")), soldOut: true },
   extra("poster", "Poster", "Affiche", 399, designAtPickup, posterPhotos),
   extra("postcard", "Postcard", "Carte postale", 199, designAtPickup, postcardPhotos),
   extra("bookmark", "Bookmark", "Signet", 115, words("SSUNS bookmark.", "Signet SSUNS.")),
@@ -114,6 +116,10 @@ export const shopProducts: ShopProduct[] = [
   bundle("rose-postcard", "Rose & Postcard", "Rose et carte postale", 549, designAtPickup,
     [{ id: "rose", quantity: 1 }, { id: "postcard", quantity: 1 }], postcardPhotos),
 ];
+
+export const shopProducts = products.filter((product) =>
+  product.group !== "bundle" || product.includes?.some(({ id }) => id === "rose"),
+);
 
 export const preorderLimit = 3;
 export const preorderClosesAt = "2026-11-12T00:00:00-05:00";
@@ -156,7 +162,7 @@ export function shopTotals(subtotal: number) {
   return { subtotal, tax, total: subtotal + tax };
 }
 
-export const findProduct = (id: string) => shopProducts.find((product) => product.id === id);
+export const findProduct = (id: string) => products.find((product) => product.id === id);
 export const componentName = (id: string, locale: ShopLocale) => id === "rose" ? words("Rose", "Rose")[locale] : findProduct(id)?.name[locale];
 export const regularPrice = (product: ShopProduct) => product.includes?.reduce(
   (total, item) => total + (item.id === "rose" ? 399 : findProduct(item.id)!.price) * item.quantity, 0,

@@ -96,6 +96,7 @@ export function shopError(code: string, language: ShopLocale) {
     invalid: ["Check your details and selections, then try again.", "Vérifiez vos coordonnées et vos choix, puis réessayez."],
     limit: [shopText.policy.en, shopText.policy.fr],
     stock: ["There isn’t enough stock for this selection. Reduce the quantity, choose another size, or remove it from your cart.", "Il ne reste pas assez d’articles pour ce choix. Réduisez la quantité, choisissez une autre taille ou retirez l’article du panier."],
+    "selection-unavailable": ["This item is no longer available. Remove it from your cart to continue.", "Cet article n’est plus disponible. Retirez-le de votre panier pour continuer."],
     "price-changed": ["Prices have changed. Refresh the shop and review your cart before trying again.", "Les prix ont changé. Actualisez la boutique et vérifiez votre panier avant de réessayer."],
     closed: ["Online preorders have closed. Shop in person at the conference, subject to availability.", "Les précommandes en ligne sont terminées. Achetez sur place à la conférence, selon les disponibilités."],
     busy: ["The shop is busy. Please wait a minute and try again.", "La boutique est occupée. Attendez une minute et réessayez."],

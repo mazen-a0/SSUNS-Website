@@ -13,7 +13,7 @@ function moduleUrl(source) {
 
 const catalogUrl = moduleUrl(await read("../../src/content/shop.ts"));
 const catalog = await import(catalogUrl);
-const { handleShopRequest, shopAvailability } = await import(moduleUrl((await read("../../src/lib/shopServer.ts")).replace("@/content/shop", catalogUrl)));
+const { handleShopRequest, shopAvailability, validateCheckout } = await import(moduleUrl((await read("../../src/lib/shopServer.ts")).replace("@/content/shop", catalogUrl)));
 const script = await read("./Code.gs");
 const secret = "local-test-only-signing-key-000000000000";
 const origin = "https://shop-test.example";
@@ -114,11 +114,25 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
     assert.equal(response.headers.get("cache-control"), "no-store");
     return { status: response.status, ...await response.json() };
   };
+  const seedEarlierReservation = (body) => {
+    const order = validateCheckout(body);
+    assert.equal(order.error, undefined);
+    const { name, email, school, items, requestId } = order;
+    const fingerprint = sha(JSON.stringify({ name, email, school, items }));
+    const token = createHmac("sha256", secret).update(`management:v1:${requestId}:${fingerprint}`).digest("hex");
+    const payload = JSON.stringify({
+      ...order, action: "create", id: "SSUNS-M-000000000001", fingerprint, tokenHash: sha(token), rateKey: sha("historical"),
+      closesAt: catalog.preorderClosesAt, pickupDeadline: catalog.pickupDeadline,
+    });
+    const signature = createHmac("sha256", secret).update(`${now}.${payload}`).digest("hex");
+    const result = ws.post(JSON.stringify({ timestamp: now, payload, signature }));
+    assert.equal(result.ok, true);
+    return token;
+  };
 
-  await t.test("approved prices and all nine bundle savings", () => {
+  await t.test("approved prices, sold out accessories, and rose bundle savings", () => {
     const savings = {
-      "ssuns-outfit": 499, "conference-souvenirs": 99, "accessories-bundle": 248, "three-small-stickers": 98,
-      "mixed-stickers": 198, "souvenir-pack": 114, "rose-bundle": 198, "large-rose-bundle": 991, "rose-postcard": 49,
+      "rose-bundle": 198, "large-rose-bundle": 991, "rose-postcard": 49,
     };
     assert.equal(catalog.findProduct("large-sticker").price, 349);
     assert.equal(catalog.findProduct("white-tee").price, 2499);
@@ -127,6 +141,7 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
     assert.equal(catalog.findProduct("bear").price, 1899);
     assert.equal(catalog.findProduct("ssuns-outfit").price, 8499);
     assert.equal(catalog.findProduct("keychain").price, 499);
+    assert.deepEqual(catalog.shopProducts.filter((p) => p.soldOut).map((p) => p.id), ["cap", "tote"]);
     for (const product of catalog.shopProducts.filter((p) => p.group === "bundle")) {
       assert.equal(catalog.regularPrice(product) - product.price, savings[product.id], product.id);
     }
@@ -146,11 +161,30 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
     const older = { ...catalog.priceLine(line("mixed-stickers", {}, 2), "en"), productName: "Sticker Bar: Large + two small" };
     assert.equal(catalog.isLegacyMixedStickerLine(older), true);
     assert.deepEqual(Object.fromEntries(counts([older])), { "large-sticker": 2, "small-sticker": 4 });
-    const order = await call(checkout([line("mixed-stickers", {})]));
+    const body = checkout([line("mixed-stickers", {})]);
+    seedEarlierReservation(body);
+    const order = await call(body);
     assert.equal(order.ok, true);
     assert.equal(order.receipt.lines[0].productName, "Sticker Bar: Two large + one small");
     assert.equal(order.receipt.total, 861);
     assert.match(ws.mail[0].body, /Two large \+ one small/);
+    assert.deepEqual(ws.rows.map((r) => r.length), [2, 2]);
+  });
+
+  await t.test("rejects new reservations for sold out items and retired bundles", async () => {
+    reset();
+    const removed = [line("ssuns-outfit", { hoodie: "M", sweatpants: "S" }), ...[
+      "cap", "tote", "conference-souvenirs", "accessories-bundle", "three-small-stickers", "mixed-stickers", "souvenir-pack",
+    ].map((id) => line(id, {}))];
+    for (const item of removed) {
+      const result = await call(checkout([item]));
+      assert.equal(result.status, 409);
+      assert.equal(result.error, "selection-unavailable");
+      assert.equal(result.stockKey, item.productId);
+    }
+    assert.deepEqual(ws.rows.map((r) => r.length), [1, 1]);
+    assert.equal(ws.mail.length, 0);
+    assert.equal((await call(checkout([line("rose-bundle", {})]))).ok, true);
   });
 
   await t.test("applies combined Québec tax once per subtotal, rounding half cents up", () => {
@@ -174,21 +208,21 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
 
   await t.test("records both tabs, totals, variant and token hash; repeats are idempotent and count by email", async () => {
     reset();
-    const body = checkout([line("ssuns-outfit", { hoodie: "S", sweatpants: "XL" }), line("pin", {}, 2)], { school: "=NotAFormula" });
+    const body = checkout([line("navy-hoodie", { size: "XL" }), line("pin", {}, 2)], { school: "=NotAFormula" });
     const a = await call(body);
     assert.equal(a.ok, true);
     assert.match(a.receipt.id, /^SSUNS-M-[A-F0-9]{12}$/);
-    assert.equal(a.receipt.total, 10919);
-    assert.equal(a.receipt.lines.find((i) => i.productId === "ssuns-outfit").variant, "Hoodie size: S · Sweatpants size: XL");
+    assert.equal(a.receipt.total, 6895);
+    assert.equal(a.receipt.lines.find((i) => i.productId === "navy-hoodie").variant, "Size: XL");
     assert.equal(ws.rows[0][1][4], "=NotAFormula");
-    assert.equal(ws.rows[0][1][5], 109.19);
+    assert.equal(ws.rows[0][1][5], 68.95);
     const token = new URL(a.managementUrl).hash.slice(1);
     assert.match(token, /^[a-f0-9]{64}$/);
     assert.equal(ws.rows[0][1][11], sha(token));
     assert.ok(!JSON.stringify(ws.rows).includes(token));
     assert.equal(a.receipt.email, "sent");
     assert.ok(ws.mail[0].body.includes(a.managementUrl));
-    assert.match(ws.mail[0].body, /GST and QST: \$14\.22 CAD/);
+    assert.match(ws.mail[0].body, /GST and QST: \$8\.98 CAD/);
     assert.equal((await call(body)).receipt.id, a.receipt.id);
     assert.equal((await call({ ...body, school: "Different School" })).error, "duplicate");
     assert.equal((await call(checkout())).error, "limit");
@@ -202,17 +236,16 @@ test("shop API and signed Apps Script transaction logic", async (t) => {
   await t.test("caps sizes across orders and bundles and releases cancelled stock", async () => {
     reset();
     const outfit = line("ssuns-outfit", { hoodie: "S", sweatpants: "XL" });
-    const a = await call(checkout([outfit]));
-    assert.equal(a.ok, true);
+    const token = seedEarlierReservation(checkout([outfit]));
     const standalone = checkout([line("sweatpants", { size: "XL" })], { email: "another@example.test" });
     const denied = await call(standalone);
     assert.equal(denied.error, "stock");
     assert.equal(denied.stockKey, "sweatpants:XL");
     assert.deepEqual(ws.rows.map((r) => r.length), [2, 2]);
-    assert.equal((await call({ action: "cancel", token: new URL(a.managementUrl).hash.slice(1) })).receipt.status, "Cancelled");
+    assert.equal((await call({ action: "cancel", token })).receipt.status, "Cancelled");
     assert.equal((await call(standalone)).ok, true);
     ws.rows[0][2][6] = "Collected";
-    assert.equal((await call(checkout([outfit], { email: "third@example.test" }))).error, "stock");
+    assert.equal((await call(checkout([line("sweatpants", { size: "XL" })], { email: "third@example.test" }))).error, "stock");
     assert.equal((await call(checkout([line("white-tee", { size: "XL" }, 2)]))).stockKey, "white-tee:XL");
   });
 

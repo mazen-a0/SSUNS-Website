@@ -1,11 +1,11 @@
 import { createHash, createHmac, randomBytes } from "node:crypto";
 import { isIP } from "node:net";
-import { findProduct, pickupDeadline, preorderClosesAt, preorderLimit, priceLine, selectionKey, shopText, shopTotals, type ShopLocale, type ShopSelection } from "@/content/shop";
+import { findProduct, pickupDeadline, preorderClosesAt, preorderLimit, priceLine, selectionKey, shopProducts, shopText, shopTotals, type ShopLocale, type ShopSelection } from "@/content/shop";
 
-type ErrorCode = "invalid" | "limit" | "stock" | "price-changed" | "closed" | "unavailable" | "busy" | "invalid-link" | "not-cancellable" | "duplicate";
+type ErrorCode = "invalid" | "limit" | "stock" | "selection-unavailable" | "price-changed" | "closed" | "unavailable" | "busy" | "invalid-link" | "not-cancellable" | "duplicate";
 const status: Record<ErrorCode, number> = {
   invalid: 400, limit: 409, "price-changed": 409, closed: 409, unavailable: 503, busy: 429,
-  "invalid-link": 404, "not-cancellable": 409, duplicate: 409, stock: 409,
+  "invalid-link": 404, "not-cancellable": 409, duplicate: 409, stock: 409, "selection-unavailable": 409,
 };
 type Json = Record<string, unknown>;
 const object = (value: unknown): value is Json => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -135,8 +135,20 @@ export async function handleShopRequest(request: Request) {
       // token on retries without storing the raw token in Sheets.
       const token = sign(`management:v1:${requestId}:${fingerprint}`, config.secret);
       const managementUrl = `${config.origin}/shop/reservation/manage#${token}`;
+      const tokenHash = hash(token);
+      const unavailableItem = items.find(({ productId }) =>
+        !shopProducts.some((product) => product.id === productId && !product.soldOut),
+      );
+      if (unavailableItem) {
+        // An earlier attempt can still recover its receipt without creating a reservation.
+        const result = await workspaceCall(config, { action: "view", rateKey, tokenHash, pickupDeadline });
+        if (result.ok) return reply({ ok: true, receipt: result.receipt, managementUrl });
+        return result.error === "invalid-link"
+          ? failure("selection-unavailable", unavailableItem.productId)
+          : failure(result.error as ErrorCode);
+      }
       const result = await workspaceCall(config, {
-        action: "create", rateKey, requestId, fingerprint, tokenHash: hash(token), managementUrl,
+        action: "create", rateKey, requestId, fingerprint, tokenHash, managementUrl,
         id: `SSUNS-M-${randomBytes(6).toString("hex").toUpperCase()}`, name, email, school, locale, lines, subtotal, tax, total, count,
         closesAt: availability.closesAt, pickupDeadline,
         pickup: shopText.pickup[locale], hold: shopText.hold[locale], payment: shopText.payment[locale],
