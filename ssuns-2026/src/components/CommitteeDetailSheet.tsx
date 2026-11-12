@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { CommitteeImage } from "@/components/media/CommitteeImage";
-import { additionalCommitteeDocumentsBySlug, backgroundGuideLinksBySlug } from "@/content/backgroundGuides";
+import { additionalCommitteeDocumentsBySlug, backgroundGuideLinksBySlug, guidesWithDaisPasswords } from "@/content/backgroundGuides";
 import { positionPaperFormsBySlug, positionPaperPageLimit, positionPaperPairRule, sharedPositionPaperCommittees } from "@/content/positionPapers";
 import { getCommitteeLevelLabel } from "@/lib/committeeBadges";
 import { useSiteContent } from "@/lib/useSiteContent";
@@ -109,6 +109,9 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
   const hasBackgroundGuide = Boolean(backgroundGuideHref || additionalDocuments.some((document) => document.label.includes("background guide")));
   const levelLabel = getCommitteeLevelLabel(committee.level);
   const detailNote = getCommitteeDetailNote(committee.difficulty, isFrench);
+  const guidePasswordNote = guidesWithDaisPasswords.has(committee.slug)
+    ? (isFrench ? "Le dais vous communiquera le mot de passe pendant la séance du comité." : "The dais will provide the password during the committee session.")
+    : (isFrench ? "Utilisez le mot de passe fourni par votre conseiller pédagogique si demandé." : "Use the password provided by your faculty advisor if prompted.");
   const sectionLabels = {
     overview: committeesPageContent.sections.overview,
     dais: isFrench ? "Rencontrez le dais" : "Meet the Dais",
@@ -125,8 +128,8 @@ export function CommitteeDetailSheet({ slug }: CommitteeDetailSheetProps) {
     documentsNote: isFrench ? "Liens essentiels pour préparer ce comité." : "Essential links for preparing this committee.",
     submitPositionPaper: isFrench ? "Soumettre l'exposé de position" : "Submit position paper",
     guideAvailableNote: isFrench
-      ? "Le guide préparatoire de ce comité est maintenant disponible. Utilisez le mot de passe fourni par votre conseiller pédagogique si demandé."
-      : "This committee's background guide is now available. Use the password provided by your faculty advisor if prompted.",
+      ? `Le guide préparatoire de ce comité est maintenant disponible. ${guidePasswordNote}`
+      : `This committee's background guide is now available. ${guidePasswordNote}`,
     accessGuide: isFrench ? "Accéder au guide préparatoire" : "Access background guide",
   };
   const hasDaisGroups = committee.chairs.some((chair) => chair.daisGroup);

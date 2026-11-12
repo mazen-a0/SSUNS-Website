@@ -1,4 +1,6 @@
 export const backgroundGuideLinksBySlug: Record<string, string> = {
+  "ad-hoc-sg-2026": "https://drive.google.com/file/d/1zDZ7n3mRNRPbrbsCMGiggiPrY_VQULe1/view?usp=share_link",
+  "ad-hoc-2026": "https://drive.google.com/file/d/11nGXDm5_QjKN_dsZtaE-WLS8y0N3DMAm/view?usp=share_link",
   "ccpcj-2026": "https://drive.google.com/file/d/1Pzo3DYHkURKFUkIb9e7tzpvj2tmm6N1u/view?usp=sharing",
   "fespaco-2026": "https://drive.google.com/file/d/1H0Ux5lPxvHIEd5yeao233Xh9YMDopNZE/view?usp=sharing",
   "icao-2026": "https://drive.google.com/file/d/1gltUzFhhTti5KA0HEKq1qqoO-GiLbpD8/view?usp=sharing",
@@ -21,6 +23,14 @@ export const backgroundGuideLinksBySlug: Record<string, string> = {
   "icj-2026": "https://drive.google.com/file/d/1Tk1GStOXoRUQVsStJJf5Kij8r3I4uW04/view?usp=sharing",
 };
 
+export const guidesWithDaisPasswords = new Set(["ad-hoc-sg-2026", "ad-hoc-2026"]);
+
+const adHocHint2 = {
+  label: "Hint 2",
+  labelFr: "Indice 2",
+  href: "https://drive.google.com/file/d/1QC8DmLOTvx009EFbPOkH5SXG2OCTOZqv/view?usp=share_link",
+};
+
 export const additionalCommitteeDocumentsBySlug: Record<
   string,
   Array<{
@@ -36,6 +46,7 @@ export const additionalCommitteeDocumentsBySlug: Record<
       labelFr: "Indice 1",
       href: "https://scratch.mit.edu/projects/1396862556",
     },
+    adHocHint2,
   ],
   "ad-hoc-2026": [
     {
@@ -43,6 +54,7 @@ export const additionalCommitteeDocumentsBySlug: Record<
       labelFr: "Indice 1",
       href: "https://m.youtube.com/watch?v=cO8G_zCkZTY",
     },
+    adHocHint2,
   ],
   "festival-rivalry-2026": [
     {

@@ -12,7 +12,7 @@
 .mapSection { scroll-margin-top: calc(var(--site-sticky-top, 0px) + 1rem); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
 .mapHeading { display: flex; align-items: start; gap: 12px; padding: 18px; background: var(--panel-strong); }
 .mapHeading svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
-.mapHeading h3 { font-size: 16px; font-weight: 600; color: var(--accent); }
+.mapHeading :is(h2, h3) { font-size: 16px; font-weight: 600; color: var(--accent); }
 .navigator .mapHeading p { margin: 5px 0 0; font-size: 12px; color: var(--muted); }
 .mapViewport { width: 100%; max-height: 520px; aspect-ratio: 1800 / 1391; overflow: auto; background: white; overscroll-behavior: contain; }
 .mapCanvas { container-type: inline-size; position: relative; aspect-ratio: 1800 / 1391; max-width: none; }
@@ -43,4 +43,45 @@
   .navigator .title { font-size: 34px; }
   .mapControls { padding: 8px; }
   .navigator .mapControls p { flex-basis: 100%; }
+}
+
+/* Map workspace in the Pocket Guide; public Venue styles above remain separate. */
+.compact .mapTools { margin-bottom: 9px; }
+.compact .search { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; padding-inline: 12px; color: var(--accent); background: #e7edf8; border-radius: 7px; }
+.compact .search svg { flex-shrink: 0; }
+.searchBar { position: relative; min-width: 0; }
+.searchBar:has(> button) .search { padding-right: 44px; }
+.searchBar input::-webkit-search-cancel-button { display: none; }
+.searchBar > button { position: absolute; right: 1px; top: 0; width: 44px; height: 44px; display: grid; place-items: center; color: var(--accent); border-radius: 7px; }
+.compact .search input { margin: 0; padding: 7px 1px; min-height: 44px; border: 0; background: transparent; font-size: 16px; }
+.compact .search input::placeholder { color: #505c78; }
+.compact .floorTabs { margin: 0; gap: 4px; border: 0; }
+.compact .floorTabs button { min-height: 44px; font-size: .97rem; border-radius: 5px; background: #ebeff8; }
+.compact .floorTabs button[aria-pressed=true] { background: #171e59; color: #fff; font-weight: 680; }
+.compact .floorTabs button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.compact .workspace:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1fr); }
+.compact .mapSection { margin: 0; border: 0; border-radius: 8px; background: #fff; }
+.compact .mapViewport { max-height: min(55dvh, 470px); min-height: 0; aspect-ratio: 1800 / 1391; }
+.compact .mapCanvas { min-height: 0; margin-inline: auto; }
+.compact .mapControls { border-top: 1px solid #e4e9f4; padding: 0 6px 0 11px; background: #f1f4fa; flex-wrap: nowrap; }
+.compact .mapControls p { flex-basis: auto; font-size: .7rem; line-height: 1.2; }
+.compact .mapControls > div { flex-shrink: 0; }
+.compact .mapControls button { width: 44px; }
+.compact .mapControls span { min-width: 22px; }
+.compact .mapAside { min-width: 0; padding-top: 7px; }
+.compact .mapHeading { gap: 7px; padding: 8px 0 6px; background: none; }
+.compact .mapHeading svg { width: 17px; height: 17px; }
+.compact .mapHeading p { margin-top: 2px; }
+.compact .roomList { margin-block: 3px; border-top: 0; }
+.compact .roomList button { min-height: 50px; padding: 8px 6px; }
+.compact .roomList small { margin-top: 2px; }
+.roomDirectory > summary { display: list-item; min-height: 44px; padding: 11px 0; color: var(--accent); font-size: 14px; }
+.compact .resource { margin-top: 0; display: inline-flex; align-items: center; gap: 4px; text-underline-offset: 3px; }
+.compact .resource svg { flex-shrink: 0; }
+@media (min-width: 760px) {
+  .compact .mapTools, .compact .workspace:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(190px, 27%); gap: 12px; }
+  .compact .mapTools { grid-template-columns: minmax(0, 1fr) minmax(255px, 37%); }
+  .compact .search { margin-bottom: 0; }
+  .compact .mapViewport { max-height: min(57dvh, 470px); }
+  .compact .mapAside { padding: 4px 0 0 6px; }
 }

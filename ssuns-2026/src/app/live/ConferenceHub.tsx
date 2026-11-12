@@ -1,37 +1,53 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ChevronRight, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CalendarDays, ChevronDown, ChevronRight, CircleHelp, Map, MapPin, Search, UsersRound, Utensils, X, HeartHandshake } from "lucide-react";
 import { useContentBundles } from "@/components/providers/SiteContentProvider";
 import { CharityDonateButton } from "@/components/CharityDonateButton";
 import { HotelNavigator } from "@/components/venue/HotelNavigator";
+import { charityPartner } from "@/content/charityPartner";
 import { venueRooms } from "@/content/venueRooms";
-import { eventDescription, eventTime, eventTitle, scheduleCommitteeBlocs, scheduleDays, scheduleEvents, type ScheduleDayId } from "@/content/schedule";
+import { eventDescription, eventTime, eventTitle, scheduleCommitteeBlocs, scheduleDays, scheduleEvents, type ScheduleDayId, type ScheduleEvent } from "@/content/schedule";
+import { diningGroups, walkingDirections } from "./dining";
+import { eventDestinations, mapHref, readMapDestination } from "./destinations";
+import { closeGuideSheet, GuideLink, useGuideHash } from "./guideNavigation";
+import { chronological, committeeSessions, conferenceTime, eventState, happeningNow } from "./liveSchedule";
 import styles from "./live.module.css";
-import { committeeSessions, conferenceTime, eventState } from "./liveSchedule";
 
 const tabs = [
-  { id: "schedule", label: "Schedule" },
-  { id: "committee", label: "Your committee" },
-  { id: "charity", label: "Charity" },
-  { id: "venue", label: "Hotel map" },
-  { id: "gallery", label: "Gallery" },
+  { id: "schedule", label: "Schedule", Icon: CalendarDays },
+  { id: "hotel-map", label: "Map", Icon: Map },
+  { id: "home", label: "Home", Icon: null },
+  { id: "dining", label: "Food", Icon: Utensils },
+  { id: "charity", label: "Charity", Icon: HeartHandshake },
 ] as const;
-type Tab = typeof tabs[number]["id"];
+type Screen = typeof tabs[number]["id"];
 
 const storageKey = "ssuns-live-committee";
+const selectionEvent = "ssuns:committee";
+const emptySnapshot = () => "";
+const dayFor = (event: ScheduleEvent) => scheduleDays.find((item) => item.id === event.day)!;
+const dateFormat = new Intl.DateTimeFormat("en-CA", { month: "long", day: "numeric", timeZone: "UTC" });
+const localDate = (date: string) => dateFormat.format(new Date(date));
+const eventDate = (event: ScheduleEvent) => `${dayFor(event).en}, ${localDate(dayFor(event).date)}`;
+const orderedEvents = [...scheduleEvents].sort(chronological);
+const noEvents: ScheduleEvent[] = [];
+
 function subscribeSelection(callback: () => void) {
   window.addEventListener("storage", callback);
-  window.addEventListener("ssuns:committee", callback);
-  return () => { window.removeEventListener("storage", callback); window.removeEventListener("ssuns:committee", callback); };
+  window.addEventListener(selectionEvent, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(selectionEvent, callback);
+  };
 }
 function readSelection() {
   try { return localStorage.getItem(storageKey) ?? ""; } catch { return ""; }
 }
 function subscribeClock(callback: () => void) {
-  const timer = window.setInterval(callback, 15_000);
+  const timer = window.setInterval(callback, 5_000);
   window.addEventListener("focus", callback);
   document.addEventListener("visibilitychange", callback);
   return () => {
@@ -40,88 +56,359 @@ function subscribeClock(callback: () => void) {
     document.removeEventListener("visibilitychange", callback);
   };
 }
-// A primitive snapshot stays stable between ticks and hydrates without a date mismatch.
-const clockSnapshot = () => Math.floor(Date.now() / 15_000) * 15_000;
+const clockSnapshot = () => Math.floor(Date.now() / 60_000) * 60_000;
 const serverClock = () => 0;
+const sheetHref = (screen: Screen, sheet: "committee" | "resources") => `#${screen}?sheet=${sheet}`;
+
+function GuideSheet({ title, children, close, opener }: {
+  title: string; children: ReactNode; close: () => void; opener: HTMLElement | null;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useLayoutEffect(() => {
+    const modal = ref.current;
+    if (!modal) return;
+    modal.showModal();
+    return () => {
+      modal.close();
+      if (opener?.isConnected && !opener.closest("[inert]")) opener.focus({ preventScroll: true });
+    };
+  }, [opener]);
+  return <dialog ref={ref} className={styles.sheet} aria-labelledby="guide-sheet-title"
+    onCancel={(event) => { event.preventDefault(); close(); }}
+    onClick={(event) => { if (event.target === event.currentTarget) close(); }}>
+    <div className={styles.sheetSurface}>
+      <header className={styles.sheetHeader}>
+        <h2 id="guide-sheet-title">{title}</h2>
+        <button type="button" className={styles.iconButton} onClick={close} aria-label="Close"><X size={22} aria-hidden="true" /></button>
+      </header>
+      <div className={styles.sheetBody}>{children}</div>
+    </div>
+  </dialog>;
+}
 
 export function ConferenceHub() {
-  const { committees, committeesPageContent, registrationContent, conferenceContent, homeContent } = useContentBundles().en;
-  const [tab, setTab] = useState<Tab | null>(null);
-  const [destinationId, setDestinationId] = useState<string | undefined>();
-  const previousTab = useRef(tab);
-  useEffect(() => {
-    if (previousTab.current !== tab) {
-      window.scrollTo({ top: 0, behavior: "instant" });
-      document.getElementById("guide-screen-title")?.focus({ preventScroll: true });
-    }
-    previousTab.current = tab;
-  }, [tab]);
+  const { committees, committeesPageContent, registrationContent, conferenceContent } = useContentBundles().en;
+  const hash = useGuideHash();
+  const [route, rawParams] = hash.split("?", 2);
+  const params = new URLSearchParams(rawParams);
+  const screen = tabs.find(({ id }) => id === (route === "venue" ? "hotel-map" : route))?.id ?? "home";
+  const selectedEvent = orderedEvents.find((item) => item.id === params.get("event"));
+  const showPicker = route === "committee" || params.get("sheet") === "committee";
+  const showResources = params.get("sheet") === "resources";
+  const sheetKey = selectedEvent?.id ?? (showPicker ? "committee" : showResources ? "resources" : "");
   const now = useSyncExternalStore(subscribeClock, clockSnapshot, serverClock);
-  const initialDay = now ? scheduleDays.find((item) => item.date === conferenceTime(now).date)?.id ?? "thursday" : "thursday";
-  const [selectedDay, setDay] = useState<ScheduleDayId | null>(null);
-  const day = selectedDay ?? initialDay;
-  const storedSlug = useSyncExternalStore(subscribeSelection, readSelection, () => "");
+  const storedSlug = useSyncExternalStore(subscribeSelection, readSelection, emptySnapshot);
   const [temporarySlug, setTemporarySlug] = useState<string | null>(null);
-  const slug = temporarySlug ?? storedSlug;
+  const [selectedDay, setDay] = useState<ScheduleDayId | null>(null);
   const [mine, setMine] = useState(true);
   const [query, setQuery] = useState("");
-  const [saved, setSaved] = useState(false);
-  const committee = committees.find((item) => item.slug === slug && !item.isArchive);
-  const committeeRooms = venueRooms.filter((item) => item.committeeSlug === committee?.slug && committee);
-  const showSelection = tab === "schedule" || tab === "committee";
-  const bloc = scheduleCommitteeBlocs.find((item) => item.slug === committee?.slug)?.bloc;
-  const events = scheduleEvents.filter((item) => item.day === day && (!mine || !bloc || item.kind !== "session" || item.bloc === bloc)).sort((a, b) => a.start.localeCompare(b.start));
+  const [foodGroup, setFoodGroup] = useState(0);
+  const [mapOpened, setMapOpened] = useState(false);
+  if (screen === "hotel-map" && !mapOpened) setMapOpened(true);
+  const panes = useRef<Partial<Record<Screen, HTMLElement | null>>>({});
+  const previousScreen = useRef<Screen>("home");
+  const mapNavigation = useRef("");
+  const [sheetOpener, setSheetOpener] = useState<HTMLElement | null>(null);
+
+  const committee = committees.find((item) => item.slug === (temporarySlug ?? storedSlug) && !item.isArchive);
+  const rooms = committee ? venueRooms.filter((item) => item.committeeSlug === committee.slug) : [];
+  const bloc = committee ? scheduleCommitteeBlocs.find((item) => item.slug === committee.slug)?.bloc : undefined;
+  const today = now ? conferenceTime(now).date : "";
+  const currentDay = scheduleDays.find((item) => item.date === today);
+  const day = selectedDay ?? currentDay?.id ?? (today > scheduleDays.at(-1)!.date ? scheduleDays.at(-1)!.id : scheduleDays[0].id);
+  const displayedDay = scheduleDays.find((item) => item.id === day)!;
+  const live = now ? happeningNow(now, bloc) : null;
   const sessions = committeeSessions(bloc, now);
-  const currentDay = now ? scheduleDays.find((item) => item.date === conferenceTime(now).date) : undefined;
-  const visibleCommittees = committees.filter((item) => !item.isArchive && `${item.name} ${item.topic}`.toLowerCase().includes(query.toLowerCase()));
-  const relatedChapters = [...conferenceContent.chapters, ...committeesPageContent.chapters, ...registrationContent.chapters];
-  function selectCommittee(value: string) {
-    setTemporarySlug(value); setSaved(false); setDestinationId(undefined);
-    setMine(Boolean(scheduleCommitteeBlocs.find((item) => item.slug === value)));
-    try { localStorage.setItem(storageKey, value); window.dispatchEvent(new Event("ssuns:committee")); setTemporarySlug(null); setSaved(Boolean(value)); } catch { /* Do not promise persistence when storage is unavailable. */ }
+  const nextSession = sessions.next ?? sessions.current;
+  const events = orderedEvents.filter((item) => item.day === day && (!mine || !bloc || item.kind !== "session" || item.bloc === bloc));
+  const upcoming = live?.status === "now" ? orderedEvents.find((item) =>
+    (item.kind !== "session" || !bloc || item.bloc === bloc) && eventState(item, now) === "upcoming") : undefined;
+  const upcomingGroup = upcoming ? orderedEvents.filter((item) => chronological(item, upcoming) === 0 &&
+    (item.kind !== "session" || !bloc || item.bloc === bloc)) : noEvents;
+  const lead = live?.events[0];
+  const additional = live?.events.slice(1) ?? noEvents;
+  const relatedPages = [...conferenceContent.chapters, ...committeesPageContent.chapters, ...registrationContent.chapters];
+  const destination = readMapDestination(screen === "hotel-map" ? params : new URLSearchParams());
+  const mapTarget = destination.floor ? mapHref({ floor: destination.floor, room: destination.room }) : "";
+  const baseHref = mapTarget || `#${screen}`;
+  const resourcesHref = `${baseHref}${baseHref.includes("?") ? "&" : "?"}sheet=resources`;
+  const committeeMatches = showPicker
+    ? committees.filter((item) => !item.isArchive && `${item.name} ${item.topic}`.toLowerCase().includes(query.trim().toLowerCase()))
+    : [];
+  const leadPlace = lead ? location(lead) : undefined;
+  const leadMaps = lead ? eventDestinations(lead, rooms, bloc) : [];
+  const defaultRoom = !destination.floor && rooms.length === 1 ? rooms[0] : undefined;
+
+  useLayoutEffect(() => {
+    const pane = panes.current[screen];
+    if (mapTarget && mapTarget !== mapNavigation.current && pane) pane.scrollTop = 0;
+    mapNavigation.current = mapTarget;
+    if (previousScreen.current !== screen && !sheetKey) {
+      const title = pane?.querySelector<HTMLElement>("h1");
+      (pane?.scrollTop ? pane : title ?? pane)?.focus({ preventScroll: true });
+    }
+    previousScreen.current = screen;
+  }, [screen, mapTarget, sheetKey]);
+
+  function selectCommittee(slug: string) {
+    setMine(true);
+    try {
+      localStorage.setItem(storageKey, slug);
+      setTemporarySlug(null);
+      window.dispatchEvent(new Event(selectionEvent));
+    } catch {
+      setTemporarySlug(slug);
+    }
+    closeGuideSheet(baseHref);
   }
-  if (tab === null) return <div className={`${styles.hub} ${styles.welcome}`}>
-    <div className={styles.welcomeContent}>
-      <Image className={styles.welcomeLogo} src="/logos/ssuns-dove-white.png" alt="SSUNS dove and laurel logo" width={500} height={500} sizes="90px" priority />
-      <h1 id="guide-screen-title" tabIndex={-1}><span>Welcome to</span>SSUNS 2026</h1>
-      <p>What can we help you with?</p>
-      <nav className={styles.welcomeChoices} aria-label="Conference guide">
-        {tabs.map(({ id, label }) => <button key={id} onClick={() => setTab(id)}><span>{label}</span><ChevronRight aria-hidden="true" size={19} strokeWidth={1.5} /></button>)}
-      </nav>
-    </div>
-  </div>;
-  return <div className={styles.hub}>
-    <header className={`${styles.header} ${styles.guideHeader}`}>
-      <button className={styles.backToGuide} onClick={() => setTab(null)}><ArrowLeft aria-hidden="true" size={16} strokeWidth={1.5} /> Back to guide</button>
-      <h1 id="guide-screen-title" tabIndex={-1} className={styles.detailTitle}>{tabs.find((item) => item.id === tab)?.label}</h1>
+
+  function location(event: ScheduleEvent) {
+    if (event.location?.en) {
+      const place = event.location.en;
+      const match = eventDestinations(event, [])[0];
+      return match?.room && !/floor|level/i.test(place) ? `${place} · Level ${match.floor}` : place;
+    }
+    if (event.kind !== "session" || event.bloc !== bloc || !rooms.length) return undefined;
+    const names = rooms.map((room) => room.room).join(" / ");
+    return rooms.every((room) => room.floor === rooms[0].floor) ? `${names} · Level ${rooms[0].floor}` : names;
+  }
+
+  function rememberOpener(event: React.MouseEvent<HTMLAnchorElement>) {
+    setSheetOpener(event.currentTarget);
+  }
+  function pickerLink(from: Screen, label: string, className?: string, replace = false) {
+    return <GuideLink href={sheetHref(from, "committee")} mode={replace ? "switch-sheet" : "sheet"} className={className}
+      onClick={(event) => { setQuery(""); if (!replace) rememberOpener(event); }}>{label}</GuideLink>;
+  }
+  function eventLink(event: ScheduleEvent, from: Screen, children: ReactNode, className?: string, keepOpener = false) {
+    return <GuideLink href={`#${from}?event=${encodeURIComponent(event.id)}`} mode="sheet" className={className}
+      onClick={keepOpener ? undefined : rememberOpener}>{children}</GuideLink>;
+  }
+  function eventList(items: ScheduleEvent[], from: Screen, insideSheet = false) {
+    return <ol className={styles.eventList}>{items.map((event) => {
+      const active = now > 0 && eventState(event, now) === "now";
+      const place = location(event);
+      return <li key={event.id} data-live={active || undefined}>
+        {eventLink(event, from, <>
+          <span className={styles.eventTime}><strong>{event.start}</strong><small>{event.end === "24:00" ? "00:00" : event.end}</small></span>
+          <span className={styles.eventText}>
+            <strong>{eventTitle(event, "en")}</strong>
+            {place && <small>{place}</small>}
+            {active && from === "schedule" && <small className={styles.inProgress}>In progress</small>}
+          </span>
+          <ChevronRight aria-hidden="true" size={16} />
+        </>, styles.eventRow, insideSheet)}
+      </li>;
+    })}</ol>;
+  }
+  function pane(id: Screen, children: ReactNode) {
+    return <section id={`guide-${id}`} ref={(element) => { panes.current[id] = element; }}
+      tabIndex={-1} aria-labelledby={`guide-${id}-title`} inert={screen !== id} data-current={screen === id}
+      className={`${styles.pane} ${id === "home" ? styles.homePane : ""}`}>{children}</section>;
+  }
+
+  return <div className={styles.guide}>
+    <header className={styles.masthead}>
+      <GuideLink href="#home" className={styles.lockup} aria-label="SSUNS Pocket Guide home">
+        <span className={styles.wordmark}><Image src="/logos/ssuns2026-woodmark-white.png" alt="SSUNS 2026" width={500} height={500} sizes="142px" priority /></span>
+        <span className={styles.productName}>Pocket Guide</span>
+      </GuideLink>
+      <GuideLink href={resourcesHref} mode="sheet" onClick={rememberOpener} className={styles.resourcesAction}>
+        <CircleHelp size={17} aria-hidden="true" /> Resources
+      </GuideLink>
     </header>
-    <div className={`${styles.workspace} ${!showSelection ? styles.singlePanel : ""}`}>
-      {showSelection && <aside className={styles.selection}>
-        <p className={styles.eyebrow}>DELEGATE INFORMATION</p>
-        <label htmlFor="my-committee">{committee ? "Your committee" : "Select your committee"}</label>
-        <select id="my-committee" value={committee?.slug ?? ""} onChange={(e) => selectCommittee(e.target.value)}><option value="">Choose a committee</option>{committees.filter((item) => !item.isArchive).map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select>
-        <p className={styles.storageMessage} aria-live="polite">{committee ? `${bloc ? `Bloc ${bloc}` : "No delegate bloc listed"}${saved ? " · Saved on this device" : ""}` : "See your session times and committee resources."}</p>
-        {committee && <div className={styles.committeeStatus}>
-          <h2>{committee.name}</h2>
-          <div className={styles.committeeRooms}>{committeeRooms.length ? committeeRooms.map((item) => <button key={item.id} onClick={() => { setDestinationId(item.id); setTab("venue"); }}><MapPin size={16} aria-hidden="true" /><span><strong>{item.room} · Level {item.floor}</strong>{item.side && <small>{item.side}</small>}</span><span aria-hidden="true">↗</span></button>) : <p className={styles.storageMessage}>Room assignment to be confirmed</p>}</div>
-          <div className={styles.liveInfo} aria-live="polite" aria-atomic="true">
-            {now > 0 && sessions.current ? <><p className={styles.statusLabel}><span className={styles.liveDot} />In session</p><h3>{eventTitle(sessions.current, "en")}</h3><p>Until {sessions.current.end} · Montréal</p></> : <><p className={styles.statusLabel}>{sessions.finished ? "Sessions complete" : sessions.next ? "Next session" : "Session information"}</p>{sessions.next ? <><h3>{eventTitle(sessions.next, "en")}</h3><p>{scheduleDays.find((item) => item.id === sessions.next?.day)?.en} {scheduleDays.find((item) => item.id === sessions.next?.day)?.date.slice(-2)} Nov · {eventTime(sessions.next)}</p></> : <p>{sessions.finished ? "All scheduled sessions for your bloc have ended." : "See your committee page for further information."}</p>}</>}
+
+    <div className={styles.stage}>
+      {pane("home", <div className={styles.home}>
+        <div className={styles.liveSpread}>
+          <div className={styles.livePrimary}>
+            <h1 id="guide-home-title" tabIndex={-1} className={styles.liveHeading}>
+              {live?.status === "now" && <span className={styles.signal} aria-hidden="true" />}
+              {live?.status === "now" ? "Happening now" : live?.status === "ended" ? "Conference complete" : "Up next"}
+            </h1>
+            {lead ? <>
+              {eventLink(lead, "home", <>{eventTitle(lead, "en")}<ArrowRight size={21} aria-hidden="true" /></>, styles.leadTitle)}
+              <p className={styles.leadTime}>{live?.status === "upcoming" && dayFor(lead).date !== today ? `${dayFor(lead).en} · ` : ""}{eventTime(lead)}</p>
+              {leadPlace && (leadMaps.length === 1 ? <GuideLink className={styles.leadPlace} href={mapHref(leadMaps[0])}>
+                <MapPin size={15} aria-hidden="true" />{leadPlace}<ArrowUpRight size={13} aria-hidden="true" />
+              </GuideLink> : leadMaps.length > 1 ? eventLink(lead, "home", <><MapPin size={15} aria-hidden="true" />{leadPlace}<ChevronRight size={13} aria-hidden="true" /></>, styles.leadPlace)
+                : <p className={styles.leadPlace}>{leadPlace}</p>)}
+            </> : <p className={styles.emptyLive}>{live ? "There are no more scheduled events." : "Checking the Montréal schedule…"}</p>}
           </div>
-          <Link className={styles.resource} href={`/committees/${committee.slug}`}>Committee details & resources ↗</Link>
-        </div>}
-        <div className={styles.asideLinks}><Link href="/conference/delegate-resource-center">Delegate Resource Centre <span>↗</span></Link><Link href="/committees/policies">Committee policies <span>↗</span></Link></div>
-      </aside>}
-      <section id="guide-content" className={styles.panel} aria-label={tabs.find((item) => item.id === tab)?.label}>
-        {tab === "schedule" && <><div className={styles.heading}><div><p className={styles.eyebrow}>CONFERENCE PROGRAMME</p><h2>Schedule</h2></div><Link href="/conference/schedule">Full timetable ↗</Link></div><p className={styles.muted}>All times Montréal · Eastern Time{currentDay ? " · Session status updates automatically" : ""}</p><div className={styles.days} aria-label="Conference day">{scheduleDays.map((item) => <button key={item.id} aria-pressed={day === item.id} onClick={() => setDay(item.id)}>{item.en.slice(0, 3)}<strong>{Number(item.date.slice(-2))}</strong></button>)}</div><label className={styles.filter}><input type="checkbox" checked={mine && Boolean(bloc)} disabled={!bloc} onChange={(e) => setMine(e.target.checked)} /> My bloc + shared events</label>{!bloc && <p className={styles.muted}>Select a committee with an assigned delegate bloc to filter sessions.</p>}<div>{events.map((item) => <details className={styles.event} data-status={now ? eventState(item, now) : "upcoming"} key={item.id}><summary><span className={styles.time}>{eventTime(item)}</span><span>{eventTitle(item, "en")}<small>{now && eventState(item, now) === "now" ? "Happening now" : now && eventState(item, now) === "ended" ? "Ended" : item.kind === "session" ? "Committee session" : item.kind}</small></span><span aria-hidden="true">+</span></summary><p>{eventDescription(item, "en")}</p>{item.related?.map((href) => <Link className={styles.resource} href={href} key={href}>{relatedChapters.find((chapter) => chapter.href === href)?.title ?? "Event information"} ↗</Link>)}</details>)}</div></>}
-        {tab === "committee" && <><p className={styles.eyebrow}>COMMITTEE INFORMATION</p><h2>{committee?.name ?? "Find your committee"}</h2>{committee ? <><p>{committee.blurb}</p><Link className={styles.action} href={`/committees/${committee.slug}`}>Committee details & resources ↗</Link><button className={styles.secondary} onClick={() => { setMine(Boolean(bloc)); setTab("schedule"); }}>View schedule</button></> : <p>Use the committee selector above to bring your committee details and session bloc together.</p>}<details className={styles.directory} key={committee?.slug ?? "none"} open={!committee}><summary>Browse committees</summary><label className={styles.search}>Search all committees<input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Committee name or topic" /></label><div className={styles.committees}>{visibleCommittees.length === 0 && <p>No committees match “{query}”.</p>}{visibleCommittees.map((item) => <button aria-pressed={slug === item.slug} key={item.slug} onClick={() => selectCommittee(item.slug)}>{item.name}<small>{item.level}</small></button>)}</div></details></>}
-        {tab === "charity" && <div className={styles.charitySection}>
-          <div className={styles.charityIntro}><Image src="/logos/warchild.png" alt="War Child" width={1500} height={784} className={styles.charityLogo} /><p className={styles.eyebrow}>OUR 2026 CHARITY PARTNER</p><h2>War Child</h2><p>Community-driven humanitarian action for war-affected women and children.</p><Link className={styles.resource} href="/conference/charity-partner">Meet our charity partner ↗</Link></div>
-          <div className={styles.donationPanel}><p className={styles.eyebrow}>SSUNS × WAR CHILD</p><h3>Support our fundraiser.</h3><CharityDonateButton /></div>
-        </div>}
-        {tab === "venue" && <HotelNavigator key={destinationId ?? committee?.slug ?? "all"} committees={committees} initialRoomId={destinationId ?? committeeRooms[0]?.id} />}
-        {tab === "gallery" && <><p className={styles.eyebrow}>PHOTOGRAPHS</p><h2>Gallery</h2><p>From the SSUNS photo archive.</p><div className={styles.gallery}>{homeContent.gallery.items.map((item) => <figure key={item.id}><Image src={item.src} alt={item.alt} width={700} height={460} loading="lazy" /><figcaption>{item.caption}</figcaption></figure>)}</div></>}
-      </section>
+          <div className={styles.conferencePhoto}>
+            <Image src="/photos/delegates-1600x1067.jpg" alt="" fill sizes="(min-width: 900px) 330px, (min-width: 500px) 33vw, 34vw" priority />
+          </div>
+          {additional.length > 0 && <div className={styles.liveFollow}>
+            <h2>{live?.status === "now" ? "Also on now" : "Starting at the same time"}</h2>
+            {eventList(additional, "home")}
+          </div>}
+        </div>
+        <section className={styles.committee} aria-labelledby="guide-committee-title">
+          <div className={styles.committeeTop}>
+            <h2 id="guide-committee-title"><UsersRound size={18} aria-hidden="true" /> Your committee</h2>
+            {committee && pickerLink("home", "Change committee", styles.changeCommittee)}
+          </div>
+          {committee ? <>
+            <p className={styles.committeeName}>{committee.name}</p>
+            <p className={styles.committeeBloc}>{bloc ? `Bloc ${bloc}` : "No delegate bloc listed"}</p>
+            <div className={styles.committeeFacts}>
+              <div className={styles.committeeSession}>
+                <h3>{sessions.next ? "Next session" : sessions.current ? "In session" : "Sessions"}</h3>
+                {nextSession ? eventLink(nextSession, "home", <><strong>{eventTime(nextSession)}</strong><small>{eventDate(nextSession)} · Session {nextSession.session}</small><ChevronRight size={16} aria-hidden="true" /></>, styles.committeeAction)
+                  : <p className={styles.meta}>{sessions.finished ? "All scheduled sessions for your bloc have ended." : "No session listed."}</p>}
+                {sessions.current && sessions.next && eventLink(sessions.current, "home", `In session until ${sessions.current.end}`, styles.textAction)}
+              </div>
+              <div>
+                <h3>{rooms.length > 1 ? "Assigned rooms" : "Assigned room"}</h3>
+                {rooms.length ? <ul className={styles.roomLinks}>{rooms.map((room) => <li key={room.id}>
+                  <GuideLink className={styles.committeeAction} href={mapHref({ floor: room.floor, room })}
+                    aria-label={`Show ${room.room}, Level ${room.floor}${room.side ? `, ${room.side}` : ""} on the hotel map`}>
+                    <strong>{room.room}</strong><small>Level {room.floor}{room.side ? ` · ${room.side}` : ""}</small><ArrowUpRight size={15} aria-hidden="true" />
+                  </GuideLink>
+                </li>)}</ul> : <p className={styles.meta}>No room assignment listed.</p>}
+              </div>
+            </div>
+          </> : <GuideLink href={sheetHref("home", "committee")} mode="sheet" onClick={(event) => { setQuery(""); rememberOpener(event); }} className={styles.chooseCommittee}>
+            <span><strong>Choose your committee</strong><small>See your session times and room.</small></span><ArrowRight size={20} aria-hidden="true" />
+          </GuideLink>}
+        </section>
+        {upcoming && <section className={`${styles.liveFollow} ${styles.homeNext}`} aria-labelledby="guide-next-title">
+          <h2 id="guide-next-title">Up next{dayFor(upcoming).date !== today ? ` · ${dayFor(upcoming).en}` : ""}</h2>
+          {eventList(upcomingGroup, "home")}
+        </section>}
+      </div>)}
+
+      {pane("schedule", <div className={styles.programme}>
+        <header className={styles.programmeHeader}>
+          <div className={styles.titleRow}><h1 id="guide-schedule-title" tabIndex={-1}>Schedule</h1><span>Montréal time</span></div>
+          <div className={styles.days} role="group" aria-label="Conference day">
+            {scheduleDays.map((item) => <button key={item.id} aria-pressed={day === item.id} aria-label={`${item.en}, ${localDate(item.date)}`} onClick={() => setDay(item.id)}>
+              <span>{item.en.slice(0, 3)}</span><strong>{Number(item.date.slice(-2))}</strong>
+            </button>)}
+          </div>
+          <div className={styles.scheduleTools}>
+            <span>{localDate(displayedDay.date)}</span>
+            {bloc ? <div className={styles.filter} role="group" aria-label="Filter schedule">
+              <button aria-pressed={!mine} onClick={() => setMine(false)}>All events</button>
+              <button aria-pressed={mine} onClick={() => setMine(true)}>Bloc {bloc} + shared</button>
+            </div> : pickerLink("schedule", "Filter by committee", styles.textAction)}
+          </div>
+        </header>
+        {eventList(events, "schedule")}
+        <Link href="/conference/schedule" className={styles.timetable}>Full timetable <ArrowUpRight size={15} aria-hidden="true" /></Link>
+      </div>)}
+
+      {pane("hotel-map", <div className={styles.mapPage}>
+        <div className={styles.titleRow}><h1 id="guide-hotel-map-title" tabIndex={-1}>Hotel map</h1></div>
+        {mapOpened && <HotelNavigator compact committees={committees} initialFloor={destination.floor}
+          initialRoomId={destination.room?.id ?? defaultRoom?.id}
+          destination={destination.floor ? { floor: destination.floor, roomId: destination.room?.id } : undefined} />}
+      </div>)}
+
+      {pane("dining", <div className={styles.dining}>
+        <header className={styles.diningCover}>
+          <div><h1 id="guide-dining-title" tabIndex={-1}>Food &amp; dining</h1><p>Near Le Centre Sheraton Montréal</p></div>
+          <div className={styles.cityPhoto}><Image src="/photos/montreal-1600x900.jpg" alt="" fill sizes="(min-width: 880px) 320px, 90vw" /></div>
+        </header>
+        <div className={styles.foodTabs} role="group" aria-label="Dining category">
+          {diningGroups.map((group, index) => <button key={group.title} aria-pressed={index === foodGroup} onClick={() => setFoodGroup(index)}>{group.title}</button>)}
+        </div>
+        {diningGroups.map((group, index) => <section key={group.title} hidden={index !== foodGroup} aria-label={group.title} className={styles.diningGroup}>
+          <ul>{group.places.map((place) => <li key={place.name}>
+            <details name="guide-dining" className={styles.restaurant}>
+              <summary aria-label={`Details for ${place.name}`}>
+                <strong>{place.name}</strong><small>{place.address}</small><ChevronDown aria-hidden="true" size={15} />
+              </summary>
+              <div className={styles.restaurantDetails}>
+                <p>{place.note}</p>
+                {"hours" in place && <p className={styles.meta}>{place.hours}</p>}
+                {"price" in place && <p className={styles.meta}>{place.price} CAD</p>}
+                <div className={styles.inlineLinks}>
+                  <a href={place.source} target="_blank" rel="noopener noreferrer">Official details <ArrowUpRight size={14} aria-hidden="true" /></a>
+                  {"menu" in place && <a href={place.menu} target="_blank" rel="noopener noreferrer">Menu <ArrowUpRight size={14} aria-hidden="true" /></a>}
+                </div>
+              </div>
+            </details>
+            <a className={styles.directions} href={walkingDirections(place.name, place.address)} target="_blank" rel="noopener noreferrer" aria-label={`Walking directions to ${place.name} (opens in a new tab)`}>
+              <ArrowUpRight aria-hidden="true" size={15} /> Directions
+            </a>
+          </li>)}</ul>
+        </section>)}
+      </div>)}
+
+      {pane("charity", <div className={styles.charity}>
+        <div className={styles.charityStory}>
+          <p className={styles.partnerLabel}>2026 Charity partner</p>
+          <div className={styles.charityIdentity}>
+            <h1 id="guide-charity-title" tabIndex={-1}>War Child</h1>
+            <Image src="/logos/warchild.png" alt="" width={1500} height={784} sizes="112px" />
+          </div>
+          <p className={styles.charityIntro}>War Child supports community-driven humanitarian action for war-affected women and children.</p>
+          <CharityDonateButton appearance="guide" />
+          <Link className={styles.textAction} href="/conference/charity-partner">Meet our charity partner <ArrowUpRight size={14} aria-hidden="true" /></Link>
+        </div>
+        <figure className={styles.charityFigure}>
+          <div><Image alt="Hands preparing vegetables together around a table" fill sizes="(min-width: 900px) 460px, 100vw" src="/photos/war-child/community.webp" /></div>
+          <figcaption>Photography: <a href={charityPartner.website} rel="noopener noreferrer" target="_blank">War Child Canada</a></figcaption>
+        </figure>
+      </div>)}
     </div>
-    <footer className={styles.footer}><span>SSUNS 2026 · Montréal</span><Link href="/">Visit the SSUNS website ↗</Link></footer>
+
+    <nav className={styles.dock} aria-label="Pocket Guide">
+      {tabs.map(({ id, label, Icon }) => <GuideLink key={id} href={`#${id}`} aria-current={screen === id ? "page" : undefined}
+        className={id === "home" ? styles.homeTab : undefined}>
+        {Icon ? <Icon size={21} strokeWidth={1.65} aria-hidden="true" /> : <span className={styles.dove}>
+          <Image src="/logos/ssuns-dove-white.png" width={500} height={500} alt="" sizes="46px" priority />
+        </span>}
+        <span>{label}</span>
+      </GuideLink>)}
+    </nav>
+
+    {selectedEvent ? <GuideSheet title={eventTitle(selectedEvent, "en")} close={() => closeGuideSheet(baseHref)} key={sheetKey} opener={sheetOpener}>
+      <p className={styles.sheetDate}>{eventDate(selectedEvent)} · {eventTime(selectedEvent)}</p>
+      {location(selectedEvent) && <p><strong>{location(selectedEvent)}</strong></p>}
+      {selectedEvent.kind === "session" && selectedEvent.bloc === bloc && committee && <p>{committee.name}</p>}
+      {selectedEvent.kind === "session" && !committee && pickerLink(screen, "Choose your committee for room details", styles.textAction, true)}
+      {eventDestinations(selectedEvent, rooms, bloc).map((item) => <GuideLink mode="from-sheet"
+        className={styles.mapAction} key={item.room?.id ?? item.floor} href={mapHref(item)}>
+        <MapPin aria-hidden="true" size={18} />
+        <span>{item.room ? `Show ${item.room.room}${item.room.side ? ` · ${item.room.side}` : ""} on map` : `Open Level ${item.floor} map`}</span>
+        <ChevronRight aria-hidden="true" size={16} />
+      </GuideLink>)}
+      <p className={styles.description}>{eventDescription(selectedEvent, "en")}</p>
+      {orderedEvents.some((item) => item.parentId === selectedEvent.id) && <section className={styles.sessionPreview}>
+        <h3>Programme activities</h3>
+        {eventList(orderedEvents.filter((item) => item.parentId === selectedEvent.id), screen, true)}
+      </section>}
+      {!!selectedEvent.related?.length && <details className={styles.disclosure}>
+        <summary>Related resources</summary>
+        <ul className={styles.resourceList}>
+          {selectedEvent.related.map((href) => <li key={href}><Link href={href}>{relatedPages.find((page) => page.href === href)?.title ?? "Event information"} <ArrowUpRight aria-hidden="true" size={15} /></Link></li>)}
+        </ul>
+      </details>}
+    </GuideSheet> : showPicker ? <GuideSheet title="Your committee" close={() => closeGuideSheet(baseHref)} key={sheetKey} opener={sheetOpener}>
+      <label className={styles.search}><Search size={18} aria-hidden="true" /><span className="sr-only">Find a committee</span>
+        <input type="search" placeholder="Find a committee" value={query} onChange={(event) => setQuery(event.target.value)} />
+      </label>
+      {committee && <button className={styles.textAction} onClick={() => selectCommittee("")}>Clear committee selection</button>}
+      <ul className={styles.committeeList}>
+        {committeeMatches.map((item) => <li key={item.slug}>
+          <button aria-pressed={item.slug === committee?.slug} onClick={() => selectCommittee(item.slug)}>
+            <span><strong>{item.name}</strong><small>{item.level}</small></span><ChevronRight size={16} aria-hidden="true" />
+          </button>
+        </li>)}
+      </ul>
+      {query.trim() && !committeeMatches.length && <p>No matching committees.</p>}
+    </GuideSheet> : showResources ? <GuideSheet title="Conference resources" close={() => closeGuideSheet(baseHref)} key={sheetKey} opener={sheetOpener}>
+      <ul className={styles.resourceList}>
+        {committee && <>
+          <li><Link href={`/committees/${committee.slug}`}>Committee details &amp; resources <ArrowUpRight size={15} aria-hidden="true" /></Link></li>
+          <li><GuideLink href="#schedule" mode="from-sheet" onClick={() => { setMine(Boolean(bloc)); setDay(nextSession?.day ?? null); }}>My committee schedule <ChevronRight size={16} aria-hidden="true" /></GuideLink></li>
+        </>}
+        <li><Link href="/conference/delegate-resource-center">Delegate Resource Centre <ArrowUpRight size={15} aria-hidden="true" /></Link></li>
+        <li><Link href="/committees/policies">Committee policies <ArrowUpRight size={15} aria-hidden="true" /></Link></li>
+        <li><Link href="/">SSUNS website <ArrowUpRight size={15} aria-hidden="true" /></Link></li>
+      </ul>
+    </GuideSheet> : null}
   </div>;
 }

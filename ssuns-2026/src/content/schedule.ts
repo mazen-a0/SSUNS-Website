@@ -14,6 +14,8 @@ export type ScheduleEvent = {
   title?: { en: string; fr: string };
   location?: { en: string; fr: string };
   featured?: boolean;
+  /** Set only when the published programme explicitly groups this activity under another event. */
+  parentId?: string;
   session?: number;
   bloc?: ScheduleBloc;
   // Four visual lanes allow staggered sessions and concurrent advisor events.
@@ -29,7 +31,7 @@ export const scheduleDays: Array<{ id: ScheduleDayId; date: string; en: string; 
   { id: "sunday", date: "2026-11-15", en: "Sunday", fr: "Dimanche" },
 ];
 
-const event = (id: string, day: ScheduleDayId, start: string, end: string, kind: ScheduleKind, en: string, fr: string, lane = 0, span = 4, related?: string[], details?: Pick<ScheduleEvent, "location" | "featured">): ScheduleEvent =>
+const event = (id: string, day: ScheduleDayId, start: string, end: string, kind: ScheduleKind, en: string, fr: string, lane = 0, span = 4, related?: string[], details?: Pick<ScheduleEvent, "location" | "featured" | "parentId">): ScheduleEvent =>
   ({ id, day, start, end, kind, title: { en, fr }, lane, span, related, ...details });
 const session = (day: ScheduleDayId, number: number, bloc: ScheduleBloc, start: string, end: string, lane: number): ScheduleEvent =>
   ({ id: `${day}-session-${number}-${lane}`, day, start, end, kind: "session", session: number, bloc, lane, span: 1, related: ["/conference/delegate-resource-center", "/committees", "/committees/policies", "/committees/position-papers", "/conference/venue"] });

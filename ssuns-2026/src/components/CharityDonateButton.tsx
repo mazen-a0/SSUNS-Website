@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
 import { charityPartner } from "@/content/charityPartner";
 
-export function CharityDonateButton() {
+export function CharityDonateButton({ appearance = "default" }: { appearance?: "default" | "guide" } = {}) {
+  const guide = appearance === "guide";
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLAnchorElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
@@ -35,11 +36,20 @@ export function CharityDonateButton() {
     };
   }, [embedUrl]);
 
+  const fundraiserDetails = <>
+    <p className={guide ? "max-w-sm text-sm leading-6 text-[#53617d]" : "mt-4 max-w-sm text-sm leading-6 text-white/80"}>Donations are processed by War Child’s CrowdChange fundraiser.</p>
+    <a className={guide ? "inline-flex min-h-11 items-center text-sm underline underline-offset-4" : "mt-3 inline-block text-sm text-white underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"} href={charityPartner.donationUrl} rel="noopener noreferrer" target="_blank">
+      Open fundraiser in a new tab ↗
+    </a>
+  </>;
+
   return (
     <div>
       <a
         aria-haspopup="dialog"
-        className="inline-flex min-h-14 items-center justify-center gap-5 rounded-full bg-white px-7 py-4 text-base font-semibold text-[#142082] transition-colors hover:bg-[#edf1ff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+        className={guide
+          ? "inline-flex min-h-12 items-center gap-3 rounded-sm bg-[#142082] px-5 py-2.5 text-sm font-semibold !text-white hover:bg-[#101956]"
+          : "inline-flex min-h-14 items-center justify-center gap-5 rounded-full bg-white px-7 py-4 text-base font-semibold text-[#142082] transition-colors hover:bg-[#edf1ff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"}
         href={charityPartner.donationUrl}
         onClick={(event) => {
           event.preventDefault();
@@ -50,12 +60,12 @@ export function CharityDonateButton() {
         rel="noopener noreferrer"
         target="_blank"
       >
-        Donate to War Child <ArrowUpRight aria-hidden="true" className="h-5 w-5" />
+        Donate to War Child <ArrowUpRight aria-hidden="true" size={guide ? 16 : 20} />
       </a>
-      <p className="mt-4 max-w-sm text-sm leading-6 text-white/80">Donations are processed by War Child’s CrowdChange fundraiser.</p>
-      <a className="mt-3 inline-block text-sm text-white underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" href={charityPartner.donationUrl} rel="noopener noreferrer" target="_blank">
-        Open fundraiser in a new tab ↗
-      </a>
+      {guide ? <details className="mt-2 text-sm">
+        <summary className="min-h-11 py-3 text-[#142082]">Fundraiser information</summary>
+        {fundraiserDetails}
+      </details> : fundraiserDetails}
 
       <dialog
         aria-labelledby="donation-dialog-title"
