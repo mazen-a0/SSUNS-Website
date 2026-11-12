@@ -42,6 +42,7 @@ export const sponsorContent = {
   sponsorVisitLabel: "Visiter le site du commanditaire",
   sponsors: en.sponsors.map((sponsor) => ({
     ...sponsor,
+    name: sponsor.id === "mcgill" ? "Université McGill" : sponsor.name,
     description:
       sponsor.name === "GS-JJ"
         ? "GS-JJ soutient SSUNS 2026 au sein de la communauté de commanditaires qui contribuent à rendre la conférence possible."
@@ -49,6 +50,8 @@ export const sponsorContent = {
   })),
   ui: {
     becomeSponsor: "Devenir partenaire de SSUNS",
+    headline: "Commanditaire principal",
+    visitMcGill: "Visiter mcgill.ca",
     platinum: "Commanditaire platine",
     bronze: "Commanditaires bronze",
     discountSuffix: " % de rabais",

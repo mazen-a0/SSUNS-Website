@@ -3,7 +3,7 @@ import { pickImage } from "@/lib/images";
 export type Sponsor = {
   id: string;
   name: string;
-  tier: "Platinum" | "Bronze";
+  tier: "Headline" | "Platinum" | "Bronze";
   href: string;
   logoSrc: string;
   logoAlt: string;
@@ -14,6 +14,16 @@ export type Sponsor = {
 };
 
 const sponsors: Sponsor[] = [
+  {
+    id: "mcgill",
+    name: "McGill University",
+    tier: "Headline",
+    href: "https://www.mcgill.ca/",
+    logoSrc: "/sponsors/mcgill.png",
+    logoAlt: "McGill University",
+    logoWidth: 2228,
+    logoHeight: 800,
+  },
   {
     id: "buylanyard",
     name: "BuyLanyard",
@@ -113,6 +123,8 @@ export const sponsorContent = {
   sponsors,
   ui: {
     becomeSponsor: "Partner with SSUNS",
+    headline: "Headline sponsor",
+    visitMcGill: "Visit mcgill.ca",
     platinum: "Platinum sponsor",
     bronze: "Bronze sponsors",
     discountSuffix: "% off",

@@ -31,6 +31,11 @@ function chapterEntries(prefix: string, parentTitle: string, chapters: Chapter[]
 
 export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
   const language = content.conferenceContent.title === "Conférence" ? "fr" : "en";
+  const sponsorTierLabels = {
+    Headline: content.sponsorContent.ui.headline,
+    Platinum: content.sponsorContent.ui.platinum,
+    Bronze: content.sponsorContent.ui.bronze,
+  };
   const navigationEntries: SearchEntry[] = [
     {
       id: "nav-home",
@@ -158,11 +163,11 @@ export function buildSearchIndex(content: ContentBundle): SearchEntry[] {
       id: `sponsor-partner-${sponsor.id}`,
       title: sponsor.name,
       snippet: [
-        sponsor.tier === "Platinum" ? content.sponsorContent.ui.platinum : content.sponsorContent.ui.bronze,
+        sponsorTierLabels[sponsor.tier],
         sponsor.description,
         sponsor.offer ? `${sponsor.offer.percentOff}${content.sponsorContent.ui.discountSuffix} — ${content.sponsorContent.ui.codeLabel} ${sponsor.offer.code}` : "",
       ].filter(Boolean).join(". "),
-      href: "/sponsor-us",
+      href: sponsor.tier === "Headline" ? `/sponsor-us#sponsor-${sponsor.id}` : "/sponsor-us",
       group: "content" as const,
       breadcrumb: content.sponsorContent.title,
     })),

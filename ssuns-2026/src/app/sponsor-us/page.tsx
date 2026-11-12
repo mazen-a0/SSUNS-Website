@@ -29,6 +29,7 @@ export default function SponsorUsPage() {
   const [activeTierIndex, setActiveTierIndex] = useState(0);
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const headlineSponsor = sponsorContent.sponsors.find((sponsor) => sponsor.tier === "Headline");
   const platinumSponsors = sponsorContent.sponsors.filter((sponsor) => sponsor.tier === "Platinum");
   const bronzeSponsors = sponsorContent.sponsors.filter((sponsor) => sponsor.tier === "Bronze");
   const sponsorSlides = homeContent.gallery.items.slice(1, 4).map((item) => ({
@@ -64,10 +65,41 @@ export default function SponsorUsPage() {
         <a className={textLink} href="#partner-with-ssuns">{ui.becomeSponsor} <span aria-hidden="true" className="ml-2">↓</span></a>
       </header>
 
-      <section aria-labelledby="sponsors-title" className="grid gap-5 py-8 sm:py-10 lg:grid-cols-2 lg:items-start lg:gap-x-14">
-        <h1 className="font-display text-[clamp(2.45rem,12vw,6.5rem)] leading-none tracking-tight text-[var(--accent)] lg:col-span-2" id="sponsors-title">{sponsorContent.title}</h1>
-        <h2 className="max-w-lg text-xl leading-8 text-[var(--accent)] sm:text-2xl">{sponsorContent.sponsorsHeading}</h2>
-        <p className="max-w-xl text-base leading-7 text-[var(--muted)] lg:pb-1">{sponsorContent.sponsorsIntro}</p>
+      <section aria-labelledby="sponsors-title" className="space-y-6 py-8 sm:space-y-8 sm:py-10">
+        <h1 className="font-display text-[clamp(2.45rem,12vw,6.5rem)] leading-none tracking-tight text-[var(--accent)]" id="sponsors-title">{sponsorContent.title}</h1>
+        {headlineSponsor && (
+          <section aria-labelledby="headline-sponsor-title" id={`sponsor-${headlineSponsor.id}`} style={{ scrollMarginTop: "calc(var(--site-sticky-top) + 2rem)" }}>
+            <a
+              aria-label={`${headlineSponsor.name} — ${ui.visitMcGill}`}
+              className={`group block overflow-hidden rounded-lg border border-[var(--rule)] bg-white ${focusStyle}`}
+              href={headlineSponsor.href}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 bg-[var(--accent)] px-5 py-4 text-white sm:px-8">
+                <h2 className="font-display text-lg leading-tight sm:text-2xl" id="headline-sponsor-title">{ui.headline}</h2>
+                <span className="text-sm font-semibold underline underline-offset-4 decoration-white/60 group-hover:decoration-white">{ui.visitMcGill} <span aria-hidden="true" className="ml-1">↗</span></span>
+              </div>
+              <div className="flex items-center justify-center px-6 py-9 sm:px-12 sm:py-12">
+                <div className="w-full max-w-2xl">
+                  <Image
+                    alt={headlineSponsor.name}
+                    className="h-auto w-full"
+                    height={headlineSponsor.logoHeight}
+                    preload
+                    sizes="(min-width: 768px) 672px, calc(100vw - 5rem)"
+                    src={headlineSponsor.logoSrc}
+                    width={headlineSponsor.logoWidth}
+                  />
+                </div>
+              </div>
+            </a>
+          </section>
+        )}
+        <div className="grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-x-14">
+          <h2 className="max-w-lg text-xl leading-8 text-[var(--accent)] sm:text-2xl">{sponsorContent.sponsorsHeading}</h2>
+          <p className="max-w-xl text-base leading-7 text-[var(--muted)] lg:pb-1">{sponsorContent.sponsorsIntro}</p>
+        </div>
       </section>
 
       <section aria-labelledby="platinum-title">
