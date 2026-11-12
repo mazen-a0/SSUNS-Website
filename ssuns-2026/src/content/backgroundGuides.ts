@@ -25,12 +25,6 @@ export const backgroundGuideLinksBySlug: Record<string, string> = {
 
 export const guidesWithDaisPasswords = new Set(["ad-hoc-sg-2026", "ad-hoc-2026"]);
 
-const adHocHint2 = {
-  label: "Hint 2",
-  labelFr: "Indice 2",
-  href: "https://drive.google.com/file/d/1QC8DmLOTvx009EFbPOkH5SXG2OCTOZqv/view?usp=share_link",
-};
-
 export const additionalCommitteeDocumentsBySlug: Record<
   string,
   Array<{
@@ -46,7 +40,11 @@ export const additionalCommitteeDocumentsBySlug: Record<
       labelFr: "Indice 1",
       href: "https://scratch.mit.edu/projects/1396862556",
     },
-    adHocHint2,
+    {
+      label: "Hint 2",
+      labelFr: "Indice 2",
+      href: "https://drive.google.com/file/d/1Z8rIgNpAgJHsNbcVxUm10DGDppBC7oby/view?usp=share_link",
+    },
   ],
   "ad-hoc-2026": [
     {
@@ -54,7 +52,11 @@ export const additionalCommitteeDocumentsBySlug: Record<
       labelFr: "Indice 1",
       href: "https://m.youtube.com/watch?v=cO8G_zCkZTY",
     },
-    adHocHint2,
+    {
+      label: "Hint 2",
+      labelFr: "Indice 2",
+      href: "https://drive.google.com/file/d/1QC8DmLOTvx009EFbPOkH5SXG2OCTOZqv/view?usp=share_link",
+    },
   ],
   "festival-rivalry-2026": [
     {
