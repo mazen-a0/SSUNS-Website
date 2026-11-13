@@ -81,7 +81,7 @@ export const additionalCommitteeDocumentsBySlug: Record<
   "icj-2026": [
     {
       label: "Access ROPs of the ICJ",
-      href: "https://drive.google.com/file/d/1nMGKXusH3j2QDsLQ0qKONhfTEWgfWJ_z/view?usp=sharing",
+      href: "https://docs.google.com/document/d/1kBPD29clGxKS0zd2-R7UvIW9_NMFo-ViWIIoAXUm_lk/edit?usp=share_link",
       note: "Due to the uniquely complicated nature of an ICJ, your Dais has provided this additional guide to the Rules of Procedure.",
     },
   ],
