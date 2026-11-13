@@ -157,6 +157,13 @@
   letter-spacing: .005em;
 }
 .signal { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: #b8d9ff; }
+@media (prefers-reduced-motion: no-preference) {
+  .homePane[data-current="true"] .signal { animation: liveSignalPulse 2.2s ease-out 2; }
+}
+@keyframes liveSignalPulse {
+  0% { box-shadow: 0 0 0 0 #b8d9ff80; }
+  65%, 100% { box-shadow: 0 0 0 5px #b8d9ff00; }
+}
 .leadTitle {
   display: block;
   max-width: 14ch;
@@ -178,6 +185,8 @@ a.leadPlace { text-decoration: underline; text-underline-offset: 3px; text-decor
 .conferencePhoto { grid-area: photo; position: relative; min-width: 0; aspect-ratio: 1 / 1.12; background: #2d3976; overflow: hidden; border-radius: 1px 22px 1px 1px; }
 .conferencePhoto img { object-fit: cover; object-position: 66% 49%; filter: saturate(.72) contrast(.95); }
 .liveFollow { grid-area: follow; min-width: 0; }
+.livePrimary .liveFollow { margin-top: 6px; }
+.livePrimary .liveFollow li + li { border-top: 1px solid #ffffff25; }
 .liveFollow h2 { color: #d5e2ff; font-size: .77rem; font-weight: 600; }
 .homeNext { grid-area: next; padding: 19px max(var(--edge), env(safe-area-inset-right)) 0 max(var(--edge), env(safe-area-inset-left)); }
 

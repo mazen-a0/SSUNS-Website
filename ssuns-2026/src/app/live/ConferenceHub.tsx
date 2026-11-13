@@ -125,6 +125,8 @@ export function ConferenceHub() {
     (item.kind !== "session" || !bloc || item.bloc === bloc) && eventState(item, now) === "upcoming") : undefined;
   const upcomingGroup = upcoming ? orderedEvents.filter((item) => chronological(item, upcoming) === 0 &&
     (item.kind !== "session" || !bloc || item.bloc === bloc)) : noEvents;
+  const showLiveList = !bloc && live?.status === "now" && live.events.length > 1 &&
+    live.events.some((event) => event.kind === "session");
   const lead = live?.events[0];
   const additional = live?.events.slice(1) ?? noEvents;
   const relatedPages = [...conferenceContent.chapters, ...committeesPageContent.chapters, ...registrationContent.chapters];
@@ -226,7 +228,7 @@ export function ConferenceHub() {
               {live?.status === "now" && <span className={styles.signal} aria-hidden="true" />}
               {live?.status === "now" ? "Happening now" : live?.status === "ended" ? "Conference complete" : "Up next"}
             </h1>
-            {lead ? <>
+            {showLiveList ? <div className={styles.liveFollow}>{eventList(live.events, "home")}</div> : lead ? <>
               {eventLink(lead, "home", <>{eventTitle(lead, "en")}<ArrowRight size={21} aria-hidden="true" /></>, styles.leadTitle)}
               <p className={styles.leadTime}>{live?.status === "upcoming" && dayFor(lead).date !== today ? `${dayFor(lead).en} · ` : ""}{eventTime(lead)}</p>
               {leadPlace && (leadMaps.length === 1 ? <GuideLink className={styles.leadPlace} href={mapHref(leadMaps[0])}>
@@ -238,7 +240,7 @@ export function ConferenceHub() {
           <div className={styles.conferencePhoto}>
             <Image src="/photos/delegates-1600x1067.jpg" alt="" fill sizes="(min-width: 900px) 330px, (min-width: 500px) 33vw, 34vw" priority />
           </div>
-          {additional.length > 0 && <div className={styles.liveFollow}>
+          {!showLiveList && additional.length > 0 && <div className={styles.liveFollow}>
             <h2>{live?.status === "now" ? "Also on now" : "Starting at the same time"}</h2>
             {eventList(additional, "home")}
           </div>}
