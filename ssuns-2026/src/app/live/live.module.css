@@ -51,8 +51,49 @@
 .wordmark { position: relative; flex: 0 0 77px; width: 77px; height: 43px; overflow: hidden; }
 .wordmark img { position: absolute; top: 50%; left: 50%; width: 105px; height: auto; max-width: none; transform: translate(-50%, -50%); }
 .productName { padding-left: 12px; border-left: 1px solid #ffffff42; color: #dce4fa; font-size: .82rem; line-height: 1.22; }
-.resourcesAction { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; color: #e6edff; font-size: .77rem; white-space: nowrap; }
-.resourcesAction:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.resourcesAction {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding-inline: 12px;
+  border-radius: 8px;
+  background: #fff;
+  background-image: linear-gradient(#fff 45%, #eeeef2);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 0 #a8aab8, 0 7px 12px #0005;
+  color: var(--navy);
+  font-size: .95rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.resourcesAction:active { box-shadow: inset 0 1px 3px #0002, 0 1px 0 #a8aab8; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .resourcesAction { transition: transform 120ms ease, box-shadow 120ms ease; }
+  .resourcesAction:active { transform: translateY(3px); }
+  .resourcesAction::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: "";
+    pointer-events: none;
+    opacity: 0;
+    animation: resourcesWave 2.4s ease-out 2;
+  }
+}
+
+@keyframes resourcesWave {
+  0% { opacity: 0; box-shadow: 0 0 4px 0 #fff, 0 0 8px 0 #fff8; }
+  14% { opacity: .9; }
+  65%, 100% { opacity: 0; box-shadow: 0 0 6px 8px #fff, 0 0 12px 13px #fff8; }
+}
+
+@media (hover: hover) {
+  .resourcesAction:hover { background-image: none; }
+}
 
 .stage { position: relative; min-width: 0; min-height: 0; background: var(--surface); }
 .pane {
@@ -337,7 +378,7 @@ a.leadPlace { text-decoration: underline; text-underline-offset: 3px; text-decor
   .lockup { gap: 6px; }
   .wordmark { flex-basis: 70px; width: 70px; }
   .wordmark img { width: 96px; }
-  .resourcesAction { font-size: .72rem; }
+  .resourcesAction { font-size: .85rem; }
   .dock a { font-size: .65rem; }
 }
 @media (prefers-reduced-motion: reduce) {

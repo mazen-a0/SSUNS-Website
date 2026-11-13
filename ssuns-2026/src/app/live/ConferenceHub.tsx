@@ -401,6 +401,11 @@ export function ConferenceHub() {
       {query.trim() && !committeeMatches.length && <p>No matching committees.</p>}
     </GuideSheet> : showResources ? <GuideSheet title="Conference resources" close={() => closeGuideSheet(baseHref)} key={sheetKey} opener={sheetOpener}>
       <ul className={styles.resourceList}>
+        <li>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfxn4aRC7V5QMybj5k5kJT7dtUMssBZ6fKX39_V119w8lwGKQ/viewform" rel="noopener noreferrer" target="_blank">
+            Equity Disclosure and Feedback Form <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        </li>
         {committee && <>
           <li><Link href={`/committees/${committee.slug}`}>Committee details &amp; resources <ArrowUpRight size={15} aria-hidden="true" /></Link></li>
           <li><GuideLink href="#schedule" mode="from-sheet" onClick={() => { setMine(Boolean(bloc)); setDay(nextSession?.day ?? null); }}>My committee schedule <ChevronRight size={16} aria-hidden="true" /></GuideLink></li>
