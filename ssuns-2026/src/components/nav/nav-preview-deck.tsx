@@ -42,7 +42,7 @@ export function NavPreviewDeck({ items, className, layout = "grid", onNavigate }
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="text-sm font-semibold text-white">{item.label}</p>
-              <p className="mt-2 text-sm leading-relaxed text-[#c6d7ff]">{item.description}</p>
+              {item.description && <p className="mt-2 text-sm leading-relaxed text-[#c6d7ff]">{item.description}</p>}
             </div>
             <ArrowRight
               aria-hidden="true"
