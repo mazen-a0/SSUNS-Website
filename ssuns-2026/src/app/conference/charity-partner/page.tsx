@@ -29,13 +29,16 @@ export default function ConferenceCharityPartnerPage() {
             <h1 className="font-display mt-4 text-[clamp(3.5rem,8vw,7.5rem)] leading-[0.95] tracking-tight text-[var(--accent)]" id="charity-title">War Child<span className="text-[#db0a3e]">.</span></h1>
             <p className="mt-6 max-w-lg text-xl leading-relaxed text-[var(--text)] sm:text-2xl">Community-driven action.<br />Long-term impact.</p>
             <div className="mt-9 flex flex-wrap items-center gap-5">
-              <a className="inline-flex min-h-12 items-center gap-5 rounded-full bg-[#bd1037] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#9d0d2d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd1037]" href="#support-war-child">
+              <a aria-describedby="hero-delegation-note" className="inline-flex min-h-12 items-center gap-5 rounded-full bg-[#bd1037] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#9d0d2d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd1037]" href="#support-war-child">
                 Support War Child <ArrowDown aria-hidden="true" className="h-4 w-4" />
               </a>
               <a className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline" href={charityPartner.website} rel="noopener noreferrer" target="_blank">
                 Meet our partner <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
               </a>
             </div>
+            <p className="mt-3 max-w-sm text-sm leading-6 font-semibold text-[var(--accent)]" id="hero-delegation-note" lang={language}>
+              {charityPartner.delegationNote[language]}
+            </p>
           </div>
           <figure className="relative min-w-0">
             <div className="relative aspect-[5/4] overflow-hidden rounded-t-[5rem] rounded-b-lg sm:aspect-[4/3] lg:aspect-[4/5]">
@@ -71,7 +74,7 @@ export default function ConferenceCharityPartnerPage() {
               <h2 className="font-display mt-4 max-w-lg text-4xl leading-tight sm:text-5xl" id="support-title">Support our<br />charity partner.</h2>
               <p className="mt-5 max-w-md text-base leading-7 text-white/85">Contribute through our online fundraiser for War Child.</p>
             </div>
-            <CharityDonateButton />
+            <CharityDonateButton language={language} />
           </div>
         </section>
       </div>

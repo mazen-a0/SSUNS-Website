@@ -4,6 +4,7 @@ import { ArrowUpRight, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useSiteContent } from "@/lib/useSiteContent";
+import { charityPartner } from "@/content/charityPartner";
 
 export function HomeConferenceLinks() {
   const { language } = useSiteContent();
@@ -27,9 +28,12 @@ export function HomeConferenceLinks() {
           <Link className="flex min-h-11 items-center justify-between gap-2 rounded-md bg-white px-3 py-2 text-sm font-bold text-[#142082] hover:bg-[#e6efff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href="/shop">
             {fr ? "Voir la boutique" : "Go to the shop"} <ArrowUpRight aria-hidden="true" size={17} />
           </Link>
-          <Link className="flex min-h-11 items-center justify-between gap-2 rounded-md border border-white/65 px-3 py-2 text-sm font-bold text-white hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href="/conference/charity-partner">
+          <Link aria-describedby="home-delegation-note" className="flex min-h-11 items-center justify-between gap-2 rounded-md border border-white/65 px-3 py-2 text-sm font-bold text-white hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href="/conference/charity-partner#support-war-child">
             {fr ? "Soutenir War Child" : "Support War Child"} <ArrowUpRight aria-hidden="true" size={17} />
           </Link>
+          <p className="px-1 text-sm leading-snug font-semibold text-white" id="home-delegation-note">
+            {charityPartner.delegationNote[language]}
+          </p>
         </div>
       </div>
     </aside>
